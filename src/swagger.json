@@ -36,16 +36,10 @@
 			"AuthResult": {
 				"properties": {
 					"profile": {
-						"allOf": [
-							{
-								"$ref": "#/components/schemas/Profile"
-							}
-						],
-						"nullable": true
+						"$ref": "#/components/schemas/Profile"
 					},
 					"token": {
-						"type": "string",
-						"nullable": true
+						"type": "string"
 					}
 				},
 				"required": [
@@ -84,25 +78,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/AuthResult"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/api/profile/ping": {
-			"get": {
-				"operationId": "Ping",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "string"
 								}
 							}
 						}

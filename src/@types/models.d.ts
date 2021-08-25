@@ -7,6 +7,6 @@ export interface Profile {
 }
 
 export interface AuthResult {
-  profile: Profile | null;
-  token: string | null;
+  profile: Profile;
+  token: string;
 }

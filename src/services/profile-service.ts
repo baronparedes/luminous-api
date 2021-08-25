@@ -11,7 +11,7 @@ export default class ProfileService {
     console.log(username + password);
     return {
       id: 1,
-      name: 'Baron Paredes',
+      name: 'Baron Patrick Paredes',
       username: 'barspars',
     };
   }

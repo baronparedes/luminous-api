@@ -22,8 +22,7 @@ export default class AuthService {
 
   public async authenticate(encodedCredentials: string): Promise<AuthResult> {
     const basicAuth = this.getAuthCredentials(encodedCredentials);
-    // eslint-disable-next-line node/no-deprecated-api
-    const credentials = new Buffer(basicAuth, 'base64').toString('ascii');
+    const credentials = Buffer.from(basicAuth).toString('base64');
     const [username, password] = credentials.split(':');
     const profile = await this.profileService.getProfile(username, password);
     const token = jwt.sign(profile, config.JWT_ACCESS_TOKEN, {

@@ -27,8 +27,8 @@ const models: TsoaRoute.Models = {
     "AuthResult": {
         "dataType": "refObject",
         "properties": {
-            "profile": {"dataType":"union","subSchemas":[{"ref":"Profile"},{"dataType":"enum","enums":[null]}],"required":true},
-            "token": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "profile": {"ref":"Profile","required":true},
+            "token": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -63,28 +63,6 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.auth.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/profile/ping',
-
-            function ProfileController_ping(request: any, response: any, next: any) {
-            const args = {
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new ProfileController();
-
-
-            const promise = controller.ping.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

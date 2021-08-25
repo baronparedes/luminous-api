@@ -1,10 +1,12 @@
 import compression from 'compression';
+import cors from 'cors';
 import express, {Request, Response} from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import {ApprovedAny} from 'src/@types';
 import swaggerUi from 'swagger-ui-express';
 
+import config from './config';
 import {RegisterRoutes} from './routes';
 import swaggerDocument from './swagger.json';
 
@@ -19,6 +21,13 @@ app.use(express.json());
 app.use(compression());
 app.use(helmet());
 app.use(morgan('dev'));
+if (config.NODE_ENV === 'development') {
+  app.use(
+    cors({
+      origin: config.CLIENT_URI,
+    })
+  );
+}
 app.use('/docs', swaggerUi.serve, async (_: Request, res: Response) => {
   return res.send(swaggerUi.generateHTML(swaggerDocument));
 });
