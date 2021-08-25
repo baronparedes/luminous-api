@@ -1,4 +1,4 @@
-import {Profile} from 'src/@types/models';
+import {Profile} from '../@types/models';
 
 export default class ProfileService {
   constructor() {}

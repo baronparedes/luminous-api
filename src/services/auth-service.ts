@@ -1,9 +1,10 @@
 import * as jwt from 'jsonwebtoken';
-import {ApprovedAny} from 'src/@types';
 
 import {AuthResult, Profile} from '../@types/models';
-import config from '../config';
+
+import {ApprovedAny} from 'src/@types';
 import ProfileService from './profile-service';
+import config from '../config';
 
 export default class AuthService {
   private profileService: ProfileService;
@@ -22,7 +23,8 @@ export default class AuthService {
 
   public async authenticate(encodedCredentials: string): Promise<AuthResult> {
     const basicAuth = this.getAuthCredentials(encodedCredentials);
-    const credentials = Buffer.from(basicAuth).toString('base64');
+    // eslint-disable-next-line node/no-deprecated-api
+    const credentials = new Buffer(basicAuth, 'base64').toString('ascii');
     const [username, password] = credentials.split(':');
     const profile = await this.profileService.getProfile(username, password);
     const token = jwt.sign(profile, config.JWT_ACCESS_TOKEN, {
