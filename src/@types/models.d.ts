@@ -1,12 +1,20 @@
-export interface Profile {
-  id?: number;
+export type ProfileType = 'stakeholder' | 'admin' | 'user';
+export interface AuthProfile {
+  id: number;
   name: string;
   username: string;
-  password?: string;
   scopes?: string;
+  type: ProfileType;
+}
+
+export interface RegisterProfile {
+  name: string;
+  username: string;
+  password: string;
+  email: string;
 }
 
 export interface AuthResult {
-  profile: Profile;
+  profile: AuthProfile;
   token: string;
 }

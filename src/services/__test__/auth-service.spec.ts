@@ -1,14 +1,11 @@
 import * as faker from 'faker';
 
+import {generateAuthProfile} from '../../@utils/fake-data';
 import AuthService from '../auth-service';
-import {Profile} from '../../@types/models';
 import ProfileService from '../profile-service';
 
 describe('AuthService', () => {
-  const mockedProfile: Profile = {
-    name: faker.name.findName(),
-    username: faker.internet.userName(),
-  };
+  const mockedProfile = generateAuthProfile();
 
   function setupAuthService() {
     const username = faker.internet.userName();

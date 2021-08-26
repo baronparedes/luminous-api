@@ -12,14 +12,30 @@ import * as express from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "Profile": {
+    "RegisterProfile": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "username": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ProfileType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["stakeholder"]},{"dataType":"enum","enums":["admin"]},{"dataType":"enum","enums":["user"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AuthProfile": {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
             "name": {"dataType":"string","required":true},
             "username": {"dataType":"string","required":true},
-            "password": {"dataType":"string"},
             "scopes": {"dataType":"string"},
+            "type": {"ref":"ProfileType","required":true},
         },
         "additionalProperties": false,
     },
@@ -27,7 +43,7 @@ const models: TsoaRoute.Models = {
     "AuthResult": {
         "dataType": "refObject",
         "properties": {
-            "profile": {"ref":"Profile","required":true},
+            "profile": {"ref":"AuthProfile","required":true},
             "token": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
@@ -43,6 +59,29 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+        app.post('/api/profile/register',
+
+            function ProfileController_register(request: any, response: any, next: any) {
+            const args = {
+                    profile: {"in":"body-prop","name":"profile","required":true,"ref":"RegisterProfile"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new ProfileController();
+
+
+            const promise = controller.register.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/profile/auth',
 
             function ProfileController_auth(request: any, response: any, next: any) {

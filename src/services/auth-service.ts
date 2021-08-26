@@ -1,10 +1,10 @@
 import * as jwt from 'jsonwebtoken';
-
-import {AuthResult, Profile} from '../@types/models';
-
 import {ApprovedAny} from 'src/@types';
-import ProfileService from './profile-service';
+
+import {AuthProfile, AuthResult} from '../@types/models';
 import config from '../config';
+import {VERBIAGE} from '../constants';
+import ProfileService from './profile-service';
 
 export default class AuthService {
   private profileService: ProfileService;
@@ -17,8 +17,20 @@ export default class AuthService {
     try {
       return encodedCredentials.split(' ')[1];
     } catch {
-      throw new Error('Invalid authorization credentials');
+      throw new Error(VERBIAGE.FAILED_AUTHENTICATION);
     }
+  }
+
+  private isProfileInScope(profile: AuthProfile, targetScopes?: string[]) {
+    // TODO: Role based accounts
+    if (targetScopes) {
+      for (const scope of targetScopes) {
+        if (!profile.scopes?.includes(scope)) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   public async authenticate(encodedCredentials: string): Promise<AuthResult> {
@@ -37,39 +49,26 @@ export default class AuthService {
     return result;
   }
 
-  public isProfileInScope(profile: Profile, targetScopes?: string[]) {
-    // TODO: Role based accounts
-    if (targetScopes) {
-      for (const scope of targetScopes) {
-        if (!profile.scopes?.includes(scope)) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
   public async verifyAuthorization(
     encodedCredentials: string,
     scopes?: string[]
-  ): Promise<Profile> {
+  ): Promise<AuthProfile> {
     const token = this.getAuthCredentials(encodedCredentials);
     return new Promise((resolve, reject) => {
       if (!token) {
-        reject(new Error('Unauthorized'));
+        reject(new Error(VERBIAGE.FAILED_AUTHENTICATION));
       }
       const verified: jwt.VerifyCallback<ApprovedAny> = (err, decoded) => {
         if (err) {
           if (err instanceof jwt.TokenExpiredError) {
-            reject(new Error('Your login session has expired, please relogin'));
+            reject(new Error(VERBIAGE.EXPIRED_AUTHENTICATION));
           } else {
             reject(err);
           }
           return;
         }
         if (decoded && this.isProfileInScope(decoded, scopes)) resolve(decoded);
-        else
-          reject(new Error('Profile does not contain required access scope.'));
+        else reject(new Error(VERBIAGE.FAILED_AUTHENTICATION));
       };
       jwt.verify(token, config.JWT_ACCESS_TOKEN, {}, verified);
     });
