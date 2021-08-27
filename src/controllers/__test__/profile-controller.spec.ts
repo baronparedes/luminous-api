@@ -61,6 +61,6 @@ describe('ProfileController', () => {
 
     expect(profileServiceSpy).toBeCalledTimes(1);
     expect(profileServiceSpy).toBeCalledWith(registerProfile);
-    expect(actual).toStrictEqual(authProfile);
+    expect(actual.profile).toStrictEqual(authProfile);
   });
 });

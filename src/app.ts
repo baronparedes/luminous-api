@@ -3,12 +3,12 @@ import cors from 'cors';
 import express, {NextFunction, Request, Response} from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import {ApprovedAny} from 'src/@types';
 import swaggerUi from 'swagger-ui-express';
 import {ValidateError} from 'tsoa';
 
+import {ApprovedAny} from './@types';
 import config from './config';
-import {ApiError, ForbiddenError} from './errors';
+import {ApiError, EntityError, ForbiddenError} from './errors';
 import {RegisterRoutes} from './routes';
 import swaggerDocument from './swagger.json';
 
@@ -47,6 +47,14 @@ app.use((err: ApprovedAny, _: Request, res: Response, next: NextFunction) => {
     res.status(422).json({
       message: 'Validation Failed',
       details: err?.fields,
+    });
+    return;
+  }
+  if (err instanceof EntityError) {
+    res.status(err.status).json({
+      status: err.status,
+      message: err.message,
+      fieldErrors: err.fieldErrors,
     });
     return;
   }

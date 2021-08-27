@@ -8,7 +8,8 @@ import {
   Table,
   Unique,
 } from 'sequelize-typescript';
-import {ProfileType} from 'src/@types/models';
+
+import {ProfileType} from '../@types/models';
 
 export interface ProfileAttr {
   id?: number;

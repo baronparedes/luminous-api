@@ -1,6 +1,6 @@
 import faker from 'faker';
-import {AuthProfile, ProfileType, RegisterProfile} from 'src/@types/models';
 
+import {AuthProfile, ProfileType, RegisterProfile} from '../@types/models';
 import {ProfileAttr} from '../models/profile';
 
 export const generateAuthProfile = (

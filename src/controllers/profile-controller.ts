@@ -1,18 +1,21 @@
 import * as express from 'express';
-import {ApprovedAny} from 'src/@types';
-import {AuthProfile, RegisterProfile} from 'src/@types/models';
+import {ValidationError} from 'sequelize';
 import {
-  BodyProp,
+  Body,
   Controller,
   Get,
   Post,
   Request,
+  Response,
   Route,
   Security,
   SuccessResponse,
 } from 'tsoa';
 
-import {ForbiddenError} from '../errors';
+import {ApprovedAny} from '../@types';
+import {AuthProfile, RegisterProfile} from '../@types/models';
+import {VERBIAGE} from '../constants';
+import {ApiError, EntityError, ForbiddenError} from '../errors';
 import AuthService from '../services/auth-service';
 import ProfileService from '../services/profile-service';
 
@@ -27,11 +30,20 @@ export class ProfileController extends Controller {
     this.profileService = new ProfileService();
   }
 
-  @SuccessResponse(201)
+  @Response<EntityError>(400, 'Bad Request')
+  @SuccessResponse(201, 'Created')
   @Post('/register')
-  public async register(@BodyProp() profile: RegisterProfile) {
-    const result = await this.profileService.register(profile);
-    return result;
+  public async register(@Body() profile: RegisterProfile) {
+    try {
+      const createdProfile = await this.profileService.register(profile);
+      const result = this.authService.createAuthorization(createdProfile);
+      return result;
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        throw new EntityError(e);
+      }
+      throw new ApiError(400, VERBIAGE.BAD_REQUEST);
+    }
   }
 
   @Post('/auth')

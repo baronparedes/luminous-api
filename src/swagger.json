@@ -6,30 +6,6 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"RegisterProfile": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"username": {
-						"type": "string"
-					},
-					"password": {
-						"type": "string"
-					},
-					"email": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"name",
-					"username",
-					"password",
-					"email"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"ProfileType": {
 				"type": "string",
 				"enum": [
@@ -81,6 +57,87 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"FieldError": {
+				"properties": {
+					"value": {
+						"type": "string",
+						"nullable": true
+					},
+					"field": {
+						"type": "string",
+						"nullable": true
+					},
+					"type": {
+						"type": "string",
+						"nullable": true
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"value",
+					"field",
+					"type",
+					"message"
+				],
+				"type": "object"
+			},
+			"EntityError": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {
+						"type": "string"
+					},
+					"status": {
+						"type": "number",
+						"format": "double"
+					},
+					"fieldErrors": {
+						"items": {
+							"$ref": "#/components/schemas/FieldError"
+						},
+						"type": "array",
+						"default": []
+					}
+				},
+				"required": [
+					"name",
+					"message",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegisterProfile": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"username",
+					"password",
+					"email"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -106,16 +163,38 @@
 				"operationId": "Register",
 				"responses": {
 					"201": {
-						"description": "",
+						"description": "Created",
 						"content": {
 							"application/json": {
-								"schema": {}
+								"schema": {
+									"$ref": "#/components/schemas/AuthResult"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityError"
+								}
 							}
 						}
 					}
 				},
 				"security": [],
-				"parameters": []
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RegisterProfile"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/api/profile/auth": {

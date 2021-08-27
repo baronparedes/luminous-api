@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
-import {ApprovedAny} from 'src/@types';
 
+import {ApprovedAny} from '../@types';
 import {AuthProfile, AuthResult} from '../@types/models';
 import config from '../config';
 import {VERBIAGE} from '../constants';
@@ -33,12 +33,7 @@ export default class AuthService {
     return true;
   }
 
-  public async authenticate(encodedCredentials: string): Promise<AuthResult> {
-    const basicAuth = this.getAuthCredentials(encodedCredentials);
-    // eslint-disable-next-line node/no-deprecated-api
-    const credentials = new Buffer(basicAuth, 'base64').toString('ascii');
-    const [username, password] = credentials.split(':');
-    const profile = await this.profileService.getProfile(username, password);
+  public createAuthorization(profile: AuthProfile): AuthResult {
     const token = jwt.sign(profile, config.JWT_ACCESS_TOKEN, {
       expiresIn: '30d',
     });
@@ -47,6 +42,15 @@ export default class AuthService {
       token,
     };
     return result;
+  }
+
+  public async authenticate(encodedCredentials: string): Promise<AuthResult> {
+    const basicAuth = this.getAuthCredentials(encodedCredentials);
+    // eslint-disable-next-line node/no-deprecated-api
+    const credentials = new Buffer(basicAuth, 'base64').toString('ascii');
+    const [username, password] = credentials.split(':');
+    const profile = await this.profileService.getProfile(username, password);
+    return this.createAuthorization(profile);
   }
 
   public async verifyAuthorization(
