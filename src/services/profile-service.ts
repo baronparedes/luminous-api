@@ -9,6 +9,17 @@ const PROFILE_MSGS = {
 export default class ProfileService {
   constructor() {}
 
+  private mapAuthProfile(profile: Profile): AuthProfile {
+    return {
+      id: Number(profile.id),
+      name: profile.name,
+      username: profile.username,
+      scopes: profile.scopes,
+      type: profile.type,
+      email: profile.email,
+    };
+  }
+
   public async register(profile: RegisterProfile): Promise<AuthProfile> {
     const {hash} = useHash();
     const newProfile = new Profile({
@@ -18,13 +29,7 @@ export default class ProfileService {
       email: profile.email,
     });
     const result = await newProfile.save();
-    return {
-      id: Number(result.id),
-      name: result.name,
-      username: result.username,
-      scopes: result.scopes,
-      type: result.type,
-    };
+    return this.mapAuthProfile(result);
   }
 
   public async getProfile(
@@ -36,12 +41,13 @@ export default class ProfileService {
     if (!result || !compare(password, result?.password)) {
       throw new Error(PROFILE_MSGS.NOT_FOUND);
     }
-    return {
-      id: Number(result.id),
-      name: result.name,
-      username: result.username,
-      scopes: result.scopes,
-      type: result.type,
-    };
+    return this.mapAuthProfile(result);
+  }
+
+  public async getProfiles(): Promise<AuthProfile[]> {
+    const result = await Profile.findAll({});
+    return result.map(p => {
+      return this.mapAuthProfile(p);
+    });
   }
 }

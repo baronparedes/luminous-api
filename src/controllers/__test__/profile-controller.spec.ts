@@ -13,6 +13,17 @@ import {ProfileController} from '../profile-controller';
 describe('ProfileController', () => {
   afterAll(() => jest.clearAllMocks());
 
+  it('should get all profiles', async () => {
+    const authProfiles = [generateAuthProfile(), generateAuthProfile()];
+    const mock = jest
+      .spyOn(ProfileService.prototype, 'getProfiles')
+      .mockReturnValueOnce(new Promise(resolve => resolve(authProfiles)));
+    const target = new ProfileController();
+    const actual = await target.getAll();
+    expect(actual).toStrictEqual(authProfiles);
+    expect(mock).toBeCalledTimes(1);
+  });
+
   it('should get my profile', async () => {
     const authProfile = generateAuthProfile();
     const request = {
@@ -36,15 +47,15 @@ describe('ProfileController', () => {
       },
     };
 
-    const authenticateSpy = jest
+    const mock = jest
       .spyOn(AuthService.prototype, 'authenticate')
       .mockReturnValueOnce(new Promise(resolve => resolve(authResult)));
 
     const target = new ProfileController();
     const actual = await target.auth(request as Request);
 
-    expect(authenticateSpy).toBeCalledTimes(1);
-    expect(authenticateSpy).toBeCalledWith(token);
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(token);
     expect(actual).toStrictEqual(authResult);
   });
 
@@ -52,15 +63,15 @@ describe('ProfileController', () => {
     const registerProfile = generateRegisterProfile();
     const authProfile = generateAuthProfile();
 
-    const profileServiceSpy = jest
+    const mock = jest
       .spyOn(ProfileService.prototype, 'register')
       .mockReturnValueOnce(new Promise(resolve => resolve(authProfile)));
 
     const target = new ProfileController();
     const actual = await target.register(registerProfile);
 
-    expect(profileServiceSpy).toBeCalledTimes(1);
-    expect(profileServiceSpy).toBeCalledWith(registerProfile);
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(registerProfile);
     expect(actual.profile).toStrictEqual(authProfile);
   });
 });

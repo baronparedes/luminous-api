@@ -10,6 +10,7 @@ export const generateAuthProfile = (
     id: faker.datatype.number(),
     name: faker.name.findName(),
     username: faker.internet.userName(),
+    email: faker.internet.email(),
     type,
   };
 };

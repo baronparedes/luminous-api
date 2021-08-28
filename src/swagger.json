@@ -31,13 +31,17 @@
 					},
 					"type": {
 						"$ref": "#/components/schemas/ProfileType"
+					},
+					"email": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"id",
 					"name",
 					"username",
-					"type"
+					"type",
+					"email"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -158,6 +162,28 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/api/profile/getAll": {
+			"get": {
+				"operationId": "GetAllProfiles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/AuthProfile"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/api/profile/register": {
 			"post": {
 				"operationId": "Register",

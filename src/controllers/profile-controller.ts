@@ -4,6 +4,7 @@ import {
   Body,
   Controller,
   Get,
+  OperationId,
   Post,
   Request,
   Response,
@@ -28,6 +29,13 @@ export class ProfileController extends Controller {
     super();
     this.authService = new AuthService();
     this.profileService = new ProfileService();
+  }
+
+  @OperationId('GetAllProfiles')
+  @Get('/getAll')
+  public async getAll() {
+    const result = await this.profileService.getProfiles();
+    return result;
   }
 
   @Response<EntityError>(400, 'Bad Request')
