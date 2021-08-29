@@ -35,7 +35,7 @@ export default class AuthService {
 
   public createAuthorization(profile: AuthProfile): AuthResult {
     const token = jwt.sign(profile, config.JWT_ACCESS_TOKEN, {
-      expiresIn: '30d',
+      expiresIn: '5d',
     });
     const result = {
       profile,
@@ -49,7 +49,10 @@ export default class AuthService {
     // eslint-disable-next-line node/no-deprecated-api
     const credentials = new Buffer(basicAuth, 'base64').toString('ascii');
     const [username, password] = credentials.split(':');
-    const profile = await this.profileService.getProfile(username, password);
+    const profile = await this.profileService.getProfileByUsernameAndPassword(
+      username,
+      password
+    );
     return this.createAuthorization(profile);
   }
 

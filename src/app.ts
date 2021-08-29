@@ -72,5 +72,12 @@ app.use((err: ApprovedAny, _: Request, res: Response, next: NextFunction) => {
     });
     return;
   }
+  if (err.status === 401) {
+    res.status(401).json({
+      status: 401,
+      message: 'Unauthorized',
+    });
+    return;
+  }
   next();
 });

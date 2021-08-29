@@ -1,11 +1,14 @@
-import * as express from 'express';
 import {ValidationError} from 'sequelize';
 import {
   Body,
   Controller,
   Get,
+  NoSecurity,
   OperationId,
+  Patch,
+  Path,
   Post,
+  Query,
   Request,
   Response,
   Route,
@@ -14,12 +17,18 @@ import {
 } from 'tsoa';
 
 import {ApprovedAny} from '../@types';
-import {AuthProfile, RegisterProfile} from '../@types/models';
+import {
+  AuthProfile,
+  ProfileStatus,
+  RegisterProfile,
+  UpdateProfile,
+} from '../@types/models';
 import {VERBIAGE} from '../constants';
-import {ApiError, EntityError, ForbiddenError} from '../errors';
+import {ApiError, EntityError} from '../errors';
 import AuthService from '../services/auth-service';
 import ProfileService from '../services/profile-service';
 
+@Security('bearer')
 @Route('/api/profile')
 export class ProfileController extends Controller {
   private authService: AuthService;
@@ -34,12 +43,13 @@ export class ProfileController extends Controller {
   @OperationId('GetAllProfiles')
   @Get('/getAll')
   public async getAll() {
-    const result = await this.profileService.getProfiles();
+    const result = await this.profileService.getAll();
     return result;
   }
 
-  @Response<EntityError>(400, 'Bad Request')
-  @SuccessResponse(201, 'Created')
+  @NoSecurity()
+  @Response<EntityError>(400, VERBIAGE.BAD_REQUEST)
+  @SuccessResponse(201, VERBIAGE.CREATED)
   @Post('/register')
   public async register(@Body() profile: RegisterProfile) {
     try {
@@ -54,20 +64,34 @@ export class ProfileController extends Controller {
     }
   }
 
-  @Post('/auth')
-  public async auth(@Request() request: express.Request) {
-    try {
-      const {authorization} = request.headers;
-      const result = await this.authService.authenticate(authorization || '');
-      return result;
-    } catch {
-      throw new ForbiddenError();
-    }
-  }
-
   @Get('/me')
-  @Security('bearer')
   public async me(@Request() request: ApprovedAny): Promise<AuthProfile> {
     return request.user;
+  }
+
+  @SuccessResponse(204, VERBIAGE.NO_CONTENT)
+  @Patch('/updateProfileStatus/{id}')
+  public async updateProfileStatus(
+    @Path() id: number,
+    @Query() status: ProfileStatus
+  ): Promise<void> {
+    await this.profileService.updateStatus(id, status);
+  }
+
+  @Response<EntityError>(400, VERBIAGE.BAD_REQUEST)
+  @Response<ApiError>(404, VERBIAGE.NOT_FOUND)
+  @Patch('/updateProfile/{id}')
+  public async updateProfile(
+    @Path() id: number,
+    @Body() profile: UpdateProfile
+  ): Promise<AuthProfile> {
+    try {
+      return await this.profileService.update(id, profile);
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        throw new EntityError(e);
+      }
+      throw new ApiError(404, VERBIAGE.NOT_FOUND);
+    }
   }
 }

@@ -1,6 +1,11 @@
 import faker from 'faker';
 
-import {AuthProfile, ProfileType, RegisterProfile} from '../@types/models';
+import {
+  AuthProfile,
+  ProfileStatus,
+  ProfileType,
+  RegisterProfile,
+} from '../@types/models';
 import {ProfileAttr} from '../models/profile';
 
 export const generateAuthProfile = (
@@ -11,6 +16,7 @@ export const generateAuthProfile = (
     name: faker.name.findName(),
     username: faker.internet.userName(),
     email: faker.internet.email(),
+    status: faker.random.arrayElement<ProfileStatus>(['active', 'inactive']),
     type,
   };
 };
@@ -31,6 +37,7 @@ export const generateProfile = (type: ProfileType = 'user'): ProfileAttr => {
     username: faker.internet.userName(),
     email: faker.internet.email(),
     password: faker.internet.password(),
+    status: faker.random.arrayElement<ProfileStatus>(['active', 'inactive']),
     type,
   };
 };

@@ -17,7 +17,10 @@ describe.skip('ProfileService', () => {
       .spyOn(Profile, 'findOne')
       .mockReturnValueOnce(new Promise(resolve => resolve(mockedProfile)));
     const target = new ProfileService();
-    const actual = await target.getProfile(profile.username, profile.password);
+    const actual = await target.getProfileByUsernameAndPassword(
+      profile.username,
+      profile.password
+    );
     expect(mock).toBeCalledTimes(1);
     expect(mock).toBeCalledWith({where: {username: profile.username}});
     expect(actual.username).toBe(profile.username);

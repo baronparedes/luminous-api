@@ -1,22 +1,20 @@
-import {Request} from 'express';
 import faker from 'faker';
 
-import {AuthResult} from '../../@types/models';
+import {ProfileStatus, UpdateProfile} from '../../@types/models';
 import {
   generateAuthProfile,
   generateRegisterProfile,
 } from '../../@utils/fake-data';
-import AuthService from '../../services/auth-service';
 import ProfileService from '../../services/profile-service';
 import {ProfileController} from '../profile-controller';
 
 describe('ProfileController', () => {
-  afterAll(() => jest.clearAllMocks());
+  afterEach(() => jest.clearAllMocks());
 
   it('should get all profiles', async () => {
     const authProfiles = [generateAuthProfile(), generateAuthProfile()];
     const mock = jest
-      .spyOn(ProfileService.prototype, 'getProfiles')
+      .spyOn(ProfileService.prototype, 'getAll')
       .mockReturnValueOnce(new Promise(resolve => resolve(authProfiles)));
     const target = new ProfileController();
     const actual = await target.getAll();
@@ -34,31 +32,6 @@ describe('ProfileController', () => {
     expect(actual).toStrictEqual(authProfile);
   });
 
-  it('should authorize using request', async () => {
-    const authProfile = generateAuthProfile();
-    const token = faker.random.alphaNumeric(64);
-    const authResult: AuthResult = {
-      profile: authProfile,
-      token,
-    };
-    const request = {
-      headers: {
-        authorization: token,
-      },
-    };
-
-    const mock = jest
-      .spyOn(AuthService.prototype, 'authenticate')
-      .mockReturnValueOnce(new Promise(resolve => resolve(authResult)));
-
-    const target = new ProfileController();
-    const actual = await target.auth(request as Request);
-
-    expect(mock).toBeCalledTimes(1);
-    expect(mock).toBeCalledWith(token);
-    expect(actual).toStrictEqual(authResult);
-  });
-
   it('should register my profile', async () => {
     const registerProfile = generateRegisterProfile();
     const authProfile = generateAuthProfile();
@@ -73,5 +46,41 @@ describe('ProfileController', () => {
     expect(mock).toBeCalledTimes(1);
     expect(mock).toBeCalledWith(registerProfile);
     expect(actual.profile).toStrictEqual(authProfile);
+  });
+
+  it('should update my profile status', async () => {
+    const authProfile = generateAuthProfile();
+    const updateProfile: UpdateProfile = {
+      email: authProfile.email,
+      name: authProfile.name,
+      status: authProfile.status,
+      type: authProfile.type,
+      scopes: authProfile.scopes,
+    };
+    const mock = jest
+      .spyOn(ProfileService.prototype, 'update')
+      .mockReturnValueOnce(new Promise(resolve => resolve(authProfile)));
+    const target = new ProfileController();
+    const actual = await target.updateProfile(authProfile.id, updateProfile);
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(authProfile.id, updateProfile);
+    expect(actual).toBe(authProfile);
+  });
+
+  it('should update my profile status', async () => {
+    const mock = jest
+      .spyOn(ProfileService.prototype, 'updateStatus')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new ProfileController();
+    const targetId = faker.datatype.number();
+    const status = faker.random.arrayElement<ProfileStatus>([
+      'active',
+      'inactive',
+    ]);
+    await target.updateProfileStatus(targetId, status);
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(targetId, status);
   });
 });

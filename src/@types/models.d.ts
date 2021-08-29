@@ -1,21 +1,32 @@
 export type ProfileType = 'stakeholder' | 'admin' | 'user';
+export type ProfileStatus = 'active' | 'inactive';
 
-export interface AuthProfile {
+export type AuthProfile = {
   id: number;
   name: string;
   username: string;
-  scopes?: string;
-  type: ProfileType;
   email: string;
-}
-export interface RegisterProfile {
+  type: ProfileType;
+  status: ProfileStatus;
+  scopes?: string;
+};
+
+export type RegisterProfile = {
   name: string;
   username: string;
   password: string;
   email: string;
-}
+};
 
-export interface AuthResult {
+export type UpdateProfile = {
+  name: string;
+  email: string;
+  type: ProfileType;
+  status: ProfileStatus;
+  scopes?: string;
+};
+
+export type AuthResult = {
   profile: AuthProfile;
   token: string;
-}
+};

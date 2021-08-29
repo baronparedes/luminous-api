@@ -23,7 +23,7 @@ describe('AuthService', () => {
 
   async function setupAuthentication() {
     const getProfileSpy = jest
-      .spyOn(ProfileService.prototype, 'getProfile')
+      .spyOn(ProfileService.prototype, 'getProfileByUsernameAndPassword')
       .mockReturnValueOnce(new Promise(resolve => resolve(mockedProfile)));
     const {target, encodedCredentials, username, password} = setupAuthService();
     const actual = await target.authenticate(`Basic ${encodedCredentials}`);
@@ -63,7 +63,7 @@ describe('AuthService', () => {
 
   it('should throw an error when profile is invalid', async () => {
     const getProfileSpy = jest
-      .spyOn(ProfileService.prototype, 'getProfile')
+      .spyOn(ProfileService.prototype, 'getProfileByUsernameAndPassword')
       .mockReturnValueOnce(
         new Promise((_, reject) => reject(new Error('err')))
       );

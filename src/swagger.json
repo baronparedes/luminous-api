@@ -14,53 +14,62 @@
 					"user"
 				]
 			},
+			"ProfileStatus": {
+				"type": "string",
+				"enum": [
+					"active",
+					"inactive"
+				]
+			},
 			"AuthProfile": {
 				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"username": {
-						"type": "string"
-					},
 					"scopes": {
 						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/ProfileStatus"
 					},
 					"type": {
 						"$ref": "#/components/schemas/ProfileType"
 					},
 					"email": {
 						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
-					"id",
-					"name",
-					"username",
+					"status",
 					"type",
-					"email"
+					"email",
+					"username",
+					"name",
+					"id"
 				],
-				"type": "object",
-				"additionalProperties": false
+				"type": "object"
 			},
 			"AuthResult": {
 				"properties": {
-					"profile": {
-						"$ref": "#/components/schemas/AuthProfile"
-					},
 					"token": {
 						"type": "string"
+					},
+					"profile": {
+						"$ref": "#/components/schemas/AuthProfile"
 					}
 				},
 				"required": [
-					"profile",
-					"token"
+					"token",
+					"profile"
 				],
-				"type": "object",
-				"additionalProperties": false
+				"type": "object"
 			},
 			"FieldError": {
 				"properties": {
@@ -121,27 +130,76 @@
 			},
 			"RegisterProfile": {
 				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"username": {
+					"email": {
 						"type": "string"
 					},
 					"password": {
 						"type": "string"
 					},
-					"email": {
+					"username": {
+						"type": "string"
+					},
+					"name": {
 						"type": "string"
 					}
 				},
 				"required": [
-					"name",
-					"username",
+					"email",
 					"password",
-					"email"
+					"username",
+					"name"
+				],
+				"type": "object"
+			},
+			"ApiError": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {
+						"type": "string"
+					},
+					"status": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"name",
+					"message",
+					"status"
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"UpdateProfile": {
+				"properties": {
+					"scopes": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/ProfileStatus"
+					},
+					"type": {
+						"$ref": "#/components/schemas/ProfileType"
+					},
+					"email": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"status",
+					"type",
+					"email",
+					"name"
+				],
+				"type": "object"
 			}
 		},
 		"securitySchemes": {
@@ -162,6 +220,25 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/api/auth": {
+			"post": {
+				"operationId": "Auth",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthResult"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/api/profile/getAll": {
 			"get": {
 				"operationId": "GetAllProfiles",
@@ -180,7 +257,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -189,7 +270,7 @@
 				"operationId": "Register",
 				"responses": {
 					"201": {
-						"description": "Created",
+						"description": "created",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -199,7 +280,7 @@
 						}
 					},
 					"400": {
-						"description": "Bad Request",
+						"description": "bad request",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -223,25 +304,6 @@
 				}
 			}
 		},
-		"/api/profile/auth": {
-			"post": {
-				"operationId": "Auth",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AuthResult"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
 		"/api/profile/me": {
 			"get": {
 				"operationId": "Me",
@@ -263,6 +325,103 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/api/profile/updateProfileStatus/{id}": {
+			"patch": {
+				"operationId": "UpdateProfileStatus",
+				"responses": {
+					"204": {
+						"description": "no content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/ProfileStatus"
+						}
+					}
+				]
+			}
+		},
+		"/api/profile/updateProfile/{id}": {
+			"patch": {
+				"operationId": "UpdateProfile",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthProfile"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateProfile"
+							}
+						}
+					}
+				}
 			}
 		}
 	},
