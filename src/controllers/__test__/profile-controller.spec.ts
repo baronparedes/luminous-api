@@ -12,13 +12,15 @@ describe('ProfileController', () => {
   afterEach(() => jest.clearAllMocks());
 
   it('should get all profiles', async () => {
+    const searchCriteria = faker.internet.userName();
     const authProfiles = [generateAuthProfile(), generateAuthProfile()];
     const mock = jest
       .spyOn(ProfileService.prototype, 'getAll')
       .mockReturnValueOnce(new Promise(resolve => resolve(authProfiles)));
     const target = new ProfileController();
-    const actual = await target.getAll();
+    const actual = await target.getAll(searchCriteria);
     expect(actual).toStrictEqual(authProfiles);
+    expect(mock).toBeCalledWith(searchCriteria);
     expect(mock).toBeCalledTimes(1);
   });
 
