@@ -42,8 +42,8 @@ export class ProfileController extends Controller {
 
   @OperationId('GetAllProfiles')
   @Get('/getAll')
-  public async getAll() {
-    const result = await this.profileService.getAll();
+  public async getAll(@Query() search?: string) {
+    const result = await this.profileService.getAll(search);
     return result;
   }
 

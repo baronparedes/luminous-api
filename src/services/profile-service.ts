@@ -1,4 +1,4 @@
-import {Op} from 'sequelize';
+import {FindOptions, Op} from 'sequelize';
 
 import {
   AuthProfile,
@@ -55,8 +55,14 @@ export default class ProfileService {
     return this.mapAuthProfile(result);
   }
 
-  public async getAll(): Promise<AuthProfile[]> {
-    const result = await Profile.findAll({});
+  public async getAll(search?: string): Promise<AuthProfile[]> {
+    const criteria = {[Op.iLike]: `%${search}%`};
+    const opts: FindOptions<Profile> = {
+      where: {
+        [Op.or]: [{name: criteria}, {email: criteria}, {username: criteria}],
+      },
+    };
+    const result = await Profile.findAll(search ? opts : {});
     return result.map(p => {
       return this.mapAuthProfile(p);
     });
