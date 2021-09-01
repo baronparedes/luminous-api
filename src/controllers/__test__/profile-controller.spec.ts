@@ -85,4 +85,18 @@ describe('ProfileController', () => {
     expect(mock).toBeCalledTimes(1);
     expect(mock).toBeCalledWith(targetId, status);
   });
+
+  it('should change my profile password', async () => {
+    const mock = jest
+      .spyOn(ProfileService.prototype, 'changePassword')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new ProfileController();
+    const targetId = faker.datatype.number();
+    const currentPassword = faker.internet.password();
+    const newPassword = faker.internet.password();
+    await target.changePassword(targetId, {currentPassword, newPassword});
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(targetId, currentPassword, newPassword);
+  });
 });

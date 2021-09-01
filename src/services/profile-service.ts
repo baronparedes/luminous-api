@@ -92,4 +92,18 @@ export default class ProfileService {
       await profile?.save();
     }
   }
+
+  public async changePassword(
+    id: number,
+    currentPassword: string,
+    newPassword: string
+  ): Promise<void> {
+    const result = await Profile.findByPk(id);
+    const {compare, hash} = useHash();
+    if (!result || !compare(currentPassword, result?.password)) {
+      throw new Error(PROFILE_MSGS.NOT_FOUND);
+    }
+    result.password = hash(newPassword);
+    await result.save();
+  }
 }

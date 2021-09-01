@@ -94,4 +94,17 @@ export class ProfileController extends Controller {
       throw new ApiError(404, VERBIAGE.NOT_FOUND);
     }
   }
+
+  @SuccessResponse(204, VERBIAGE.NO_CONTENT)
+  @Patch('/changePassword/{id}')
+  public async changePassword(
+    @Path() id: number,
+    @Body() profile: {currentPassword: string; newPassword: string}
+  ) {
+    await this.profileService.changePassword(
+      id,
+      profile.currentPassword,
+      profile.newPassword
+    );
+  }
 }
