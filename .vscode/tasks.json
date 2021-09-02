@@ -1,0 +1,39 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "develop-api",
+			"group": "build",
+            "dependsOrder": "parallel",
+            "dependsOn": [
+                "express-server",
+                "jest-watch-api"
+            ],
+            "problemMatcher": []
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"problemMatcher": [],
+			"label": "express-server",
+			"isBackground": true,
+			"presentation": {
+				"reveal": "always",
+				"panel": "new",
+				"clear": false,
+			}
+		},
+		{
+			"type": "npm",
+			"script": "test",
+			"problemMatcher": [],
+			"label": "jest-watch",
+			"isBackground": true,
+			"presentation": {
+				"reveal": "always",
+				"panel": "new",
+				"clear": false,
+			}
+		}
+	]
+}
