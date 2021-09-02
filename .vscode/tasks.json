@@ -27,7 +27,7 @@
 			"type": "npm",
 			"script": "test",
 			"problemMatcher": [],
-			"label": "jest-watch",
+			"label": "jest-watch-api",
 			"isBackground": true,
 			"presentation": {
 				"reveal": "always",
