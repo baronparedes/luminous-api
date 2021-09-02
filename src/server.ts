@@ -13,9 +13,11 @@ app.listen(config.PORT, () => {
   sequelize
     .authenticate()
     .then(() => {
-      sequelize.sync({alter: true}).then(() => {
-        console.info('migrated models');
-      });
+      if (config.NODE_ENV !== 'production') {
+        sequelize.sync({alter: true}).then(() => {
+          console.info('migrated models');
+        });
+      }
     })
     .catch(err => {
       console.error('app starting error:', err.stack);

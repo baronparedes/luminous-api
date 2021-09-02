@@ -23,6 +23,7 @@ app.use(express.json());
 app.use(compression());
 app.use(helmet());
 app.use(morgan('dev'));
+
 if (config.NODE_ENV === 'development') {
   app.use(
     cors({
@@ -30,9 +31,12 @@ if (config.NODE_ENV === 'development') {
     })
   );
 }
-app.use('/docs', swaggerUi.serve, async (_: Request, res: Response) => {
-  return res.send(swaggerUi.generateHTML(swaggerDocument));
-});
+
+if (config.NODE_ENV !== 'production') {
+  app.use('/docs', swaggerUi.serve, async (_: Request, res: Response) => {
+    return res.send(swaggerUi.generateHTML(swaggerDocument));
+  });
+}
 
 RegisterRoutes(app);
 
