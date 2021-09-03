@@ -4,10 +4,10 @@
 name: luminous-api Deploy
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["luminous-api Build & Test"]
+    branches: [main]
+    types: [completed]
 
 jobs:
   build:
