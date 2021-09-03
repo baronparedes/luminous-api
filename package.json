@@ -12,7 +12,7 @@
     "test": "jest --runInBand --testResultsProcessor ./node_modules/jest-junit-reporter --watchAll",
     "pretest:ci": "npm run compile",
     "posttest:ci": "npm run lint",
-    "test:ci": "jest --runInBand --detectOpenHandles --forceExit",
+    "test:ci": "jest --runInBand --detectOpenHandles --forceExit --testResultsProcessor ./node_modules/jest-junit-reporter",
     "precompile": "tsc --build --clean",
     "compile": "tsc",
     "lint": "gts lint",
