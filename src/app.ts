@@ -32,7 +32,7 @@ if (config.NODE_ENV === 'development') {
   );
 }
 
-if (config.NODE_ENV !== 'production') {
+if (config.DOCS) {
   app.use('/docs', swaggerUi.serve, async (_: Request, res: Response) => {
     return res.send(swaggerUi.generateHTML(swaggerDocument));
   });

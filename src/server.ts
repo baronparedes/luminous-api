@@ -21,7 +21,7 @@ app.listen(config.PORT, () => {
   sequelize
     .authenticate()
     .then(() => {
-      if (config.NODE_ENV !== 'production') {
+      if (config.DB.SYNC) {
         sequelize.sync({alter: true}).then(() => {
           console.info('migrated models');
         });
