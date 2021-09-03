@@ -1,2 +1,2 @@
 # luminous-api
-[![luminous-api CI](https://github.com/baronparedes/luminous-api/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/baronparedes/luminous-api/actions/workflows/ci.yml)
+[![luminous-api Build & Test](https://github.com/baronparedes/luminous-api/actions/workflows/main_ci.yml/badge.svg)](https://github.com/baronparedes/luminous-api/actions/workflows/main_ci.yml)
