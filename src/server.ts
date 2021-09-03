@@ -1,15 +1,23 @@
+import {Dialect} from 'sequelize';
 import {Sequelize} from 'sequelize-typescript';
 
 import {app} from './app';
 import config from './config';
 
 app.listen(config.PORT, () => {
-  const sequelize = new Sequelize(config.DB_URI, {
-    dialect: 'postgres',
-    models: [`${__dirname}/models`],
-    define: {underscored: true},
-    logging: config.NODE_ENV !== 'production',
-  });
+  const sequelize = new Sequelize(
+    config.DB.DB_NAME,
+    config.DB.USER_NAME,
+    config.DB.PASSWORD,
+    {
+      host: config.DB.HOST,
+      port: Number(config.DB.PORT),
+      dialect: config.DB.DIALECT as Dialect,
+      models: [`${__dirname}/models`],
+      define: {underscored: true},
+      logging: config.NODE_ENV !== 'production' ? console.log : false,
+    }
+  );
   sequelize
     .authenticate()
     .then(() => {

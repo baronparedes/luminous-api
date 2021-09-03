@@ -22,5 +22,5 @@ RUN npm i --only=production
 
 COPY --from=builder /app/build ./build
 
-EXPOSE 3000
+EXPOSE 3001
 ENTRYPOINT ["pm2-runtime", "./process.yml"]  
