@@ -46,8 +46,7 @@ export default class AuthService {
 
   public async authenticate(encodedCredentials: string): Promise<AuthResult> {
     const basicAuth = this.getAuthCredentials(encodedCredentials);
-    // eslint-disable-next-line node/no-deprecated-api
-    const credentials = new Buffer(basicAuth, 'base64').toString('ascii');
+    const credentials = Buffer.from(basicAuth, 'base64').toString('ascii');
     const [username, password] = credentials.split(':');
     const profile = await this.profileService.getProfileByUsernameAndPassword(
       username,
