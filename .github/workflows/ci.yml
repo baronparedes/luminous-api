@@ -13,6 +13,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    env:
+      PORT: 3001
+      JWT_ACCESS_TOKEN: JWT_FAKE_ACCESS_TOKEN
+      JWT_REFRESH_TOKEN: JWT_FAKE_REFRESH_TOKEN
 
     strategy:
       matrix:
