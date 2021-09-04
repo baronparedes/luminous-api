@@ -14,7 +14,7 @@
 					"user"
 				]
 			},
-			"ProfileStatus": {
+			"RecordStatus": {
 				"type": "string",
 				"enum": [
 					"active",
@@ -27,7 +27,7 @@
 						"type": "string"
 					},
 					"status": {
-						"$ref": "#/components/schemas/ProfileStatus"
+						"$ref": "#/components/schemas/RecordStatus"
 					},
 					"type": {
 						"$ref": "#/components/schemas/ProfileType"
@@ -187,7 +187,7 @@
 						"type": "string"
 					},
 					"status": {
-						"$ref": "#/components/schemas/ProfileStatus"
+						"$ref": "#/components/schemas/RecordStatus"
 					},
 					"type": {
 						"$ref": "#/components/schemas/ProfileType"
@@ -209,6 +209,35 @@
 					"name"
 				],
 				"type": "object"
+			},
+			"UnitProperty": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"code": {
+						"type": "string"
+					},
+					"floorArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"address": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RecordStatus"
+					}
+				},
+				"required": [
+					"code",
+					"floorArea",
+					"address",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -373,7 +402,7 @@
 						"name": "status",
 						"required": true,
 						"schema": {
-							"$ref": "#/components/schemas/ProfileStatus"
+							"$ref": "#/components/schemas/RecordStatus"
 						}
 					}
 				]
@@ -484,6 +513,214 @@
 									"currentPassword"
 								],
 								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/property/getAll": {
+			"get": {
+				"operationId": "GetAllProperties",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UnitProperty"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/{id}": {
+			"get": {
+				"operationId": "GetProperty",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UnitProperty"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/create": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UnitProperty"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UnitProperty"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/property/updatePropertyStatus/{id}": {
+			"patch": {
+				"operationId": "UpdatePropertyStatus",
+				"responses": {
+					"204": {
+						"description": "no content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/RecordStatus"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/updateProperty/{id}": {
+			"patch": {
+				"operationId": "UpdateProperty",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UnitProperty"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UnitProperty"
 							}
 						}
 					}

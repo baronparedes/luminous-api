@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import {ProfileStatus, UpdateProfile} from '../../@types/models';
+import {RecordStatus, UpdateProfile} from '../../@types/models';
 import {
   generateAuthProfile,
   generateRegisterProfile,
@@ -50,7 +50,7 @@ describe('ProfileController', () => {
     expect(actual.profile).toStrictEqual(authProfile);
   });
 
-  it('should update my profile status', async () => {
+  it('should update my profile details', async () => {
     const authProfile = generateAuthProfile();
     const updateProfile: UpdateProfile = {
       email: authProfile.email,
@@ -76,7 +76,7 @@ describe('ProfileController', () => {
       .mockReturnValueOnce(new Promise(resolve => resolve()));
     const target = new ProfileController();
     const targetId = faker.datatype.number();
-    const status = faker.random.arrayElement<ProfileStatus>([
+    const status = faker.random.arrayElement<RecordStatus>([
       'active',
       'inactive',
     ]);

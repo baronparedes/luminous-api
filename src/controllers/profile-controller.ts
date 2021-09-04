@@ -19,7 +19,7 @@ import {
 import {ApprovedAny} from '../@types';
 import {
   AuthProfile,
-  ProfileStatus,
+  RecordStatus,
   RegisterProfile,
   UpdateProfile,
 } from '../@types/models';
@@ -73,7 +73,7 @@ export class ProfileController extends Controller {
   @Patch('/updateProfileStatus/{id}')
   public async updateProfileStatus(
     @Path() id: number,
-    @Query() status: ProfileStatus
+    @Query() status: RecordStatus
   ): Promise<void> {
     await this.profileService.updateStatus(id, status);
   }

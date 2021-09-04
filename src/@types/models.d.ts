@@ -1,5 +1,5 @@
 export type ProfileType = 'stakeholder' | 'admin' | 'user';
-export type ProfileStatus = 'active' | 'inactive';
+export type RecordStatus = 'active' | 'inactive';
 
 export type AuthProfile = {
   id: number;
@@ -8,7 +8,7 @@ export type AuthProfile = {
   email: string;
   mobileNumber?: string;
   type: ProfileType;
-  status: ProfileStatus;
+  status: RecordStatus;
   scopes?: string;
 };
 
@@ -25,7 +25,7 @@ export type UpdateProfile = {
   email: string;
   mobileNumber?: string;
   type: ProfileType;
-  status: ProfileStatus;
+  status: RecordStatus;
   scopes?: string;
 };
 
@@ -33,3 +33,23 @@ export type AuthResult = {
   profile: AuthProfile;
   token: string;
 };
+
+export interface Profile {
+  id?: number;
+  name: string;
+  username: string;
+  password: string;
+  email: string;
+  mobileNumber?: string;
+  type: ProfileType;
+  status: RecordStatus;
+  scopes?: string;
+}
+
+export interface UnitProperty {
+  id?: number;
+  code: string;
+  floorArea: number;
+  address: string;
+  status: RecordStatus;
+}

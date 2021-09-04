@@ -2,11 +2,12 @@ import faker from 'faker';
 
 import {
   AuthProfile,
-  ProfileStatus,
+  Profile,
   ProfileType,
+  RecordStatus,
   RegisterProfile,
+  UnitProperty,
 } from '../@types/models';
-import {ProfileAttr} from '../models/profile';
 
 export const generateAuthProfile = (
   type: ProfileType = 'user'
@@ -17,7 +18,7 @@ export const generateAuthProfile = (
     username: faker.internet.userName(),
     email: faker.internet.email(),
     mobileNumber: faker.phone.phoneNumber(),
-    status: faker.random.arrayElement<ProfileStatus>(['active', 'inactive']),
+    status: faker.random.arrayElement<RecordStatus>(['active', 'inactive']),
     type,
   };
 };
@@ -32,7 +33,7 @@ export const generateRegisterProfile = (): RegisterProfile => {
   };
 };
 
-export const generateProfile = (type: ProfileType = 'user'): ProfileAttr => {
+export const generateProfile = (type: ProfileType = 'user'): Profile => {
   return {
     id: faker.datatype.number(),
     name: faker.name.findName(),
@@ -40,7 +41,17 @@ export const generateProfile = (type: ProfileType = 'user'): ProfileAttr => {
     email: faker.internet.email(),
     password: faker.internet.password(),
     mobileNumber: faker.phone.phoneNumber(),
-    status: faker.random.arrayElement<ProfileStatus>(['active', 'inactive']),
+    status: faker.random.arrayElement<RecordStatus>(['active', 'inactive']),
     type,
+  };
+};
+
+export const generateProperty = (): UnitProperty => {
+  return {
+    id: faker.datatype.number(),
+    code: faker.datatype.string(),
+    floorArea: faker.datatype.number(),
+    address: `${faker.address.cityName()} ${faker.address.country()}`,
+    status: faker.random.arrayElement<RecordStatus>(['active', 'inactive']),
   };
 };
