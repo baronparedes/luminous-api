@@ -3,7 +3,7 @@
 
 name: luminous-api Deploy
 
-on:
+on:    
   workflow_run:
     workflows: ["luminous-api Build & Test"]
     branches: [main]

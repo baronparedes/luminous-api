@@ -4,6 +4,8 @@
 name: luminous-api Build & Test
 
 on:
+  workflow_dispatch:
+
   push:
     branches: [ main ]
 

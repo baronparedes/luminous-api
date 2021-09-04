@@ -9,7 +9,7 @@ const config = {
   JWT_REFRESH_TOKEN: process.env.JWT_REFRESH_TOKEN || '',
   CLIENT_URI: process.env.CLIENT_URI,
   DB_URI: process.env.DB_URI || '',
-  DOCS: process.env.DOCS === 'true',
+  DOCS: process.env.DOCS?.toLowerCase() === 'true',
   DB: {
     DB_NAME: process.env.DB_NAME || '',
     USER_NAME: process.env.DB_USER_NAME || '',
@@ -17,7 +17,7 @@ const config = {
     HOST: process.env.DB_HOST || '',
     PORT: process.env.DB_PORT || '',
     DIALECT: process.env.DB_DIALECT || 'postgres',
-    SYNC: process.env.DB_SYNC === 'true',
+    SYNC: process.env.DB_SYNC?.toLowerCase() === 'true',
   },
 };
 
