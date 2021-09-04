@@ -75,4 +75,17 @@ describe('PropertyController', () => {
     expect(mock).toBeCalledTimes(1);
     expect(mock).toBeCalledWith(targetId, status);
   });
+
+  it('should update property assignments', async () => {
+    const mock = jest
+      .spyOn(PropertyService.prototype, 'updateAssignments')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new PropertyController();
+    const targetId = faker.datatype.number();
+    const profileIds = [faker.datatype.number(), faker.datatype.number()];
+    await target.updatePropertyAssignments(targetId, profileIds);
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(targetId, profileIds);
+  });
 });

@@ -84,4 +84,13 @@ export class PropertyController extends Controller {
       throw new ApiError(404, VERBIAGE.NOT_FOUND);
     }
   }
+
+  @SuccessResponse(204, VERBIAGE.NO_CONTENT)
+  @Patch('/updatePropertyAssignments/{id}')
+  public async updatePropertyAssignments(
+    @Path() id: number,
+    @Body() profileIds: number[]
+  ): Promise<void> {
+    return await this.propertyService.updateAssignments(id, profileIds);
+  }
 }

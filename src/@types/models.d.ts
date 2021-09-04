@@ -53,3 +53,10 @@ export interface PropertyAttr {
   address: string;
   status: RecordStatus;
 }
+
+export interface PropertyAssignmentAttr {
+  profileId: number;
+  propertyId: number;
+  profile?: ProfileAttr;
+  property?: PropertyAttr;
+}

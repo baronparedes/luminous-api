@@ -726,6 +726,46 @@
 					}
 				}
 			}
+		},
+		"/api/property/updatePropertyAssignments/{id}": {
+			"patch": {
+				"operationId": "UpdatePropertyAssignments",
+				"responses": {
+					"204": {
+						"description": "no content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"servers": [
