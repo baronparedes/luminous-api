@@ -74,7 +74,7 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"scopes":{"dataType":"string"},"status":{"ref":"RecordStatus","required":true},"type":{"ref":"ProfileType","required":true},"mobileNumber":{"dataType":"string"},"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "UnitProperty": {
+    "PropertyAttr": {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double"},
@@ -318,7 +318,7 @@ export function RegisterRoutes(app: express.Router) {
 
             function PropertyController_create(request: any, response: any, next: any) {
             const args = {
-                    property: {"in":"body","name":"property","required":true,"ref":"UnitProperty"},
+                    property: {"in":"body","name":"property","required":true,"ref":"PropertyAttr"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -368,7 +368,7 @@ export function RegisterRoutes(app: express.Router) {
             function PropertyController_updateProperty(request: any, response: any, next: any) {
             const args = {
                     id: {"in":"path","name":"id","required":true,"dataType":"double"},
-                    property: {"in":"body","name":"property","required":true,"ref":"UnitProperty"},
+                    property: {"in":"body","name":"property","required":true,"ref":"PropertyAttr"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

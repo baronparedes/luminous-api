@@ -2,11 +2,11 @@ import faker from 'faker';
 
 import {
   AuthProfile,
-  Profile,
+  ProfileAttr,
   ProfileType,
+  PropertyAttr,
   RecordStatus,
   RegisterProfile,
-  UnitProperty,
 } from '../@types/models';
 
 export const generateAuthProfile = (
@@ -33,7 +33,7 @@ export const generateRegisterProfile = (): RegisterProfile => {
   };
 };
 
-export const generateProfile = (type: ProfileType = 'user'): Profile => {
+export const generateProfile = (type: ProfileType = 'user'): ProfileAttr => {
   return {
     id: faker.datatype.number(),
     name: faker.name.findName(),
@@ -46,7 +46,7 @@ export const generateProfile = (type: ProfileType = 'user'): Profile => {
   };
 };
 
-export const generateProperty = (): UnitProperty => {
+export const generateProperty = (): PropertyAttr => {
   return {
     id: faker.datatype.number(),
     code: faker.datatype.string(),

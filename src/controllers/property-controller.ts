@@ -14,7 +14,7 @@ import {
   SuccessResponse,
 } from 'tsoa';
 
-import {RecordStatus, UnitProperty} from '../@types/models';
+import {PropertyAttr, RecordStatus} from '../@types/models';
 import {VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
 import PropertyService from '../services/property-service';
@@ -46,7 +46,7 @@ export class PropertyController extends Controller {
   @Response<EntityError>(400, VERBIAGE.BAD_REQUEST)
   @SuccessResponse(201, VERBIAGE.CREATED)
   @Post('/create')
-  public async create(@Body() property: UnitProperty) {
+  public async create(@Body() property: PropertyAttr) {
     try {
       const result = await this.propertyService.create(property);
       return result;
@@ -72,8 +72,8 @@ export class PropertyController extends Controller {
   @Patch('/updateProperty/{id}')
   public async updateProperty(
     @Path() id: number,
-    @Body() property: UnitProperty
-  ): Promise<UnitProperty> {
+    @Body() property: PropertyAttr
+  ): Promise<PropertyAttr> {
     try {
       return await this.propertyService.update(id, property);
     } catch (e) {

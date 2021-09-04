@@ -1,6 +1,6 @@
 import {FindOptions, Op} from 'sequelize';
 
-import {RecordStatus, UnitProperty} from '../@types/models';
+import {PropertyAttr, RecordStatus} from '../@types/models';
 import PropertyModel from '../models/property-model';
 
 const PROPERTY_MSGS = {
@@ -10,7 +10,7 @@ const PROPERTY_MSGS = {
 export default class PropertyService {
   constructor() {}
 
-  private mapProperty(model: PropertyModel): UnitProperty {
+  private mapProperty(model: PropertyModel): PropertyAttr {
     return {
       id: Number(model.id),
       address: model.address,
@@ -26,7 +26,7 @@ export default class PropertyService {
     return this.mapProperty(result);
   }
 
-  public async getAll(search?: string): Promise<UnitProperty[]> {
+  public async getAll(search?: string): Promise<PropertyAttr[]> {
     const criteria = {[Op.iLike]: `%${search}%`};
     const opts: FindOptions<PropertyModel> = {
       where: {
@@ -39,7 +39,7 @@ export default class PropertyService {
     });
   }
 
-  public async create(property: UnitProperty): Promise<UnitProperty> {
+  public async create(property: PropertyAttr): Promise<PropertyAttr> {
     const newProperty = new PropertyModel({
       code: property.code,
       address: property.address,
@@ -52,8 +52,8 @@ export default class PropertyService {
 
   public async update(
     id: number,
-    property: UnitProperty
-  ): Promise<UnitProperty> {
+    property: PropertyAttr
+  ): Promise<PropertyAttr> {
     const result = await PropertyModel.findByPk(id);
     if (!result) {
       throw new Error(PROPERTY_MSGS.NOT_FOUND);

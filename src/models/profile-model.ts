@@ -9,10 +9,10 @@ import {
   Unique,
 } from 'sequelize-typescript';
 
-import {Profile, ProfileType, RecordStatus} from '../@types/models';
+import {ProfileAttr, ProfileType, RecordStatus} from '../@types/models';
 
 @Table
-class ProfileModel extends Model implements Profile {
+class Profile extends Model implements ProfileAttr {
   @AllowNull(false)
   @NotEmpty
   @Column
@@ -52,4 +52,4 @@ class ProfileModel extends Model implements Profile {
   scopes?: string;
 }
 
-export default ProfileModel;
+export default Profile;

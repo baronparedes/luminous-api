@@ -210,7 +210,7 @@
 				],
 				"type": "object"
 			},
-			"UnitProperty": {
+			"PropertyAttr": {
 				"properties": {
 					"id": {
 						"type": "number",
@@ -529,7 +529,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/UnitProperty"
+										"$ref": "#/components/schemas/PropertyAttr"
 									},
 									"type": "array"
 								}
@@ -563,7 +563,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UnitProperty"
+									"$ref": "#/components/schemas/PropertyAttr"
 								}
 							}
 						}
@@ -596,7 +596,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UnitProperty"
+									"$ref": "#/components/schemas/PropertyAttr"
 								}
 							}
 						}
@@ -623,7 +623,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/UnitProperty"
+								"$ref": "#/components/schemas/PropertyAttr"
 							}
 						}
 					}
@@ -673,7 +673,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UnitProperty"
+									"$ref": "#/components/schemas/PropertyAttr"
 								}
 							}
 						}
@@ -720,7 +720,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/UnitProperty"
+								"$ref": "#/components/schemas/PropertyAttr"
 							}
 						}
 					}

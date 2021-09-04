@@ -34,7 +34,7 @@ export type AuthResult = {
   token: string;
 };
 
-export interface Profile {
+export interface ProfileAttr {
   id?: number;
   name: string;
   username: string;
@@ -46,7 +46,7 @@ export interface Profile {
   scopes?: string;
 }
 
-export interface UnitProperty {
+export interface PropertyAttr {
   id?: number;
   code: string;
   floorArea: number;

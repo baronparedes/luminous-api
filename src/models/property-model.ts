@@ -9,10 +9,10 @@ import {
   Unique,
 } from 'sequelize-typescript';
 
-import {RecordStatus, UnitProperty} from '../@types/models';
+import {PropertyAttr, RecordStatus} from '../@types/models';
 
 @Table
-class PropertyModel extends Model implements UnitProperty {
+class Property extends Model implements PropertyAttr {
   @AllowNull(false)
   @NotEmpty
   @Unique
@@ -34,4 +34,4 @@ class PropertyModel extends Model implements UnitProperty {
   status!: RecordStatus;
 }
 
-export default PropertyModel;
+export default Property;
