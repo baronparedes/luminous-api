@@ -32,6 +32,9 @@
 					"type": {
 						"$ref": "#/components/schemas/ProfileType"
 					},
+					"mobileNumber": {
+						"type": "string"
+					},
 					"email": {
 						"type": "string"
 					},
@@ -130,6 +133,9 @@
 			},
 			"RegisterProfile": {
 				"properties": {
+					"mobileNumber": {
+						"type": "string"
+					},
 					"email": {
 						"type": "string"
 					},
@@ -185,6 +191,9 @@
 					},
 					"type": {
 						"$ref": "#/components/schemas/ProfileType"
+					},
+					"mobileNumber": {
+						"type": "string"
 					},
 					"email": {
 						"type": "string"

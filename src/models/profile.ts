@@ -17,6 +17,7 @@ export interface ProfileAttr {
   username: string;
   password: string;
   email: string;
+  mobileNumber?: string;
   type: ProfileType;
   status: ProfileStatus;
   scopes?: string;
@@ -45,6 +46,9 @@ class Profile extends Model implements ProfileAttr {
   @IsEmail
   @Column
   email!: string;
+
+  @Column
+  mobileNumber?: string;
 
   @AllowNull(false)
   @Default('user')

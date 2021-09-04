@@ -16,6 +16,7 @@ export const generateAuthProfile = (
     name: faker.name.findName(),
     username: faker.internet.userName(),
     email: faker.internet.email(),
+    mobileNumber: faker.phone.phoneNumber(),
     status: faker.random.arrayElement<ProfileStatus>(['active', 'inactive']),
     type,
   };
@@ -27,6 +28,7 @@ export const generateRegisterProfile = (): RegisterProfile => {
     username: faker.internet.userName(),
     password: faker.internet.password(),
     email: faker.internet.email(),
+    mobileNumber: faker.phone.phoneNumber(),
   };
 };
 
@@ -37,6 +39,7 @@ export const generateProfile = (type: ProfileType = 'user'): ProfileAttr => {
     username: faker.internet.userName(),
     email: faker.internet.email(),
     password: faker.internet.password(),
+    mobileNumber: faker.phone.phoneNumber(),
     status: faker.random.arrayElement<ProfileStatus>(['active', 'inactive']),
     type,
   };

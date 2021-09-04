@@ -6,6 +6,7 @@ export type AuthProfile = {
   name: string;
   username: string;
   email: string;
+  mobileNumber?: string;
   type: ProfileType;
   status: ProfileStatus;
   scopes?: string;
@@ -16,11 +17,13 @@ export type RegisterProfile = {
   username: string;
   password: string;
   email: string;
+  mobileNumber?: string;
 };
 
 export type UpdateProfile = {
   name: string;
   email: string;
+  mobileNumber?: string;
   type: ProfileType;
   status: ProfileStatus;
   scopes?: string;

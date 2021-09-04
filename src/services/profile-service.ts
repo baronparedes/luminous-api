@@ -25,6 +25,7 @@ export default class ProfileService {
       scopes: profile.scopes,
       type: profile.type,
       email: profile.email,
+      mobileNumber: profile.mobileNumber,
       status: profile.status,
     };
   }
@@ -36,6 +37,7 @@ export default class ProfileService {
       username: profile.username,
       password: hash(profile.password),
       email: profile.email,
+      mobileNumber: profile.mobileNumber,
     });
     const result = await newProfile.save();
     return this.mapAuthProfile(result);
@@ -81,15 +83,16 @@ export default class ProfileService {
     result.type = profile.type;
     result.status = profile.status;
     result.scopes = profile.scopes;
+    result.mobileNumber = profile.mobileNumber;
     result.save();
     return this.mapAuthProfile(result);
   }
 
   public async updateStatus(id: number, status: ProfileStatus) {
-    const profile = await Profile.findOne({where: {id}});
-    if (profile) {
-      profile.status = status;
-      await profile?.save();
+    const result = await Profile.findByPk(id);
+    if (result) {
+      result.status = status;
+      await result?.save();
     }
   }
 
