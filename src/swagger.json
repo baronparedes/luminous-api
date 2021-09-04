@@ -238,6 +238,72 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"ProfileAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"mobileNumber": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/ProfileType"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RecordStatus"
+					},
+					"scopes": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"username",
+					"password",
+					"email",
+					"type",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PropertyAssignmentAttr": {
+				"properties": {
+					"profileId": {
+						"type": "number",
+						"format": "double"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"profile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyAttr"
+					}
+				},
+				"required": [
+					"profileId",
+					"propertyId"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -564,6 +630,42 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/PropertyAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/getPropertyAssignments/{id}": {
+			"get": {
+				"operationId": "GetPropertyAssignments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAssignmentAttr"
+									},
+									"type": "array"
 								}
 							}
 						}

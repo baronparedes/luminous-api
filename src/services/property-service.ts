@@ -1,8 +1,10 @@
 import {FindOptions, Op} from 'sequelize';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
+import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
+import {mapProperty, mapPropertyAssignment} from './@mappers';
 
 const PROPERTY_MSGS = {
   NOT_FOUND: 'unable to get profile',
@@ -11,20 +13,10 @@ const PROPERTY_MSGS = {
 export default class PropertyService {
   constructor() {}
 
-  private mapProperty(model: Property): PropertyAttr {
-    return {
-      id: Number(model.id),
-      address: model.address,
-      code: model.code,
-      floorArea: model.floorArea,
-      status: model.status,
-    };
-  }
-
   public async get(id: number) {
     const result = await Property.findByPk(id);
     if (!result) throw new Error(PROPERTY_MSGS.NOT_FOUND);
-    return this.mapProperty(result);
+    return mapProperty(result);
   }
 
   public async getAll(search?: string): Promise<PropertyAttr[]> {
@@ -36,7 +28,7 @@ export default class PropertyService {
     };
     const result = await Property.findAll(search ? opts : {});
     return result.map(p => {
-      return this.mapProperty(p);
+      return mapProperty(p);
     });
   }
 
@@ -48,7 +40,7 @@ export default class PropertyService {
       status: property.status,
     });
     const result = await newProperty.save();
-    return this.mapProperty(result);
+    return mapProperty(result);
   }
 
   public async update(
@@ -64,7 +56,7 @@ export default class PropertyService {
     result.floorArea = property.floorArea;
     result.address = property.address;
     await result.save();
-    return this.mapProperty(result);
+    return mapProperty(result);
   }
 
   public async updateStatus(id: number, status: RecordStatus) {
@@ -73,6 +65,19 @@ export default class PropertyService {
       result.status = status;
       await result?.save();
     }
+  }
+
+  public async getAssignments(propertyId: number) {
+    const result = await PropertyAssignment.findAll({
+      where: {propertyId},
+      include: [
+        {
+          model: Profile,
+          attributes: ['id', 'name', 'username'],
+        },
+      ],
+    });
+    return result.map(r => mapPropertyAssignment(r));
   }
 
   public async updateAssignments(propertyId: number, profileIds: number[]) {
@@ -84,9 +89,12 @@ export default class PropertyService {
         },
       },
     });
-    const records = profileIds.map(p =>
-      PropertyAssignment.build({propertyId, profileId: p})
-    );
+    const records = profileIds.map(p => {
+      return {
+        propertyId,
+        profileId: p,
+      };
+    });
     await PropertyAssignment.bulkCreate(records);
   }
 }

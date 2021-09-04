@@ -43,6 +43,13 @@ export class PropertyController extends Controller {
     return result;
   }
 
+  @OperationId('GetPropertyAssignments')
+  @Get('/getPropertyAssignments/{id}')
+  public async getPropertyAssignments(@Path() id: number) {
+    const result = await this.propertyService.getAssignments(id);
+    return result;
+  }
+
   @OperationId('CreateProperty')
   @Response<EntityError>(400, VERBIAGE.BAD_REQUEST)
   @SuccessResponse(201, VERBIAGE.CREATED)

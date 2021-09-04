@@ -9,6 +9,7 @@ import {
 import {useHash} from '../@utils/use-hash';
 import {VERBIAGE} from '../constants';
 import Profile from '../models/profile-model';
+import {mapAuthProfile} from './@mappers';
 
 const PROFILE_MSGS = {
   NOT_FOUND: 'unable to get profile',
@@ -16,19 +17,6 @@ const PROFILE_MSGS = {
 
 export default class ProfileService {
   constructor() {}
-
-  private mapAuthProfile(profile: Profile): AuthProfile {
-    return {
-      id: Number(profile.id),
-      name: profile.name,
-      username: profile.username,
-      scopes: profile.scopes,
-      type: profile.type,
-      email: profile.email,
-      mobileNumber: profile.mobileNumber,
-      status: profile.status,
-    };
-  }
 
   public async register(profile: RegisterProfile): Promise<AuthProfile> {
     const {hash} = useHash();
@@ -40,7 +28,7 @@ export default class ProfileService {
       mobileNumber: profile.mobileNumber,
     });
     const result = await newProfile.save();
-    return this.mapAuthProfile(result);
+    return mapAuthProfile(result);
   }
 
   public async getProfileByUsernameAndPassword(
@@ -54,7 +42,7 @@ export default class ProfileService {
     if (!result || !compare(password, result?.password)) {
       throw new Error(PROFILE_MSGS.NOT_FOUND);
     }
-    return this.mapAuthProfile(result);
+    return mapAuthProfile(result);
   }
 
   public async getAll(search?: string): Promise<AuthProfile[]> {
@@ -66,7 +54,7 @@ export default class ProfileService {
     };
     const result = await Profile.findAll(search ? opts : {});
     return result.map(p => {
-      return this.mapAuthProfile(p);
+      return mapAuthProfile(p);
     });
   }
 
@@ -85,7 +73,7 @@ export default class ProfileService {
     result.scopes = profile.scopes;
     result.mobileNumber = profile.mobileNumber;
     await result.save();
-    return this.mapAuthProfile(result);
+    return mapAuthProfile(result);
   }
 
   public async updateStatus(id: number, status: RecordStatus) {

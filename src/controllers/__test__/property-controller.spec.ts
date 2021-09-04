@@ -1,7 +1,10 @@
 import faker from 'faker';
 
 import {RecordStatus} from '../../@types/models';
-import {generateProperty} from '../../@utils/fake-data';
+import {
+  generateProperty,
+  generatePropertyAssignment,
+} from '../../@utils/fake-data';
 import PropertyService from '../../services/property-service';
 import {PropertyController} from '../property-controller';
 
@@ -31,6 +34,20 @@ describe('PropertyController', () => {
     expect(actual).toStrictEqual(property);
     expect(mock).toBeCalledWith(Number(property.id));
     expect(mock).toBeCalledTimes(1);
+  });
+
+  it('should get property assignments', async () => {
+    const mockedData = [generatePropertyAssignment()];
+    const mock = jest
+      .spyOn(PropertyService.prototype, 'getAssignments')
+      .mockReturnValueOnce(new Promise(resolve => resolve(mockedData)));
+    const target = new PropertyController();
+    const targetId = faker.datatype.number();
+    const actual = await target.getPropertyAssignments(targetId);
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(targetId);
+    expect(actual).toBe(mockedData);
   });
 
   it('should create a new property', async () => {

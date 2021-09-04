@@ -4,6 +4,7 @@ import {
   AuthProfile,
   ProfileAttr,
   ProfileType,
+  PropertyAssignmentAttr,
   PropertyAttr,
   RecordStatus,
   RegisterProfile,
@@ -53,5 +54,12 @@ export const generateProperty = (): PropertyAttr => {
     floorArea: faker.datatype.number(),
     address: `${faker.address.cityName()} ${faker.address.country()}`,
     status: faker.random.arrayElement<RecordStatus>(['active', 'inactive']),
+  };
+};
+
+export const generatePropertyAssignment = (): PropertyAssignmentAttr => {
+  return {
+    profileId: faker.datatype.number(),
+    propertyId: faker.datatype.number(),
   };
 };
