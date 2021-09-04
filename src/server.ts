@@ -15,7 +15,7 @@ app.listen(config.PORT, () => {
       dialect: config.DB.DIALECT as Dialect,
       models: [`${__dirname}/models`],
       define: {underscored: true},
-      logging: config.NODE_ENV !== 'production' ? console.log : false,
+      logging: !config.IS_PROD ? console.log : false,
     }
   );
   sequelize

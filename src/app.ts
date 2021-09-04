@@ -22,17 +22,15 @@ app.use(
 app.use(express.json());
 app.use(compression());
 app.use(helmet());
-app.use(morgan('dev'));
+app.use(morgan(config.IS_PROD ? 'tiny' : 'dev'));
 
-if (config.NODE_ENV === 'development') {
+if (!config.IS_PROD) {
   app.use(
     cors({
       origin: config.CLIENT_URI,
     })
   );
-}
 
-if (config.DOCS) {
   app.use('/docs', swaggerUi.serve, async (_: Request, res: Response) => {
     return res.send(swaggerUi.generateHTML(swaggerDocument));
   });

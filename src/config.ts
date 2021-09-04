@@ -4,6 +4,7 @@ dotenv.config();
 
 const config = {
   NODE_ENV: process.env.NODE_ENV,
+  IS_PROD: process.env.NODE_ENV === 'production',
   PORT: process.env.PORT || 3001,
   JWT_ACCESS_TOKEN: process.env.JWT_ACCESS_TOKEN || '',
   JWT_REFRESH_TOKEN: process.env.JWT_REFRESH_TOKEN || '',
