@@ -589,7 +589,7 @@
 		},
 		"/api/property/create": {
 			"post": {
-				"operationId": "Create",
+				"operationId": "CreateProperty",
 				"responses": {
 					"201": {
 						"description": "created",

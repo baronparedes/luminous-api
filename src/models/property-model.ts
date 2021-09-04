@@ -21,7 +21,7 @@ class Property extends Model implements PropertyAttr {
 
   @AllowNull(false)
   @NotEmpty
-  @Column(DataType.DECIMAL(2))
+  @Column(DataType.DECIMAL)
   floorArea!: number;
 
   @AllowNull

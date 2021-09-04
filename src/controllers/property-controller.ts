@@ -43,6 +43,7 @@ export class PropertyController extends Controller {
     return result;
   }
 
+  @OperationId('CreateProperty')
   @Response<EntityError>(400, VERBIAGE.BAD_REQUEST)
   @SuccessResponse(201, VERBIAGE.CREATED)
   @Post('/create')
