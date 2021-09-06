@@ -67,6 +67,14 @@ export default class PropertyService {
     }
   }
 
+  public async getAssignedProperies(profileId: number) {
+    const result = await PropertyAssignment.findAll({
+      where: {profileId},
+      include: [Property],
+    });
+    return result.map(r => mapPropertyAssignment(r));
+  }
+
   public async getAssignments(propertyId: number) {
     const result = await PropertyAssignment.findAll({
       where: {propertyId},

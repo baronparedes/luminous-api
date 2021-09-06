@@ -36,6 +36,20 @@ describe('PropertyController', () => {
     expect(mock).toBeCalledTimes(1);
   });
 
+  it('should get assigned properties of a profile', async () => {
+    const mockedData = [generatePropertyAssignment()];
+    const mock = jest
+      .spyOn(PropertyService.prototype, 'getAssignedProperies')
+      .mockReturnValueOnce(new Promise(resolve => resolve(mockedData)));
+    const target = new PropertyController();
+    const targetId = faker.datatype.number();
+    const actual = await target.getAssignedProperties(targetId);
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(targetId);
+    expect(actual).toBe(mockedData);
+  });
+
   it('should get property assignments', async () => {
     const mockedData = [generatePropertyAssignment()];
     const mock = jest
