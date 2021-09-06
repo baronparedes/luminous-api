@@ -73,7 +73,7 @@ export default class PropertyService {
       include: [
         {
           model: Profile,
-          attributes: ['id', 'name', 'username'],
+          attributes: ['id', 'name', 'username', 'mobileNumber', 'email'],
         },
       ],
     });
@@ -84,15 +84,12 @@ export default class PropertyService {
     await PropertyAssignment.destroy({
       where: {
         propertyId,
-        profileId: {
-          [Op.in]: profileIds,
-        },
       },
     });
-    const records = profileIds.map(p => {
+    const records = profileIds.map(profileId => {
       return {
         propertyId,
-        profileId: p,
+        profileId,
       };
     });
     await PropertyAssignment.bulkCreate(records);
