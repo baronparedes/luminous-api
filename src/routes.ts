@@ -364,12 +364,12 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/property/getAssignedProperties',
+        app.get('/api/property/getAssignedProperties/:profileId',
             authenticateMiddleware([{"bearer":[]}]),
 
             function PropertyController_getAssignedProperties(request: any, response: any, next: any) {
             const args = {
-                    profileId: {"in":"query","name":"profileId","required":true,"dataType":"double"},
+                    profileId: {"in":"path","name":"profileId","required":true,"dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

@@ -51,8 +51,8 @@ export class PropertyController extends Controller {
   }
 
   @OperationId('GetAssignedProperties')
-  @Get('/getAssignedProperties')
-  public async getAssignedProperties(@Query() profileId: number) {
+  @Get('/getAssignedProperties/{profileId}')
+  public async getAssignedProperties(@Path() profileId: number) {
     const result = await this.propertyService.getAssignedProperies(profileId);
     return result;
   }

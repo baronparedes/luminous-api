@@ -689,7 +689,7 @@
 				]
 			}
 		},
-		"/api/property/getAssignedProperties": {
+		"/api/property/getAssignedProperties/{profileId}": {
 			"get": {
 				"operationId": "GetAssignedProperties",
 				"responses": {
@@ -714,7 +714,7 @@
 				],
 				"parameters": [
 					{
-						"in": "query",
+						"in": "path",
 						"name": "profileId",
 						"required": true,
 						"schema": {
