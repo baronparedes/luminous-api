@@ -1,35 +1,12 @@
-import {Dialect} from 'sequelize';
-import {Sequelize} from 'sequelize-typescript';
-
 import {app} from './app';
 import config from './config';
+import {dbInit} from './db';
 
 app.listen(config.PORT, () => {
-  const sequelize = new Sequelize(
-    config.DB.DB_NAME,
-    config.DB.USER_NAME,
-    config.DB.PASSWORD,
-    {
-      host: config.DB.HOST,
-      port: Number(config.DB.PORT),
-      dialect: config.DB.DIALECT as Dialect,
-      models: [`${__dirname}/models`],
-      define: {underscored: true},
-      logging: !config.IS_PROD ? console.log : false,
-    }
-  );
-  sequelize
-    .authenticate()
-    .then(() => {
-      if (config.DB.SYNC) {
-        sequelize.sync({alter: true}).then(() => {
-          console.info('migrated models');
-        });
-      }
-    })
+  dbInit()
+    .then(() => console.info(`listening on port ${config.PORT}`))
     .catch(err => {
       console.error('app starting error:', err.stack);
       throw new Error(err);
     });
-  console.info(`listening on port ${config.PORT}`);
 });

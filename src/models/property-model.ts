@@ -3,6 +3,7 @@ import {
   Column,
   DataType,
   Default,
+  ForeignKey,
   Model,
   NotEmpty,
   Table,
@@ -10,6 +11,8 @@ import {
 } from 'sequelize-typescript';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
+import {CONSTANTS} from '../constants';
+import Community from './community-model';
 
 @Table
 class Property extends Model implements PropertyAttr {
@@ -32,6 +35,12 @@ class Property extends Model implements PropertyAttr {
   @Default('active')
   @Column
   status!: RecordStatus;
+
+  @Default(CONSTANTS.COMMUNITY_ID) //TODO: Remove after enabling multiple communities
+  @AllowNull(false)
+  @ForeignKey(() => Community)
+  @Column
+  communityId!: number;
 }
 
 export default Property;

@@ -304,6 +304,44 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"Month": {
+				"type": "string",
+				"enum": [
+					"JAN",
+					"FEB",
+					"MAR",
+					"APR",
+					"MAY",
+					"JUN",
+					"JUL",
+					"AUG",
+					"SEP",
+					"OCT",
+					"NOV",
+					"DEC"
+				]
+			},
+			"PostTransactionBody": {
+				"properties": {
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"month": {
+						"$ref": "#/components/schemas/Month"
+					},
+					"year": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"propertyId",
+					"month",
+					"year"
+				],
+				"type": "object"
 			}
 		},
 		"securitySchemes": {
@@ -899,6 +937,28 @@
 									"format": "double"
 								},
 								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/transaction/postMonthlyCharges": {
+			"post": {
+				"operationId": "PostMonthlyCharges",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostTransactionBody"
 							}
 						}
 					}

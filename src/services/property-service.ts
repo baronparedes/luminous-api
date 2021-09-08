@@ -1,6 +1,7 @@
 import {FindOptions, Op} from 'sequelize';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
+import sequelize from '../db';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
@@ -89,17 +90,20 @@ export default class PropertyService {
   }
 
   public async updateAssignments(propertyId: number, profileIds: number[]) {
-    await PropertyAssignment.destroy({
-      where: {
-        propertyId,
-      },
+    await sequelize.transaction(async transaction => {
+      await PropertyAssignment.destroy({
+        where: {
+          propertyId,
+        },
+        transaction,
+      });
+      const records = profileIds.map(profileId => {
+        return {
+          propertyId,
+          profileId,
+        };
+      });
+      await PropertyAssignment.bulkCreate(records, {transaction});
     });
-    const records = profileIds.map(profileId => {
-      return {
-        propertyId,
-        profileId,
-      };
-    });
-    await PropertyAssignment.bulkCreate(records);
   }
 }

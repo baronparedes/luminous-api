@@ -8,6 +8,8 @@ import { AuthController } from './controllers/auth-controller';
 import { ProfileController } from './controllers/profile-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PropertyController } from './controllers/property-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { TransactionController } from './controllers/transaction-controller';
 import { expressAuthentication } from './auth';
 // @ts-ignore - no great way to install types from subpackage
 const promiseAny = require('promise.any');
@@ -111,6 +113,16 @@ const models: TsoaRoute.Models = {
             "property": {"ref":"PropertyAttr"},
         },
         "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Month": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["JAN"]},{"dataType":"enum","enums":["FEB"]},{"dataType":"enum","enums":["MAR"]},{"dataType":"enum","enums":["APR"]},{"dataType":"enum","enums":["MAY"]},{"dataType":"enum","enums":["JUN"]},{"dataType":"enum","enums":["JUL"]},{"dataType":"enum","enums":["AUG"]},{"dataType":"enum","enums":["SEP"]},{"dataType":"enum","enums":["OCT"]},{"dataType":"enum","enums":["NOV"]},{"dataType":"enum","enums":["DEC"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostTransactionBody": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"propertyId":{"dataType":"double","required":true},"month":{"ref":"Month","required":true},"year":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -484,6 +496,29 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.updatePropertyAssignments.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/transaction/postMonthlyCharges',
+
+            function TransactionController_auth(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"PostTransactionBody"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TransactionController();
+
+
+            const promise = controller.auth.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

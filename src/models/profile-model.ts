@@ -1,6 +1,7 @@
 import {
   AllowNull,
   Column,
+  DataType,
   Default,
   IsEmail,
   Model,
@@ -21,7 +22,7 @@ class Profile extends Model implements ProfileAttr {
   @AllowNull(false)
   @NotEmpty
   @Unique
-  @Column
+  @Column(DataType.CITEXT)
   username!: string;
 
   @AllowNull(false)
