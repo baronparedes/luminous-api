@@ -501,7 +501,7 @@ export function RegisterRoutes(app: express.Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/transaction/postMonthlyCharges',
 
-            function TransactionController_auth(request: any, response: any, next: any) {
+            function TransactionController_postMonthlyCharges(request: any, response: any, next: any) {
             const args = {
                     body: {"in":"body","name":"body","required":true,"ref":"PostTransactionBody"},
             };
@@ -518,7 +518,7 @@ export function RegisterRoutes(app: express.Router) {
             const controller = new TransactionController();
 
 
-            const promise = controller.auth.apply(controller, validatedArgs as any);
+            const promise = controller.postMonthlyCharges.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

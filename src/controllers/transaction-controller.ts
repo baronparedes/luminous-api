@@ -11,7 +11,7 @@ import {
 import {Month} from '../@types/models';
 import TransactionService from '../services/transaction-service';
 
-type PostTransactionBody = {
+export type PostTransactionBody = {
   year: number;
   month: Month;
   propertyId: number;
@@ -30,7 +30,7 @@ export class TransactionController extends Controller {
   @NoSecurity()
   @OperationId('PostMonthlyCharges')
   @Post('/postMonthlyCharges')
-  public async auth(@Body() body: PostTransactionBody) {
+  public async postMonthlyCharges(@Body() body: PostTransactionBody) {
     await this.transactionService.postMonthlyCharges(
       body.year,
       body.month,

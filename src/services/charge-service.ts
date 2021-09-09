@@ -1,5 +1,3 @@
-import {Op} from 'sequelize';
-
 import {ChargeAttr, Month, PropertyAttr} from '../@types/models';
 import {subtractFromYearMonth} from '../@utils/dates';
 import {generateNumberedSeries} from '../@utils/helpers';
@@ -23,7 +21,7 @@ export default class ChargeService {
           propertyId,
           transactionYear: prev.year,
           transactionMonth: prev.month,
-          waivedBy: {[Op.is]: null},
+          waivedBy: null,
         },
       });
       const transactionTypes = transactions.map(t => t.transactionType);

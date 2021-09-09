@@ -5,6 +5,7 @@ export const VERBIAGE = {
   NOT_FOUND: 'not found',
   NO_CONTENT: 'no content',
   CREATED: 'created',
+  DUPLICATE_CHARGES: 'duplicate charges',
 };
 
 export const CONSTANTS = {

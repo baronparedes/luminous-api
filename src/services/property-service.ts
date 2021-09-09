@@ -1,30 +1,25 @@
 import {FindOptions, Op} from 'sequelize';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
-import sequelize from '../db';
+import {iLike} from '../@utils/helpers-sequelize';
+import {VERBIAGE} from '../constants';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
+import BaseService from './@base-service';
 import {mapProperty, mapPropertyAssignment} from './@mappers';
 
-const PROPERTY_MSGS = {
-  NOT_FOUND: 'unable to get profile',
-};
-
-export default class PropertyService {
-  constructor() {}
-
+export default class PropertyService extends BaseService {
   public async get(id: number) {
     const result = await Property.findByPk(id);
-    if (!result) throw new Error(PROPERTY_MSGS.NOT_FOUND);
+    if (!result) throw new Error(VERBIAGE.NOT_FOUND);
     return mapProperty(result);
   }
 
   public async getAll(search?: string): Promise<PropertyAttr[]> {
-    const criteria = {[Op.iLike]: `%${search}%`};
     const opts: FindOptions<Property> = {
       where: {
-        [Op.or]: [{code: criteria}],
+        [Op.or]: [iLike('code', search)],
       },
     };
     const result = await Property.findAll(search ? opts : {});
@@ -50,7 +45,7 @@ export default class PropertyService {
   ): Promise<PropertyAttr> {
     const result = await Property.findByPk(id);
     if (!result) {
-      throw new Error(PROPERTY_MSGS.NOT_FOUND);
+      throw new Error(VERBIAGE.NOT_FOUND);
     }
     result.status = property.status;
     result.code = property.code;
@@ -90,20 +85,22 @@ export default class PropertyService {
   }
 
   public async updateAssignments(propertyId: number, profileIds: number[]) {
-    await sequelize.transaction(async transaction => {
-      await PropertyAssignment.destroy({
-        where: {
-          propertyId,
-        },
-        transaction,
-      });
+    await this.repository.transaction(transaction => {
       const records = profileIds.map(profileId => {
         return {
-          propertyId,
           profileId,
+          propertyId,
         };
       });
-      await PropertyAssignment.bulkCreate(records, {transaction});
+      return Promise.all([
+        PropertyAssignment.destroy({
+          where: {
+            propertyId,
+          },
+          transaction,
+        }),
+        PropertyAssignment.bulkCreate(records, {transaction}),
+      ]);
     });
   }
 }

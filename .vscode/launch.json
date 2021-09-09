@@ -13,6 +13,31 @@
             "restart": true,
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "name": "jest-tests",
+            "request": "launch",
+            "args": [
+                "--runInBand",
+                "--watch",
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "env": {
+                "NODE_ENV": "test",
+            },
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+            "runtimeArgs": [
+                "--harmony",
+                "--no-deprecation"
+            ],
+            "skipFiles": [
+                "${workspaceRoot}/node_modules/**/*",
+                "<node_internals>/**"
+            ],
         }
     ]
 }
