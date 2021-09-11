@@ -17,16 +17,19 @@ import {
 import {PropertyAttr, RecordStatus} from '../@types/models';
 import {VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
+import PropertyAccountService from '../services/property-account-service';
 import PropertyService from '../services/property-service';
 
 @Security('bearer')
 @Route('/api/property')
 export class PropertyController extends Controller {
   private propertyService: PropertyService;
+  private propertyAccountService: PropertyAccountService;
 
   constructor() {
     super();
     this.propertyService = new PropertyService();
+    this.propertyAccountService = new PropertyAccountService();
   }
 
   @OperationId('GetAllProperties')
@@ -44,16 +47,17 @@ export class PropertyController extends Controller {
   }
 
   @OperationId('GetPropertyAssignments')
-  @Get('/getPropertyAssignments/{id}')
-  public async getPropertyAssignments(@Path() id: number) {
-    const result = await this.propertyService.getAssignments(id);
+  @Get('/getPropertyAssignments/{propertyId}')
+  public async getPropertyAssignments(@Path() propertyId: number) {
+    const result = await this.propertyService.getAssignments(propertyId);
     return result;
   }
 
-  @OperationId('GetAssignedProperties')
-  @Get('/getAssignedProperties/{profileId}')
-  public async getAssignedProperties(@Path() profileId: number) {
-    const result = await this.propertyService.getAssignedProperies(profileId);
+  @OperationId('GetPropertyAccounts')
+  @Get('/getPropertyAccounts/{profileId}')
+  public async getPropertyAccounts(@Path() profileId: number) {
+    const result =
+      await this.propertyAccountService.getPropertyAccountsByProfile(profileId);
     return result;
   }
 

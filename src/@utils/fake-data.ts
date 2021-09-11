@@ -61,5 +61,6 @@ export const generatePropertyAssignment = (): PropertyAssignmentAttr => {
   return {
     profileId: faker.datatype.number(),
     propertyId: faker.datatype.number(),
+    property: generateProperty(),
   };
 };

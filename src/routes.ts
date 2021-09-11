@@ -115,9 +115,73 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CommunityAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "description": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ChargeType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["unit"]},{"dataType":"enum","enums":["percentage"]},{"dataType":"enum","enums":["amount"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostingType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["monthly"]},{"dataType":"enum","enums":["manual"]},{"dataType":"enum","enums":["accrued"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ChargeAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "communityId": {"dataType":"double","required":true},
+            "community": {"ref":"CommunityAttr"},
+            "code": {"dataType":"string","required":true},
+            "rate": {"dataType":"double","required":true},
+            "chargeType": {"ref":"ChargeType","required":true},
+            "postingType": {"ref":"PostingType","required":true},
+            "thresholdInMonths": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Month": {
         "dataType": "refAlias",
         "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["JAN"]},{"dataType":"enum","enums":["FEB"]},{"dataType":"enum","enums":["MAR"]},{"dataType":"enum","enums":["APR"]},{"dataType":"enum","enums":["MAY"]},{"dataType":"enum","enums":["JUN"]},{"dataType":"enum","enums":["JUL"]},{"dataType":"enum","enums":["AUG"]},{"dataType":"enum","enums":["SEP"]},{"dataType":"enum","enums":["OCT"]},{"dataType":"enum","enums":["NOV"]},{"dataType":"enum","enums":["DEC"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "TransactionType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["charged"]},{"dataType":"enum","enums":["collected"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "TransactionAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "chargeId": {"dataType":"double","required":true},
+            "charge": {"ref":"ChargeAttr"},
+            "propertyId": {"dataType":"double","required":true},
+            "property": {"ref":"PropertyAttr"},
+            "amount": {"dataType":"double","required":true},
+            "transactionYear": {"dataType":"double","required":true},
+            "transactionMonth": {"ref":"Month","required":true},
+            "transactionType": {"ref":"TransactionType","required":true},
+            "waivedBy": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PropertyAccount": {
+        "dataType": "refObject",
+        "properties": {
+            "balance": {"dataType":"double","required":true},
+            "propertyId": {"dataType":"double","required":true},
+            "property": {"ref":"PropertyAttr"},
+            "transactions": {"dataType":"array","array":{"dataType":"refObject","ref":"TransactionAttr"}},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PostTransactionBody": {
@@ -352,12 +416,12 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/property/getPropertyAssignments/:id',
+        app.get('/api/property/getPropertyAssignments/:propertyId',
             authenticateMiddleware([{"bearer":[]}]),
 
             function PropertyController_getPropertyAssignments(request: any, response: any, next: any) {
             const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -376,10 +440,10 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/property/getAssignedProperties/:profileId',
+        app.get('/api/property/getPropertyAccounts/:profileId',
             authenticateMiddleware([{"bearer":[]}]),
 
-            function PropertyController_getAssignedProperties(request: any, response: any, next: any) {
+            function PropertyController_getPropertyAccounts(request: any, response: any, next: any) {
             const args = {
                     profileId: {"in":"path","name":"profileId","required":true,"dataType":"double"},
             };
@@ -396,7 +460,7 @@ export function RegisterRoutes(app: express.Router) {
             const controller = new PropertyController();
 
 
-            const promise = controller.getAssignedProperties.apply(controller, validatedArgs as any);
+            const promise = controller.getPropertyAccounts.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

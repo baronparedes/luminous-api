@@ -5,6 +5,7 @@ import {
   generateProperty,
   generatePropertyAssignment,
 } from '../../@utils/fake-data';
+import ChargeService from '../../services/charge-service';
 import PropertyService from '../../services/property-service';
 import {PropertyController} from '../property-controller';
 
@@ -36,18 +37,30 @@ describe('PropertyController', () => {
     expect(mock).toBeCalledTimes(1);
   });
 
-  it('should get assigned properties of a profile', async () => {
+  it('should get property accounts of a profile', async () => {
+    const targetId = faker.datatype.number();
+    const mockedBalance = faker.datatype.number();
     const mockedData = [generatePropertyAssignment()];
-    const mock = jest
+    const mockPropertyService = jest
       .spyOn(PropertyService.prototype, 'getAssignedProperies')
       .mockReturnValueOnce(new Promise(resolve => resolve(mockedData)));
+    const mockChargeService = jest
+      .spyOn(ChargeService.prototype, 'getPropertyBalance')
+      .mockReturnValueOnce(new Promise(resolve => resolve(mockedBalance)));
     const target = new PropertyController();
-    const targetId = faker.datatype.number();
-    const actual = await target.getAssignedProperties(targetId);
+    const actual = await target.getPropertyAccounts(targetId);
 
-    expect(mock).toBeCalledTimes(1);
-    expect(mock).toBeCalledWith(targetId);
-    expect(actual).toBe(mockedData);
+    expect(mockPropertyService).toBeCalledTimes(1);
+    expect(mockPropertyService).toBeCalledWith(targetId);
+    expect(mockChargeService).toBeCalledTimes(1);
+    expect(mockChargeService).toBeCalledWith(mockedData[0].propertyId);
+    expect(actual).toEqual([
+      {
+        balance: mockedBalance,
+        property: mockedData[0].property,
+        propertyId: mockedData[0].propertyId,
+      },
+    ]);
   });
 
   it('should get property assignments', async () => {

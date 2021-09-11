@@ -305,6 +305,71 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"CommunityAttr": {
+				"properties": {
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ChargeType": {
+				"type": "string",
+				"enum": [
+					"unit",
+					"percentage",
+					"amount"
+				]
+			},
+			"PostingType": {
+				"type": "string",
+				"enum": [
+					"monthly",
+					"manual",
+					"accrued"
+				]
+			},
+			"ChargeAttr": {
+				"properties": {
+					"communityId": {
+						"type": "number",
+						"format": "double"
+					},
+					"community": {
+						"$ref": "#/components/schemas/CommunityAttr"
+					},
+					"code": {
+						"type": "string"
+					},
+					"rate": {
+						"type": "number",
+						"format": "double"
+					},
+					"chargeType": {
+						"$ref": "#/components/schemas/ChargeType"
+					},
+					"postingType": {
+						"$ref": "#/components/schemas/PostingType"
+					},
+					"thresholdInMonths": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"communityId",
+					"code",
+					"rate",
+					"chargeType",
+					"postingType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"Month": {
 				"type": "string",
 				"enum": [
@@ -321,6 +386,86 @@
 					"NOV",
 					"DEC"
 				]
+			},
+			"TransactionType": {
+				"type": "string",
+				"enum": [
+					"charged",
+					"collected"
+				]
+			},
+			"TransactionAttr": {
+				"properties": {
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"charge": {
+						"$ref": "#/components/schemas/ChargeAttr"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyAttr"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"transactionYear": {
+						"type": "number",
+						"format": "double"
+					},
+					"transactionMonth": {
+						"$ref": "#/components/schemas/Month"
+					},
+					"transactionType": {
+						"$ref": "#/components/schemas/TransactionType"
+					},
+					"waivedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeId",
+					"propertyId",
+					"amount",
+					"transactionYear",
+					"transactionMonth",
+					"transactionType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PropertyAccount": {
+				"properties": {
+					"balance": {
+						"type": "number",
+						"format": "double"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyAttr"
+					},
+					"transactions": {
+						"items": {
+							"$ref": "#/components/schemas/TransactionAttr"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"balance",
+					"propertyId"
+				],
+				"type": "object",
+				"additionalProperties": false
 			},
 			"PostTransactionBody": {
 				"properties": {
@@ -691,7 +836,7 @@
 				]
 			}
 		},
-		"/api/property/getPropertyAssignments/{id}": {
+		"/api/property/getPropertyAssignments/{propertyId}": {
 			"get": {
 				"operationId": "GetPropertyAssignments",
 				"responses": {
@@ -717,7 +862,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "id",
+						"name": "propertyId",
 						"required": true,
 						"schema": {
 							"format": "double",
@@ -727,9 +872,9 @@
 				]
 			}
 		},
-		"/api/property/getAssignedProperties/{profileId}": {
+		"/api/property/getPropertyAccounts/{profileId}": {
 			"get": {
-				"operationId": "GetAssignedProperties",
+				"operationId": "GetPropertyAccounts",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -737,7 +882,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/PropertyAssignmentAttr"
+										"$ref": "#/components/schemas/PropertyAccount"
 									},
 									"type": "array"
 								}

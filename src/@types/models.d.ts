@@ -51,6 +51,13 @@ export type AuthResult = {
   token: string;
 };
 
+export interface PropertyAccount {
+  balance: number;
+  propertyId: number;
+  property?: PropertyAttr;
+  transactions?: TransactionAttr[];
+}
+
 export interface ProfileAttr {
   id?: number;
   name: string;
