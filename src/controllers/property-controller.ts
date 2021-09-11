@@ -53,11 +53,27 @@ export class PropertyController extends Controller {
     return result;
   }
 
-  @OperationId('GetPropertyAccounts')
-  @Get('/getPropertyAccounts/{profileId}')
-  public async getPropertyAccounts(@Path() profileId: number) {
+  @OperationId('GetAssignedProperties')
+  @Get('/getAssignedProperties/{profileId}')
+  public async getAssignedProperties(@Path() profileId: number) {
+    const result = await this.propertyService.getAssignedProperies(profileId);
+    return result;
+  }
+
+  @OperationId('GetPropertyAccountsByProfile')
+  @Get('/getPropertyAccountsByProfile/{profileId}')
+  public async getPropertyAccountsByProfile(@Path() profileId: number) {
     const result =
       await this.propertyAccountService.getPropertyAccountsByProfile(profileId);
+    return result;
+  }
+
+  @OperationId('GetPropertyAccount')
+  @Get('/getPropertyAccount/{propertyId}')
+  public async getPropertyAccount(@Path() propertyId: number) {
+    const result = await this.propertyAccountService.getPropertyAcount(
+      propertyId
+    );
     return result;
   }
 

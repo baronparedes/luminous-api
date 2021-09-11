@@ -37,6 +37,28 @@ describe('PropertyController', () => {
     expect(mock).toBeCalledTimes(1);
   });
 
+  it('should get property account', async () => {
+    const mockedProperty = generateProperty();
+    const mockedBalance = faker.datatype.number();
+    const mockPropertyService = jest
+      .spyOn(PropertyService.prototype, 'get')
+      .mockReturnValueOnce(new Promise(resolve => resolve(mockedProperty)));
+    const mockChargeService = jest
+      .spyOn(ChargeService.prototype, 'getPropertyBalance')
+      .mockReturnValueOnce(new Promise(resolve => resolve(mockedBalance)));
+    const target = new PropertyController();
+    const actual = await target.getPropertyAccount(Number(mockedProperty.id));
+    expect(mockPropertyService).toBeCalledTimes(1);
+    expect(mockPropertyService).toBeCalledWith(Number(mockedProperty.id));
+    expect(mockChargeService).toBeCalledTimes(1);
+    expect(mockChargeService).toBeCalledWith(mockedProperty.id);
+    expect(actual).toEqual({
+      balance: mockedBalance,
+      property: mockedProperty,
+      propertyId: mockedProperty.id,
+    });
+  });
+
   it('should get property accounts of a profile', async () => {
     const targetId = faker.datatype.number();
     const mockedBalance = faker.datatype.number();
@@ -48,7 +70,7 @@ describe('PropertyController', () => {
       .spyOn(ChargeService.prototype, 'getPropertyBalance')
       .mockReturnValueOnce(new Promise(resolve => resolve(mockedBalance)));
     const target = new PropertyController();
-    const actual = await target.getPropertyAccounts(targetId);
+    const actual = await target.getPropertyAccountsByProfile(targetId);
 
     expect(mockPropertyService).toBeCalledTimes(1);
     expect(mockPropertyService).toBeCalledWith(targetId);
@@ -61,6 +83,20 @@ describe('PropertyController', () => {
         propertyId: mockedData[0].propertyId,
       },
     ]);
+  });
+
+  it('should get assigned properties of a profile', async () => {
+    const mockedData = [generatePropertyAssignment()];
+    const mock = jest
+      .spyOn(PropertyService.prototype, 'getAssignedProperies')
+      .mockReturnValueOnce(new Promise(resolve => resolve(mockedData)));
+    const target = new PropertyController();
+    const targetId = faker.datatype.number();
+    const actual = await target.getAssignedProperties(targetId);
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(targetId);
+    expect(actual).toBe(mockedData);
   });
 
   it('should get property assignments', async () => {

@@ -872,9 +872,45 @@
 				]
 			}
 		},
-		"/api/property/getPropertyAccounts/{profileId}": {
+		"/api/property/getAssignedProperties/{profileId}": {
 			"get": {
-				"operationId": "GetPropertyAccounts",
+				"operationId": "GetAssignedProperties",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAssignmentAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "profileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/getPropertyAccountsByProfile/{profileId}": {
+			"get": {
+				"operationId": "GetPropertyAccountsByProfile",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -899,6 +935,39 @@
 					{
 						"in": "path",
 						"name": "profileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/getPropertyAccount/{propertyId}": {
+			"get": {
+				"operationId": "GetPropertyAccount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PropertyAccount"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
 						"required": true,
 						"schema": {
 							"format": "double",

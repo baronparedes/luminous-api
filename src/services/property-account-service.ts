@@ -11,6 +11,16 @@ export default class PropertyAccountService {
     this.chargeService = new ChargeService();
   }
 
+  public async getPropertyAcount(propertyId: number): Promise<PropertyAccount> {
+    const property = await this.propertyService.get(propertyId);
+    const result: PropertyAccount = {
+      propertyId,
+      property,
+      balance: await this.chargeService.getPropertyBalance(propertyId),
+    };
+    return result;
+  }
+
   public async getPropertyAccountsByProfile(
     profileId: number
   ): Promise<PropertyAccount[]> {

@@ -440,10 +440,10 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/property/getPropertyAccounts/:profileId',
+        app.get('/api/property/getAssignedProperties/:profileId',
             authenticateMiddleware([{"bearer":[]}]),
 
-            function PropertyController_getPropertyAccounts(request: any, response: any, next: any) {
+            function PropertyController_getAssignedProperties(request: any, response: any, next: any) {
             const args = {
                     profileId: {"in":"path","name":"profileId","required":true,"dataType":"double"},
             };
@@ -460,7 +460,55 @@ export function RegisterRoutes(app: express.Router) {
             const controller = new PropertyController();
 
 
-            const promise = controller.getPropertyAccounts.apply(controller, validatedArgs as any);
+            const promise = controller.getAssignedProperties.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/property/getPropertyAccountsByProfile/:profileId',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PropertyController_getPropertyAccountsByProfile(request: any, response: any, next: any) {
+            const args = {
+                    profileId: {"in":"path","name":"profileId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PropertyController();
+
+
+            const promise = controller.getPropertyAccountsByProfile.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/property/getPropertyAccount/:propertyId',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PropertyController_getPropertyAccount(request: any, response: any, next: any) {
+            const args = {
+                    propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PropertyController();
+
+
+            const promise = controller.getPropertyAccount.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
