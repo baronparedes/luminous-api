@@ -4,11 +4,16 @@ import {
   AuthProfile,
   ProfileAttr,
   ProfileType,
+  PropertyAccount,
   PropertyAssignmentAttr,
   PropertyAttr,
   RecordStatus,
   RegisterProfile,
+  TransactionAttr,
+  TransactionType,
 } from '../@types/models';
+import {toMonthName} from './dates';
+import {generateNumberedSeries} from './helpers';
 
 export const generateAuthProfile = (
   type: ProfileType = 'user'
@@ -62,5 +67,35 @@ export const generatePropertyAssignment = (): PropertyAssignmentAttr => {
     profileId: faker.datatype.number(),
     propertyId: faker.datatype.number(),
     property: generateProperty(),
+  };
+};
+
+export const generateTranasction = (): TransactionAttr => {
+  return {
+    amount: faker.datatype.number(),
+    chargeId: faker.datatype.number(),
+    propertyId: faker.datatype.number(),
+    transactionMonth: toMonthName(faker.date.recent().getMonth()),
+    transactionYear: faker.date.recent().getFullYear(),
+    transactionType: faker.random.arrayElement<TransactionType>([
+      'charged',
+      'collected',
+    ]),
+    id: faker.datatype.number(),
+  };
+};
+
+export const generatePropertyAccount = (
+  tranasctionCount = 2
+): PropertyAccount => {
+  const property = generateProperty();
+  const transactions = generateNumberedSeries(tranasctionCount).map(() =>
+    generateTranasction()
+  );
+  return {
+    balance: faker.datatype.number(),
+    propertyId: Number(property.id),
+    property,
+    transactions,
   };
 };

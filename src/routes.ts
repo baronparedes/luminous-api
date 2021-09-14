@@ -160,6 +160,7 @@ const models: TsoaRoute.Models = {
     "TransactionAttr": {
         "dataType": "refObject",
         "properties": {
+            "id": {"dataType":"double"},
             "chargeId": {"dataType":"double","required":true},
             "charge": {"ref":"ChargeAttr"},
             "propertyId": {"dataType":"double","required":true},

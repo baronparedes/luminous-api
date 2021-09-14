@@ -37,6 +37,7 @@ export default class TransactionService {
     }
     const transactions = await Transaction.findAll({
       where: criteria,
+      include: [Charge],
     });
     return transactions;
   }

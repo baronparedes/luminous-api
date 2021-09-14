@@ -396,6 +396,10 @@
 			},
 			"TransactionAttr": {
 				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
 					"chargeId": {
 						"type": "number",
 						"format": "double"

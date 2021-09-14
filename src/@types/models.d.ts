@@ -101,6 +101,7 @@ export interface ChargeAttr {
 }
 
 export interface TransactionAttr {
+  id?: number;
   chargeId: number;
   charge?: ChargeAttr;
   propertyId: number;
