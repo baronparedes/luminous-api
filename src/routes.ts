@@ -170,6 +170,7 @@ const models: TsoaRoute.Models = {
             "transactionMonth": {"ref":"Month","required":true},
             "transactionType": {"ref":"TransactionType","required":true},
             "waivedBy": {"dataType":"double"},
+            "comments": {"dataType":"string"},
         },
         "additionalProperties": false,
     },

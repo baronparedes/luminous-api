@@ -111,4 +111,5 @@ export interface TransactionAttr {
   transactionMonth: Month;
   transactionType: TransactionType;
   waivedBy?: number;
+  comments?: string;
 }
