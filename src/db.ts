@@ -81,6 +81,10 @@ async function seed() {
     },
   ];
 
+  await Community.bulkCreate(communities, {
+    updateOnDuplicate: ['description'],
+  });
+
   await Charge.bulkCreate(charges, {
     updateOnDuplicate: [
       'description',
@@ -91,10 +95,6 @@ async function seed() {
       'postingType',
       'thresholdInMonths',
     ],
-  });
-
-  await Community.bulkCreate(communities, {
-    updateOnDuplicate: ['description'],
   });
 }
 
