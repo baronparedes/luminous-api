@@ -1,5 +1,12 @@
-import {ChargeAttr, Month, PropertyAttr} from '../@types/models';
-import {subtractFromYearMonth} from '../@utils/dates';
+import {AggregateOptions, Op} from 'sequelize';
+
+import {
+  ChargeAttr,
+  Month,
+  PropertyAttr,
+  TransactionType,
+} from '../@types/models';
+import {subtractFromYearMonth, toTransactionPeriod} from '../@utils/dates';
 import {generateNumberedSeries} from '../@utils/helpers';
 import Transaction from '../models/transaction-model';
 
@@ -19,8 +26,7 @@ export default class ChargeService {
         attributes: ['transactionType'],
         where: {
           propertyId,
-          transactionYear: prev.year,
-          transactionMonth: prev.month,
+          transactionPeriod: toTransactionPeriod(prev.year, prev.month),
           waivedBy: null,
         },
       });
@@ -34,6 +40,23 @@ export default class ChargeService {
     return false;
   }
 
+  private async calculateInterest(
+    propertyId: number,
+    charge: ChargeAttr,
+    year: number,
+    month: Month
+  ) {
+    const prev = subtractFromYearMonth(year, month, 1);
+    const balance = await this.getPropertyBalanceByYearMonth(
+      propertyId,
+      prev.year,
+      prev.month
+    );
+    const amount = balance * charge.rate;
+    if (amount < 0) return 0;
+    return Number(amount.toFixed(2));
+  }
+
   private async calculateAmountByAccruedPercentage(
     propertyId: number,
     charge: ChargeAttr,
@@ -43,6 +66,7 @@ export default class ChargeService {
     const balance = await this.getPropertyBalance(propertyId);
     if (!charge.thresholdInMonths) {
       const amount = balance * charge.rate;
+      if (amount < 0) return 0;
       return Number(amount.toFixed(2));
     }
 
@@ -54,26 +78,74 @@ export default class ChargeService {
     );
     if (!hasPaid) {
       const amount = balance * charge.rate;
+      if (amount < 0) return 0;
       return Number(amount.toFixed(2));
     }
 
     return 0;
   }
 
-  public async getPropertyBalance(propertyId: number) {
-    const charged = await Transaction.sum('amount', {
-      where: {
-        propertyId,
-        transactionType: 'charged',
-      },
-    });
-    const collected = await Transaction.sum('amount', {
-      where: {
-        propertyId,
-        transactionType: 'collected',
-      },
-    });
+  private async getPropertyBalanceQuery(
+    criteria: (
+      transactionType: TransactionType
+    ) => AggregateOptions<Transaction>
+  ) {
+    const charged = await Transaction.sum('amount', criteria('charged'));
+    const collected = await Transaction.sum('amount', criteria('collected'));
     return charged - collected;
+  }
+
+  private async getPropertyBalanceByYearMonth(
+    propertyId: number,
+    year: number,
+    month: Month
+  ) {
+    const criteria = (transactionType: TransactionType) => {
+      const value = toTransactionPeriod(year, month);
+      const opts: AggregateOptions<Transaction> = {
+        where: {
+          propertyId,
+          transactionType,
+          transactionPeriod: value,
+        },
+      };
+      return opts;
+    };
+    return await this.getPropertyBalanceQuery(criteria);
+  }
+
+  public async getPropertyBalanceUpToYearMonth(
+    propertyId: number,
+    year: number,
+    month: Month
+  ) {
+    const criteria = (transactionType: TransactionType) => {
+      const value = toTransactionPeriod(year, month);
+      const opts: AggregateOptions<Transaction> = {
+        where: {
+          propertyId,
+          transactionType,
+          transactionPeriod: {
+            [Op.lte]: value,
+          },
+        },
+      };
+      return opts;
+    };
+    return await this.getPropertyBalanceQuery(criteria);
+  }
+
+  public async getPropertyBalance(propertyId: number) {
+    const criteria = (transactionType: TransactionType) => {
+      const opts: AggregateOptions<Transaction> = {
+        where: {
+          propertyId,
+          transactionType,
+        },
+      };
+      return opts;
+    };
+    return await this.getPropertyBalanceQuery(criteria);
   }
 
   public async calculateAmountByChargeType(
@@ -92,6 +164,18 @@ export default class ChargeService {
       charge.postingType === 'accrued'
     ) {
       return await this.calculateAmountByAccruedPercentage(
+        Number(property.id),
+        charge,
+        year,
+        month
+      );
+    }
+
+    if (
+      charge.chargeType === 'percentage' &&
+      charge.postingType === 'interest'
+    ) {
+      return await this.calculateInterest(
         Number(property.id),
         charge,
         year,

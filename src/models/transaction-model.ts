@@ -10,7 +10,6 @@ import {
 
 import {
   ChargeAttr,
-  Month,
   PropertyAttr,
   TransactionAttr,
   TransactionType,
@@ -36,12 +35,8 @@ class Transaction extends Model implements TransactionAttr {
   amount!: number;
 
   @AllowNull(false)
-  @Column
-  transactionYear!: number;
-
-  @AllowNull(false)
-  @Column(DataType.CITEXT)
-  transactionMonth!: Month;
+  @Column(DataType.DATEONLY)
+  transactionPeriod!: Date;
 
   @AllowNull(false)
   @Column

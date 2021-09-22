@@ -12,11 +12,10 @@ import {
   TransactionAttr,
   TransactionType,
 } from '../@types/models';
-import {toMonthName} from './dates';
 import {generateNumberedSeries} from './helpers';
 
 export const generateAuthProfile = (
-  type: ProfileType = 'user'
+  type: ProfileType = 'unit owner'
 ): AuthProfile => {
   return {
     id: faker.datatype.number(),
@@ -39,7 +38,9 @@ export const generateRegisterProfile = (): RegisterProfile => {
   };
 };
 
-export const generateProfile = (type: ProfileType = 'user'): ProfileAttr => {
+export const generateProfile = (
+  type: ProfileType = 'unit owner'
+): ProfileAttr => {
   return {
     id: faker.datatype.number(),
     name: faker.name.findName(),
@@ -49,6 +50,7 @@ export const generateProfile = (type: ProfileType = 'user'): ProfileAttr => {
     mobileNumber: faker.phone.phoneNumber(),
     status: faker.random.arrayElement<RecordStatus>(['active', 'inactive']),
     type,
+    remarks: faker.random.words(),
   };
 };
 
@@ -70,13 +72,12 @@ export const generatePropertyAssignment = (): PropertyAssignmentAttr => {
   };
 };
 
-export const generateTranasction = (): TransactionAttr => {
+export const generateTransaction = (): TransactionAttr => {
   return {
     amount: faker.datatype.number(),
     chargeId: faker.datatype.number(),
     propertyId: faker.datatype.number(),
-    transactionMonth: toMonthName(faker.date.recent().getMonth()),
-    transactionYear: faker.date.recent().getFullYear(),
+    transactionPeriod: faker.date.recent(),
     transactionType: faker.random.arrayElement<TransactionType>([
       'charged',
       'collected',
@@ -86,11 +87,11 @@ export const generateTranasction = (): TransactionAttr => {
 };
 
 export const generatePropertyAccount = (
-  tranasctionCount = 2
+  transactionCount = 2
 ): PropertyAccount => {
   const property = generateProperty();
-  const transactions = generateNumberedSeries(tranasctionCount).map(() =>
-    generateTranasction()
+  const transactions = generateNumberedSeries(transactionCount).map(() =>
+    generateTransaction()
   );
   return {
     balance: faker.datatype.number(),

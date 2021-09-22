@@ -1,14 +1,20 @@
 import faker from 'faker';
 
-import {ChargeAttr, ChargeType, PropertyAttr} from '../../@types/models';
+import {
+  ChargeAttr,
+  ChargeType,
+  PropertyAttr,
+  TransactionType,
+} from '../../@types/models';
+import {toTransactionPeriod} from '../../@utils/dates';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
 import Transaction from '../../models/transaction-model';
 import ChargeService from '../../services/charge-service';
 
 describe('ChargeService', () => {
   const target = new ChargeService();
-  const chargedAmount = faker.datatype.number();
-  const collectedAmount = faker.datatype.number();
+  const chargedAmount = faker.datatype.number({min: 10000, max: 20000});
+  const collectedAmount = faker.datatype.number({max: 5000});
   const expectedBalance = chargedAmount * 3 - collectedAmount;
   const charge = faker.random.arrayElement(SEED.CHARGES);
   const property = faker.random.arrayElement(SEED.PROPERTIES);
@@ -18,36 +24,32 @@ describe('ChargeService', () => {
       amount: chargedAmount,
       chargeId: charge.id,
       propertyId: property.id,
-      transactionMonth: 'JAN',
-      transactionYear: 2021,
-      transactionType: 'charged',
+      transactionPeriod: toTransactionPeriod(2021, 'JAN'),
+      transactionType: 'charged' as TransactionType,
     },
     {
       id: 2,
       amount: chargedAmount,
       chargeId: charge.id,
       propertyId: property.id,
-      transactionMonth: 'FEB',
-      transactionYear: 2021,
-      transactionType: 'charged',
+      transactionPeriod: toTransactionPeriod(2021, 'FEB'),
+      transactionType: 'charged' as TransactionType,
     },
     {
       id: 3,
       amount: chargedAmount,
       chargeId: charge.id,
       propertyId: property.id,
-      transactionMonth: 'MAR',
-      transactionYear: 2021,
-      transactionType: 'charged',
+      transactionPeriod: toTransactionPeriod(2021, 'MAR'),
+      transactionType: 'charged' as TransactionType,
     },
     {
       id: 4,
       amount: collectedAmount,
       chargeId: charge.id,
       propertyId: property.id,
-      transactionMonth: 'DEC',
-      transactionYear: 2020,
-      transactionType: 'collected',
+      transactionPeriod: toTransactionPeriod(2020, 'DEC'),
+      transactionType: 'collected' as TransactionType,
     },
   ];
 
@@ -59,6 +61,16 @@ describe('ChargeService', () => {
   it('should get balance', async () => {
     const actual = await target.getPropertyBalance(property.id);
     expect(actual).toEqual(expectedBalance);
+  });
+
+  it('should get balance up to a year month period', async () => {
+    const expected = chargedAmount - collectedAmount;
+    const actual = await target.getPropertyBalanceUpToYearMonth(
+      property.id,
+      2021,
+      'JAN'
+    );
+    expect(actual).toEqual(expected);
   });
 
   it('should calculate charge when charge type is unit', async () => {
@@ -143,5 +155,99 @@ describe('ChargeService', () => {
       'FEB'
     );
     expect(actual).toBe(0);
+  });
+
+  it('should calculate charge when charge type is percentage and posting type is interest', async () => {
+    const targetChargeType: ChargeType = 'percentage';
+    const targetCharge = SEED.CHARGES.find(
+      c => c.chargeType === targetChargeType && c.postingType === 'interest'
+    ) as ChargeAttr;
+    const targetProperty: PropertyAttr = {
+      ...property,
+      status: 'active',
+    };
+    const expected = chargedAmount * targetCharge.rate;
+    const actual = await target.calculateAmountByChargeType(
+      targetProperty,
+      targetCharge,
+      2021,
+      'MAR'
+    );
+    expect(actual).toBe(Number(expected.toFixed(2)));
+  });
+
+  describe('when handling negative balance', () => {
+    beforeAll(async () => {
+      await Transaction.bulkCreate([
+        {
+          id: 5,
+          amount: 100000,
+          chargeId: charge.id,
+          propertyId: property.id,
+          transactionPeriod: toTransactionPeriod(2020, 'NOV'),
+          transactionType: 'collected' as TransactionType,
+        },
+      ]);
+    });
+
+    it('should calculate charge when charge type is percentage and posting type is accrued with no threshold', async () => {
+      const targetChargeType: ChargeType = 'percentage';
+      const targetCharge = SEED.CHARGES.find(
+        c =>
+          c.chargeType === targetChargeType &&
+          c.postingType === 'accrued' &&
+          c.thresholdInMonths
+      ) as ChargeAttr;
+      const targetProperty: PropertyAttr = {
+        ...property,
+        status: 'active',
+      };
+      const actual = await target.calculateAmountByChargeType(
+        targetProperty,
+        targetCharge,
+        2021,
+        'JAN'
+      );
+      expect(actual).toBe(0);
+    });
+
+    it('should calculate charge when charge type is percentage and posting type is accrued with threshold', async () => {
+      const targetChargeType: ChargeType = 'percentage';
+      const targetCharge = SEED.CHARGES.find(
+        c =>
+          c.chargeType === targetChargeType &&
+          c.postingType === 'accrued' &&
+          c.thresholdInMonths
+      ) as ChargeAttr;
+      const targetProperty: PropertyAttr = {
+        ...property,
+        status: 'active',
+      };
+      const actual = await target.calculateAmountByChargeType(
+        targetProperty,
+        targetCharge,
+        2021,
+        'MAR'
+      );
+      expect(actual).toBe(0);
+    });
+
+    it('should calculate charge when charge type is percentage and posting type is interest', async () => {
+      const targetChargeType: ChargeType = 'percentage';
+      const targetCharge = SEED.CHARGES.find(
+        c => c.chargeType === targetChargeType && c.postingType === 'interest'
+      ) as ChargeAttr;
+      const targetProperty: PropertyAttr = {
+        ...property,
+        status: 'active',
+      };
+      const actual = await target.calculateAmountByChargeType(
+        targetProperty,
+        targetCharge,
+        2020,
+        'DEC'
+      );
+      expect(actual).toBe(0);
+    });
   });
 });

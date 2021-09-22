@@ -1,5 +1,6 @@
 import faker from 'faker';
 
+import {toTransactionPeriod} from '../../@utils/dates';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
 import {VERBIAGE} from '../../constants';
 import Transaction from '../../models/transaction-model';
@@ -17,8 +18,7 @@ describe('TransactionService', () => {
       amount: Number((property.floorArea * charge.rate).toFixed(2)),
       chargeId: charge.id,
       propertyId: property.id,
-      transactionMonth: 'JAN',
-      transactionYear: 2021,
+      transactionPeriod: toTransactionPeriod(2021, 'JAN'),
       transactionType: 'charged',
     },
     {
@@ -26,8 +26,7 @@ describe('TransactionService', () => {
       amount: Number((property.floorArea * charge.rate).toFixed(2)),
       chargeId: charge.id,
       propertyId: property.id,
-      transactionMonth: 'DEC',
-      transactionYear: 2020,
+      transactionPeriod: toTransactionPeriod(2020, 'DEC'),
       transactionType: 'charged',
     },
   ];
@@ -45,7 +44,7 @@ describe('TransactionService', () => {
     }
   });
 
-  it('should post monthyl charges', async () => {
+  it('should post monthly charges', async () => {
     await target.postMonthlyCharges(2021, 'FEB', property.id);
     const transactions = await target.getTransactionByYearMonth(
       property.id,
@@ -53,9 +52,9 @@ describe('TransactionService', () => {
       'FEB',
       'charged'
     );
-    const expected = SEED.CHARGES.filter(c => c.postingType !== 'manual')
-      .map(c => c.id)
-      .sort();
+    const expected = SEED.CHARGES.filter(c => c.postingType !== 'manual').map(
+      c => c.id
+    );
     const actual = transactions.map(c => c.chargeId).sort();
     expect(actual).toEqual(expected); // actual calculation of amount is in charge-service.spec.ts
   });

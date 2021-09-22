@@ -17,6 +17,7 @@ export function mapAuthProfile(profile: Profile): AuthProfile {
     email: profile.email,
     mobileNumber: profile.mobileNumber,
     status: profile.status,
+    remarks: profile.remarks,
   };
 }
 

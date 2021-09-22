@@ -3,6 +3,7 @@ import {
   subtractFromYearMonth,
   toMonthName,
   toMonthValue,
+  toTransactionPeriod,
 } from '../dates';
 
 describe('dates', () => {
@@ -79,5 +80,10 @@ describe('dates', () => {
     });
 
     jest.useRealTimers();
+  });
+
+  it('should format to transaction period', () => {
+    const actual = toTransactionPeriod(2021, 'SEP');
+    expect(actual).toEqual(new Date('2021-09-01'));
   });
 });

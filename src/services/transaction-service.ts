@@ -1,10 +1,7 @@
-import {ApprovedAny} from '../@types';
-import {
-  Month,
-  PostingType,
-  TransactionAttr,
-  TransactionType,
-} from '../@types/models';
+import {Op, WhereOptions} from 'sequelize';
+
+import {Month, TransactionAttr, TransactionType} from '../@types/models';
+import {toTransactionPeriod} from '../@utils/dates';
 import {VERBIAGE} from '../constants';
 import Charge from '../models/charge-model';
 import Property from '../models/property-model';
@@ -24,10 +21,9 @@ export default class TransactionService {
     month: Month,
     transactionType?: TransactionType
   ) {
-    let criteria: ApprovedAny = {
+    let criteria: WhereOptions<Transaction> = {
       propertyId,
-      transactionYear: year,
-      transactionMonth: month,
+      transactionPeriod: toTransactionPeriod(year, month),
     };
     if (transactionType) {
       criteria = {
@@ -51,10 +47,11 @@ export default class TransactionService {
     if (!property) {
       throw new Error(VERBIAGE.NOT_FOUND);
     }
-
-    const postingTypes: PostingType[] = ['monthly', 'accrued'];
-    const charges = await Charge.findAll({where: {postingType: postingTypes}});
+    const charges = await Charge.findAll({
+      where: {postingType: {[Op.ne]: 'manual'}},
+    });
     const transactions = charges.map(async charge => {
+      const transactionPeriod = toTransactionPeriod(year, month);
       const amount = await this.chargeService.calculateAmountByChargeType(
         property,
         charge,
@@ -66,8 +63,7 @@ export default class TransactionService {
         chargeId: charge.id,
         propertyId,
         transactionType: 'charged',
-        transactionMonth: month,
-        transactionYear: year,
+        transactionPeriod,
       };
       return result;
     });
@@ -85,8 +81,7 @@ export default class TransactionService {
       const found = postedTransactions.find(p => {
         p.chargeId === item.chargeId &&
           p.propertyId === item.propertyId &&
-          p.transactionMonth === item.transactionMonth &&
-          p.transactionYear === item.transactionYear &&
+          p.transactionPeriod === item.transactionPeriod &&
           p.transactionType === item.transactionType &&
           p.amount === item.amount;
       });

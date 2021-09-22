@@ -11,7 +11,7 @@
 				"enum": [
 					"stakeholder",
 					"admin",
-					"user"
+					"unit owner"
 				]
 			},
 			"RecordStatus": {
@@ -23,6 +23,9 @@
 			},
 			"AuthProfile": {
 				"properties": {
+					"remarks": {
+						"type": "string"
+					},
 					"scopes": {
 						"type": "string"
 					},
@@ -183,6 +186,10 @@
 			},
 			"UpdateProfile": {
 				"properties": {
+					"remarks": {
+						"type": "string",
+						"nullable": true
+					},
 					"scopes": {
 						"type": "string"
 					},
@@ -268,6 +275,9 @@
 					},
 					"scopes": {
 						"type": "string"
+					},
+					"remarks": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -330,7 +340,8 @@
 				"enum": [
 					"monthly",
 					"manual",
-					"accrued"
+					"accrued",
+					"interest"
 				]
 			},
 			"ChargeAttr": {
@@ -370,23 +381,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Month": {
-				"type": "string",
-				"enum": [
-					"JAN",
-					"FEB",
-					"MAR",
-					"APR",
-					"MAY",
-					"JUN",
-					"JUL",
-					"AUG",
-					"SEP",
-					"OCT",
-					"NOV",
-					"DEC"
-				]
-			},
 			"TransactionType": {
 				"type": "string",
 				"enum": [
@@ -418,12 +412,9 @@
 						"type": "number",
 						"format": "double"
 					},
-					"transactionYear": {
-						"type": "number",
-						"format": "double"
-					},
-					"transactionMonth": {
-						"$ref": "#/components/schemas/Month"
+					"transactionPeriod": {
+						"type": "string",
+						"format": "date-time"
 					},
 					"transactionType": {
 						"$ref": "#/components/schemas/TransactionType"
@@ -440,8 +431,7 @@
 					"chargeId",
 					"propertyId",
 					"amount",
-					"transactionYear",
-					"transactionMonth",
+					"transactionPeriod",
 					"transactionType"
 				],
 				"type": "object",
@@ -473,6 +463,23 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"Month": {
+				"type": "string",
+				"enum": [
+					"JAN",
+					"FEB",
+					"MAR",
+					"APR",
+					"MAY",
+					"JUN",
+					"JUL",
+					"AUG",
+					"SEP",
+					"OCT",
+					"NOV",
+					"DEC"
+				]
 			},
 			"PostTransactionBody": {
 				"properties": {

@@ -80,6 +80,7 @@ export default class ProfileService {
     result.status = profile.status;
     result.scopes = profile.scopes;
     result.mobileNumber = profile.mobileNumber;
+    result.remarks = profile.remarks ?? undefined;
     await result.save();
     return mapAuthProfile(result);
   }

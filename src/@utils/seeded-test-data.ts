@@ -1,7 +1,8 @@
 import faker from 'faker';
 import {Sequelize} from 'sequelize-typescript';
 
-import {ProfileAttr} from '../@types/models';
+import {ChargeType, PostingType, ProfileAttr} from '../@types/models';
+import {CONSTANTS} from '../constants';
 import Charge from '../models/charge-model';
 import Community from '../models/community-model';
 import Profile from '../models/profile-model';
@@ -27,7 +28,7 @@ export const PROFILE_USER: ProfileAttr = {
   id: 2,
   username: 'testuser',
   password: hash(PROFILE_CREDS),
-  type: 'user',
+  type: 'unit owner',
   status: 'active',
 };
 
@@ -51,7 +52,7 @@ export const PROFILE_INACTIVE: ProfileAttr = {
 export const SEED = {
   COMMUNITIES: [
     {
-      id: 1,
+      id: CONSTANTS.COMMUNITY_ID,
       code: 'TOWER G & H',
       description: 'Hampton Gardens Tower G & H',
     },
@@ -59,8 +60,8 @@ export const SEED = {
   PROPERTIES: [
     {
       id: 1,
-      communityId: 1,
-      code: 'TOWER G',
+      communityId: CONSTANTS.COMMUNITY_ID,
+      code: 'G-111',
       floorArea: 32.5,
       address: faker.address.city(),
     },
@@ -68,52 +69,60 @@ export const SEED = {
   CHARGES: [
     {
       id: 1,
-      communityId: 1,
+      communityId: CONSTANTS.COMMUNITY_ID,
       code: 'CONDO DUES',
       rate: 52,
-      chargeType: 'unit',
-      postingType: 'monthly',
+      chargeType: 'unit' as ChargeType,
+      postingType: 'monthly' as PostingType,
     },
     {
       id: 2,
-      communityId: 1,
+      communityId: CONSTANTS.COMMUNITY_ID,
       code: 'ESTATE DUES',
       rate: 11,
-      chargeType: 'unit',
-      postingType: 'monthly',
+      chargeType: 'unit' as ChargeType,
+      postingType: 'monthly' as PostingType,
     },
     {
       id: 3,
-      communityId: 1,
+      communityId: CONSTANTS.COMMUNITY_ID,
       code: 'RPT COMMON',
       rate: 12.76,
-      chargeType: 'unit',
-      postingType: 'monthly',
+      chargeType: 'unit' as ChargeType,
+      postingType: 'monthly' as PostingType,
     },
     {
       id: 4,
-      communityId: 1,
+      communityId: CONSTANTS.COMMUNITY_ID,
       code: 'INTEREST',
       rate: 0.01,
-      chargeType: 'percentage',
-      postingType: 'accrued',
+      chargeType: 'percentage' as ChargeType,
+      postingType: 'interest' as PostingType,
     },
     {
       id: 5,
-      communityId: 1,
+      communityId: CONSTANTS.COMMUNITY_ID,
       code: 'PENALTY',
       rate: 0.02,
-      chargeType: 'percentage',
-      postingType: 'accrued',
+      chargeType: 'percentage' as ChargeType,
+      postingType: 'accrued' as PostingType,
       thresholdInMonths: 2,
     },
     {
       id: 6,
-      communityId: 1,
+      communityId: CONSTANTS.COMMUNITY_ID,
+      code: 'PENALTY_2',
+      rate: 0.02,
+      chargeType: 'percentage' as ChargeType,
+      postingType: 'accrued' as PostingType,
+    },
+    {
+      id: 7,
+      communityId: CONSTANTS.COMMUNITY_ID,
       code: 'WATER UTILITY',
       rate: 1,
-      chargeType: 'amount',
-      postingType: 'manual',
+      chargeType: 'amount' as ChargeType,
+      postingType: 'manual' as PostingType,
     },
   ],
   PROFILES: [PROFILE_ADMIN, PROFILE_USER, PROFILE_STAKEHOLDER],

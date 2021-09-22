@@ -7,12 +7,12 @@ import TransactionService from './transaction-service';
 export default class PropertyAccountService {
   private propertyService: PropertyService;
   private chargeService: ChargeService;
-  private tranasctionService: TransactionService;
+  private transactionService: TransactionService;
 
   constructor() {
     this.propertyService = new PropertyService();
     this.chargeService = new ChargeService();
-    this.tranasctionService = new TransactionService();
+    this.transactionService = new TransactionService();
   }
 
   public async getPropertyAcount(propertyId: number): Promise<PropertyAccount> {
@@ -29,7 +29,7 @@ export default class PropertyAccountService {
       propertyId,
       property: property,
       balance: await this.chargeService.getPropertyBalance(propertyId),
-      transactions: await this.tranasctionService.getTransactionByYearMonth(
+      transactions: await this.transactionService.getTransactionByYearMonth(
         propertyId,
         year,
         month

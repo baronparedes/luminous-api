@@ -60,7 +60,7 @@ async function seed() {
       code: 'INTEREST',
       rate: 0.01,
       chargeType: 'percentage',
-      postingType: 'accrued',
+      postingType: 'interest',
     },
     {
       id: 5,

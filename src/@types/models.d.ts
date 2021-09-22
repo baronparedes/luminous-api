@@ -1,6 +1,6 @@
-export type ProfileType = 'stakeholder' | 'admin' | 'user';
+export type ProfileType = 'stakeholder' | 'admin' | 'unit owner';
 export type ChargeType = 'unit' | 'percentage' | 'amount';
-export type PostingType = 'monthly' | 'manual' | 'accrued';
+export type PostingType = 'monthly' | 'manual' | 'accrued' | 'interest';
 export type PaymentType = 'cash' | 'check';
 export type TransactionType = 'charged' | 'collected';
 export type RecordStatus = 'active' | 'inactive';
@@ -18,6 +18,10 @@ export type Month =
   | 'NOV'
   | 'DEC';
 
+export type SavedRecord = {
+  id: number;
+};
+
 export type AuthProfile = {
   id: number;
   name: string;
@@ -27,6 +31,7 @@ export type AuthProfile = {
   type: ProfileType;
   status: RecordStatus;
   scopes?: string;
+  remarks?: string;
 };
 
 export type RegisterProfile = {
@@ -44,6 +49,7 @@ export type UpdateProfile = {
   type: ProfileType;
   status: RecordStatus;
   scopes?: string;
+  remarks?: string | null;
 };
 
 export type AuthResult = {
@@ -68,6 +74,7 @@ export interface ProfileAttr {
   type: ProfileType;
   status: RecordStatus;
   scopes?: string;
+  remarks?: string;
 }
 
 export interface PropertyAttr {
@@ -107,8 +114,7 @@ export interface TransactionAttr {
   propertyId: number;
   property?: PropertyAttr;
   amount: number;
-  transactionYear: number;
-  transactionMonth: Month;
+  transactionPeriod: Date;
   transactionType: TransactionType;
   waivedBy?: number;
   comments?: string;
