@@ -22,6 +22,11 @@ export type SavedRecord = {
   id: number;
 };
 
+export type Period = {
+  year: number;
+  month: Month;
+};
+
 export type AuthProfile = {
   id: number;
   name: string;

@@ -496,6 +496,8 @@ export function RegisterRoutes(app: express.Router) {
             function PropertyController_getPropertyAccount(request: any, response: any, next: any) {
             const args = {
                     propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
+                    year: {"in":"query","name":"year","dataType":"double"},
+                    month: {"in":"query","name":"month","ref":"Month"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

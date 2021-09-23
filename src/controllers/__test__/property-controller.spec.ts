@@ -1,6 +1,7 @@
 import faker from 'faker';
 
 import {RecordStatus} from '../../@types/models';
+import {getCurrentMonthYear} from '../../@utils/dates';
 import {
   generateProperty,
   generatePropertyAccount,
@@ -39,6 +40,7 @@ describe('PropertyController', () => {
   });
 
   it('should get property account', async () => {
+    const {year, month} = getCurrentMonthYear();
     const mockedPropertyAccount = generatePropertyAccount();
     const mock = jest
       .spyOn(PropertyAccountService.prototype, 'getPropertyAcount')
@@ -51,7 +53,10 @@ describe('PropertyController', () => {
       mockedPropertyAccount.propertyId
     );
     expect(mock).toBeCalledTimes(1);
-    expect(mock).toBeCalledWith(mockedPropertyAccount.propertyId);
+    expect(mock).toBeCalledWith(mockedPropertyAccount.propertyId, {
+      month,
+      year,
+    });
     expect(actual).toEqual(mockedPropertyAccount);
   });
 

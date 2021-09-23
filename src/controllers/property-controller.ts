@@ -14,7 +14,8 @@ import {
   SuccessResponse,
 } from 'tsoa';
 
-import {PropertyAttr, RecordStatus} from '../@types/models';
+import {Month, Period, PropertyAttr, RecordStatus} from '../@types/models';
+import {getCurrentMonthYear} from '../@utils/dates';
 import {VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
 import PropertyAccountService from '../services/property-account-service';
@@ -70,9 +71,19 @@ export class PropertyController extends Controller {
 
   @OperationId('GetPropertyAccount')
   @Get('/getPropertyAccount/{propertyId}')
-  public async getPropertyAccount(@Path() propertyId: number) {
+  public async getPropertyAccount(
+    @Path() propertyId: number,
+    @Query() year?: number,
+    @Query() month?: Month
+  ) {
+    const currentPeriod = getCurrentMonthYear();
+    const period: Period = {
+      year: year ?? currentPeriod.year,
+      month: month ?? currentPeriod.month,
+    };
     const result = await this.propertyAccountService.getPropertyAcount(
-      propertyId
+      propertyId,
+      period
     );
     return result;
   }

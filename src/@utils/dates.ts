@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-import {Month} from '../@types/models';
+import {Month, Period} from '../@types/models';
 
-export function getCurrentMonthYear() {
+export function getCurrentMonthYear(): Period {
   const [year, month] = moment().format('YYYY MMM').split(' ');
   return {
     year: Number(year),

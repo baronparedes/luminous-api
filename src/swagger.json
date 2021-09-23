@@ -987,6 +987,23 @@
 							"format": "double",
 							"type": "number"
 						}
+					},
+					{
+						"in": "query",
+						"name": "year",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "month",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
 					}
 				]
 			}
