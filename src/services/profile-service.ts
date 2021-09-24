@@ -23,7 +23,7 @@ export default class ProfileService {
     const {compare} = useHash();
     const match = compare(password, profile.password);
     if (!match) {
-      throw new Error('not match');
+      throw new Error(VERBIAGE.NOT_FOUND);
     }
   }
 

@@ -1,11 +1,12 @@
 import {Op, WhereOptions} from 'sequelize';
 
 import {Month, TransactionAttr, TransactionType} from '../@types/models';
-import {toTransactionPeriod} from '../@utils/dates';
+import {isSamePeriod, toPeriod, toTransactionPeriod} from '../@utils/dates';
 import {VERBIAGE} from '../constants';
 import Charge from '../models/charge-model';
 import Property from '../models/property-model';
 import Transaction from '../models/transaction-model';
+import {mapTransactions} from './@mappers';
 import ChargeService from './charge-service';
 
 export default class TransactionService {
@@ -35,7 +36,7 @@ export default class TransactionService {
       where: criteria,
       include: [Charge],
     });
-    return transactions;
+    return transactions.map(t => mapTransactions(t));
   }
 
   public async calculateMonthlyCharges(
@@ -77,15 +78,16 @@ export default class TransactionService {
     transactionsToBePosted: TransactionAttr[]
   ) {
     const dups: TransactionAttr[] = [];
-    for (const item of transactionsToBePosted) {
-      const found = postedTransactions.find(p => {
-        p.chargeId === item.chargeId &&
-          p.propertyId === item.propertyId &&
-          p.transactionPeriod === item.transactionPeriod &&
-          p.transactionType === item.transactionType &&
-          p.amount === item.amount;
-      });
-      found && dups.push(found);
+    for (const pt of postedTransactions) {
+      const found = transactionsToBePosted.filter(
+        t =>
+          t.chargeId === pt.chargeId &&
+          t.propertyId === pt.propertyId &&
+          isSamePeriod(t.transactionPeriod, pt.transactionPeriod) &&
+          t.transactionType === pt.transactionType &&
+          t.amount === pt.amount
+      );
+      found.length > 0 && dups.push(...found);
     }
     return dups;
   }
@@ -117,5 +119,18 @@ export default class TransactionService {
 
     const records = [...transactionsCalculated];
     await Transaction.bulkCreate(records, {validate: true});
+  }
+
+  public async getAvailablePeriodsByProperty(propertyId: number) {
+    const transactions = await Transaction.findAll({
+      attributes: ['transactionPeriod'],
+      group: ['transactionPeriod'],
+      where: {
+        propertyId,
+      },
+      order: [['transactionPeriod', 'DESC']],
+    });
+    const result = transactions.map(t => toPeriod(t.transactionPeriod));
+    return result;
   }
 }

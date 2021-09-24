@@ -42,6 +42,10 @@ class Transaction extends Model implements TransactionAttr {
   @Column
   transactionType!: TransactionType;
 
+  @AllowNull(true)
+  @Column
+  comments?: string;
+
   @Column
   @ForeignKey(() => Profile)
   waivedBy?: number;

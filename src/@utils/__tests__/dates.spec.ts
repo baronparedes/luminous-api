@@ -1,5 +1,6 @@
 import {
   getCurrentMonthYear,
+  isSamePeriod,
   subtractFromYearMonth,
   toMonthName,
   toMonthValue,
@@ -85,5 +86,18 @@ describe('dates', () => {
   it('should format to transaction period', () => {
     const actual = toTransactionPeriod(2021, 'SEP');
     expect(actual).toEqual(new Date('2021-09-01'));
+  });
+
+  it('should match same period', () => {
+    const targetMonth = 9 - 1; // This is September, since JS Date month are zero indexed;
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2021, targetMonth));
+
+    expect(
+      isSamePeriod('2021-09-01', new Date(2021, targetMonth))
+    ).toBeTruthy();
+    expect(isSamePeriod('2021-09-01', new Date())).toBeTruthy();
+
+    jest.useRealTimers();
   });
 });

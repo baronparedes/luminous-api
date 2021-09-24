@@ -501,6 +501,22 @@
 					"year"
 				],
 				"type": "object"
+			},
+			"Period": {
+				"properties": {
+					"month": {
+						"$ref": "#/components/schemas/Month"
+					},
+					"year": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"month",
+					"year"
+				],
+				"type": "object"
 			}
 		},
 		"securitySchemes": {
@@ -1196,7 +1212,11 @@
 						"description": "No content"
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -1208,6 +1228,42 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/transaction/getAvailablePeriods/{propertyId}": {
+			"get": {
+				"operationId": "GetAvailablePeriods",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Period"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		}
 	},

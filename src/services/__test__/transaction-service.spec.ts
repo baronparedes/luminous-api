@@ -29,6 +29,14 @@ describe('TransactionService', () => {
       transactionPeriod: toTransactionPeriod(2020, 'DEC'),
       transactionType: 'charged',
     },
+    {
+      id: 3,
+      amount: Number(((property.floorArea * charge.rate) / 2).toFixed(2)),
+      chargeId: charge.id,
+      propertyId: property.id,
+      transactionPeriod: toTransactionPeriod(2020, 'DEC'),
+      transactionType: 'charged',
+    },
   ];
 
   beforeAll(async () => {
@@ -36,12 +44,19 @@ describe('TransactionService', () => {
     await Transaction.bulkCreate([...seedTransactions]);
   });
 
+  it('should get available periods for a property', async () => {
+    const actual = await target.getAvailablePeriodsByProperty(property.id);
+    expect(actual.length).toEqual(2);
+    expect(actual[0].year).toEqual(2021);
+    expect(actual[0].month).toEqual('JAN');
+    expect(actual[1].year).toEqual(2020);
+    expect(actual[1].month).toEqual('DEC');
+  });
+
   it('should not allow duplicate charges', async () => {
-    try {
-      await target.postMonthlyCharges(2021, 'JAN', property.id);
-    } catch (err) {
-      expect(err.message).toEqual(VERBIAGE.DUPLICATE_CHARGES);
-    }
+    await expect(
+      target.postMonthlyCharges(2021, 'JAN', property.id)
+    ).rejects.toThrowError(VERBIAGE.DUPLICATE_CHARGES);
   });
 
   it('should post monthly charges', async () => {

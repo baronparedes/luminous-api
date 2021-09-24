@@ -6,6 +6,7 @@ import {
   PROFILE_CREDS,
   SEED,
 } from '../../@utils/seeded-test-data';
+import {VERBIAGE} from '../../constants';
 import ProfileService from '../profile-service';
 
 describe('ProfileService', () => {
@@ -21,13 +22,34 @@ describe('ProfileService', () => {
     expect(actual.length).toBe(4);
   });
 
-  it('should get correct profile', async () => {
-    const expected = faker.random.arrayElement(SEED.PROFILES);
-    const actual = await target.getProfileByUsernameAndPassword(
-      expected.username,
-      PROFILE_CREDS
-    );
-    expect(actual.id).toEqual(expected.id);
+  describe('when fetching a profile by username and password', () => {
+    it('should get correct profile', async () => {
+      const expected = faker.random.arrayElement(SEED.PROFILES);
+      const actual = await target.getProfileByUsernameAndPassword(
+        expected.username,
+        PROFILE_CREDS
+      );
+      expect(actual.id).toEqual(expected.id);
+    });
+
+    it('should throw an error when profile is not found', async () => {
+      await expect(
+        target.getProfileByUsernameAndPassword(
+          faker.internet.userName(),
+          PROFILE_CREDS
+        )
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
+    });
+
+    it('should throw an error when profile password does not match', async () => {
+      const expected = faker.random.arrayElement(SEED.PROFILES);
+      await expect(
+        target.getProfileByUsernameAndPassword(
+          expected.username,
+          faker.internet.password()
+        )
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
+    });
   });
 
   describe('when managing profiles', () => {
@@ -92,6 +114,19 @@ describe('ProfileService', () => {
       expect(actual?.status).toEqual(updatedProfile.status);
       expect(actual?.type).toEqual(updatedProfile.type);
       expect(actual?.mobileNumber).toEqual(updatedProfile.mobileNumber);
+    });
+
+    it('should throw an error when profile is not found', async () => {
+      const updatedProfile = generateProfile();
+      await expect(
+        target.update(faker.datatype.number(), {
+          email: updatedProfile.email,
+          name: updatedProfile.name,
+          status: updatedProfile.status,
+          type: updatedProfile.type,
+          mobileNumber: updatedProfile.mobileNumber,
+        })
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
     });
   });
 });

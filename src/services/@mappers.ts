@@ -2,10 +2,12 @@ import {
   AuthProfile,
   PropertyAssignmentAttr,
   PropertyAttr,
+  TransactionAttr,
 } from '../@types/models';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
+import Transaction from '../models/transaction-model';
 
 export function mapAuthProfile(profile: Profile): AuthProfile {
   return {
@@ -39,5 +41,20 @@ export function mapPropertyAssignment(
     propertyId: model.propertyId,
     profile: model.profile,
     property: model.property,
+  };
+}
+
+export function mapTransactions(model: Transaction): TransactionAttr {
+  return {
+    id: model.id,
+    chargeId: model.chargeId,
+    charge: model.charge,
+    propertyId: model.propertyId,
+    property: model.property,
+    amount: model.amount,
+    transactionPeriod: model.transactionPeriod,
+    transactionType: model.transactionType,
+    waivedBy: model.waivedBy,
+    comments: model.comments,
   };
 }
