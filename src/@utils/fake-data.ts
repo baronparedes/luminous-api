@@ -9,6 +9,7 @@ import {
   PropertyAttr,
   RecordStatus,
   RegisterProfile,
+  SettingAttr,
   TransactionAttr,
   TransactionType,
 } from '../@types/models';
@@ -98,5 +99,12 @@ export const generatePropertyAccount = (
     propertyId: Number(property.id),
     property,
     transactions,
+  };
+};
+
+export const generateSetting = (): SettingAttr => {
+  return {
+    key: faker.random.word(),
+    value: faker.random.words(),
   };
 };

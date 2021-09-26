@@ -124,3 +124,8 @@ export interface TransactionAttr {
   waivedBy?: number;
   comments?: string;
 }
+
+export interface SettingAttr {
+  key: string;
+  value: string;
+}

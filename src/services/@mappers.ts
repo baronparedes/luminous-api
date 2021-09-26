@@ -2,11 +2,13 @@ import {
   AuthProfile,
   PropertyAssignmentAttr,
   PropertyAttr,
+  SettingAttr,
   TransactionAttr,
 } from '../@types/models';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
+import Setting from '../models/setting-model';
 import Transaction from '../models/transaction-model';
 
 export function mapAuthProfile(profile: Profile): AuthProfile {
@@ -56,5 +58,12 @@ export function mapTransactions(model: Transaction): TransactionAttr {
     transactionType: model.transactionType,
     waivedBy: model.waivedBy,
     comments: model.comments,
+  };
+}
+
+export function mapSettings(model: Setting): SettingAttr {
+  return {
+    key: model.key,
+    value: model.value,
   };
 }

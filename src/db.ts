@@ -5,6 +5,7 @@ import config from './config';
 import {CONSTANTS} from './constants';
 import Charge from './models/charge-model';
 import Community from './models/community-model';
+import Setting from './models/setting-model';
 
 const sequelize = new Sequelize(
   config.DB.DB_NAME,
@@ -81,6 +82,15 @@ async function seed() {
     },
   ];
 
+  const settings = [
+    {
+      id: 1,
+      key: 'BILLING_CUTOFF_DAY',
+      value: '10',
+      communityId: CONSTANTS.COMMUNITY_ID,
+    },
+  ];
+
   await Community.bulkCreate(communities, {
     updateOnDuplicate: ['description'],
   });
@@ -95,6 +105,10 @@ async function seed() {
       'postingType',
       'thresholdInMonths',
     ],
+  });
+
+  await Setting.bulkCreate(settings, {
+    updateOnDuplicate: ['key', 'value', 'communityId'],
   });
 }
 

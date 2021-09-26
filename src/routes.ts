@@ -9,6 +9,8 @@ import { ProfileController } from './controllers/profile-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PropertyController } from './controllers/property-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { SettingController } from './controllers/setting-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TransactionController } from './controllers/transaction-controller';
 import { expressAuthentication } from './auth';
 // @ts-ignore - no great way to install types from subpackage
@@ -184,6 +186,15 @@ const models: TsoaRoute.Models = {
     "Month": {
         "dataType": "refAlias",
         "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["JAN"]},{"dataType":"enum","enums":["FEB"]},{"dataType":"enum","enums":["MAR"]},{"dataType":"enum","enums":["APR"]},{"dataType":"enum","enums":["MAY"]},{"dataType":"enum","enums":["JUN"]},{"dataType":"enum","enums":["JUL"]},{"dataType":"enum","enums":["AUG"]},{"dataType":"enum","enums":["SEP"]},{"dataType":"enum","enums":["OCT"]},{"dataType":"enum","enums":["NOV"]},{"dataType":"enum","enums":["DEC"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SettingAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "key": {"dataType":"string","required":true},
+            "value": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PostTransactionBody": {
@@ -617,6 +628,74 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.updatePropertyAssignments.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/setting/getAll',
+
+            function SettingController_getAll(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new SettingController();
+
+
+            const promise = controller.getAll.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/setting/getSettingValue',
+
+            function SettingController_getSettingValue(request: any, response: any, next: any) {
+            const args = {
+                    key: {"in":"query","name":"key","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new SettingController();
+
+
+            const promise = controller.getSettingValue.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.patch('/api/setting/updateSettingValue',
+
+            function SettingController_updateSettingValue(request: any, response: any, next: any) {
+            const args = {
+                    setting: {"in":"body","name":"setting","required":true,"ref":"SettingAttr"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new SettingController();
+
+
+            const promise = controller.updateSettingValue.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
