@@ -1257,7 +1257,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
@@ -1278,7 +1282,11 @@
 						"description": "No content"
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,

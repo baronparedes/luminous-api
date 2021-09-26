@@ -654,6 +654,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/setting/getSettingValue',
+            authenticateMiddleware([{"bearer":[]}]),
 
             function SettingController_getSettingValue(request: any, response: any, next: any) {
             const args = {
@@ -677,6 +678,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/setting/updateSettingValue',
+            authenticateMiddleware([{"bearer":[]}]),
 
             function SettingController_updateSettingValue(request: any, response: any, next: any) {
             const args = {

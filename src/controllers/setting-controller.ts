@@ -1,8 +1,19 @@
-import {Body, Controller, Get, OperationId, Patch, Query, Route} from 'tsoa';
+import {
+  Body,
+  Controller,
+  Get,
+  NoSecurity,
+  OperationId,
+  Patch,
+  Query,
+  Route,
+  Security,
+} from 'tsoa';
 
 import {SettingAttr} from '../@types/models';
 import SettingService from '../services/setting-service';
 
+@Security('bearer')
 @Route('/api/setting')
 export class SettingController extends Controller {
   private settingService: SettingService;
@@ -12,6 +23,7 @@ export class SettingController extends Controller {
     this.settingService = new SettingService();
   }
 
+  @NoSecurity()
   @OperationId('GetAllSettings')
   @Get('/getAll')
   public async getAll() {
