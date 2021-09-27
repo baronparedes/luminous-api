@@ -1,18 +1,12 @@
-import {
-  AllowNull,
-  Column,
-  DataType,
-  Model,
-  Table,
-  Unique,
-} from 'sequelize-typescript';
+import {AllowNull, Column, DataType, Model, Table} from 'sequelize-typescript';
 
 import {CommunityAttr} from '../@types/models';
 
-@Table
+@Table({
+  indexes: [{unique: true, fields: ['code']}],
+})
 class Community extends Model implements CommunityAttr {
   @AllowNull(false)
-  @Unique
   @Column(DataType.CITEXT)
   code!: string;
 

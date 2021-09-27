@@ -1,0 +1,1346 @@
+[
+  {
+    "id": 1,
+    "code": "G-101",
+    "address": "Unit G-101 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 2,
+    "code": "G-102",
+    "address": "Unit G-102 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 3,
+    "code": "G-103",
+    "address": "Unit G-103 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 4,
+    "code": "G-104",
+    "address": "Unit G-104 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 5,
+    "code": "G-105",
+    "address": "Unit G-105 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 6,
+    "code": "G-106",
+    "address": "Unit G-106 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 7,
+    "code": "G-107",
+    "address": "Unit G-107 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 8,
+    "code": "G-108",
+    "address": "Unit G-108 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 9,
+    "code": "G-109",
+    "address": "Unit G-109 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 10,
+    "code": "G-110",
+    "address": "Unit G-110 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 52.25,
+    "status": "active"
+  },
+  {
+    "id": 11,
+    "code": "G-111",
+    "address": "Unit G-111 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 12,
+    "code": "G-112",
+    "address": "Unit G-112 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 24.5,
+    "status": "active"
+  },
+  {
+    "id": 13,
+    "code": "G-113",
+    "address": "Unit G-113 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 28.87,
+    "status": "active"
+  },
+  {
+    "id": 14,
+    "code": "G-201",
+    "address": "Unit G-201 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 15,
+    "code": "G-202",
+    "address": "Unit G-202 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 16,
+    "code": "G-203",
+    "address": "Unit G-203 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 17,
+    "code": "G-204",
+    "address": "Unit G-204 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 18,
+    "code": "G-205",
+    "address": "Unit G-205 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 19,
+    "code": "G-206",
+    "address": "Unit G-206 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 20,
+    "code": "G-207",
+    "address": "Unit G-207 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 52.25,
+    "status": "active"
+  },
+  {
+    "id": 21,
+    "code": "G-208",
+    "address": "Unit G-208 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 22,
+    "code": "G-209",
+    "address": "Unit G-209 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 23,
+    "code": "G-210",
+    "address": "Unit G-210 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 24,
+    "code": "G-211",
+    "address": "Unit G-211 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 25,
+    "code": "G-212",
+    "address": "Unit G-212 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 26,
+    "code": "G-213",
+    "address": "Unit G-213 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 51.39,
+    "status": "active"
+  },
+  {
+    "id": 27,
+    "code": "G-214",
+    "address": "Unit G-214 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 51,
+    "status": "active"
+  },
+  {
+    "id": 28,
+    "code": "G-215",
+    "address": "Unit G-215 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 29,
+    "code": "G-216",
+    "address": "Unit G-216 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 30,
+    "code": "G-301",
+    "address": "Unit G-301 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 31,
+    "code": "G-302",
+    "address": "Unit G-302 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 32,
+    "code": "G-303",
+    "address": "Unit G-303 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 33,
+    "code": "G-304",
+    "address": "Unit G-304 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 34,
+    "code": "G-305",
+    "address": "Unit G-305 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 35,
+    "code": "G-306",
+    "address": "Unit G-306 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 36,
+    "code": "G-307",
+    "address": "Unit G-307 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 37,
+    "code": "G-308",
+    "address": "Unit G-308 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 38,
+    "code": "G-309",
+    "address": "Unit G-309 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 39,
+    "code": "G-310",
+    "address": "Unit G-310 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 40,
+    "code": "G-311",
+    "address": "Unit G-311 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 41,
+    "code": "G-312",
+    "address": "Unit G-312 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 42,
+    "code": "G-313",
+    "address": "Unit G-313 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 43,
+    "code": "G-314",
+    "address": "Unit G-314 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 44,
+    "code": "G-315",
+    "address": "Unit G-315 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 45,
+    "code": "G-316",
+    "address": "Unit G-316 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 46,
+    "code": "G-401",
+    "address": "Unit G-401 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 47,
+    "code": "G-402",
+    "address": "Unit G-402 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 48,
+    "code": "G-403",
+    "address": "Unit G-403 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 49,
+    "code": "G-404",
+    "address": "Unit G-404 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 50,
+    "code": "G-405",
+    "address": "Unit G-405 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 51,
+    "code": "G-406",
+    "address": "Unit G-406 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 52,
+    "code": "G-407",
+    "address": "Unit G-407 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 53,
+    "code": "G-408",
+    "address": "Unit G-408 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 54,
+    "code": "G-409",
+    "address": "Unit G-409 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 55,
+    "code": "G-410",
+    "address": "Unit G-410 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 56,
+    "code": "G-411",
+    "address": "Unit G-411 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 57,
+    "code": "G-412",
+    "address": "Unit G-412 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 58,
+    "code": "G-413",
+    "address": "Unit G-413 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 59,
+    "code": "G-414",
+    "address": "Unit G-414 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 60,
+    "code": "G-415",
+    "address": "Unit G-415 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 61,
+    "code": "G-416",
+    "address": "Unit G-416 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 62,
+    "code": "G-501",
+    "address": "Unit G-501 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 63,
+    "code": "G-502",
+    "address": "Unit G-502 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 64,
+    "code": "G-503",
+    "address": "Unit G-503 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 65,
+    "code": "G-504",
+    "address": "Unit G-504 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 66,
+    "code": "G-505",
+    "address": "Unit G-505 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 67,
+    "code": "G-506/507",
+    "address": "Unit G-506/507er G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 71.5,
+    "status": "active"
+  },
+  {
+    "id": 68,
+    "code": "G-508",
+    "address": "Unit G-508 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 69,
+    "code": "G-509",
+    "address": "Unit G-509 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 70,
+    "code": "G-510",
+    "address": "Unit G-510 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 52.25,
+    "status": "active"
+  },
+  {
+    "id": 71,
+    "code": "G-511",
+    "address": "Unit G-511 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 72,
+    "code": "G-512",
+    "address": "Unit G-512 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 73,
+    "code": "G-513",
+    "address": "Unit G-513 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 74,
+    "code": "G-514",
+    "address": "Unit G-514 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 75,
+    "code": "G-515",
+    "address": "Unit G-515 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 76,
+    "code": "G-516",
+    "address": "Unit G-516 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 77,
+    "code": "G-601",
+    "address": "Unit G-601 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 78,
+    "code": "G-602",
+    "address": "Unit G-602 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 79,
+    "code": "G-603",
+    "address": "Unit G-603 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 80,
+    "code": "G-604",
+    "address": "Unit G-604 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 81,
+    "code": "G-605",
+    "address": "Unit G-605 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 82,
+    "code": "G-606",
+    "address": "Unit G-606 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 83,
+    "code": "G-607",
+    "address": "Unit G-607 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 84,
+    "code": "G-608",
+    "address": "Unit G-608 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 85,
+    "code": "G-609",
+    "address": "Unit G-609 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 86,
+    "code": "G-610",
+    "address": "Unit G-610 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 87,
+    "code": "G-611",
+    "address": "Unit G-611 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 88,
+    "code": "G-612",
+    "address": "Unit G-612 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 89,
+    "code": "G-613",
+    "address": "Unit G-613 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 90,
+    "code": "G-614",
+    "address": "Unit G-614 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 91,
+    "code": "G-615",
+    "address": "Unit G-615 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 92,
+    "code": "G-616",
+    "address": "Unit G-616 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 93,
+    "code": "G-LG01",
+    "address": "Unit G-LG01 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 94,
+    "code": "G-LG02",
+    "address": "Unit G-LG02 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 95,
+    "code": "G-LG03",
+    "address": "Unit G-LG03 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 96,
+    "code": "G-LG04",
+    "address": "Unit G-LG04 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 97,
+    "code": "G-LG05",
+    "address": "Unit G-LG05 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.28,
+    "status": "active"
+  },
+  {
+    "id": 98,
+    "code": "G-LG06",
+    "address": "Unit G-LG06 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.28,
+    "status": "active"
+  },
+  {
+    "id": 99,
+    "code": "G-LG07",
+    "address": "Unit G-LG07 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 100,
+    "code": "G-LG08",
+    "address": "Unit G-LG08 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 24.5,
+    "status": "active"
+  },
+  {
+    "id": 101,
+    "code": "G-LG09",
+    "address": "Unit G-LG09 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 102,
+    "code": "G-LG10",
+    "address": "Unit G-LG10 Tower GH Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 103,
+    "code": "G-LG11",
+    "address": "Unit G-LG11 Tower GH Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 28.87,
+    "status": "active"
+  },
+  {
+    "id": 104,
+    "code": "G-PS05",
+    "address": "Unit G-515 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 12.5,
+    "status": "active"
+  },
+  {
+    "id": 105,
+    "code": "G-PS10",
+    "address": "Unit G-203 Tower G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 12.5,
+    "status": "active"
+  },
+  {
+    "id": 106,
+    "code": "H-114",
+    "address": "Unit H-114 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 28.87,
+    "status": "active"
+  },
+  {
+    "id": 107,
+    "code": "H-115",
+    "address": "Unit H-115 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 24.5,
+    "status": "active"
+  },
+  {
+    "id": 108,
+    "code": "H-116",
+    "address": "Unit H-116 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 109,
+    "code": "H-117",
+    "address": "Unit H-117 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 110,
+    "code": "H-118",
+    "address": "Unit H-118 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 111,
+    "code": "H-119",
+    "address": "Unit H-119 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 112,
+    "code": "H-120",
+    "address": "Unit H-120 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 113,
+    "code": "H-121",
+    "address": "Unit H-121 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 114,
+    "code": "H-122",
+    "address": "Unit H-122 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 115,
+    "code": "H-123",
+    "address": "Unit H-123 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 116,
+    "code": "H-124",
+    "address": "Unit H-124 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 117,
+    "code": "H-217",
+    "address": "Unit H-217 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 118,
+    "code": "H-218",
+    "address": "Unit H-218 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 119,
+    "code": "H-219",
+    "address": "Unit H-219 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 120,
+    "code": "H-220",
+    "address": "Unit H-220 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 121,
+    "code": "H-221",
+    "address": "Unit H-221 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 122,
+    "code": "H-222",
+    "address": "Unit H-222 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 123,
+    "code": "H-223",
+    "address": "Unit H-223 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 124,
+    "code": "H-224",
+    "address": "Unit H-224 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 125,
+    "code": "H-225",
+    "address": "Unit H-225 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 126,
+    "code": "H-226",
+    "address": "Unit H-226 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 127,
+    "code": "H-227",
+    "address": "Unit H-227 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 128,
+    "code": "H-228",
+    "address": "Unit H-228 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 51,
+    "status": "active"
+  },
+  {
+    "id": 129,
+    "code": "H-229",
+    "address": "Unit H-229 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 130,
+    "code": "H-317",
+    "address": "Unit H-317 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 131,
+    "code": "H-318",
+    "address": "Unit H-318 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 132,
+    "code": "H-319",
+    "address": "Unit H-319 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 133,
+    "code": "H-320",
+    "address": "Unit H-320 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 134,
+    "code": "H-321",
+    "address": "Unit H-321 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 135,
+    "code": "H-322",
+    "address": "Unit H-322 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 136,
+    "code": "H-323",
+    "address": "Unit H-323 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 137,
+    "code": "H-324",
+    "address": "Unit H-324 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 138,
+    "code": "H-325",
+    "address": "Unit H-325 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 139,
+    "code": "H-326",
+    "address": "Unit H-326 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 140,
+    "code": "H-327",
+    "address": "Unit H-327 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 141,
+    "code": "H-328",
+    "address": "Unit H-328 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 142,
+    "code": "H-329",
+    "address": "Unit H-329 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 51,
+    "status": "active"
+  },
+  {
+    "id": 143,
+    "code": "H-417",
+    "address": "Unit H-417 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 144,
+    "code": "H-418",
+    "address": "Unit H-418 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 145,
+    "code": "H-419",
+    "address": "Unit H-419 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 146,
+    "code": "H-420",
+    "address": "Unit H-420 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 147,
+    "code": "H-421",
+    "address": "Unit H-421 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 148,
+    "code": "H-422",
+    "address": "Unit H-422 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 149,
+    "code": "H-423",
+    "address": "Unit H-423 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 150,
+    "code": "H-424",
+    "address": "Unit H-424 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 151,
+    "code": "H-425",
+    "address": "Unit H-425 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 152,
+    "code": "H-426",
+    "address": "Unit H-426 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 153,
+    "code": "H-427",
+    "address": "Unit H-427 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 154,
+    "code": "H-428",
+    "address": "Unit H-428 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 155,
+    "code": "H-429",
+    "address": "Unit H-429 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 156,
+    "code": "H-517",
+    "address": "Unit H-517 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 157,
+    "code": "H-518",
+    "address": "Unit H-518 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 158,
+    "code": "H-519",
+    "address": "Unit H-519 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 159,
+    "code": "H-520",
+    "address": "Unit H-520 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 160,
+    "code": "H-521",
+    "address": "Unit H-521 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 161,
+    "code": "H-522",
+    "address": "Unit H-522 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 162,
+    "code": "H-523",
+    "address": "Unit H-523 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 163,
+    "code": "H-524",
+    "address": "Unit H-524 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 164,
+    "code": "H-525",
+    "address": "Unit H-525 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 165,
+    "code": "H-526",
+    "address": "Unit H-526 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 166,
+    "code": "H-527",
+    "address": "Unit H-527 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 167,
+    "code": "H-528",
+    "address": "Unit H-528 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 168,
+    "code": "H-529",
+    "address": "Unit H-529 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 169,
+    "code": "H-617",
+    "address": "Unit H-617 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 170,
+    "code": "H-618",
+    "address": "Unit H-618 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 171,
+    "code": "H-619",
+    "address": "Unit H-619 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 172,
+    "code": "H-620",
+    "address": "Unit H-620 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.89,
+    "status": "active"
+  },
+  {
+    "id": 173,
+    "code": "H-621",
+    "address": "Unit H-621 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 31.75,
+    "status": "active"
+  },
+  {
+    "id": 174,
+    "code": "H-622",
+    "address": "Unit H-622 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 175,
+    "code": "H-623",
+    "address": "Unit H-623 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 176,
+    "code": "H-624",
+    "address": "Unit H-624 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.67,
+    "status": "active"
+  },
+  {
+    "id": 177,
+    "code": "H-625",
+    "address": "Unit H-625 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 178,
+    "code": "H-626",
+    "address": "Unit H-626 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 179,
+    "code": "H-627",
+    "address": "Unit H-627 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 180,
+    "code": "H-628",
+    "address": "Unit H-628 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 181,
+    "code": "H-629",
+    "address": "Unit H-629 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 182,
+    "code": "H-LG112",
+    "address": "Unit H-LG112 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 183,
+    "code": "H-LG113",
+    "address": "Unit H-LG113 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 28.87,
+    "status": "active"
+  },
+  {
+    "id": 184,
+    "code": "H-LG114",
+    "address": "Unit H-LG114 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 24.5,
+    "status": "active"
+  },
+  {
+    "id": 185,
+    "code": "H-LG115",
+    "address": "Unit H-LG115 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 19.25,
+    "status": "active"
+  },
+  {
+    "id": 186,
+    "code": "H-LG116",
+    "address": "Unit H-LG116 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 187,
+    "code": "H-LG117",
+    "address": "Unit H-LG117 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.28,
+    "status": "active"
+  },
+  {
+    "id": 188,
+    "code": "H-LG118",
+    "address": "Unit H-LG118 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 33.28,
+    "status": "active"
+  },
+  {
+    "id": 189,
+    "code": "H-LG119",
+    "address": "Unit H-LG119 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 39.75,
+    "status": "active"
+  },
+  {
+    "id": 190,
+    "code": "H-LG120",
+    "address": "Unit H-LG120 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 191,
+    "code": "H-LG121",
+    "address": "Unit H-LG121 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  },
+  {
+    "id": 192,
+    "code": "H-LG122",
+    "address": "Unit H-LG122 Tower H Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
+    "floorArea": 38.5,
+    "status": "active"
+  }
+]

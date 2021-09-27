@@ -7,12 +7,13 @@ import {
   Model,
   NotEmpty,
   Table,
-  Unique,
 } from 'sequelize-typescript';
 
 import {ProfileAttr, ProfileType, RecordStatus} from '../@types/models';
 
-@Table
+@Table({
+  indexes: [{unique: true, fields: ['username']}],
+})
 class Profile extends Model implements ProfileAttr {
   @AllowNull(false)
   @NotEmpty
@@ -21,7 +22,6 @@ class Profile extends Model implements ProfileAttr {
 
   @AllowNull(false)
   @NotEmpty
-  @Unique
   @Column(DataType.CITEXT)
   username!: string;
 

@@ -1,10 +1,14 @@
 import {Dialect} from 'sequelize';
 import {Sequelize} from 'sequelize-typescript';
 
+import profilesData from './@seed/profiles.json';
+import propertiesData from './@seed/properties.json';
 import config from './config';
 import {CONSTANTS} from './constants';
 import Charge from './models/charge-model';
 import Community from './models/community-model';
+import Profile from './models/profile-model';
+import Property from './models/property-model';
 import Setting from './models/setting-model';
 
 const sequelize = new Sequelize(
@@ -91,6 +95,10 @@ async function seed() {
     },
   ];
 
+  const properties = propertiesData.map(p => {
+    return {...p, communityId: CONSTANTS.COMMUNITY_ID};
+  });
+
   await Community.bulkCreate(communities, {
     updateOnDuplicate: ['description'],
   });
@@ -110,6 +118,20 @@ async function seed() {
   await Setting.bulkCreate(settings, {
     updateOnDuplicate: ['key', 'value', 'communityId'],
   });
+
+  await Property.bulkCreate(properties, {
+    updateOnDuplicate: [
+      'code',
+      'address',
+      'floorArea',
+      'status',
+      'communityId',
+    ],
+  });
+
+  await Profile.bulkCreate(profilesData, {
+    updateOnDuplicate: ['username', 'type', 'status'],
+  });
 }
 
 async function enableExtensions() {
@@ -122,7 +144,7 @@ export async function dbInit() {
   await sequelize.authenticate();
   await enableExtensions();
   if (config.DB.SYNC) {
-    await sequelize.sync({alter: true});
+    await sequelize.sync({force: true});
     await seed();
   }
 }

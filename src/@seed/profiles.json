@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "name": "Baron Patrick T Paredes",
+      "username": "baronp",
+      "password": "$2b$12$QxwLHoOu22SC4gctUrjRDOGlK8nOQgXm8ObMyMycG79twIQSaKOKq",
+      "email": "admin@luminous.com",
+      "mobileNumber": "09999999999",
+      "type": "admin",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "name": "Redentor Manalo",
+      "username": "RManalo1978",
+      "password": "$2b$12$Iguc6yD88XvQdkb5AlOXmOKLbGRWeQXcg3SPNIlp.50XhnVDLUAS6",
+      "email": "admin@luminous.com",
+      "mobileNumber": "09999999999",
+      "type": "admin",
+      "status": "active"
+    }
+  ]

@@ -7,18 +7,18 @@ import {
   Model,
   NotEmpty,
   Table,
-  Unique,
 } from 'sequelize-typescript';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
 import {CONSTANTS} from '../constants';
 import Community from './community-model';
 
-@Table
+@Table({
+  indexes: [{unique: true, fields: ['code']}],
+})
 class Property extends Model implements PropertyAttr {
   @AllowNull(false)
   @NotEmpty
-  @Unique
   @Column
   code!: string;
 

@@ -6,7 +6,6 @@ import {
   ForeignKey,
   Model,
   Table,
-  Unique,
 } from 'sequelize-typescript';
 
 import {
@@ -17,10 +16,11 @@ import {
 } from '../@types/models';
 import Community from './community-model';
 
-@Table
+@Table({
+  indexes: [{unique: true, fields: ['code']}],
+})
 class Charge extends Model implements ChargeAttr {
   @AllowNull(false)
-  @Unique
   @Column(DataType.CITEXT)
   code!: string;
 
