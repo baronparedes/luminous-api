@@ -1,0 +1,45 @@
+[
+    {
+       "id": 1,
+       "code": "CONDO DUES",
+       "rate": 52,
+       "chargeType": "unit",
+       "postingType": "monthly"
+    },
+    {
+       "id": 2,
+       "code": "ESTATE DUES",
+       "rate": 11,
+       "chargeType": "unit",
+       "postingType": "monthly"
+    },
+    {
+       "id": 3,
+       "code": "RPT COMMON",
+       "rate": 12.76,
+       "chargeType": "unit",
+       "postingType": "monthly"
+    },
+    {
+       "id": 4,
+       "code": "INTEREST",
+       "rate": 0.01,
+       "chargeType": "percentage",
+       "postingType": "interest"
+    },
+    {
+       "id": 5,
+       "code": "PENALTY",
+       "rate": 0.02,
+       "chargeType": "percentage",
+       "postingType": "accrued",
+       "thresholdInMonths": 2
+    },
+    {
+       "id": 6,
+       "code": "WATER UTILITY",
+       "rate": 1,
+       "chargeType": "amount",
+       "postingType": "manual"
+    }
+ ]
