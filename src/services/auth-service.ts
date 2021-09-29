@@ -4,6 +4,7 @@ import {ApprovedAny} from '../@types';
 import {AuthProfile, AuthResult} from '../@types/models';
 import config from '../config';
 import {VERBIAGE} from '../constants';
+import {ApiError} from '../errors';
 import ProfileService from './profile-service';
 
 export default class AuthService {
@@ -17,7 +18,7 @@ export default class AuthService {
     try {
       return encodedCredentials.split(' ')[1];
     } catch {
-      throw new Error(VERBIAGE.FAILED_AUTHENTICATION);
+      throw new ApiError(401, VERBIAGE.FAILED_AUTHENTICATION);
     }
   }
 
@@ -62,19 +63,19 @@ export default class AuthService {
     const token = this.getAuthCredentials(encodedCredentials);
     return new Promise((resolve, reject) => {
       if (!token) {
-        reject(new Error(VERBIAGE.FAILED_AUTHENTICATION));
+        reject(new ApiError(401, VERBIAGE.FAILED_AUTHENTICATION));
       }
       const verified: jwt.VerifyCallback<ApprovedAny> = (err, decoded) => {
         if (err) {
           if (err instanceof jwt.TokenExpiredError) {
-            reject(new Error(VERBIAGE.EXPIRED_AUTHENTICATION));
+            reject(new ApiError(401, VERBIAGE.FAILED_AUTHENTICATION));
           } else {
             reject(err);
           }
           return;
         }
         if (decoded && this.isProfileInScope(decoded, scopes)) resolve(decoded);
-        else reject(new Error(VERBIAGE.FAILED_AUTHENTICATION));
+        else reject(new ApiError(401, VERBIAGE.FAILED_AUTHENTICATION));
       };
       jwt.verify(token, config.JWT_ACCESS_TOKEN, {}, verified);
     });

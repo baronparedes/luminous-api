@@ -1,6 +1,17 @@
-import {Body, Controller, Get, Path, Post, Route, Security} from 'tsoa';
+import {
+  Body,
+  Controller,
+  Get,
+  Path,
+  Post,
+  Response,
+  Route,
+  Security,
+} from 'tsoa';
 
 import {Month} from '../@types/models';
+import {VERBIAGE} from '../constants';
+import {ApiError} from '../errors';
 import TransactionService from '../services/transaction-service';
 
 export type PostTransactionBody = {
@@ -19,6 +30,7 @@ export class TransactionController extends Controller {
     this.transactionService = new TransactionService();
   }
 
+  @Response<ApiError>(400, VERBIAGE.DUPLICATE_CHARGES)
   @Post('/postMonthlyCharges')
   public async postMonthlyCharges(@Body() body: PostTransactionBody) {
     await this.transactionService.postMonthlyCharges(

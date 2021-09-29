@@ -3,6 +3,7 @@ import {Op, WhereOptions} from 'sequelize';
 import {Month, TransactionAttr, TransactionType} from '../@types/models';
 import {isSamePeriod, toPeriod, toTransactionPeriod} from '../@utils/dates';
 import {VERBIAGE} from '../constants';
+import {ApiError} from '../errors';
 import Charge from '../models/charge-model';
 import Property from '../models/property-model';
 import Transaction from '../models/transaction-model';
@@ -114,7 +115,7 @@ export default class TransactionService {
     );
 
     if (duplicateCharges.length > 0) {
-      throw new Error(VERBIAGE.DUPLICATE_CHARGES);
+      throw new ApiError(400, VERBIAGE.DUPLICATE_CHARGES);
     }
 
     const records = [...transactionsCalculated];
