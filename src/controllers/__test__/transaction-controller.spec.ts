@@ -1,6 +1,8 @@
 import faker from 'faker';
 
 import {Period} from '../../@types/models';
+import {generateTransaction} from '../../@utils/fake-data';
+import CollectionService from '../../services/collection-service';
 import TransactionService from '../../services/transaction-service';
 import {
   PostTransactionBody,
@@ -42,6 +44,40 @@ describe('TransactionController', () => {
     const actual = await target.getAvailablePeriods(propertyId);
     expect(actual).toBe(expected);
     expect(mock).toBeCalledWith(propertyId);
+    expect(mock).toBeCalledTimes(1);
+  });
+
+  it('should suggest payment breakdown', async () => {
+    const expected = [generateTransaction(), generateTransaction()];
+    const propertyId = faker.datatype.number();
+    const period: Period = {
+      year: 2021,
+      month: 'SEP',
+    };
+    const amount = faker.datatype.number();
+    const mock = jest
+      .spyOn(CollectionService.prototype, 'suggestCollectionBreakdown')
+      .mockReturnValueOnce(new Promise(resolve => resolve(expected)));
+    const target = new TransactionController();
+    const actual = await target.suggestPaymentBreakdown(
+      propertyId,
+      amount,
+      period.year,
+      period.month
+    );
+    expect(actual).toBe(expected);
+    expect(mock).toBeCalledWith(propertyId, amount, period);
+    expect(mock).toBeCalledTimes(1);
+  });
+
+  it('should post collections', async () => {
+    const expected = [generateTransaction(), generateTransaction()];
+    const mock = jest
+      .spyOn(CollectionService.prototype, 'postCollections')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new TransactionController();
+    await target.postCollections(expected);
+    expect(mock).toBeCalledWith(expected);
     expect(mock).toBeCalledTimes(1);
   });
 });

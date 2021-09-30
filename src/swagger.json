@@ -1340,6 +1340,35 @@
 				}
 			}
 		},
+		"/api/transaction/postCollections": {
+			"post": {
+				"operationId": "PostCollections",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/TransactionAttr"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/transaction/getAvailablePeriods/{propertyId}": {
 			"get": {
 				"operationId": "GetAvailablePeriods",
@@ -1394,7 +1423,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1412,6 +1445,23 @@
 						"schema": {
 							"format": "double",
 							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "month",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
 						}
 					}
 				]

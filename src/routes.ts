@@ -726,6 +726,30 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/transaction/postCollections',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function TransactionController_postCollections(request: any, response: any, next: any) {
+            const args = {
+                    collections: {"in":"body","name":"collections","required":true,"dataType":"array","array":{"dataType":"refObject","ref":"TransactionAttr"}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TransactionController();
+
+
+            const promise = controller.postCollections.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/getAvailablePeriods/:propertyId',
             authenticateMiddleware([{"bearer":[]}]),
 
@@ -751,11 +775,14 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/suggestPaymentBreakdown/:propertyId',
+            authenticateMiddleware([{"bearer":[]}]),
 
             function TransactionController_suggestPaymentBreakdown(request: any, response: any, next: any) {
             const args = {
                     propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
                     amount: {"in":"query","name":"amount","required":true,"dataType":"double"},
+                    year: {"in":"query","name":"year","required":true,"dataType":"double"},
+                    month: {"in":"query","name":"month","required":true,"ref":"Month"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

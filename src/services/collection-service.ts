@@ -1,11 +1,12 @@
-import {TransactionAttr} from '../@types/models';
-import {getCurrentTransactionPeriod} from '../@utils/dates';
+import {Period, TransactionAttr} from '../@types/models';
+import {toTransactionPeriod} from '../@utils/dates';
 import useTransactionBreakdown from '../hooks/use-transaction-breakdown';
 import Charge from '../models/charge-model';
+import Transaction from '../models/transaction-model';
 import BaseService from './@base-service';
 
 export default class CollectionService extends BaseService {
-  public async getTransactionBreakdown(propertyId: number) {
+  private async getTransactionBreakdown(propertyId: number) {
     const breakdown = await useTransactionBreakdown(
       propertyId,
       this.repository
@@ -13,7 +14,15 @@ export default class CollectionService extends BaseService {
     return breakdown;
   }
 
-  public async suggestCollectionBreakdown(propertyId: number, amount: number) {
+  public async postCollections(tranasctions: TransactionAttr[]) {
+    await Transaction.bulkCreate(tranasctions, {validate: true});
+  }
+
+  public async suggestCollectionBreakdown(
+    propertyId: number,
+    amount: number,
+    period: Period
+  ) {
     const charges = await Charge.findAll({
       order: [['priority', 'ASC NULLS LAST']],
     });
@@ -35,13 +44,18 @@ export default class CollectionService extends BaseService {
         } else {
           amountLeft -= collected;
         }
-        result.push({
-          amount: parseFloat(collected.toString()),
-          chargeId: c.id,
-          propertyId,
-          transactionPeriod: getCurrentTransactionPeriod(),
-          transactionType: 'collected',
-        });
+        try {
+          result.push({
+            amount: parseFloat(Number(collected).toFixed(2)),
+            chargeId: c.id,
+            charge: c,
+            propertyId,
+            transactionPeriod: toTransactionPeriod(period.year, period.month),
+            transactionType: 'collected',
+          });
+        } catch (e) {
+          console.error(e);
+        }
       }
     }
 

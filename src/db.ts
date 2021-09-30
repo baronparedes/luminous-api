@@ -65,7 +65,7 @@ async function seed() {
   });
 
   await Setting.bulkCreate(settings, {
-    updateOnDuplicate: ['key', 'value', 'communityId'],
+    updateOnDuplicate: ['key', 'communityId'],
   });
 
   await Property.bulkCreate(properties, {

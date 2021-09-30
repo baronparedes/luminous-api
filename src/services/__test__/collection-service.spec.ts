@@ -1,6 +1,7 @@
 import {TransactionAttr, TransactionType} from '../../@types/models';
 import {
-  getCurrentTransactionPeriod,
+  getCurrentMonthYear,
+  isSamePeriod,
   toTransactionPeriod,
 } from '../../@utils/dates';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
@@ -55,72 +56,128 @@ describe('ColletionService', () => {
   });
 
   it('should suggest collection breakdown for partial amount', async () => {
+    const period = getCurrentMonthYear();
+    const transactionPeriod = toTransactionPeriod(period.year, period.month);
     const expectedResult: TransactionAttr[] = [
       {
         amount: 5005,
         chargeId: 1,
         propertyId,
-        transactionPeriod: getCurrentTransactionPeriod(),
+        transactionPeriod,
         transactionType: 'collected',
       },
       {
         amount: 1058.75,
         chargeId: 2,
         propertyId,
-        transactionPeriod: getCurrentTransactionPeriod(),
+        transactionPeriod,
         transactionType: 'collected',
       },
       {
         amount: 936.25,
         chargeId: 3,
         propertyId,
-        transactionPeriod: getCurrentTransactionPeriod(),
+        transactionPeriod,
         transactionType: 'collected',
       },
     ];
-    const result = await target.suggestCollectionBreakdown(propertyId, 7000);
-    expect(result).toEqual(expectedResult);
+    const result = await target.suggestCollectionBreakdown(
+      propertyId,
+      7000,
+      period
+    );
+    expect(
+      result.map(data => {
+        return {...data, charge: undefined};
+      })
+    ).toEqual(expectedResult);
   });
 
   it('should suggest collection breakdown for excess amount', async () => {
+    const period = getCurrentMonthYear();
+    const transactionPeriod = toTransactionPeriod(period.year, period.month);
     const expectedResult: TransactionAttr[] = [
       {
         amount: 5005,
         chargeId: 1,
         propertyId: 1,
-        transactionPeriod: getCurrentTransactionPeriod(),
+        transactionPeriod,
         transactionType: 'collected',
       },
       {
         amount: 1058.75,
         chargeId: 2,
         propertyId: 1,
-        transactionPeriod: getCurrentTransactionPeriod(),
+        transactionPeriod,
         transactionType: 'collected',
       },
       {
         amount: 1228.15,
         chargeId: 3,
         propertyId: 1,
-        transactionPeriod: getCurrentTransactionPeriod(),
+        transactionPeriod,
         transactionType: 'collected',
       },
       {
         amount: 60.26,
         chargeId: 4,
         propertyId: 1,
-        transactionPeriod: getCurrentTransactionPeriod(),
+        transactionPeriod,
         transactionType: 'collected',
       },
       {
         amount: 268.41,
         chargeId: 5,
         propertyId: 1,
-        transactionPeriod: getCurrentTransactionPeriod(),
+        transactionPeriod,
         transactionType: 'collected',
       },
     ];
-    const result = await target.suggestCollectionBreakdown(propertyId, 8000);
-    expect(result).toEqual(expectedResult);
+    const result = await target.suggestCollectionBreakdown(
+      propertyId,
+      8000,
+      period
+    );
+    expect(
+      result.map(data => {
+        return {...data, charge: undefined};
+      })
+    ).toEqual(expectedResult);
+  });
+
+  it('should post collections without errors', async () => {
+    const period = getCurrentMonthYear();
+    const transactionPeriod = toTransactionPeriod(period.year, period.month);
+    const transactions: TransactionAttr[] = [
+      {
+        amount: 5005,
+        chargeId: 1,
+        propertyId: 1,
+        transactionPeriod,
+        transactionType: 'collected',
+      },
+      {
+        amount: 1058.75,
+        chargeId: 2,
+        propertyId: 1,
+        transactionPeriod,
+        transactionType: 'collected',
+      },
+    ];
+    await target.postCollections(transactions);
+
+    const actual = await Transaction.findAll({
+      where: {transactionType: 'collected'},
+    });
+
+    for (const expected of transactions) {
+      const found = actual.find(a => a.chargeId === expected.chargeId);
+      expect(found).toBeDefined();
+      expect(found?.amount).toEqual(expected.amount);
+      expect(found?.propertyId).toEqual(expected.propertyId);
+      expect(
+        isSamePeriod(found?.transactionPeriod ?? '', expected.transactionPeriod)
+      ).toBeTruthy();
+    }
   });
 });

@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  NoSecurity,
   Path,
   Post,
   Query,
@@ -11,7 +10,7 @@ import {
   Security,
 } from 'tsoa';
 
-import {Month} from '../@types/models';
+import {Month, TransactionAttr} from '../@types/models';
 import {VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import CollectionService from '../services/collection-service';
@@ -45,6 +44,11 @@ export class TransactionController extends Controller {
     );
   }
 
+  @Post('/postCollections')
+  public async postCollections(@Body() collections: TransactionAttr[]) {
+    await this.collectionService.postCollections(collections);
+  }
+
   @Get('/getAvailablePeriods/:propertyId')
   public async getAvailablePeriods(@Path() propertyId: number) {
     return await this.transactionService.getAvailablePeriodsByProperty(
@@ -52,15 +56,17 @@ export class TransactionController extends Controller {
     );
   }
 
-  @NoSecurity()
   @Get('/suggestPaymentBreakdown/:propertyId')
   public async suggestPaymentBreakdown(
     @Path() propertyId: number,
-    @Query() amount: number
+    @Query() amount: number,
+    @Query() year: number,
+    @Query() month: Month
   ) {
     return await this.collectionService.suggestCollectionBreakdown(
       propertyId,
-      amount
+      amount,
+      {year, month}
     );
   }
 }
