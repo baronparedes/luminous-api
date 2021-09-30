@@ -27,7 +27,7 @@ export default async function useTransactionBreakdown(
       ) AS breakdown
       GROUP BY charge_id
     )
-    SELECT * FROM calculated_breakdown`;
+    SELECT * FROM calculated_breakdown WHERE amount > 0`;
   const {query} = useSql(db);
   const result = await query<TransactionBreakdownView>(sql, {propertyId});
   return result;
