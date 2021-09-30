@@ -60,6 +60,28 @@ describe('PropertyController', () => {
     expect(actual).toEqual(mockedPropertyAccount);
   });
 
+  it('should get all property accounts', async () => {
+    const {year, month} = getCurrentMonthYear();
+    const mockedPropertyAccounts = [
+      generatePropertyAccount(),
+      generatePropertyAccount(),
+    ];
+    const mock = jest
+      .spyOn(PropertyAccountService.prototype, 'getAllPropertyAccounts')
+      .mockReturnValueOnce(
+        new Promise(resolve => resolve(mockedPropertyAccounts))
+      );
+
+    const target = new PropertyController();
+    const actual = await target.getAllPropertyAccounts();
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith({
+      month,
+      year,
+    });
+    expect(actual).toEqual(mockedPropertyAccounts);
+  });
+
   it('should get property accounts of a profile', async () => {
     const targetId = faker.datatype.number();
     const mockedPropertyAccounts = [

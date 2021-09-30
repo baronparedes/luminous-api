@@ -47,21 +47,18 @@ export class PropertyController extends Controller {
     return result;
   }
 
-  @OperationId('GetPropertyAssignments')
   @Get('/getPropertyAssignments/{propertyId}')
   public async getPropertyAssignments(@Path() propertyId: number) {
     const result = await this.propertyService.getAssignments(propertyId);
     return result;
   }
 
-  @OperationId('GetAssignedProperties')
   @Get('/getAssignedProperties/{profileId}')
   public async getAssignedProperties(@Path() profileId: number) {
     const result = await this.propertyService.getAssignedProperies(profileId);
     return result;
   }
 
-  @OperationId('GetPropertyAccountsByProfile')
   @Get('/getPropertyAccountsByProfile/{profileId}')
   public async getPropertyAccountsByProfile(@Path() profileId: number) {
     const result =
@@ -69,7 +66,6 @@ export class PropertyController extends Controller {
     return result;
   }
 
-  @OperationId('GetPropertyAccount')
   @Get('/getPropertyAccount/{propertyId}')
   public async getPropertyAccount(
     @Path() propertyId: number,
@@ -83,6 +79,22 @@ export class PropertyController extends Controller {
     };
     const result = await this.propertyAccountService.getPropertyAcount(
       propertyId,
+      period
+    );
+    return result;
+  }
+
+  @Get('/getAllPropertyAccounts')
+  public async getAllPropertyAccounts(
+    @Query() year?: number,
+    @Query() month?: Month
+  ) {
+    const currentPeriod = getCurrentMonthYear();
+    const period: Period = {
+      year: year ?? currentPeriod.year,
+      month: month ?? currentPeriod.month,
+    };
+    const result = await this.propertyAccountService.getAllPropertyAccounts(
       period
     );
     return result;

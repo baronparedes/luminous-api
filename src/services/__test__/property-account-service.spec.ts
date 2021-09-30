@@ -91,4 +91,13 @@ describe('PropertyAccountService', () => {
     expect(actual.property?.id).toEqual(property.id);
     expect(actual.transactions?.length).toEqual(0);
   });
+
+  it('should get all property accounts', async () => {
+    const actual = await target.getAllPropertyAccounts();
+    expect(actual.length).toEqual(1);
+    expect(actual[0].balance).toEqual(amount);
+    expect(actual[0].propertyId).toEqual(property.id);
+    expect(actual[0].property?.id).toEqual(property.id);
+    expect(actual[0].transactions?.length).toEqual(1);
+  });
 });

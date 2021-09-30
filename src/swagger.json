@@ -1044,6 +1044,50 @@
 				]
 			}
 		},
+		"/api/property/getAllPropertyAccounts": {
+			"get": {
+				"operationId": "GetAllPropertyAccounts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAccount"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "year",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "month",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
 		"/api/property/create": {
 			"post": {
 				"operationId": "CreateProperty",

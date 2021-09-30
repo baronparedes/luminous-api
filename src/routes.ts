@@ -533,6 +533,31 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/property/getAllPropertyAccounts',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PropertyController_getAllPropertyAccounts(request: any, response: any, next: any) {
+            const args = {
+                    year: {"in":"query","name":"year","dataType":"double"},
+                    month: {"in":"query","name":"month","ref":"Month"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PropertyController();
+
+
+            const promise = controller.getAllPropertyAccounts.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/property/create',
             authenticateMiddleware([{"bearer":[]}]),
 

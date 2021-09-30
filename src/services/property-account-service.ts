@@ -1,5 +1,6 @@
 import {Period, PropertyAccount, PropertyAttr} from '../@types/models';
 import {getCurrentMonthYear} from '../@utils/dates';
+import Property from '../models/property-model';
 import ChargeService from './charge-service';
 import PropertyService from './property-service';
 import TransactionService from './transaction-service';
@@ -13,6 +14,16 @@ export default class PropertyAccountService {
     this.propertyService = new PropertyService();
     this.chargeService = new ChargeService();
     this.transactionService = new TransactionService();
+  }
+
+  public async getAllPropertyAccounts(period?: Period) {
+    const properties = await Property.findAll({});
+    const result: PropertyAccount[] = [];
+    for (const item of properties) {
+      const account = await this.getPropertyAccount(item, period);
+      result.push(account);
+    }
+    return result;
   }
 
   public async getPropertyAcount(
