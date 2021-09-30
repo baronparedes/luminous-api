@@ -60,6 +60,7 @@ async function seed() {
       'chargeType',
       'postingType',
       'thresholdInMonths',
+      'priority',
     ],
   });
 

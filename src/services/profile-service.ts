@@ -14,8 +14,6 @@ import Profile from '../models/profile-model';
 import {mapAuthProfile} from './@mappers';
 
 export default class ProfileService {
-  constructor() {}
-
   private validateProfile(password: string, profile: ProfileAttr | null) {
     if (!profile) {
       throw new Error(VERBIAGE.NOT_FOUND);

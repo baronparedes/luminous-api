@@ -39,6 +39,9 @@ class Charge extends Model implements ChargeAttr {
   @Column
   thresholdInMonths!: number;
 
+  @Column
+  priority!: number;
+
   @AllowNull(false)
   @ForeignKey(() => Community)
   @Column

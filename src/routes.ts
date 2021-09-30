@@ -146,6 +146,7 @@ const models: TsoaRoute.Models = {
             "chargeType": {"ref":"ChargeType","required":true},
             "postingType": {"ref":"PostingType","required":true},
             "thresholdInMonths": {"dataType":"double"},
+            "priority": {"dataType":"double"},
         },
         "additionalProperties": false,
     },
@@ -746,6 +747,30 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getAvailablePeriods.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/transaction/suggestPaymentBreakdown/:propertyId',
+
+            function TransactionController_suggestPaymentBreakdown(request: any, response: any, next: any) {
+            const args = {
+                    propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
+                    amount: {"in":"query","name":"amount","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TransactionController();
+
+
+            const promise = controller.suggestPaymentBreakdown.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

@@ -11,8 +11,6 @@ import {generateNumberedSeries} from '../@utils/helpers';
 import Transaction from '../models/transaction-model';
 
 export default class ChargeService {
-  constructor() {}
-
   private async hasPreviouslyPostedPaymentsSince(
     propertyId: number,
     year: number,

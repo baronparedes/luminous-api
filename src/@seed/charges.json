@@ -4,21 +4,24 @@
        "code": "CONDO DUES",
        "rate": 52,
        "chargeType": "unit",
-       "postingType": "monthly"
+       "postingType": "monthly",
+       "priority": 1
     },
     {
        "id": 2,
        "code": "ESTATE DUES",
        "rate": 11,
        "chargeType": "unit",
-       "postingType": "monthly"
+       "postingType": "monthly",
+       "priority": 2
     },
     {
        "id": 3,
        "code": "RPT COMMON",
        "rate": 12.76,
        "chargeType": "unit",
-       "postingType": "monthly"
+       "postingType": "monthly",
+       "priority": 3
     },
     {
        "id": 4,
@@ -40,6 +43,7 @@
        "code": "WATER UTILITY",
        "rate": 1,
        "chargeType": "amount",
-       "postingType": "manual"
+       "postingType": "manual",
+       "priority": 4
     }
  ]
