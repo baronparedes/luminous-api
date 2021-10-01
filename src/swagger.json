@@ -291,30 +291,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"PropertyAssignmentAttr": {
-				"properties": {
-					"profileId": {
-						"type": "number",
-						"format": "double"
-					},
-					"propertyId": {
-						"type": "number",
-						"format": "double"
-					},
-					"profile": {
-						"$ref": "#/components/schemas/ProfileAttr"
-					},
-					"property": {
-						"$ref": "#/components/schemas/PropertyAttr"
-					}
-				},
-				"required": [
-					"profileId",
-					"propertyId"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"CommunityAttr": {
 				"properties": {
 					"description": {
@@ -454,6 +430,12 @@
 					"property": {
 						"$ref": "#/components/schemas/PropertyAttr"
 					},
+					"assignedProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileAttr"
+						},
+						"type": "array"
+					},
 					"transactions": {
 						"items": {
 							"$ref": "#/components/schemas/TransactionAttr"
@@ -484,6 +466,30 @@
 					"NOV",
 					"DEC"
 				]
+			},
+			"PropertyAssignmentAttr": {
+				"properties": {
+					"profileId": {
+						"type": "number",
+						"format": "double"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"profile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyAttr"
+					}
+				},
+				"required": [
+					"profileId",
+					"propertyId"
+				],
+				"type": "object",
+				"additionalProperties": false
 			},
 			"SettingAttr": {
 				"properties": {
@@ -818,6 +824,136 @@
 				}
 			}
 		},
+		"/api/property-account/getPropertyAccountsByProfile/{profileId}": {
+			"get": {
+				"operationId": "GetPropertyAccountsByProfile",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAccount"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "profileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property-account/getPropertyAccount/{propertyId}": {
+			"get": {
+				"operationId": "GetPropertyAccount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PropertyAccount"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "year",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "month",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
+		"/api/property-account/getPropertyAccountsByPeriod": {
+			"get": {
+				"operationId": "GetPropertyAccountsByPeriod",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAccount"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "year",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "month",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
 		"/api/property/getAll": {
 			"get": {
 				"operationId": "GetAllProperties",
@@ -953,136 +1089,6 @@
 						"schema": {
 							"format": "double",
 							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/api/property/getPropertyAccountsByProfile/{profileId}": {
-			"get": {
-				"operationId": "GetPropertyAccountsByProfile",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/PropertyAccount"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "profileId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/api/property/getPropertyAccount/{propertyId}": {
-			"get": {
-				"operationId": "GetPropertyAccount",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PropertyAccount"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "propertyId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "year",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "month",
-						"required": false,
-						"schema": {
-							"$ref": "#/components/schemas/Month"
-						}
-					}
-				]
-			}
-		},
-		"/api/property/getAllPropertyAccounts": {
-			"get": {
-				"operationId": "GetAllPropertyAccounts",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/PropertyAccount"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "year",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "month",
-						"required": false,
-						"schema": {
-							"$ref": "#/components/schemas/Month"
 						}
 					}
 				]

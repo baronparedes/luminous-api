@@ -1,13 +1,10 @@
 import faker from 'faker';
 
 import {RecordStatus} from '../../@types/models';
-import {getCurrentMonthYear} from '../../@utils/dates';
 import {
   generateProperty,
-  generatePropertyAccount,
   generatePropertyAssignment,
 } from '../../@utils/fake-data';
-import PropertyAccountService from '../../services/property-account-service';
 import PropertyService from '../../services/property-service';
 import {PropertyController} from '../property-controller';
 
@@ -37,67 +34,6 @@ describe('PropertyController', () => {
     expect(actual).toStrictEqual(property);
     expect(mock).toBeCalledWith(Number(property.id));
     expect(mock).toBeCalledTimes(1);
-  });
-
-  it('should get property account', async () => {
-    const {year, month} = getCurrentMonthYear();
-    const mockedPropertyAccount = generatePropertyAccount();
-    const mock = jest
-      .spyOn(PropertyAccountService.prototype, 'getPropertyAcount')
-      .mockReturnValueOnce(
-        new Promise(resolve => resolve(mockedPropertyAccount))
-      );
-
-    const target = new PropertyController();
-    const actual = await target.getPropertyAccount(
-      mockedPropertyAccount.propertyId
-    );
-    expect(mock).toBeCalledTimes(1);
-    expect(mock).toBeCalledWith(mockedPropertyAccount.propertyId, {
-      month,
-      year,
-    });
-    expect(actual).toEqual(mockedPropertyAccount);
-  });
-
-  it('should get all property accounts', async () => {
-    const {year, month} = getCurrentMonthYear();
-    const mockedPropertyAccounts = [
-      generatePropertyAccount(),
-      generatePropertyAccount(),
-    ];
-    const mock = jest
-      .spyOn(PropertyAccountService.prototype, 'getAllPropertyAccounts')
-      .mockReturnValueOnce(
-        new Promise(resolve => resolve(mockedPropertyAccounts))
-      );
-
-    const target = new PropertyController();
-    const actual = await target.getAllPropertyAccounts();
-    expect(mock).toBeCalledTimes(1);
-    expect(mock).toBeCalledWith({
-      month,
-      year,
-    });
-    expect(actual).toEqual(mockedPropertyAccounts);
-  });
-
-  it('should get property accounts of a profile', async () => {
-    const targetId = faker.datatype.number();
-    const mockedPropertyAccounts = [
-      generatePropertyAccount(),
-      generatePropertyAccount(),
-    ];
-    const mock = jest
-      .spyOn(PropertyAccountService.prototype, 'getPropertyAccountsByProfile')
-      .mockReturnValueOnce(
-        new Promise(resolve => resolve(mockedPropertyAccounts))
-      );
-    const target = new PropertyController();
-    const actual = await target.getPropertyAccountsByProfile(targetId);
-    expect(mock).toBeCalledTimes(1);
-    expect(mock).toBeCalledWith(targetId);
-    expect(actual).toEqual(mockedPropertyAccounts);
   });
 
   it('should get assigned properties of a profile', async () => {

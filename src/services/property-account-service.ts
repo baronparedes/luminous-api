@@ -1,6 +1,9 @@
 import {Period, PropertyAccount, PropertyAttr} from '../@types/models';
 import {getCurrentMonthYear} from '../@utils/dates';
+import Profile from '../models/profile-model';
+import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
+import {mapProfile} from './@mappers';
 import ChargeService from './charge-service';
 import PropertyService from './property-service';
 import TransactionService from './transaction-service';
@@ -14,6 +17,46 @@ export default class PropertyAccountService {
     this.propertyService = new PropertyService();
     this.chargeService = new ChargeService();
     this.transactionService = new TransactionService();
+  }
+
+  private async getAssignedProfiles(propertyId: number) {
+    const data = await PropertyAssignment.findAll({
+      include: [Profile],
+      where: {propertyId},
+    });
+    const result = data.map(d => mapProfile(d.profile as Profile));
+    return result;
+  }
+
+  private async getPropertyAccount(
+    property: PropertyAttr,
+    period?: Period
+  ): Promise<PropertyAccount> {
+    const current = getCurrentMonthYear();
+    const year = period ? period.year : current.year;
+    const month = period ? period.month : current.month;
+    const propertyId = Number(property.id);
+    const balance = await this.chargeService.getPropertyBalanceUpToYearMonth(
+      propertyId,
+      year,
+      month
+    );
+    const transactions =
+      await this.transactionService.getTransactionByYearMonth(
+        propertyId,
+        year,
+        month
+      );
+
+    const assignedProfiles = await this.getAssignedProfiles(propertyId);
+    const result: PropertyAccount = {
+      propertyId,
+      property: property,
+      balance,
+      transactions,
+      assignedProfiles,
+    };
+    return result;
   }
 
   public async getAllPropertyAccounts(period?: Period) {
@@ -32,31 +75,6 @@ export default class PropertyAccountService {
   ): Promise<PropertyAccount> {
     const property = await this.propertyService.get(propertyId);
     return await this.getPropertyAccount(property, period);
-  }
-
-  private async getPropertyAccount(
-    property: PropertyAttr,
-    period?: Period
-  ): Promise<PropertyAccount> {
-    const current = getCurrentMonthYear();
-    const year = period ? period.year : current.year;
-    const month = period ? period.month : current.month;
-    const propertyId = Number(property.id);
-    const result: PropertyAccount = {
-      propertyId,
-      property: property,
-      balance: await this.chargeService.getPropertyBalanceUpToYearMonth(
-        propertyId,
-        year,
-        month
-      ),
-      transactions: await this.transactionService.getTransactionByYearMonth(
-        propertyId,
-        year,
-        month
-      ),
-    };
-    return result;
   }
 
   public async getPropertyAccountsByProfile(

@@ -14,23 +14,19 @@ import {
   SuccessResponse,
 } from 'tsoa';
 
-import {Month, Period, PropertyAttr, RecordStatus} from '../@types/models';
-import {getCurrentMonthYear} from '../@utils/dates';
+import {PropertyAttr, RecordStatus} from '../@types/models';
 import {VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
-import PropertyAccountService from '../services/property-account-service';
 import PropertyService from '../services/property-service';
 
 @Security('bearer')
 @Route('/api/property')
 export class PropertyController extends Controller {
   private propertyService: PropertyService;
-  private propertyAccountService: PropertyAccountService;
 
   constructor() {
     super();
     this.propertyService = new PropertyService();
-    this.propertyAccountService = new PropertyAccountService();
   }
 
   @OperationId('GetAllProperties')
@@ -56,47 +52,6 @@ export class PropertyController extends Controller {
   @Get('/getAssignedProperties/{profileId}')
   public async getAssignedProperties(@Path() profileId: number) {
     const result = await this.propertyService.getAssignedProperies(profileId);
-    return result;
-  }
-
-  @Get('/getPropertyAccountsByProfile/{profileId}')
-  public async getPropertyAccountsByProfile(@Path() profileId: number) {
-    const result =
-      await this.propertyAccountService.getPropertyAccountsByProfile(profileId);
-    return result;
-  }
-
-  @Get('/getPropertyAccount/{propertyId}')
-  public async getPropertyAccount(
-    @Path() propertyId: number,
-    @Query() year?: number,
-    @Query() month?: Month
-  ) {
-    const currentPeriod = getCurrentMonthYear();
-    const period: Period = {
-      year: year ?? currentPeriod.year,
-      month: month ?? currentPeriod.month,
-    };
-    const result = await this.propertyAccountService.getPropertyAcount(
-      propertyId,
-      period
-    );
-    return result;
-  }
-
-  @Get('/getAllPropertyAccounts')
-  public async getAllPropertyAccounts(
-    @Query() year?: number,
-    @Query() month?: Month
-  ) {
-    const currentPeriod = getCurrentMonthYear();
-    const period: Period = {
-      year: year ?? currentPeriod.year,
-      month: month ?? currentPeriod.month,
-    };
-    const result = await this.propertyAccountService.getAllPropertyAccounts(
-      period
-    );
     return result;
   }
 

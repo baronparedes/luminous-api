@@ -7,6 +7,8 @@ import { AuthController } from './controllers/auth-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ProfileController } from './controllers/profile-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { PropertyAccountController } from './controllers/property-account-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PropertyController } from './controllers/property-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SettingController } from './controllers/setting-controller';
@@ -107,17 +109,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PropertyAssignmentAttr": {
-        "dataType": "refObject",
-        "properties": {
-            "profileId": {"dataType":"double","required":true},
-            "propertyId": {"dataType":"double","required":true},
-            "profile": {"ref":"ProfileAttr"},
-            "property": {"ref":"PropertyAttr"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CommunityAttr": {
         "dataType": "refObject",
         "properties": {
@@ -179,6 +170,7 @@ const models: TsoaRoute.Models = {
             "balance": {"dataType":"double","required":true},
             "propertyId": {"dataType":"double","required":true},
             "property": {"ref":"PropertyAttr"},
+            "assignedProfiles": {"dataType":"array","array":{"dataType":"refObject","ref":"ProfileAttr"}},
             "transactions": {"dataType":"array","array":{"dataType":"refObject","ref":"TransactionAttr"}},
         },
         "additionalProperties": false,
@@ -187,6 +179,17 @@ const models: TsoaRoute.Models = {
     "Month": {
         "dataType": "refAlias",
         "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["JAN"]},{"dataType":"enum","enums":["FEB"]},{"dataType":"enum","enums":["MAR"]},{"dataType":"enum","enums":["APR"]},{"dataType":"enum","enums":["MAY"]},{"dataType":"enum","enums":["JUN"]},{"dataType":"enum","enums":["JUL"]},{"dataType":"enum","enums":["AUG"]},{"dataType":"enum","enums":["SEP"]},{"dataType":"enum","enums":["OCT"]},{"dataType":"enum","enums":["NOV"]},{"dataType":"enum","enums":["DEC"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PropertyAssignmentAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "profileId": {"dataType":"double","required":true},
+            "propertyId": {"dataType":"double","required":true},
+            "profile": {"ref":"ProfileAttr"},
+            "property": {"ref":"PropertyAttr"},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "SettingAttr": {
@@ -387,6 +390,81 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/property-account/getPropertyAccountsByProfile/:profileId',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PropertyAccountController_getPropertyAccountsByProfile(request: any, response: any, next: any) {
+            const args = {
+                    profileId: {"in":"path","name":"profileId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PropertyAccountController();
+
+
+            const promise = controller.getPropertyAccountsByProfile.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/property-account/getPropertyAccount/:propertyId',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PropertyAccountController_getPropertyAccount(request: any, response: any, next: any) {
+            const args = {
+                    propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
+                    year: {"in":"query","name":"year","dataType":"double"},
+                    month: {"in":"query","name":"month","ref":"Month"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PropertyAccountController();
+
+
+            const promise = controller.getPropertyAccount.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/property-account/getPropertyAccountsByPeriod',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PropertyAccountController_getPropertyAccountsByPeriod(request: any, response: any, next: any) {
+            const args = {
+                    year: {"in":"query","name":"year","dataType":"double"},
+                    month: {"in":"query","name":"month","ref":"Month"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PropertyAccountController();
+
+
+            const promise = controller.getPropertyAccountsByPeriod.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getAll',
             authenticateMiddleware([{"bearer":[]}]),
 
@@ -480,81 +558,6 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getAssignedProperties.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/property/getPropertyAccountsByProfile/:profileId',
-            authenticateMiddleware([{"bearer":[]}]),
-
-            function PropertyController_getPropertyAccountsByProfile(request: any, response: any, next: any) {
-            const args = {
-                    profileId: {"in":"path","name":"profileId","required":true,"dataType":"double"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.getPropertyAccountsByProfile.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/property/getPropertyAccount/:propertyId',
-            authenticateMiddleware([{"bearer":[]}]),
-
-            function PropertyController_getPropertyAccount(request: any, response: any, next: any) {
-            const args = {
-                    propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
-                    year: {"in":"query","name":"year","dataType":"double"},
-                    month: {"in":"query","name":"month","ref":"Month"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.getPropertyAccount.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/property/getAllPropertyAccounts',
-            authenticateMiddleware([{"bearer":[]}]),
-
-            function PropertyController_getAllPropertyAccounts(request: any, response: any, next: any) {
-            const args = {
-                    year: {"in":"query","name":"year","dataType":"double"},
-                    month: {"in":"query","name":"month","ref":"Month"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.getAllPropertyAccounts.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

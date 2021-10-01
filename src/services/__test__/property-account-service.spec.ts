@@ -68,6 +68,7 @@ describe('PropertyAccountService', () => {
     expect(actual[0].propertyId).toEqual(property.id);
     expect(actual[0].property?.id).toEqual(property.id);
     expect(actual[0].transactions?.length).toEqual(1);
+    expect(actual[0].assignedProfiles?.length).toEqual(1);
   });
 
   it('should get property account by property and period', async () => {
@@ -79,6 +80,7 @@ describe('PropertyAccountService', () => {
     expect(actual.propertyId).toEqual(property.id);
     expect(actual.property?.id).toEqual(property.id);
     expect(actual.transactions?.length).toEqual(2);
+    expect(actual.assignedProfiles?.length).toEqual(1);
   });
 
   it('should get property account by property and period with no historical data', async () => {
@@ -90,6 +92,7 @@ describe('PropertyAccountService', () => {
     expect(actual.propertyId).toEqual(property.id);
     expect(actual.property?.id).toEqual(property.id);
     expect(actual.transactions?.length).toEqual(0);
+    expect(actual.assignedProfiles?.length).toEqual(1);
   });
 
   it('should get all property accounts', async () => {
@@ -99,5 +102,6 @@ describe('PropertyAccountService', () => {
     expect(actual[0].propertyId).toEqual(property.id);
     expect(actual[0].property?.id).toEqual(property.id);
     expect(actual[0].transactions?.length).toEqual(1);
+    expect(actual[0].assignedProfiles?.length).toEqual(1);
   });
 });

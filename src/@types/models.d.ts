@@ -66,6 +66,7 @@ export interface PropertyAccount {
   balance: number;
   propertyId: number;
   property?: PropertyAttr;
+  assignedProfiles?: ProfileAttr[];
   transactions?: TransactionAttr[];
 }
 
