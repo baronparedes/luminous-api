@@ -10,7 +10,7 @@ import {
   Security,
 } from 'tsoa';
 
-import {Month, TransactionAttr} from '../@types/models';
+import {Month, PaymentDetailAttr, TransactionAttr} from '../@types/models';
 import {VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import CollectionService from '../services/collection-service';
@@ -20,6 +20,11 @@ export type PostTransactionBody = {
   year: number;
   month: Month;
   propertyId: number;
+};
+
+export type PostCollectionBody = {
+  paymentDetail: PaymentDetailAttr;
+  transactions: TransactionAttr[];
 };
 
 @Security('bearer')
@@ -45,8 +50,11 @@ export class TransactionController extends Controller {
   }
 
   @Post('/postCollections')
-  public async postCollections(@Body() collections: TransactionAttr[]) {
-    await this.collectionService.postCollections(collections);
+  public async postCollections(@Body() body: PostCollectionBody) {
+    await this.collectionService.postCollections(
+      body.paymentDetail,
+      body.transactions
+    );
   }
 
   @Get('/getAvailablePeriods/:propertyId')

@@ -368,6 +368,44 @@
 					"collected"
 				]
 			},
+			"PaymentType": {
+				"type": "string",
+				"enum": [
+					"cash",
+					"check"
+				]
+			},
+			"PaymentDetailAttr": {
+				"properties": {
+					"collectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"orNumber": {
+						"type": "string"
+					},
+					"paymentType": {
+						"$ref": "#/components/schemas/PaymentType"
+					},
+					"checkNumber": {
+						"type": "string"
+					},
+					"checkPostingDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"checkIssuingBank": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"collectedBy",
+					"orNumber",
+					"paymentType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"TransactionAttr": {
 				"properties": {
 					"id": {
@@ -405,6 +443,13 @@
 					},
 					"comments": {
 						"type": "string"
+					},
+					"paymentDetailId": {
+						"type": "number",
+						"format": "double"
+					},
+					"paymentDetail": {
+						"$ref": "#/components/schemas/PaymentDetailAttr"
 					}
 				},
 				"required": [
@@ -525,6 +570,24 @@
 					"propertyId",
 					"month",
 					"year"
+				],
+				"type": "object"
+			},
+			"PostCollectionBody": {
+				"properties": {
+					"transactions": {
+						"items": {
+							"$ref": "#/components/schemas/TransactionAttr"
+						},
+						"type": "array"
+					},
+					"paymentDetail": {
+						"$ref": "#/components/schemas/PaymentDetailAttr"
+					}
+				},
+				"required": [
+					"transactions",
+					"paymentDetail"
 				],
 				"type": "object"
 			},
@@ -1409,10 +1472,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"items": {
-									"$ref": "#/components/schemas/TransactionAttr"
-								},
-								"type": "array"
+								"$ref": "#/components/schemas/PostCollectionBody"
 							}
 						}
 					}

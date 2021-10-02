@@ -2,6 +2,7 @@ import faker from 'faker';
 
 import {
   AuthProfile,
+  PaymentDetailAttr,
   ProfileAttr,
   ProfileType,
   PropertyAccount,
@@ -70,6 +71,17 @@ export const generatePropertyAssignment = (): PropertyAssignmentAttr => {
     profileId: faker.datatype.number(),
     propertyId: faker.datatype.number(),
     property: generateProperty(),
+  };
+};
+
+export const generatePaymentDetail = (): PaymentDetailAttr => {
+  return {
+    collectedBy: faker.datatype.number(),
+    orNumber: faker.random.alphaNumeric(),
+    paymentType: faker.random.arrayElement(['cash', 'check']),
+    checkNumber: faker.random.alphaNumeric(),
+    checkIssuingBank: faker.random.words(),
+    checkPostingDate: faker.datatype.datetime(),
   };
 };
 

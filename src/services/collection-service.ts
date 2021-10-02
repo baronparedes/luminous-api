@@ -1,7 +1,8 @@
-import {Period, TransactionAttr} from '../@types/models';
+import {PaymentDetailAttr, Period, TransactionAttr} from '../@types/models';
 import {toTransactionPeriod} from '../@utils/dates';
 import useTransactionBreakdown from '../hooks/use-transaction-breakdown';
 import Charge from '../models/charge-model';
+import PaymentDetail from '../models/payment-detail-model';
 import Transaction from '../models/transaction-model';
 import BaseService from './@base-service';
 
@@ -14,8 +15,25 @@ export default class CollectionService extends BaseService {
     return breakdown;
   }
 
-  public async postCollections(tranasctions: TransactionAttr[]) {
-    await Transaction.bulkCreate(tranasctions, {validate: true});
+  public async postCollections(
+    paymentDetail: PaymentDetailAttr,
+    transactions: TransactionAttr[]
+  ) {
+    await this.repository.transaction(async transaction => {
+      const newPaymentDetail = new PaymentDetail({...paymentDetail});
+      await newPaymentDetail.save();
+
+      const taggedTransactions = transactions.map(t => {
+        return {
+          ...t,
+          paymentDetailId: newPaymentDetail.id,
+        };
+      });
+      await Transaction.bulkCreate(taggedTransactions, {
+        validate: true,
+        transaction,
+      });
+    });
   }
 
   public async suggestCollectionBreakdown(

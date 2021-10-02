@@ -147,6 +147,24 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["charged"]},{"dataType":"enum","enums":["collected"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PaymentType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["cash"]},{"dataType":"enum","enums":["check"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PaymentDetailAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "collectedBy": {"dataType":"double","required":true},
+            "orNumber": {"dataType":"string","required":true},
+            "paymentType": {"ref":"PaymentType","required":true},
+            "checkNumber": {"dataType":"string"},
+            "checkPostingDate": {"dataType":"datetime"},
+            "checkIssuingBank": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "TransactionAttr": {
         "dataType": "refObject",
         "properties": {
@@ -160,6 +178,8 @@ const models: TsoaRoute.Models = {
             "transactionType": {"ref":"TransactionType","required":true},
             "waivedBy": {"dataType":"double"},
             "comments": {"dataType":"string"},
+            "paymentDetailId": {"dataType":"double"},
+            "paymentDetail": {"ref":"PaymentDetailAttr"},
         },
         "additionalProperties": false,
     },
@@ -204,6 +224,11 @@ const models: TsoaRoute.Models = {
     "PostTransactionBody": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"propertyId":{"dataType":"double","required":true},"month":{"ref":"Month","required":true},"year":{"dataType":"double","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostCollectionBody": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"transactions":{"dataType":"array","array":{"dataType":"refObject","ref":"TransactionAttr"},"required":true},"paymentDetail":{"ref":"PaymentDetailAttr","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Period": {
@@ -759,7 +784,7 @@ export function RegisterRoutes(app: express.Router) {
 
             function TransactionController_postCollections(request: any, response: any, next: any) {
             const args = {
-                    collections: {"in":"body","name":"collections","required":true,"dataType":"array","array":{"dataType":"refObject","ref":"TransactionAttr"}},
+                    body: {"in":"body","name":"body","required":true,"ref":"PostCollectionBody"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

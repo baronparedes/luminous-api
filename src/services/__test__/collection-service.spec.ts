@@ -4,7 +4,9 @@ import {
   isSamePeriod,
   toTransactionPeriod,
 } from '../../@utils/dates';
+import {generatePaymentDetail} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
+import PaymentDetail from '../../models/payment-detail-model';
 import Transaction from '../../models/transaction-model';
 import CollectionService from '../collection-service';
 
@@ -147,6 +149,7 @@ describe('ColletionService', () => {
 
   it('should post collections without errors', async () => {
     const period = getCurrentMonthYear();
+    const paymentDetail = generatePaymentDetail();
     const transactionPeriod = toTransactionPeriod(period.year, period.month);
     const transactions: TransactionAttr[] = [
       {
@@ -164,10 +167,19 @@ describe('ColletionService', () => {
         transactionType: 'collected',
       },
     ];
-    await target.postCollections(transactions);
+    await target.postCollections(paymentDetail, transactions);
+
+    const actualPaymentDetail = await PaymentDetail.findOne({
+      where: {
+        orNumber: paymentDetail.orNumber,
+      },
+    });
 
     const actual = await Transaction.findAll({
-      where: {transactionType: 'collected'},
+      where: {
+        transactionType: 'collected',
+        paymentDetailId: actualPaymentDetail?.id,
+      },
     });
 
     for (const expected of transactions) {

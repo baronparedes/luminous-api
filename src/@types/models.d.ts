@@ -125,9 +125,20 @@ export interface TransactionAttr {
   transactionType: TransactionType;
   waivedBy?: number;
   comments?: string;
+  paymentDetailId?: number;
+  paymentDetail?: PaymentDetailAttr;
 }
 
 export interface SettingAttr {
   key: string;
   value: string;
+}
+
+export interface PaymentDetailAttr {
+  collectedBy: number;
+  orNumber: string;
+  paymentType: PaymentType;
+  checkNumber?: string;
+  checkPostingDate?: Date;
+  checkIssuingBank?: string;
 }

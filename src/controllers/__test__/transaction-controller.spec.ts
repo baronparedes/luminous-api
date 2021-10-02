@@ -1,10 +1,14 @@
 import faker from 'faker';
 
 import {Period} from '../../@types/models';
-import {generateTransaction} from '../../@utils/fake-data';
+import {
+  generatePaymentDetail,
+  generateTransaction,
+} from '../../@utils/fake-data';
 import CollectionService from '../../services/collection-service';
 import TransactionService from '../../services/transaction-service';
 import {
+  PostCollectionBody,
   PostTransactionBody,
   TransactionController,
 } from '../transaction-controller';
@@ -71,13 +75,16 @@ describe('TransactionController', () => {
   });
 
   it('should post collections', async () => {
-    const expected = [generateTransaction(), generateTransaction()];
+    const expected: PostCollectionBody = {
+      transactions: [generateTransaction(), generateTransaction()],
+      paymentDetail: generatePaymentDetail(),
+    };
     const mock = jest
       .spyOn(CollectionService.prototype, 'postCollections')
       .mockReturnValueOnce(new Promise(resolve => resolve()));
     const target = new TransactionController();
     await target.postCollections(expected);
-    expect(mock).toBeCalledWith(expected);
+    expect(mock).toBeCalledWith(expected.paymentDetail, expected.transactions);
     expect(mock).toBeCalledTimes(1);
   });
 });

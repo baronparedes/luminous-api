@@ -10,11 +10,13 @@ import {
 
 import {
   ChargeAttr,
+  PaymentDetailAttr,
   PropertyAttr,
   TransactionAttr,
   TransactionType,
 } from '../@types/models';
 import Charge from './charge-model';
+import PaymentDetail from './payment-detail-model';
 import Profile from './profile-model';
 import Property from './property-model';
 
@@ -49,6 +51,14 @@ class Transaction extends Model implements TransactionAttr {
   @Column
   @ForeignKey(() => Profile)
   waivedBy?: number;
+
+  @AllowNull(true)
+  @ForeignKey(() => PaymentDetail)
+  @Column
+  paymentDetailId!: number;
+
+  @BelongsTo(() => PaymentDetail)
+  paymentDetail?: PaymentDetailAttr;
 
   @BelongsTo(() => Charge)
   charge?: ChargeAttr;
