@@ -192,6 +192,7 @@ const models: TsoaRoute.Models = {
             "property": {"ref":"PropertyAttr"},
             "assignedProfiles": {"dataType":"array","array":{"dataType":"refObject","ref":"ProfileAttr"}},
             "transactions": {"dataType":"array","array":{"dataType":"refObject","ref":"TransactionAttr"}},
+            "paymentDetails": {"dataType":"array","array":{"dataType":"refObject","ref":"PaymentDetailAttr"}},
         },
         "additionalProperties": false,
     },

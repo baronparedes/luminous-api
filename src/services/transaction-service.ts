@@ -37,6 +37,7 @@ export default class TransactionService {
       where: criteria,
       include: [Charge],
     });
+
     return transactions.map(t => mapTransactions(t));
   }
 

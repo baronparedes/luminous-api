@@ -1,16 +1,31 @@
 import {
   AuthProfile,
+  PaymentDetailAttr,
   ProfileAttr,
   PropertyAssignmentAttr,
   PropertyAttr,
   SettingAttr,
   TransactionAttr,
 } from '../@types/models';
+import PaymentDetail from '../models/payment-detail-model';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
 import Setting from '../models/setting-model';
 import Transaction from '../models/transaction-model';
+
+export function mapPaymentDetail(
+  paymentDetail: PaymentDetail
+): PaymentDetailAttr {
+  return {
+    collectedBy: paymentDetail.collectedBy,
+    orNumber: paymentDetail.orNumber,
+    paymentType: paymentDetail.paymentType,
+    checkIssuingBank: paymentDetail.checkIssuingBank,
+    checkPostingDate: paymentDetail.checkPostingDate,
+    checkNumber: paymentDetail.checkNumber,
+  };
+}
 
 export function mapProfile(profile: Profile): ProfileAttr {
   return {
@@ -74,6 +89,8 @@ export function mapTransactions(model: Transaction): TransactionAttr {
     transactionType: model.transactionType,
     waivedBy: model.waivedBy,
     comments: model.comments,
+    paymentDetailId: model.paymentDetailId,
+    paymentDetail: model.paymentDetail,
   };
 }
 

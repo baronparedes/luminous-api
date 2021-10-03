@@ -187,6 +187,7 @@ describe('ColletionService', () => {
       expect(found).toBeDefined();
       expect(found?.amount).toEqual(expected.amount);
       expect(found?.propertyId).toEqual(expected.propertyId);
+      expect(found?.paymentDetailId).toBeDefined();
       expect(
         isSamePeriod(found?.transactionPeriod ?? '', expected.transactionPeriod)
       ).toBeTruthy();

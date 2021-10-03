@@ -486,6 +486,12 @@
 							"$ref": "#/components/schemas/TransactionAttr"
 						},
 						"type": "array"
+					},
+					"paymentDetails": {
+						"items": {
+							"$ref": "#/components/schemas/PaymentDetailAttr"
+						},
+						"type": "array"
 					}
 				},
 				"required": [

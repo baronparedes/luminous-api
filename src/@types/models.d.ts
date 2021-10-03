@@ -68,6 +68,7 @@ export interface PropertyAccount {
   property?: PropertyAttr;
   assignedProfiles?: ProfileAttr[];
   transactions?: TransactionAttr[];
+  paymentDetails?: PaymentDetailAttr[];
 }
 
 export interface ProfileAttr {

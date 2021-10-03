@@ -2,7 +2,9 @@ import faker from 'faker';
 
 import {TransactionType} from '../../@types/models';
 import {toTransactionPeriod} from '../../@utils/dates';
+import {generatePaymentDetail} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
+import PaymentDetail from '../../models/payment-detail-model';
 import PropertyAssignment from '../../models/property-assignment-model';
 import Transaction from '../../models/transaction-model';
 import PropertyAccountService from '../property-account-service';
@@ -13,6 +15,12 @@ describe('PropertyAccountService', () => {
   const profile = faker.random.arrayElement(SEED.PROFILES);
   const charge = faker.random.arrayElement(SEED.CHARGES);
   const property = faker.random.arrayElement(SEED.PROPERTIES);
+  const seedPaymentDetails = [
+    {
+      id: 1,
+      ...generatePaymentDetail(),
+    },
+  ];
   const seedTransactions = [
     {
       id: 1,
@@ -37,6 +45,7 @@ describe('PropertyAccountService', () => {
       propertyId: property.id,
       transactionPeriod: toTransactionPeriod(2021, 'AUG'),
       transactionType: 'collected' as TransactionType,
+      paymentDetailId: 1,
     },
   ];
 
@@ -55,6 +64,7 @@ describe('PropertyAccountService', () => {
     jest.setSystemTime(new Date(2021, targetMonth));
 
     await initInMemoryDb();
+    await PaymentDetail.bulkCreate([...seedPaymentDetails]);
     await Transaction.bulkCreate([...seedTransactions]);
     await PropertyAssignment.bulkCreate([...seedAssignments]);
   });
@@ -76,11 +86,13 @@ describe('PropertyAccountService', () => {
       year: 2021,
       month: 'AUG',
     });
+
     expect(actual.balance).toEqual(0);
     expect(actual.propertyId).toEqual(property.id);
     expect(actual.property?.id).toEqual(property.id);
     expect(actual.transactions?.length).toEqual(2);
     expect(actual.assignedProfiles?.length).toEqual(1);
+    expect(actual.paymentDetails?.length).toEqual(1);
   });
 
   it('should get property account by property and period with no historical data', async () => {

@@ -5,6 +5,7 @@ import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
 import {mapProfile} from './@mappers';
 import ChargeService from './charge-service';
+import PaymentDetailService from './payment-detail-service';
 import PropertyService from './property-service';
 import TransactionService from './transaction-service';
 
@@ -12,11 +13,13 @@ export default class PropertyAccountService {
   private propertyService: PropertyService;
   private chargeService: ChargeService;
   private transactionService: TransactionService;
+  private paymentDetailService: PaymentDetailService;
 
   constructor() {
     this.propertyService = new PropertyService();
     this.chargeService = new ChargeService();
     this.transactionService = new TransactionService();
+    this.paymentDetailService = new PaymentDetailService();
   }
 
   private async getAssignedProfiles(propertyId: number) {
@@ -49,12 +52,18 @@ export default class PropertyAccountService {
       );
 
     const assignedProfiles = await this.getAssignedProfiles(propertyId);
+    const paymentDetails =
+      await this.paymentDetailService.getPaymentDetailsByPropertyAndPeriod(
+        propertyId,
+        period ?? current
+      );
     const result: PropertyAccount = {
       propertyId,
       property: property,
       balance,
       transactions,
       assignedProfiles,
+      paymentDetails,
     };
     return result;
   }

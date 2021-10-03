@@ -15,7 +15,7 @@ export function getCurrentTransactionPeriod() {
   return toTransactionPeriod(year, month);
 }
 
-export function isSamePeriod(a: Date | string, b: Date | string) {
+export function isSamePeriod(a?: Date | string, b?: Date | string) {
   const first = moment(a).format('YYYY MM');
   const second = moment(b).format('YYYY MM');
   const result = first === second;
