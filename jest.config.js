@@ -4,6 +4,7 @@ module.exports = {
   testTimeout: 300000,
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   clearMocks: true,
+  resetMocks: true,
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
