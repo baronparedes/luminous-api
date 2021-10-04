@@ -136,6 +136,7 @@ export interface SettingAttr {
 }
 
 export interface PaymentDetailAttr {
+  id?: number;
   collectedBy: number;
   orNumber: string;
   paymentType: PaymentType;

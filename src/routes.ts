@@ -155,6 +155,7 @@ const models: TsoaRoute.Models = {
     "PaymentDetailAttr": {
         "dataType": "refObject",
         "properties": {
+            "id": {"dataType":"double"},
             "collectedBy": {"dataType":"double","required":true},
             "orNumber": {"dataType":"string","required":true},
             "paymentType": {"ref":"PaymentType","required":true},

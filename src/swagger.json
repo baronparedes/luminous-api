@@ -377,6 +377,10 @@
 			},
 			"PaymentDetailAttr": {
 				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
 					"collectedBy": {
 						"type": "number",
 						"format": "double"

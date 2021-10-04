@@ -18,6 +18,7 @@ export function mapPaymentDetail(
   paymentDetail: PaymentDetail
 ): PaymentDetailAttr {
   return {
+    id: paymentDetail.id,
     collectedBy: paymentDetail.collectedBy,
     orNumber: paymentDetail.orNumber,
     paymentType: paymentDetail.paymentType,
