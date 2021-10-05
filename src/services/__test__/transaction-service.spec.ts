@@ -1,6 +1,11 @@
 import faker from 'faker';
 
-import {toTransactionPeriod} from '../../@utils/dates';
+import {TransactionAttr} from '../../@types/models';
+import {
+  toTransactionPeriod,
+  toTransactionPeriodFromDb,
+} from '../../@utils/dates';
+import {generateTransaction} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
 import {VERBIAGE} from '../../constants';
 import Transaction from '../../models/transaction-model';
@@ -12,6 +17,7 @@ describe('TransactionService', () => {
     SEED.CHARGES.filter(c => c.chargeType === 'unit')
   );
   const property = faker.random.arrayElement(SEED.PROPERTIES);
+  const profile = faker.random.arrayElement(SEED.PROFILES);
   const seedTransactions = [
     {
       id: 1,
@@ -72,5 +78,59 @@ describe('TransactionService', () => {
     );
     const actual = transactions.map(c => c.chargeId).sort();
     expect(actual).toEqual(expected); // actual calculation of amount is in charge-service.spec.ts
+  });
+
+  it('should save transactions', async () => {
+    const transactionPeriod = toTransactionPeriod(2019, 'DEC');
+    const expectedTransactions = [
+      {
+        ...generateTransaction(),
+        propertyId: property.id,
+        chargeId: charge.id,
+        waivedBy: profile.id,
+        transactionPeriod,
+      },
+      {
+        ...generateTransaction(),
+        propertyId: property.id,
+        chargeId: charge.id,
+        waivedBy: profile.id,
+        transactionPeriod,
+      },
+    ];
+
+    await target.saveTransactions(expectedTransactions);
+    const actualTranasctions = await target.getTransactionByYearMonth(
+      property.id,
+      2019,
+      'DEC'
+    );
+
+    expect(actualTranasctions.length).toEqual(2);
+    for (let index = 0; index < actualTranasctions.length; index++) {
+      const actual = actualTranasctions[index];
+      const expected = expectedTransactions[index];
+      const a: TransactionAttr = {
+        amount: actual.amount,
+        chargeId: actual.chargeId,
+        propertyId: actual.propertyId,
+        waivedBy: actual.waivedBy,
+        transactionPeriod: toTransactionPeriodFromDb(actual.transactionPeriod),
+        transactionType: actual.transactionType,
+        comments: actual.comments,
+        paymentDetailId: actual.paymentDetailId ?? undefined,
+      };
+      const e: TransactionAttr = {
+        amount: expected.amount,
+        chargeId: expected.chargeId,
+        propertyId: expected.propertyId,
+        waivedBy: expected.waivedBy,
+        transactionPeriod: expected.transactionPeriod,
+        transactionType: expected.transactionType,
+        comments: expected.comments,
+        paymentDetailId: expected.paymentDetailId,
+      };
+      expect(a).toEqual(e);
+    }
   });
 });

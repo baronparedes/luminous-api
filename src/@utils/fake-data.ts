@@ -96,6 +96,7 @@ export const generateTransaction = (): TransactionAttr => {
       'collected',
     ]),
     id: faker.datatype.number(),
+    comments: faker.random.words(),
   };
 };
 

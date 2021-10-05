@@ -36,6 +36,7 @@ export default class TransactionService {
     const transactions = await Transaction.findAll({
       where: criteria,
       include: [Charge],
+      order: [['id', 'ASC']],
     });
 
     return transactions.map(t => mapTransactions(t));
@@ -120,7 +121,11 @@ export default class TransactionService {
     }
 
     const records = [...transactionsCalculated];
-    await Transaction.bulkCreate(records, {validate: true});
+    await this.saveTransactions(records);
+  }
+
+  public async saveTransactions(transactions: TransactionAttr[]) {
+    await Transaction.bulkCreate([...transactions], {validate: true});
   }
 
   public async getAvailablePeriodsByProperty(propertyId: number) {

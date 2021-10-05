@@ -87,4 +87,15 @@ describe('TransactionController', () => {
     expect(mock).toBeCalledWith(expected.paymentDetail, expected.transactions);
     expect(mock).toBeCalledTimes(1);
   });
+
+  it('should post transactions', async () => {
+    const expected = [generateTransaction(), generateTransaction()];
+    const mock = jest
+      .spyOn(TransactionService.prototype, 'saveTransactions')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new TransactionController();
+    await target.postTransactions(expected);
+    expect(mock).toBeCalledWith(expected);
+    expect(mock).toBeCalledTimes(1);
+  });
 });

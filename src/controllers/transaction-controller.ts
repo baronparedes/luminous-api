@@ -69,6 +69,12 @@ export class TransactionController extends Controller {
     }
   }
 
+  @SuccessResponse(201, VERBIAGE.CREATED)
+  @Post('/postTransactions')
+  public async postTransactions(@Body() body: TransactionAttr[]) {
+    await this.transactionService.saveTransactions(body);
+  }
+
   @Get('/getAvailablePeriods/:propertyId')
   public async getAvailablePeriods(@Path() propertyId: number) {
     return await this.transactionService.getAvailablePeriodsByProperty(

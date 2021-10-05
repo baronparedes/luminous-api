@@ -1499,6 +1499,35 @@
 				}
 			}
 		},
+		"/api/transaction/postTransactions": {
+			"post": {
+				"operationId": "PostTransactions",
+				"responses": {
+					"201": {
+						"description": "created"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/TransactionAttr"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/transaction/getAvailablePeriods/{propertyId}": {
 			"get": {
 				"operationId": "GetAvailablePeriods",
