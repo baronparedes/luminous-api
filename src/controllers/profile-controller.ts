@@ -60,7 +60,7 @@ export class ProfileController extends Controller {
       if (e instanceof ValidationError) {
         throw new EntityError(e);
       }
-      throw new ApiError(400, VERBIAGE.BAD_REQUEST);
+      throw e;
     }
   }
 

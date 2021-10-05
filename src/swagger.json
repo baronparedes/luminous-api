@@ -1431,8 +1431,8 @@
 			"post": {
 				"operationId": "PostMonthlyCharges",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"201": {
+						"description": "created"
 					},
 					"400": {
 						"description": "duplicate charges",
@@ -1467,8 +1467,18 @@
 			"post": {
 				"operationId": "PostCollections",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"201": {
+						"description": "created"
+					},
+					"400": {
+						"description": "bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityError"
+								}
+							}
+						}
 					}
 				},
 				"security": [

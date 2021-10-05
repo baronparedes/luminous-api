@@ -1,3 +1,4 @@
+import {ValidationError} from 'sequelize';
 import {
   Body,
   Controller,
@@ -8,11 +9,12 @@ import {
   Response,
   Route,
   Security,
+  SuccessResponse,
 } from 'tsoa';
 
 import {Month, PaymentDetailAttr, TransactionAttr} from '../@types/models';
 import {VERBIAGE} from '../constants';
-import {ApiError} from '../errors';
+import {ApiError, EntityError} from '../errors';
 import CollectionService from '../services/collection-service';
 import TransactionService from '../services/transaction-service';
 
@@ -40,6 +42,7 @@ export class TransactionController extends Controller {
   }
 
   @Response<ApiError>(400, VERBIAGE.DUPLICATE_CHARGES)
+  @SuccessResponse(201, VERBIAGE.CREATED)
   @Post('/postMonthlyCharges')
   public async postMonthlyCharges(@Body() body: PostTransactionBody) {
     await this.transactionService.postMonthlyCharges(
@@ -49,12 +52,21 @@ export class TransactionController extends Controller {
     );
   }
 
+  @Response<EntityError>(400, VERBIAGE.BAD_REQUEST)
+  @SuccessResponse(201, VERBIAGE.CREATED)
   @Post('/postCollections')
   public async postCollections(@Body() body: PostCollectionBody) {
-    await this.collectionService.postCollections(
-      body.paymentDetail,
-      body.transactions
-    );
+    try {
+      await this.collectionService.postCollections(
+        body.paymentDetail,
+        body.transactions
+      );
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        throw new EntityError(e);
+      }
+      throw e;
+    }
   }
 
   @Get('/getAvailablePeriods/:propertyId')
