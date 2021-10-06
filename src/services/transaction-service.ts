@@ -7,7 +7,7 @@ import {ApiError} from '../errors';
 import Charge from '../models/charge-model';
 import Property from '../models/property-model';
 import Transaction from '../models/transaction-model';
-import {mapTransactions} from './@mappers';
+import {mapTransaction} from './@mappers';
 import ChargeService from './charge-service';
 
 export default class TransactionService {
@@ -39,7 +39,7 @@ export default class TransactionService {
       order: [['id', 'ASC']],
     });
 
-    return transactions.map(t => mapTransactions(t));
+    return transactions.map(t => mapTransaction(t));
   }
 
   public async calculateMonthlyCharges(

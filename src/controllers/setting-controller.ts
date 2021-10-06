@@ -11,6 +11,7 @@ import {
 } from 'tsoa';
 
 import {SettingAttr} from '../@types/models';
+import {CONSTANTS} from '../constants';
 import SettingService from '../services/setting-service';
 
 @Security('bearer')
@@ -20,7 +21,7 @@ export class SettingController extends Controller {
 
   constructor() {
     super();
-    this.settingService = new SettingService();
+    this.settingService = new SettingService(CONSTANTS.COMMUNITY_ID);
   }
 
   @NoSecurity()

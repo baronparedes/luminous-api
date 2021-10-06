@@ -1,22 +1,23 @@
-import {CONSTANTS} from '../constants';
 import Setting from '../models/setting-model';
-import {mapSettings} from './@mappers';
+import {mapSetting} from './@mappers';
 
 export default class SettingService {
+  constructor(private communityId: number) {}
+
   public async getValues() {
     const result = await Setting.findAll({
       where: {
-        communityId: CONSTANTS.COMMUNITY_ID,
+        communityId: this.communityId,
       },
     });
-    return result.map(s => mapSettings(s));
+    return result.map(s => mapSetting(s));
   }
 
   public async getValue(key: string) {
     const result = await Setting.findOne({
       where: {
         key,
-        communityId: CONSTANTS.COMMUNITY_ID,
+        communityId: this.communityId,
       },
     });
     return result?.value ?? '';
@@ -26,7 +27,7 @@ export default class SettingService {
     const existing = await Setting.findOne({
       where: {
         key,
-        communityId: CONSTANTS.COMMUNITY_ID,
+        communityId: this.communityId,
       },
     });
     if (existing) {
@@ -36,7 +37,7 @@ export default class SettingService {
       const newSetting = new Setting({
         key,
         value,
-        communityId: CONSTANTS.COMMUNITY_ID,
+        communityId: this.communityId,
       });
       await newSetting.save();
     }

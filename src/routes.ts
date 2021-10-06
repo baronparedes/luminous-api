@@ -5,6 +5,8 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { AuthController } from './controllers/auth-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ChargeController } from './controllers/charge-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ProfileController } from './controllers/profile-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PropertyAccountController } from './controllers/property-account-controller';
@@ -40,6 +42,39 @@ const models: TsoaRoute.Models = {
     "AuthResult": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"token":{"dataType":"string","required":true},"profile":{"ref":"AuthProfile","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CommunityAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "description": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ChargeType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["unit"]},{"dataType":"enum","enums":["percentage"]},{"dataType":"enum","enums":["amount"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostingType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["monthly"]},{"dataType":"enum","enums":["manual"]},{"dataType":"enum","enums":["accrued"]},{"dataType":"enum","enums":["interest"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ChargeAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "communityId": {"dataType":"double","required":true},
+            "community": {"ref":"CommunityAttr"},
+            "code": {"dataType":"string","required":true},
+            "rate": {"dataType":"double","required":true},
+            "chargeType": {"ref":"ChargeType","required":true},
+            "postingType": {"ref":"PostingType","required":true},
+            "thresholdInMonths": {"dataType":"double"},
+            "priority": {"dataType":"double"},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "FieldError": {
@@ -105,39 +140,6 @@ const models: TsoaRoute.Models = {
             "status": {"ref":"RecordStatus","required":true},
             "scopes": {"dataType":"string"},
             "remarks": {"dataType":"string"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "CommunityAttr": {
-        "dataType": "refObject",
-        "properties": {
-            "description": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ChargeType": {
-        "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["unit"]},{"dataType":"enum","enums":["percentage"]},{"dataType":"enum","enums":["amount"]}],"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PostingType": {
-        "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["monthly"]},{"dataType":"enum","enums":["manual"]},{"dataType":"enum","enums":["accrued"]},{"dataType":"enum","enums":["interest"]}],"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ChargeAttr": {
-        "dataType": "refObject",
-        "properties": {
-            "communityId": {"dataType":"double","required":true},
-            "community": {"ref":"CommunityAttr"},
-            "code": {"dataType":"string","required":true},
-            "rate": {"dataType":"double","required":true},
-            "chargeType": {"ref":"ChargeType","required":true},
-            "postingType": {"ref":"PostingType","required":true},
-            "thresholdInMonths": {"dataType":"double"},
-            "priority": {"dataType":"double"},
         },
         "additionalProperties": false,
     },
@@ -268,6 +270,29 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.auth.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/charge/getAllCharges',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function ChargeController_getAllCharges(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new ChargeController();
+
+
+            const promise = controller.getAllCharges.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

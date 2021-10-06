@@ -6,7 +6,7 @@ import Setting from '../../models/setting-model';
 import SettingService from '../setting-service';
 
 describe('SettingService', () => {
-  const target = new SettingService();
+  const target = new SettingService(CONSTANTS.COMMUNITY_ID);
   const seedData = {
     key: faker.random.word(),
     value: faker.random.words(),

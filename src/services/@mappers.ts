@@ -1,5 +1,6 @@
 import {
   AuthProfile,
+  ChargeAttr,
   PaymentDetailAttr,
   ProfileAttr,
   PropertyAssignmentAttr,
@@ -7,6 +8,7 @@ import {
   SettingAttr,
   TransactionAttr,
 } from '../@types/models';
+import Charge from '../models/charge-model';
 import PaymentDetail from '../models/payment-detail-model';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
@@ -78,7 +80,7 @@ export function mapPropertyAssignment(
   };
 }
 
-export function mapTransactions(model: Transaction): TransactionAttr {
+export function mapTransaction(model: Transaction): TransactionAttr {
   return {
     id: model.id,
     chargeId: model.chargeId,
@@ -95,9 +97,21 @@ export function mapTransactions(model: Transaction): TransactionAttr {
   };
 }
 
-export function mapSettings(model: Setting): SettingAttr {
+export function mapSetting(model: Setting): SettingAttr {
   return {
     key: model.key,
     value: model.value,
+  };
+}
+
+export function mapCharge(model: Charge): ChargeAttr {
+  return {
+    chargeType: model.chargeType,
+    code: model.code,
+    communityId: model.communityId,
+    postingType: model.postingType,
+    rate: model.rate,
+    priority: model.priority,
+    thresholdInMonths: model.thresholdInMonths,
   };
 }

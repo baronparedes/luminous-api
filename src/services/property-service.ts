@@ -2,7 +2,7 @@ import {FindOptions, Op} from 'sequelize';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
 import {iLike} from '../@utils/helpers-sequelize';
-import {VERBIAGE} from '../constants';
+import {CONSTANTS, VERBIAGE} from '../constants';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
@@ -34,6 +34,7 @@ export default class PropertyService extends BaseService {
       address: property.address,
       floorArea: property.floorArea,
       status: property.status,
+      communityId: CONSTANTS.COMMUNITY_ID,
     });
     const result = await newProperty.save();
     return mapProperty(result);

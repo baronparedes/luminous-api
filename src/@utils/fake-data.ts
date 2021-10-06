@@ -2,7 +2,10 @@ import faker from 'faker';
 
 import {
   AuthProfile,
+  ChargeAttr,
+  ChargeType,
   PaymentDetailAttr,
+  PostingType,
   ProfileAttr,
   ProfileType,
   PropertyAccount,
@@ -119,5 +122,26 @@ export const generateSetting = (): SettingAttr => {
   return {
     key: faker.random.word(),
     value: faker.random.words(),
+  };
+};
+
+export const generateCharge = (): ChargeAttr => {
+  return {
+    chargeType: faker.random.arrayElement<ChargeType>([
+      'amount',
+      'percentage',
+      'unit',
+    ]),
+    code: faker.random.alphaNumeric(10),
+    communityId: faker.datatype.number(),
+    postingType: faker.random.arrayElement<PostingType>([
+      'accrued',
+      'interest',
+      'manual',
+      'monthly',
+    ]),
+    rate: faker.datatype.number(),
+    priority: faker.datatype.number(),
+    thresholdInMonths: faker.datatype.number(),
   };
 };

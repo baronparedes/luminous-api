@@ -77,6 +77,76 @@
 				],
 				"type": "object"
 			},
+			"CommunityAttr": {
+				"properties": {
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ChargeType": {
+				"type": "string",
+				"enum": [
+					"unit",
+					"percentage",
+					"amount"
+				]
+			},
+			"PostingType": {
+				"type": "string",
+				"enum": [
+					"monthly",
+					"manual",
+					"accrued",
+					"interest"
+				]
+			},
+			"ChargeAttr": {
+				"properties": {
+					"communityId": {
+						"type": "number",
+						"format": "double"
+					},
+					"community": {
+						"$ref": "#/components/schemas/CommunityAttr"
+					},
+					"code": {
+						"type": "string"
+					},
+					"rate": {
+						"type": "number",
+						"format": "double"
+					},
+					"chargeType": {
+						"$ref": "#/components/schemas/ChargeType"
+					},
+					"postingType": {
+						"$ref": "#/components/schemas/PostingType"
+					},
+					"thresholdInMonths": {
+						"type": "number",
+						"format": "double"
+					},
+					"priority": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"communityId",
+					"code",
+					"rate",
+					"chargeType",
+					"postingType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"FieldError": {
 				"properties": {
 					"value": {
@@ -287,76 +357,6 @@
 					"email",
 					"type",
 					"status"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"CommunityAttr": {
-				"properties": {
-					"description": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"description"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ChargeType": {
-				"type": "string",
-				"enum": [
-					"unit",
-					"percentage",
-					"amount"
-				]
-			},
-			"PostingType": {
-				"type": "string",
-				"enum": [
-					"monthly",
-					"manual",
-					"accrued",
-					"interest"
-				]
-			},
-			"ChargeAttr": {
-				"properties": {
-					"communityId": {
-						"type": "number",
-						"format": "double"
-					},
-					"community": {
-						"$ref": "#/components/schemas/CommunityAttr"
-					},
-					"code": {
-						"type": "string"
-					},
-					"rate": {
-						"type": "number",
-						"format": "double"
-					},
-					"chargeType": {
-						"$ref": "#/components/schemas/ChargeType"
-					},
-					"postingType": {
-						"$ref": "#/components/schemas/PostingType"
-					},
-					"thresholdInMonths": {
-						"type": "number",
-						"format": "double"
-					},
-					"priority": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"communityId",
-					"code",
-					"rate",
-					"chargeType",
-					"postingType"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -652,6 +652,32 @@
 					}
 				},
 				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/charge/getAllCharges": {
+			"get": {
+				"operationId": "GetAllCharges",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ChargeAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": []
 			}
 		},

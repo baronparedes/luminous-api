@@ -8,6 +8,7 @@ import {
 } from '../../@types/models';
 import {toTransactionPeriod} from '../../@utils/dates';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
+import {CONSTANTS} from '../../constants';
 import Transaction from '../../models/transaction-model';
 import ChargeService from '../../services/charge-service';
 
@@ -56,6 +57,35 @@ describe('ChargeService', () => {
   beforeAll(async () => {
     await initInMemoryDb();
     await Transaction.bulkCreate([...seedTransactions]);
+  });
+
+  it('should get all charges', async () => {
+    const actualCharges = await target.getCharges(CONSTANTS.COMMUNITY_ID);
+    for (const expected of SEED.CHARGES) {
+      const actual = actualCharges.find(c => c.code === expected.code);
+      expect(actual).toBeDefined();
+      if (actual) {
+        const a: ChargeAttr = {
+          chargeType: actual.chargeType,
+          code: actual.code,
+          communityId: actual.communityId,
+          postingType: actual.postingType,
+          rate: actual.rate,
+          priority: actual.priority ?? undefined,
+          thresholdInMonths: actual.thresholdInMonths ?? undefined,
+        };
+        const e: ChargeAttr = {
+          chargeType: expected.chargeType,
+          code: expected.code,
+          communityId: expected.communityId,
+          postingType: expected.postingType,
+          rate: expected.rate,
+          priority: expected.priority,
+          thresholdInMonths: expected.thresholdInMonths,
+        };
+        expect(a).toEqual(e);
+      }
+    }
   });
 
   it('should get balance', async () => {

@@ -106,7 +106,7 @@ describe('TransactionService', () => {
       'DEC'
     );
 
-    expect(actualTranasctions.length).toEqual(2);
+    expect(actualTranasctions.length).toEqual(expectedTransactions.length);
     for (let index = 0; index < actualTranasctions.length; index++) {
       const actual = actualTranasctions[index];
       const expected = expectedTransactions[index];

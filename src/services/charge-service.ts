@@ -8,7 +8,9 @@ import {
 } from '../@types/models';
 import {subtractFromYearMonth, toTransactionPeriod} from '../@utils/dates';
 import {generateNumberedSeries} from '../@utils/helpers';
+import Charge from '../models/charge-model';
 import Transaction from '../models/transaction-model';
+import {mapCharge} from './@mappers';
 
 export default class ChargeService {
   private async hasPreviouslyPostedPaymentsSince(
@@ -182,5 +184,14 @@ export default class ChargeService {
     }
 
     return 0;
+  }
+
+  public async getCharges(communityId: number) {
+    const result = await Charge.findAll({
+      where: {
+        communityId,
+      },
+    });
+    return result.map(c => mapCharge(c));
   }
 }
