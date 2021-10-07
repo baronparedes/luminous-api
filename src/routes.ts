@@ -183,6 +183,7 @@ const models: TsoaRoute.Models = {
             "comments": {"dataType":"string"},
             "paymentDetailId": {"dataType":"double"},
             "paymentDetail": {"ref":"PaymentDetailAttr"},
+            "rateSnapshot": {"dataType":"double"},
         },
         "additionalProperties": false,
     },

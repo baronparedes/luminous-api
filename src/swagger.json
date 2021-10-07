@@ -454,6 +454,10 @@
 					},
 					"paymentDetail": {
 						"$ref": "#/components/schemas/PaymentDetailAttr"
+					},
+					"rateSnapshot": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [

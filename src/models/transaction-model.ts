@@ -45,7 +45,7 @@ class Transaction extends Model implements TransactionAttr {
   transactionType!: TransactionType;
 
   @AllowNull(true)
-  @Column
+  @Column(DataType.TEXT)
   comments?: string;
 
   @Column
