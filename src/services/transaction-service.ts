@@ -68,6 +68,7 @@ export default class TransactionService {
         propertyId,
         transactionType: 'charged',
         transactionPeriod,
+        rateSnapshot: charge.rate,
       };
       return result;
     });

@@ -57,6 +57,10 @@ class Transaction extends Model implements TransactionAttr {
   @Column
   paymentDetailId!: number;
 
+  @AllowNull(true)
+  @Column(DataType.DECIMAL)
+  rateSnapshot?: number;
+
   @BelongsTo(() => PaymentDetail)
   paymentDetail?: PaymentDetailAttr;
 

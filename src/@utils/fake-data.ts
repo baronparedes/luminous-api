@@ -100,6 +100,7 @@ export const generateTransaction = (): TransactionAttr => {
     ]),
     id: faker.datatype.number(),
     comments: faker.random.words(),
+    rateSnapshot: faker.datatype.number(),
   };
 };
 

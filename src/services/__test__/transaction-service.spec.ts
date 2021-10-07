@@ -26,6 +26,7 @@ describe('TransactionService', () => {
       propertyId: property.id,
       transactionPeriod: toTransactionPeriod(2021, 'JAN'),
       transactionType: 'charged',
+      rateSnapshot: charge.rate,
     },
     {
       id: 2,
@@ -34,6 +35,7 @@ describe('TransactionService', () => {
       propertyId: property.id,
       transactionPeriod: toTransactionPeriod(2020, 'DEC'),
       transactionType: 'charged',
+      rateSnapshot: charge.rate,
     },
     {
       id: 3,
@@ -42,6 +44,7 @@ describe('TransactionService', () => {
       propertyId: property.id,
       transactionPeriod: toTransactionPeriod(2020, 'DEC'),
       transactionType: 'charged',
+      rateSnapshot: charge.rate,
     },
   ];
 
@@ -67,17 +70,20 @@ describe('TransactionService', () => {
 
   it('should post monthly charges', async () => {
     await target.postMonthlyCharges(2021, 'FEB', property.id);
-    const transactions = await target.getTransactionByYearMonth(
+    const actualCharges = await target.getTransactionByYearMonth(
       property.id,
       2021,
       'FEB',
       'charged'
     );
-    const expected = SEED.CHARGES.filter(c => c.postingType !== 'manual').map(
-      c => c.id
+    const expectedCharges = SEED.CHARGES.filter(
+      c => c.postingType !== 'manual'
     );
-    const actual = transactions.map(c => c.chargeId).sort();
-    expect(actual).toEqual(expected); // actual calculation of amount is in charge-service.spec.ts
+    for (const expected of expectedCharges) {
+      const actual = actualCharges.find(c => c.chargeId === expected.id);
+      expect(actual).toBeDefined();
+      expect(actual?.rateSnapshot).toEqual(expected.rate);
+    }
   });
 
   it('should save transactions', async () => {
@@ -119,6 +125,7 @@ describe('TransactionService', () => {
         transactionType: actual.transactionType,
         comments: actual.comments,
         paymentDetailId: actual.paymentDetailId ?? undefined,
+        rateSnapshot: actual.rateSnapshot ?? undefined,
       };
       const e: TransactionAttr = {
         amount: expected.amount,
@@ -129,6 +136,7 @@ describe('TransactionService', () => {
         transactionType: expected.transactionType,
         comments: expected.comments,
         paymentDetailId: expected.paymentDetailId,
+        rateSnapshot: expected.rateSnapshot,
       };
       expect(a).toEqual(e);
     }

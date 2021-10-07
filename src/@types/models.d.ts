@@ -128,6 +128,7 @@ export interface TransactionAttr {
   comments?: string;
   paymentDetailId?: number;
   paymentDetail?: PaymentDetailAttr;
+  rateSnapshot?: number;
 }
 
 export interface SettingAttr {
