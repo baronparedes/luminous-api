@@ -108,6 +108,10 @@
 			},
 			"ChargeAttr": {
 				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
 					"communityId": {
 						"type": "number",
 						"format": "double"

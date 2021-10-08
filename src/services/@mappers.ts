@@ -107,6 +107,7 @@ export function mapSetting(model: Setting): SettingAttr {
 
 export function mapCharge(model: Charge): ChargeAttr {
   return {
+    id: model.id,
     chargeType: model.chargeType,
     code: model.code,
     communityId: model.communityId,

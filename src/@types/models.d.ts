@@ -105,6 +105,7 @@ export interface CommunityAttr {
 }
 
 export interface ChargeAttr {
+  id?: number;
   communityId: number;
   community?: CommunityAttr;
   code: string;

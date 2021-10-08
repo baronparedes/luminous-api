@@ -66,6 +66,7 @@ describe('ChargeService', () => {
       expect(actual).toBeDefined();
       if (actual) {
         const a: ChargeAttr = {
+          id: actual.id,
           chargeType: actual.chargeType,
           code: actual.code,
           communityId: actual.communityId,
@@ -75,6 +76,7 @@ describe('ChargeService', () => {
           thresholdInMonths: actual.thresholdInMonths ?? undefined,
         };
         const e: ChargeAttr = {
+          id: expected.id,
           chargeType: expected.chargeType,
           code: expected.code,
           communityId: expected.communityId,

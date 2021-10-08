@@ -65,6 +65,7 @@ const models: TsoaRoute.Models = {
     "ChargeAttr": {
         "dataType": "refObject",
         "properties": {
+            "id": {"dataType":"double"},
             "communityId": {"dataType":"double","required":true},
             "community": {"ref":"CommunityAttr"},
             "code": {"dataType":"string","required":true},
