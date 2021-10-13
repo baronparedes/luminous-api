@@ -88,20 +88,25 @@ describe('TransactionService', () => {
 
   it('should save transactions', async () => {
     const transactionPeriod = toTransactionPeriod(2019, 'DEC');
+    const batchId = faker.datatype.uuid();
     const expectedTransactions = [
       {
         ...generateTransaction(),
+        id: undefined,
         propertyId: property.id,
         chargeId: charge.id,
         waivedBy: profile.id,
         transactionPeriod,
+        batchId,
       },
       {
         ...generateTransaction(),
+        id: undefined,
         propertyId: property.id,
         chargeId: charge.id,
         waivedBy: profile.id,
         transactionPeriod,
+        batchId,
       },
     ];
 
@@ -126,6 +131,7 @@ describe('TransactionService', () => {
         comments: actual.comments,
         paymentDetailId: actual.paymentDetailId ?? undefined,
         rateSnapshot: actual.rateSnapshot ?? undefined,
+        batchId: actual.batchId ?? undefined,
       };
       const e: TransactionAttr = {
         amount: expected.amount,
@@ -137,6 +143,7 @@ describe('TransactionService', () => {
         comments: expected.comments,
         paymentDetailId: expected.paymentDetailId,
         rateSnapshot: expected.rateSnapshot,
+        batchId: expected.batchId,
       };
       expect(a).toEqual(e);
     }

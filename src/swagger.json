@@ -462,6 +462,9 @@
 					"rateSnapshot": {
 						"type": "number",
 						"format": "double"
+					},
+					"batchId": {
+						"type": "string"
 					}
 				},
 				"required": [

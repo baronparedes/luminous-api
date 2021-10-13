@@ -41,8 +41,8 @@
     {
        "id": 6,
        "code": "WATER UTILITY",
-       "rate": 1,
-       "chargeType": "amount",
+       "rate": 15.94,
+       "chargeType": "unit",
        "postingType": "manual",
        "priority": 4
     }
