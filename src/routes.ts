@@ -185,7 +185,7 @@ const models: TsoaRoute.Models = {
             "paymentDetailId": {"dataType":"double"},
             "paymentDetail": {"ref":"PaymentDetailAttr"},
             "rateSnapshot": {"dataType":"double"},
-            "batchId": {"dataType":"string"},
+            "batchId": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
         },
         "additionalProperties": false,
     },

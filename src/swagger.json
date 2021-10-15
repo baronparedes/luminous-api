@@ -464,7 +464,8 @@
 						"format": "double"
 					},
 					"batchId": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					}
 				},
 				"required": [
