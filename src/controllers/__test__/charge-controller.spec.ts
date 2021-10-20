@@ -18,4 +18,15 @@ describe('ChargeController', () => {
     expect(mock).toBeCalledWith(CONSTANTS.COMMUNITY_ID);
     expect(actual).toStrictEqual(mockedCharges);
   });
+
+  it('should post charges', async () => {
+    const expected = [generateCharge(), generateCharge()];
+    const mock = jest
+      .spyOn(ChargeService.prototype, 'saveCharges')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new ChargeController();
+    await target.patchCharges(expected);
+    expect(mock).toBeCalledWith(expected);
+    expect(mock).toBeCalledTimes(1);
+  });
 });

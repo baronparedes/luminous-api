@@ -134,11 +134,13 @@
 					},
 					"thresholdInMonths": {
 						"type": "number",
-						"format": "double"
+						"format": "double",
+						"nullable": true
 					},
 					"priority": {
 						"type": "number",
-						"format": "double"
+						"format": "double",
+						"nullable": true
 					}
 				},
 				"required": [
@@ -691,6 +693,35 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/api/charge/patchCharges": {
+			"patch": {
+				"operationId": "PatchCharges",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/ChargeAttr"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/api/profile/getAll": {

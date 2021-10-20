@@ -72,8 +72,8 @@ const models: TsoaRoute.Models = {
             "rate": {"dataType":"double","required":true},
             "chargeType": {"ref":"ChargeType","required":true},
             "postingType": {"ref":"PostingType","required":true},
-            "thresholdInMonths": {"dataType":"double"},
-            "priority": {"dataType":"double"},
+            "thresholdInMonths": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}]},
+            "priority": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}]},
         },
         "additionalProperties": false,
     },
@@ -296,6 +296,30 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getAllCharges.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.patch('/api/charge/patchCharges',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function ChargeController_patchCharges(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"dataType":"array","array":{"dataType":"refObject","ref":"ChargeAttr"}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new ChargeController();
+
+
+            const promise = controller.patchCharges.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

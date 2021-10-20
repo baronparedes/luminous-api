@@ -112,8 +112,8 @@ export interface ChargeAttr {
   rate: number;
   chargeType: ChargeType;
   postingType: PostingType;
-  thresholdInMonths?: number;
-  priority?: number;
+  thresholdInMonths?: number | null;
+  priority?: number | null;
 }
 
 export interface TransactionAttr {

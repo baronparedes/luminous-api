@@ -194,4 +194,11 @@ export default class ChargeService {
     });
     return result.map(c => mapCharge(c));
   }
+
+  public async saveCharges(charges: ChargeAttr[]) {
+    await Charge.bulkCreate([...charges], {
+      validate: true,
+      updateOnDuplicate: ['rate'],
+    });
+  }
 }

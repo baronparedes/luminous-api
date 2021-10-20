@@ -54,7 +54,7 @@ async function seed() {
   await Charge.bulkCreate(charges, {
     updateOnDuplicate: [
       'description',
-      'rate',
+      // 'rate',
       'type',
       'communityId',
       'chargeType',

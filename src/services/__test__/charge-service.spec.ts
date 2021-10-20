@@ -7,6 +7,7 @@ import {
   TransactionType,
 } from '../../@types/models';
 import {toTransactionPeriod} from '../../@utils/dates';
+import {generateCharge} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
 import {CONSTANTS} from '../../constants';
 import Transaction from '../../models/transaction-model';
@@ -281,5 +282,40 @@ describe('ChargeService', () => {
       );
       expect(actual).toBe(0);
     });
+  });
+
+  it('should save charges', async () => {
+    const newCharges = [generateCharge(), generateCharge()].map(c => {
+      return {
+        ...c,
+        communityId: CONSTANTS.COMMUNITY_ID,
+        id: undefined,
+      };
+    });
+    const updatedCharge = faker.random.arrayElement(SEED.CHARGES);
+    updatedCharge.rate = faker.datatype.number();
+
+    const expected = [...newCharges, updatedCharge];
+    await target.saveCharges(expected);
+
+    const actual = await target.getCharges(CONSTANTS.COMMUNITY_ID);
+
+    const actualUpdated = actual.find(c => c.id === updatedCharge.id);
+    expect(actualUpdated).toBeDefined();
+    expect({
+      ...actualUpdated,
+      thresholdInMonths: actualUpdated?.thresholdInMonths ?? undefined,
+      priority: actualUpdated?.priority ?? undefined,
+    }).toEqual(updatedCharge);
+
+    for (const newCharge of newCharges) {
+      const actualNewCharge = actual.find(c => c.code === newCharge.code);
+      expect(actualNewCharge).toBeDefined();
+      expect(actualNewCharge?.id).toBeDefined();
+      expect({
+        ...actualNewCharge,
+        id: undefined,
+      }).toEqual(newCharge);
+    }
   });
 });
