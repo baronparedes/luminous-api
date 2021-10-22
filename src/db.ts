@@ -61,6 +61,7 @@ async function seed() {
       'postingType',
       'thresholdInMonths',
       'priority',
+      'passOn',
     ],
   });
 

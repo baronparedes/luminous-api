@@ -74,6 +74,7 @@ const models: TsoaRoute.Models = {
             "postingType": {"ref":"PostingType","required":true},
             "thresholdInMonths": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}]},
             "priority": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}]},
+            "passOn": {"dataType":"union","subSchemas":[{"dataType":"boolean"},{"dataType":"enum","enums":[null]}]},
         },
         "additionalProperties": false,
     },

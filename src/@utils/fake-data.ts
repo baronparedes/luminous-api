@@ -144,5 +144,6 @@ export const generateCharge = (): ChargeAttr => {
     rate: faker.datatype.number(),
     priority: faker.datatype.number(),
     thresholdInMonths: faker.datatype.number(),
+    passOn: faker.datatype.boolean(),
   };
 };

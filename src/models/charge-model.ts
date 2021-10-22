@@ -47,6 +47,10 @@ class Charge extends Model implements ChargeAttr {
   @Column
   communityId!: number;
 
+  @AllowNull(true)
+  @Column
+  passOn?: boolean;
+
   @BelongsTo(() => Community)
   community?: CommunityAttr;
 }

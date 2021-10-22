@@ -141,6 +141,10 @@
 						"type": "number",
 						"format": "double",
 						"nullable": true
+					},
+					"passOn": {
+						"type": "boolean",
+						"nullable": true
 					}
 				},
 				"required": [

@@ -116,5 +116,6 @@ export function mapCharge(model: Charge): ChargeAttr {
     rate: model.rate,
     priority: model.priority,
     thresholdInMonths: model.thresholdInMonths,
+    passOn: model.passOn,
   };
 }

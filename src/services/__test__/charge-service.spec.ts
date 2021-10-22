@@ -75,6 +75,7 @@ describe('ChargeService', () => {
           rate: actual.rate,
           priority: actual.priority ?? undefined,
           thresholdInMonths: actual.thresholdInMonths ?? undefined,
+          passOn: actual.passOn ?? undefined,
         };
         const e: ChargeAttr = {
           id: expected.id,
@@ -306,6 +307,7 @@ describe('ChargeService', () => {
       ...actualUpdated,
       thresholdInMonths: actualUpdated?.thresholdInMonths ?? undefined,
       priority: actualUpdated?.priority ?? undefined,
+      passOn: actualUpdated?.passOn ?? undefined,
     }).toEqual(updatedCharge);
 
     for (const newCharge of newCharges) {
