@@ -22,6 +22,9 @@ const config = {
     DIALECT: process.env.DB_DIALECT || 'postgres',
     SYNC: process.env.DB_SYNC?.toLowerCase() === 'true',
   },
+  APP: {
+    MIN_APPROVERS: 3,
+  },
 };
 
 export default config;

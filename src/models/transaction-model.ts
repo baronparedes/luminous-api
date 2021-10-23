@@ -33,7 +33,7 @@ class Transaction extends Model implements TransactionAttr {
   propertyId!: number;
 
   @AllowNull(false)
-  @Column(DataType.DOUBLE)
+  @Column(DataType.DECIMAL)
   amount!: number;
 
   @AllowNull(false)

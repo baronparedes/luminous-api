@@ -4,6 +4,8 @@ import {
   AuthProfile,
   ChargeAttr,
   ChargeType,
+  DisbursementAttr,
+  ExpenseAttr,
   PaymentDetailAttr,
   PostingType,
   ProfileAttr,
@@ -11,8 +13,10 @@ import {
   PropertyAccount,
   PropertyAssignmentAttr,
   PropertyAttr,
+  PurchaseOrderAttr,
   RecordStatus,
   RegisterProfile,
+  RequestStatus,
   SettingAttr,
   TransactionAttr,
   TransactionType,
@@ -145,5 +149,45 @@ export const generateCharge = (): ChargeAttr => {
     priority: faker.datatype.number(),
     thresholdInMonths: faker.datatype.number(),
     passOn: faker.datatype.boolean(),
+  };
+};
+
+export const generateExpense = (): ExpenseAttr => {
+  const quantity = faker.datatype.number();
+  const unitCost = faker.datatype.number();
+  return {
+    category: faker.random.words(2),
+    description: faker.random.words(10),
+    quantity,
+    unitCost,
+    totalCost: quantity * unitCost,
+    purchaseOrderId: faker.datatype.number(),
+  };
+};
+
+export const generatePurchaseOrder = (): PurchaseOrderAttr => {
+  return {
+    description: faker.random.words(2),
+    requestedBy: faker.datatype.number(),
+    requestedDate: faker.datatype.datetime(),
+    status: faker.random.arrayElement<RequestStatus>([
+      'approved',
+      'pending',
+      'rejected',
+    ]),
+    totalCost: faker.datatype.number(),
+    comments: faker.random.words(10),
+    expenses: [generateExpense(), generateExpense()],
+  };
+};
+
+export const generateDisbursement = (): DisbursementAttr => {
+  return {
+    details: faker.random.words(10),
+    paymentType: faker.random.arrayElement(['cash', 'check']),
+    checkNumber: faker.random.alphaNumeric(),
+    checkIssuingBank: faker.random.words(),
+    checkPostingDate: faker.datatype.datetime(),
+    releasedBy: faker.datatype.number(),
   };
 };

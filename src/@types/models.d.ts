@@ -4,6 +4,7 @@ export type PostingType = 'monthly' | 'manual' | 'accrued' | 'interest';
 export type PaymentType = 'cash' | 'check';
 export type TransactionType = 'charged' | 'collected';
 export type RecordStatus = 'active' | 'inactive';
+export type RequestStatus = 'approved' | 'rejected' | 'pending';
 export type Month =
   | 'JAN'
   | 'FEB'
@@ -37,6 +38,19 @@ export type AuthProfile = {
   status: RecordStatus;
   scopes?: string;
   remarks?: string;
+};
+
+export type CreatePurchaseRequest = {
+  description: string;
+  requestedBy: number;
+  requestedDate: Date;
+  expenses: ExpenseAttr[];
+};
+
+export type ApprovePurchaseRequest = {
+  purchaseOrderId: number;
+  codes: string[];
+  disbursement: DisbursementAttr[];
 };
 
 export type RegisterProfile = {
@@ -155,8 +169,7 @@ export interface PaymentDetailAttr {
 }
 
 export interface ExpenseAttr {
-  id?: number;
-  purchaseOrderId: number;
+  purchaseOrderId?: number;
   category: string;
   description: string;
   quantity: number;
@@ -165,27 +178,34 @@ export interface ExpenseAttr {
   waivedBy?: number;
 }
 
-export interface ApprovalAuthorizationAttr {
-  id?: number;
-  purchaseOrderId?: number;
-  details: string;
-}
-
 export interface PurchaseOrderAttr {
   id?: number;
   description: string;
-  totalCost: string;
-  isApproved: boolean;
+  totalCost: number;
+  status: RequestStatus;
   requestedBy: number;
-  approvedBy: string;
+  requestedDate: Date;
+  approvedBy?: string | null;
+  comments?: string | null;
+  expenses?: ExpenseAttr[];
+  disbursement?: DisbursementAttr[];
 }
 
 export interface DisbursementAttr {
   id?: number;
-  purchaseOrderId: number;
+  purchaseOrderId?: number;
+  chargeId?: number;
   releasedBy: number;
   paymentType: PaymentType;
+  details: string;
   checkNumber?: string;
   checkPostingDate?: Date;
   checkIssuingBank?: string;
 }
+
+export type ApprovalCodeAttr = {
+  profileId: number;
+  email: string;
+  code: string;
+  purchaseOrderId?: number | null;
+};

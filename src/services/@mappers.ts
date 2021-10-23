@@ -1,18 +1,22 @@
 import {
   AuthProfile,
   ChargeAttr,
+  ExpenseAttr,
   PaymentDetailAttr,
   ProfileAttr,
   PropertyAssignmentAttr,
   PropertyAttr,
+  PurchaseOrderAttr,
   SettingAttr,
   TransactionAttr,
 } from '../@types/models';
 import Charge from '../models/charge-model';
+import Expense from '../models/expense-model';
 import PaymentDetail from '../models/payment-detail-model';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
+import PurchaseOrder from '../models/purchase-order-model';
 import Setting from '../models/setting-model';
 import Transaction from '../models/transaction-model';
 
@@ -117,5 +121,30 @@ export function mapCharge(model: Charge): ChargeAttr {
     priority: model.priority,
     thresholdInMonths: model.thresholdInMonths,
     passOn: model.passOn,
+  };
+}
+
+export function mapExpense(model: Expense): ExpenseAttr {
+  return {
+    category: model.category,
+    description: model.description,
+    quantity: model.quantity,
+    totalCost: model.totalCost,
+    unitCost: model.unitCost,
+    purchaseOrderId: model.purchaseOrderId,
+    waivedBy: model.waivedBy,
+  };
+}
+
+export function mapPurchaseOrder(model: PurchaseOrder): PurchaseOrderAttr {
+  return {
+    id: model.id,
+    description: model.description,
+    requestedBy: model.requestedBy,
+    requestedDate: model.requestedDate,
+    status: model.status,
+    totalCost: model.totalCost,
+    approvedBy: model.approvedBy,
+    expenses: model.expenses,
   };
 }
