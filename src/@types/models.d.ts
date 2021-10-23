@@ -71,6 +71,11 @@ export interface PropertyAccount {
   paymentDetails?: PaymentDetailAttr[];
 }
 
+export interface ChargeCollected {
+  charge: ChargeAttr;
+  amount: number;
+}
+
 export interface ProfileAttr {
   id?: number;
   name: string;
@@ -143,6 +148,42 @@ export interface PaymentDetailAttr {
   id?: number;
   collectedBy: number;
   orNumber: string;
+  paymentType: PaymentType;
+  checkNumber?: string;
+  checkPostingDate?: Date;
+  checkIssuingBank?: string;
+}
+
+export interface ExpenseAttr {
+  id?: number;
+  purchaseOrderId: number;
+  category: string;
+  description: string;
+  quantity: number;
+  unitCost: number;
+  totalCost: number;
+  waivedBy?: number;
+}
+
+export interface ApprovalAuthorizationAttr {
+  id?: number;
+  purchaseOrderId?: number;
+  details: string;
+}
+
+export interface PurchaseOrderAttr {
+  id?: number;
+  description: string;
+  totalCost: string;
+  isApproved: boolean;
+  requestedBy: number;
+  approvedBy: string;
+}
+
+export interface DisbursementAttr {
+  id?: number;
+  purchaseOrderId: number;
+  releasedBy: number;
   paymentType: PaymentType;
   checkNumber?: string;
   checkPostingDate?: Date;

@@ -20,6 +20,14 @@ export class ChargeController extends Controller {
     return result;
   }
 
+  @Get('/getAllCollectedCharges')
+  public async getAllCollectedCharges() {
+    const result = await this.chargeService.getChargesWithCollectedAmount(
+      CONSTANTS.COMMUNITY_ID
+    );
+    return result;
+  }
+
   @Patch('/patchCharges')
   public async patchCharges(@Body() body: ChargeAttr[]) {
     await this.chargeService.saveCharges(body);

@@ -157,6 +157,23 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ChargeCollected": {
+				"properties": {
+					"charge": {
+						"$ref": "#/components/schemas/ChargeAttr"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"charge",
+					"amount"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"FieldError": {
 				"properties": {
 					"value": {
@@ -684,6 +701,32 @@
 								"schema": {
 									"items": {
 										"$ref": "#/components/schemas/ChargeAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/charge/getAllCollectedCharges": {
+			"get": {
+				"operationId": "GetAllCollectedCharges",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ChargeCollected"
 									},
 									"type": "array"
 								}

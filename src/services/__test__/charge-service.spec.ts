@@ -320,4 +320,19 @@ describe('ChargeService', () => {
       }).toEqual(newCharge);
     }
   });
+
+  it('should get all charges with collected amount', async () => {
+    const expectedAmount = await Transaction.sum('amount', {
+      where: {
+        chargeId: charge.id,
+        transactionType: 'collected',
+      },
+    });
+    const actual = await target.getChargesWithCollectedAmount(
+      CONSTANTS.COMMUNITY_ID
+    );
+    expect(actual.find(c => c.charge.id === charge.id)?.amount).toEqual(
+      expectedAmount
+    );
+  });
 });

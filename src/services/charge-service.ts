@@ -1,11 +1,13 @@
-import {AggregateOptions, Op} from 'sequelize';
+import {AggregateOptions, Op, Sequelize} from 'sequelize';
 
 import {
   ChargeAttr,
+  ChargeCollected,
   Month,
   PropertyAttr,
   TransactionType,
 } from '../@types/models';
+import {ChargeCollectedView} from '../@types/views';
 import {subtractFromYearMonth, toTransactionPeriod} from '../@utils/dates';
 import {generateNumberedSeries} from '../@utils/helpers';
 import Charge from '../models/charge-model';
@@ -200,5 +202,33 @@ export default class ChargeService {
       validate: true,
       updateOnDuplicate: ['rate'],
     });
+  }
+
+  public async getChargesWithCollectedAmount(communityId: number) {
+    const charges = await Charge.findAll({
+      where: {communityId},
+    });
+    const data: Partial<ChargeCollectedView>[] = await Transaction.findAll({
+      where: {
+        transactionType: 'collected',
+      },
+      attributes: [
+        'charge_id',
+        [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
+      ],
+      group: ['charge_id'],
+      raw: true,
+    });
+
+    const result: ChargeCollected[] = [];
+    for (const charge of charges) {
+      const amount = data.find(d => d.charge_id === charge.id)?.amount;
+      result.push({
+        charge,
+        amount: amount ?? 0,
+      });
+    }
+
+    return result;
   }
 }
