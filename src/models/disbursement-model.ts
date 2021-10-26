@@ -1,6 +1,7 @@
 import {
   AllowNull,
   Column,
+  DataType,
   ForeignKey,
   Model,
   NotEmpty,
@@ -44,6 +45,10 @@ class Disbursement extends Model implements DisbursementAttr {
 
   @Column
   checkIssuingBank?: string;
+
+  @AllowNull(false)
+  @Column(DataType.DECIMAL)
+  amount!: number;
 }
 
 export default Disbursement;

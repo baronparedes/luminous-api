@@ -84,10 +84,20 @@ describe('PurchaseOrderService', () => {
     });
 
     it('should reject purchase order', async () => {
+      const expectedComments = faker.random.words(10);
       await target.rejectPurchaseRequest(
         toBeRejectedPurchaseOrderId,
-        faker.random.words(10)
+        expectedComments
       );
+
+      const actual = await target.getPurchaseOrder(toBeRejectedPurchaseOrderId);
+      expect(actual.status).toEqual('rejected');
+      expect(actual.comments).toEqual(expectedComments);
+
+      const approvalCodesCount = await ApprovalCode.count({
+        where: {purchaseOrderId: toBeRejectedPurchaseOrderId},
+      });
+      expect(approvalCodesCount).toBe(0);
     });
 
     it('should validate approve purchase order', async () => {
@@ -99,7 +109,7 @@ describe('PurchaseOrderService', () => {
       const request: ApprovePurchaseRequest = {
         codes,
         purchaseOrderId: toBeApprovedPurchaseOrderId,
-        disbursement: [
+        disbursements: [
           {
             ...generateDisbursement(),
             purchaseOrderId: toBeApprovedPurchaseOrderId,
@@ -108,7 +118,7 @@ describe('PurchaseOrderService', () => {
       };
 
       await expect(
-        target.approvePurchaseRequest({...request, disbursement: []})
+        target.approvePurchaseRequest({...request, disbursements: []})
       ).rejects.toThrow();
       await expect(
         target.approvePurchaseRequest({...request, codes: [codes[0], codes[1]]})
@@ -121,6 +131,11 @@ describe('PurchaseOrderService', () => {
       expect(actual.approvedBy).toEqual(
         JSON.stringify(approvalCodes.map(a => a.profileId))
       );
+
+      const approvalCodesCount = await ApprovalCode.count({
+        where: {purchaseOrderId: toBeApprovedPurchaseOrderId},
+      });
+      expect(approvalCodesCount).toBe(0);
     });
 
     it.each`
@@ -128,7 +143,7 @@ describe('PurchaseOrderService', () => {
       ${'approved'}
       ${'rejected'}
       ${'pending'}
-    `('should get all purhcase orders by $status', async ({status}) => {
+    `('should get all purchase orders by $status', async ({status}) => {
       const actual = await target.getPurchaseOrdersByStatus(status);
       const actualCount = actual.filter(a => a.status === status).length;
       expect(actualCount).toEqual(actual.length);
@@ -158,7 +173,7 @@ describe('PurchaseOrderService', () => {
           faker.random.alphaNumeric(6),
         ],
         purchaseOrderId: 0,
-        disbursement: [
+        disbursements: [
           {
             ...generateDisbursement(),
             purchaseOrderId: toBeApprovedPurchaseOrderId,

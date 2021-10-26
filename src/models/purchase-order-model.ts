@@ -12,11 +12,13 @@ import {
 } from 'sequelize-typescript';
 
 import {
+  DisbursementAttr,
   ExpenseAttr,
   ProfileAttr,
   PurchaseOrderAttr,
   RequestStatus,
 } from '../@types/models';
+import Disbursement from './disbursement-model';
 import Expense from './expense-model';
 import Profile from './profile-model';
 
@@ -56,6 +58,9 @@ class PurchaseOrder extends Model implements PurchaseOrderAttr {
 
   @HasMany(() => Expense)
   expenses?: ExpenseAttr[];
+
+  @HasMany(() => Disbursement)
+  disbursements?: DisbursementAttr[];
 }
 
 export default PurchaseOrder;

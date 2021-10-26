@@ -68,7 +68,7 @@ describe('PurchaseOrderController', () => {
     const request: ApprovePurchaseRequest = {
       purchaseOrderId: faker.datatype.number(),
       codes: [generateOTP(), generateOTP()],
-      disbursement: [generateDisbursement()],
+      disbursements: [generateDisbursement()],
     };
     const mock = jest
       .spyOn(PurchaseOrderService.prototype, 'approvePurchaseRequest')

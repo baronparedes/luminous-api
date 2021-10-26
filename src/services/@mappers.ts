@@ -146,5 +146,10 @@ export function mapPurchaseOrder(model: PurchaseOrder): PurchaseOrderAttr {
     totalCost: model.totalCost,
     approvedBy: model.approvedBy,
     expenses: model.expenses,
+    disbursements: model.disbursements,
+    comments: model.comments,
+    requestedByProfile: model.requestedByProfile
+      ? mapProfile(model.requestedByProfile as Profile)
+      : undefined,
   };
 }

@@ -183,6 +183,7 @@ export const generatePurchaseOrder = (): PurchaseOrderAttr => {
 
 export const generateDisbursement = (): DisbursementAttr => {
   return {
+    amount: faker.datatype.number(),
     details: faker.random.words(10),
     paymentType: faker.random.arrayElement(['cash', 'check']),
     checkNumber: faker.random.alphaNumeric(),

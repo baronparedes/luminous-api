@@ -262,6 +262,7 @@ const models: TsoaRoute.Models = {
             "checkNumber": {"dataType":"string"},
             "checkPostingDate": {"dataType":"datetime"},
             "checkIssuingBank": {"dataType":"string"},
+            "amount": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -278,7 +279,8 @@ const models: TsoaRoute.Models = {
             "approvedBy": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
             "comments": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
             "expenses": {"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"}},
-            "disbursement": {"dataType":"array","array":{"dataType":"refObject","ref":"DisbursementAttr"}},
+            "disbursements": {"dataType":"array","array":{"dataType":"refObject","ref":"DisbursementAttr"}},
+            "requestedByProfile": {"ref":"ProfileAttr"},
         },
         "additionalProperties": false,
     },
@@ -290,7 +292,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ApprovePurchaseRequest": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"disbursement":{"dataType":"array","array":{"dataType":"refObject","ref":"DisbursementAttr"},"required":true},"codes":{"dataType":"array","array":{"dataType":"string"},"required":true},"purchaseOrderId":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"disbursements":{"dataType":"array","array":{"dataType":"refObject","ref":"DisbursementAttr"},"required":true},"codes":{"dataType":"array","array":{"dataType":"string"},"required":true},"purchaseOrderId":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RejectPurchaseRequest": {

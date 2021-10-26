@@ -50,7 +50,7 @@ export type CreatePurchaseRequest = {
 export type ApprovePurchaseRequest = {
   purchaseOrderId: number;
   codes: string[];
-  disbursement: DisbursementAttr[];
+  disbursements: DisbursementAttr[];
 };
 
 export type RegisterProfile = {
@@ -188,7 +188,8 @@ export interface PurchaseOrderAttr {
   approvedBy?: string | null;
   comments?: string | null;
   expenses?: ExpenseAttr[];
-  disbursement?: DisbursementAttr[];
+  disbursements?: DisbursementAttr[];
+  requestedByProfile?: ProfileAttr;
 }
 
 export interface DisbursementAttr {
@@ -201,6 +202,7 @@ export interface DisbursementAttr {
   checkNumber?: string;
   checkPostingDate?: Date;
   checkIssuingBank?: string;
+  amount: number;
 }
 
 export type ApprovalCodeAttr = {

@@ -7,6 +7,7 @@ export const VERBIAGE = {
   CREATED: 'created',
   DUPLICATE_CHARGES: 'duplicate charges',
   MIN_APPROVER_NOT_REACHED: 'insufficient approvers',
+  INVALID_APPROVAL_CODES: 'invalid approval codes',
   SHOULD_HAVE_EXPENSES: 'should have atleast 1 expense',
 };
 

@@ -36,26 +36,37 @@ export default class PurchaseOrderService extends BaseService {
     return approvalCodes;
   }
 
-  public async rejectPurchaseRequest(id: number, comments: string) {
-    const request = await PurchaseOrder.findOne({
-      where: {
-        id,
-        status: 'pending',
-      },
+  public async rejectPurchaseRequest(
+    purchaseOrderId: number,
+    comments: string
+  ) {
+    return await this.repository.transaction(async transaction => {
+      const request = await PurchaseOrder.findOne({
+        where: {
+          id: purchaseOrderId,
+          status: 'pending',
+        },
+      });
+
+      if (!request) {
+        throw new ApiError(404, VERBIAGE.NOT_FOUND);
+      }
+
+      request.comments = comments;
+      request.status = 'rejected';
+      await request.save({transaction});
+      await ApprovalCode.destroy({
+        where: {
+          purchaseOrderId,
+        },
+        transaction,
+      });
     });
-
-    if (!request) {
-      throw new ApiError(404, VERBIAGE.NOT_FOUND);
-    }
-
-    request.comments = comments;
-    request.status = 'rejected';
-    await request.save();
   }
 
   public async approvePurchaseRequest(approveRequest: ApprovePurchaseRequest) {
     return await this.repository.transaction(async transaction => {
-      if (approveRequest.disbursement.length <= 0) {
+      if (approveRequest.disbursements.length <= 0) {
         throw new ApiError(400, VERBIAGE.BAD_REQUEST);
       }
 
@@ -78,7 +89,7 @@ export default class PurchaseOrderService extends BaseService {
       });
 
       if (matchedCodes.length < config.APP.MIN_APPROVERS) {
-        throw new ApiError(400, VERBIAGE.MIN_APPROVER_NOT_REACHED);
+        throw new ApiError(400, VERBIAGE.INVALID_APPROVAL_CODES);
       }
 
       request.status = 'approved';
@@ -87,7 +98,7 @@ export default class PurchaseOrderService extends BaseService {
       await request.save({transaction});
       await Disbursement.bulkCreate(
         [
-          ...approveRequest.disbursement.map(d => {
+          ...approveRequest.disbursements.map(d => {
             return {
               ...d,
               purchaseOrderId: Number(request.id),
@@ -96,6 +107,12 @@ export default class PurchaseOrderService extends BaseService {
         ],
         {transaction}
       );
+      await ApprovalCode.destroy({
+        where: {
+          purchaseOrderId: approveRequest.purchaseOrderId,
+        },
+        transaction,
+      });
     });
   }
 
@@ -153,7 +170,7 @@ export default class PurchaseOrderService extends BaseService {
 
   public async getPurchaseOrder(id: number) {
     const result = await PurchaseOrder.findByPk(id, {
-      include: [Expense],
+      include: [Expense, Profile, Disbursement],
     });
     if (!result) throw new ApiError(404, VERBIAGE.NOT_FOUND);
     return mapPurchaseOrder(result as PurchaseOrder);
@@ -164,7 +181,7 @@ export default class PurchaseOrderService extends BaseService {
       where: {
         status,
       },
-      include: [Expense],
+      include: [Expense, Profile, Disbursement],
     });
     return result.map(po => mapPurchaseOrder(po));
   }

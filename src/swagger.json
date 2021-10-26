@@ -661,12 +661,17 @@
 					},
 					"checkIssuingBank": {
 						"type": "string"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
 					"releasedBy",
 					"paymentType",
-					"details"
+					"details",
+					"amount"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -709,11 +714,14 @@
 						},
 						"type": "array"
 					},
-					"disbursement": {
+					"disbursements": {
 						"items": {
 							"$ref": "#/components/schemas/DisbursementAttr"
 						},
 						"type": "array"
+					},
+					"requestedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
 					}
 				},
 				"required": [
@@ -756,7 +764,7 @@
 			},
 			"ApprovePurchaseRequest": {
 				"properties": {
-					"disbursement": {
+					"disbursements": {
 						"items": {
 							"$ref": "#/components/schemas/DisbursementAttr"
 						},
@@ -774,7 +782,7 @@
 					}
 				},
 				"required": [
-					"disbursement",
+					"disbursements",
 					"codes",
 					"purchaseOrderId"
 				],
