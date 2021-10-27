@@ -81,13 +81,14 @@ describe('PurchaseOrderController', () => {
 
   it('should reject purchase order', async () => {
     const id = faker.datatype.number();
+    const rejectedBy = faker.datatype.number();
     const comments = faker.random.words(10);
     const mock = jest
       .spyOn(PurchaseOrderService.prototype, 'rejectPurchaseRequest')
       .mockReturnValueOnce(new Promise(resolve => resolve()));
     const target = new PurchaseOrderController();
-    await target.rejectPurchaseOrder({id, comments});
-    expect(mock).toBeCalledWith(id, comments);
+    await target.rejectPurchaseOrder({id, comments, rejectedBy});
+    expect(mock).toBeCalledWith(id, comments, rejectedBy);
     expect(mock).toBeCalledTimes(1);
   });
 

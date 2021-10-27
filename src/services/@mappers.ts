@@ -145,9 +145,13 @@ export function mapPurchaseOrder(model: PurchaseOrder): PurchaseOrderAttr {
     status: model.status,
     totalCost: model.totalCost,
     approvedBy: model.approvedBy,
+    rejectedBy: model.rejectedBy,
     expenses: model.expenses,
     disbursements: model.disbursements,
     comments: model.comments,
+    rejectedByProfile: model.rejectedByProfile
+      ? mapProfile(model.rejectedByProfile as Profile)
+      : undefined,
     requestedByProfile: model.requestedByProfile
       ? mapProfile(model.requestedByProfile as Profile)
       : undefined,

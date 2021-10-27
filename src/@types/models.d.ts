@@ -186,10 +186,13 @@ export interface PurchaseOrderAttr {
   requestedBy: number;
   requestedDate: Date;
   approvedBy?: string | null;
+  rejectedBy?: number;
   comments?: string | null;
   expenses?: ExpenseAttr[];
   disbursements?: DisbursementAttr[];
   requestedByProfile?: ProfileAttr;
+  rejectedByProfile?: ProfileAttr;
+  approverProfiles?: ProfileAttr[];
 }
 
 export interface DisbursementAttr {

@@ -3,6 +3,8 @@ import {
   ApprovePurchaseRequest,
   CreatePurchaseRequest,
   ExpenseAttr,
+  ProfileAttr,
+  PurchaseOrderAttr,
   RequestStatus,
 } from '../@types/models';
 import {generateOTP, sum} from '../@utils/helpers';
@@ -15,7 +17,7 @@ import Expense from '../models/expense-model';
 import Profile from '../models/profile-model';
 import PurchaseOrder from '../models/purchase-order-model';
 import BaseService from './@base-service';
-import {mapPurchaseOrder} from './@mappers';
+import {mapProfile, mapPurchaseOrder} from './@mappers';
 
 export default class PurchaseOrderService extends BaseService {
   private async generateApprovalCodes() {
@@ -38,7 +40,8 @@ export default class PurchaseOrderService extends BaseService {
 
   public async rejectPurchaseRequest(
     purchaseOrderId: number,
-    comments: string
+    comments: string,
+    rejectedBy: number
   ) {
     return await this.repository.transaction(async transaction => {
       const request = await PurchaseOrder.findOne({
@@ -54,6 +57,7 @@ export default class PurchaseOrderService extends BaseService {
 
       request.comments = comments;
       request.status = 'rejected';
+      request.rejectedBy = rejectedBy;
       await request.save({transaction});
       await ApprovalCode.destroy({
         where: {
@@ -170,10 +174,29 @@ export default class PurchaseOrderService extends BaseService {
 
   public async getPurchaseOrder(id: number) {
     const result = await PurchaseOrder.findByPk(id, {
-      include: [Expense, Profile, Disbursement],
+      include: [
+        Expense,
+        {model: Profile, as: 'requestedByProfile'},
+        {model: Profile, as: 'rejectedByProfile'},
+        Disbursement,
+      ],
     });
     if (!result) throw new ApiError(404, VERBIAGE.NOT_FOUND);
-    return mapPurchaseOrder(result as PurchaseOrder);
+
+    const approverProfiles: ProfileAttr[] = [];
+    if (result.approvedBy) {
+      const approvers = JSON.parse(result.approvedBy) as string[];
+      for (const approverProfileId of approvers) {
+        const data = await Profile.findByPk(approverProfileId);
+        data && approverProfiles.push(mapProfile(data));
+      }
+    }
+
+    const purchaseOrder: PurchaseOrderAttr = {
+      ...mapPurchaseOrder(result as PurchaseOrder),
+      approverProfiles,
+    };
+    return purchaseOrder;
   }
 
   public async getPurchaseOrdersByStatus(status: RequestStatus) {
@@ -181,7 +204,11 @@ export default class PurchaseOrderService extends BaseService {
       where: {
         status,
       },
-      include: [Expense, Profile, Disbursement],
+      include: [
+        Expense,
+        {model: Profile, as: 'requestedByProfile'},
+        Disbursement,
+      ],
     });
     return result.map(po => mapPurchaseOrder(po));
   }

@@ -277,10 +277,13 @@ const models: TsoaRoute.Models = {
             "requestedBy": {"dataType":"double","required":true},
             "requestedDate": {"dataType":"datetime","required":true},
             "approvedBy": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
+            "rejectedBy": {"dataType":"double"},
             "comments": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
             "expenses": {"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"}},
             "disbursements": {"dataType":"array","array":{"dataType":"refObject","ref":"DisbursementAttr"}},
             "requestedByProfile": {"ref":"ProfileAttr"},
+            "rejectedByProfile": {"ref":"ProfileAttr"},
+            "approverProfiles": {"dataType":"array","array":{"dataType":"refObject","ref":"ProfileAttr"}},
         },
         "additionalProperties": false,
     },
@@ -297,7 +300,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RejectPurchaseRequest": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"comments":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"rejectedBy":{"dataType":"double","required":true},"comments":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "SettingAttr": {

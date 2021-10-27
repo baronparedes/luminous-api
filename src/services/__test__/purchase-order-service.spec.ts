@@ -87,12 +87,15 @@ describe('PurchaseOrderService', () => {
       const expectedComments = faker.random.words(10);
       await target.rejectPurchaseRequest(
         toBeRejectedPurchaseOrderId,
-        expectedComments
+        expectedComments,
+        Number(profile.id)
       );
 
       const actual = await target.getPurchaseOrder(toBeRejectedPurchaseOrderId);
       expect(actual.status).toEqual('rejected');
       expect(actual.comments).toEqual(expectedComments);
+      expect(actual.rejectedBy).toEqual(profile.id);
+      expect(actual.rejectedByProfile?.id).toEqual(profile.id);
 
       const approvalCodesCount = await ApprovalCode.count({
         where: {purchaseOrderId: toBeRejectedPurchaseOrderId},
@@ -131,6 +134,9 @@ describe('PurchaseOrderService', () => {
       expect(actual.approvedBy).toEqual(
         JSON.stringify(approvalCodes.map(a => a.profileId))
       );
+      expect(JSON.stringify(actual.approverProfiles?.map(a => a.id))).toEqual(
+        JSON.stringify(approvalCodes.map(a => a.profileId))
+      );
 
       const approvalCodesCount = await ApprovalCode.count({
         where: {purchaseOrderId: toBeApprovedPurchaseOrderId},
@@ -153,14 +159,16 @@ describe('PurchaseOrderService', () => {
       await expect(
         target.rejectPurchaseRequest(
           toBeRejectedPurchaseOrderId,
-          faker.random.words(10)
+          faker.random.words(10),
+          Number(profile.id)
         )
       ).rejects.toThrow();
 
       await expect(
         target.rejectPurchaseRequest(
           toBeApprovedPurchaseOrderId,
-          faker.random.words(10)
+          faker.random.words(10),
+          Number(profile.id)
         )
       ).rejects.toThrow();
     });

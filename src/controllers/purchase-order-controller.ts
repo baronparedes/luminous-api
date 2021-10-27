@@ -11,6 +11,7 @@ import PurchaseOrderService from '../services/purchase-order-service';
 type RejectPurchaseRequest = {
   id: number;
   comments: string;
+  rejectedBy: number;
 };
 
 @Security('bearer')
@@ -49,7 +50,8 @@ export class PurchaseOrderController extends Controller {
   public async rejectPurchaseOrder(@Body() body: RejectPurchaseRequest) {
     await this.purchaseOrderService.rejectPurchaseRequest(
       body.id,
-      body.comments
+      body.comments,
+      body.rejectedBy
     );
   }
 

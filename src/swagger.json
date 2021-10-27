@@ -704,6 +704,10 @@
 						"type": "string",
 						"nullable": true
 					},
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
 					"comments": {
 						"type": "string",
 						"nullable": true
@@ -722,6 +726,15 @@
 					},
 					"requestedByProfile": {
 						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"rejectedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"approverProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileAttr"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
@@ -790,6 +803,10 @@
 			},
 			"RejectPurchaseRequest": {
 				"properties": {
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
 					"comments": {
 						"type": "string"
 					},
@@ -799,6 +816,7 @@
 					}
 				},
 				"required": [
+					"rejectedBy",
 					"comments",
 					"id"
 				],

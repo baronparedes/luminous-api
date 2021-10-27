@@ -49,12 +49,19 @@ class PurchaseOrder extends Model implements PurchaseOrderAttr {
   @Column
   approvedBy?: string;
 
+  @Column
+  @ForeignKey(() => Profile)
+  rejectedBy?: number;
+
   @AllowNull(true)
   @Column
   comments?: string;
 
   @BelongsTo(() => Profile)
   requestedByProfile?: ProfileAttr;
+
+  @BelongsTo(() => Profile)
+  rejectedByProfile?: ProfileAttr;
 
   @HasMany(() => Expense)
   expenses?: ExpenseAttr[];
