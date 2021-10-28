@@ -18,6 +18,7 @@ import {
   PurchaseOrderAttr,
   RequestStatus,
 } from '../@types/models';
+import Community from './community-model';
 import Disbursement from './disbursement-model';
 import Expense from './expense-model';
 import Profile from './profile-model';
@@ -56,6 +57,11 @@ class PurchaseOrder extends Model implements PurchaseOrderAttr {
   @AllowNull(true)
   @Column
   comments?: string;
+
+  @AllowNull(false)
+  @ForeignKey(() => Community)
+  @Column
+  communityId!: number;
 
   @BelongsTo(() => Profile)
   requestedByProfile?: ProfileAttr;

@@ -9,7 +9,7 @@ import {
 } from '../@types/models';
 import {generateOTP, sum} from '../@utils/helpers';
 import config from '../config';
-import {VERBIAGE} from '../constants';
+import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import ApprovalCode from '../models/approval-code-model';
 import Disbursement from '../models/disbursement-model';
@@ -139,6 +139,7 @@ export default class PurchaseOrderService extends BaseService {
         description: purchaseRequest.description,
         requestedBy: purchaseRequest.requestedBy,
         requestedDate: purchaseRequest.requestedDate,
+        communityId: CONSTANTS.COMMUNITY_ID,
         totalCost,
         status: 'pending',
       });
