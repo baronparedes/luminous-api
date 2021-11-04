@@ -38,7 +38,9 @@ export class PurchaseOrderController extends Controller {
 
   @Post('/postPurchaseOrder')
   public async postPurchaseOrder(@Body() body: CreatePurchaseRequest) {
-    return await this.purchaseOrderService.createPurchaseOrder(body);
+    const id = await this.purchaseOrderService.createPurchaseOrder(body);
+    await this.notificationService.notifyPurchaseOrderApprovers(id);
+    return id;
   }
 
   @Post('/approvePurchaseOrder')

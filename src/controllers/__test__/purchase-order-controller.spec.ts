@@ -57,11 +57,16 @@ describe('PurchaseOrderController', () => {
     const mock = jest
       .spyOn(PurchaseOrderService.prototype, 'createPurchaseOrder')
       .mockReturnValueOnce(new Promise(resolve => resolve(expected)));
+    const mockNotifyApprovers = jest
+      .spyOn(NotificatioNService.prototype, 'notifyPurchaseOrderApprovers')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
     const target = new PurchaseOrderController();
     const actual = await target.postPurchaseOrder(request);
     expect(actual).toStrictEqual(expected);
     expect(mock).toBeCalledWith(request);
     expect(mock).toBeCalledTimes(1);
+    expect(mockNotifyApprovers).toBeCalledTimes(1);
+    expect(mockNotifyApprovers).toBeCalledWith(expected);
   });
 
   it('should approve purchase order', async () => {
