@@ -25,7 +25,7 @@ export default class NotificatioNService {
     const promises = approvalCodes.map(ac => {
       const subject = `[Luminous] Approval for PO-${purchaseOrderId}`;
       const content = purchaseRequestApprovalTemplate(purchaseOrder, ac.code);
-      return send('baronpatrick.free@gmail.com', subject, content);
+      return send(ac.email, subject, content);
     });
 
     await Promise.all(promises);
