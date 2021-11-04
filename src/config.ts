@@ -25,6 +25,11 @@ const config = {
   APP: {
     MIN_APPROVERS: 3,
   },
+  SMTP: {
+    USER_NAME: process.env.SMTP_USER_NAME || '',
+    PASSWORD: process.env.SMTP_PASSWORD || '',
+    SENDER: process.env.SMTP_SENDER || 'luminous.webapp@gmail.com',
+  },
 };
 
 export default config;
