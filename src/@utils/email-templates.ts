@@ -44,6 +44,7 @@ export function purchaseRequestApprovalTemplate(
     <table style="width: 100%; text-align: left">
         <tr>
             <th>Description</th>
+            <th>Category</th>
             <th>Qty</th>
             <th>Unit Cost</th>
         </tr>
@@ -51,6 +52,7 @@ export function purchaseRequestApprovalTemplate(
           return `
             <tr>
                 <td>${e.description}</td>
+                <td>${e.category}</td>
                 <td>${e.quantity}</td>
                 <td>${e.unitCost}</td>
             </tr>
