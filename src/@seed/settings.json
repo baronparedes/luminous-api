@@ -12,6 +12,6 @@
      {
          "id": 3,
          "key": "EXPENSE_CATEGORY",
-         "value": "['Repair & Maintenace','Administrative & Mgt. Fee','Board of Directors Per Diem','Employees Benefit','Security Services','Janitorial Services','Pest Control Services','Communications','Transportation Expenses','Office Supplies','Insurance','Elevator Maintenance','Housekeeping Equipment','Representation Expense','Professional Fees','Taxes & Licenses Fees','Electricity - Admin']"
+         "value": "[\"Repair & Maintenace\",\"Administrative & Mgt. Fee\",\"Board of Directors Per Diem\",\"Employees Benefit\",\"Security Services\",\"Janitorial Services\",\"Pest Control Services\",\"Communications\",\"Transportation Expenses\",\"Office Supplies\",\"Insurance\",\"Elevator Maintenance\",\"Housekeeping Equipment\",\"Representation Expense\",\"Professional Fees\",\"Taxes & Licenses Fees\",\"Electricity - Admin\"]"
      }
  ]
