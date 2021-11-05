@@ -1304,11 +1304,7 @@
 						"description": "no content"
 					}
 				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
+				"security": [],
 				"parameters": [],
 				"requestBody": {
 					"required": true,

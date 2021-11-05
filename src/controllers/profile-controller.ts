@@ -111,6 +111,7 @@ export class ProfileController extends Controller {
     );
   }
 
+  @NoSecurity()
   @SuccessResponse(204, VERBIAGE.NO_CONTENT)
   @Post('/resetPassword')
   public async resetPassword(
