@@ -5,7 +5,7 @@ import {
   CreatePurchaseRequest,
   RequestStatus,
 } from '../@types/models';
-import NotificatioNService from '../services/notification-service';
+import NotificationService from '../services/notification-service';
 import PurchaseOrderService from '../services/purchase-order-service';
 
 type RejectPurchaseRequest = {
@@ -18,12 +18,12 @@ type RejectPurchaseRequest = {
 @Route('/api/purchase-order')
 export class PurchaseOrderController extends Controller {
   private purchaseOrderService: PurchaseOrderService;
-  private notificationService: NotificatioNService;
+  private notificationService: NotificationService;
 
   constructor() {
     super();
     this.purchaseOrderService = new PurchaseOrderService();
-    this.notificationService = new NotificatioNService();
+    this.notificationService = new NotificationService();
   }
 
   @Get('/getPurchaseOrder/{id}')

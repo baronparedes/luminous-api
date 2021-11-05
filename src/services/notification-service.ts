@@ -3,7 +3,7 @@ import useSendMail from '../hooks/use-send-mail';
 import ApprovalCode from '../models/approval-code-model';
 import PurchaseOrderService from './purchase-order-service';
 
-export default class NotificatioNService {
+export default class NotificationService {
   private purchaseOrderService: PurchaseOrderService;
 
   constructor() {
