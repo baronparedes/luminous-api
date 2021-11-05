@@ -26,6 +26,7 @@ import {
 import {VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
 import AuthService from '../services/auth-service';
+import NotificationService from '../services/notification-service';
 import ProfileService from '../services/profile-service';
 
 @Security('bearer')
@@ -33,11 +34,13 @@ import ProfileService from '../services/profile-service';
 export class ProfileController extends Controller {
   private authService: AuthService;
   private profileService: ProfileService;
+  private notificationService: NotificationService;
 
   constructor() {
     super();
     this.authService = new AuthService();
     this.profileService = new ProfileService();
+    this.notificationService = new NotificationService();
   }
 
   @OperationId('GetAllProfiles')
@@ -105,6 +108,21 @@ export class ProfileController extends Controller {
       id,
       profile.currentPassword,
       profile.newPassword
+    );
+  }
+
+  @SuccessResponse(204, VERBIAGE.NO_CONTENT)
+  @Post('/resetPassword')
+  public async resetPassword(
+    @Body() profile: {username: string; email: string}
+  ) {
+    const newPassword = await this.profileService.resetPassword(
+      profile.username,
+      profile.email
+    );
+    await this.notificationService.notifyResetPassword(
+      profile.email,
+      newPassword
     );
   }
 }

@@ -7,9 +7,11 @@ import {
   RegisterProfile,
   UpdateProfile,
 } from '../@types/models';
+import {generatePassword} from '../@utils/helpers';
 import {iLike} from '../@utils/helpers-sequelize';
 import {useHash} from '../@utils/use-hash';
 import {VERBIAGE} from '../constants';
+import {ApiError} from '../errors';
 import Profile from '../models/profile-model';
 import {mapAuthProfile} from './@mappers';
 
@@ -103,5 +105,23 @@ export default class ProfileService {
       result.password = hash(newPassword);
       await result.save();
     }
+  }
+
+  public async resetPassword(username: string, email: string) {
+    const profile = await Profile.findOne({
+      where: {
+        username,
+      },
+    });
+
+    if (!profile) throw new ApiError(404, VERBIAGE.NOT_FOUND);
+    if (profile && profile.email.toLowerCase() !== email.toLowerCase())
+      throw new ApiError(404, VERBIAGE.NOT_FOUND);
+
+    const newPassword = generatePassword();
+    const {hash} = useHash();
+    profile.password = hash(newPassword);
+    await profile.save();
+    return newPassword;
   }
 }

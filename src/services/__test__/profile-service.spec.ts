@@ -55,12 +55,13 @@ describe('ProfileService', () => {
   describe('when managing profiles', () => {
     let newProfileId: number;
     const newProfile = generateProfile();
+    let currentPassword = newProfile.password;
 
     beforeAll(async () => {
       const actual = await target.register({
         email: newProfile.email,
         name: newProfile.name,
-        password: newProfile.password,
+        password: currentPassword,
         username: newProfile.username,
         mobileNumber: newProfile.mobileNumber,
       });
@@ -70,14 +71,23 @@ describe('ProfileService', () => {
 
     it('should change profile password', async () => {
       const newPassword = faker.internet.password();
-      await target.changePassword(
-        newProfileId,
-        newProfile.password,
-        newPassword
-      );
+      await target.changePassword(newProfileId, currentPassword, newPassword);
       const actual = await target.getProfileByUsernameAndPassword(
         newProfile.username,
         newPassword
+      );
+      currentPassword = newPassword;
+      expect(actual.id).toEqual(newProfileId);
+    });
+
+    it('should reset password', async () => {
+      currentPassword = await target.resetPassword(
+        newProfile.username,
+        newProfile.email
+      );
+      const actual = await target.getProfileByUsernameAndPassword(
+        newProfile.username,
+        currentPassword
       );
       expect(actual.id).toEqual(newProfileId);
     });

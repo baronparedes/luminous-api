@@ -22,6 +22,17 @@ function container(content: string) {
   return html;
 }
 
+export function resetPasswordTemplate(password: string) {
+  const html = `
+    <p style="font-size:1.1em">Hi,</p>
+    <p>You have requested for a password reset.</p>
+    <h1 style="background: #03284A;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">
+        ${password}
+    </h1>
+  `;
+  return container(html);
+}
+
 export function purchaseRequestApprovalTemplate(
   purchaseOrder: PurchaseOrderAttr,
   code: string

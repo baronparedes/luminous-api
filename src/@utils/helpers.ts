@@ -9,11 +9,21 @@ export function sum(numbers: number[] | undefined) {
   return numbers.reduce((p, c) => Number(p) + Number(c));
 }
 
-export function generateOTP() {
-  const digits = '0123456789';
+function generateString(chars: string, length: number) {
   let result = '';
-  for (let i = 0; i < 6; i++) {
-    result += digits[Math.floor(Math.random() * digits.length)];
+  for (let i = 0; i < length; i++) {
+    result += chars[Math.floor(Math.random() * chars.length)];
   }
   return result;
+}
+
+export function generateOTP() {
+  const digits = '0123456789';
+  return generateString(digits, 6);
+}
+
+export function generatePassword() {
+  const chars =
+    '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  return generateString(chars, 12);
 }

@@ -1,4 +1,7 @@
-import {purchaseRequestApprovalTemplate} from '../@utils/email-templates';
+import {
+  purchaseRequestApprovalTemplate,
+  resetPasswordTemplate,
+} from '../@utils/email-templates';
 import useSendMail from '../hooks/use-send-mail';
 import ApprovalCode from '../models/approval-code-model';
 import PurchaseOrderService from './purchase-order-service';
@@ -8,6 +11,13 @@ export default class NotificationService {
 
   constructor() {
     this.purchaseOrderService = new PurchaseOrderService();
+  }
+
+  public async notifyResetPassword(email: string, password: string) {
+    const {send} = useSendMail();
+    const subject = '[Luminous] Password Reset';
+    const content = resetPasswordTemplate(password);
+    await send(email, subject, content);
   }
 
   public async notifyPurchaseOrderApprovers(purchaseOrderId: number) {

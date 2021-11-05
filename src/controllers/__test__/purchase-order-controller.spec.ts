@@ -11,7 +11,7 @@ import {
   generatePurchaseOrder,
 } from '../../@utils/fake-data';
 import {generateOTP} from '../../@utils/helpers';
-import NotificatioNService from '../../services/notification-service';
+import NotificationService from '../../services/notification-service';
 import PurchaseOrderService from '../../services/purchase-order-service';
 import {PurchaseOrderController} from '../purchase-order-controller';
 
@@ -58,7 +58,7 @@ describe('PurchaseOrderController', () => {
       .spyOn(PurchaseOrderService.prototype, 'createPurchaseOrder')
       .mockReturnValueOnce(new Promise(resolve => resolve(expected)));
     const mockNotifyApprovers = jest
-      .spyOn(NotificatioNService.prototype, 'notifyPurchaseOrderApprovers')
+      .spyOn(NotificationService.prototype, 'notifyPurchaseOrderApprovers')
       .mockReturnValueOnce(new Promise(resolve => resolve()));
     const target = new PurchaseOrderController();
     const actual = await target.postPurchaseOrder(request);
@@ -100,7 +100,7 @@ describe('PurchaseOrderController', () => {
   it('should notify purchase order approvers', async () => {
     const id = faker.datatype.number();
     const mock = jest
-      .spyOn(NotificatioNService.prototype, 'notifyPurchaseOrderApprovers')
+      .spyOn(NotificationService.prototype, 'notifyPurchaseOrderApprovers')
       .mockReturnValueOnce(new Promise(resolve => resolve()));
     const target = new PurchaseOrderController();
     await target.notifyApprovers(id);
