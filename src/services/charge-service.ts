@@ -213,7 +213,7 @@ export default class ChargeService {
         transactionType: 'collected',
       },
       attributes: [
-        'charge_id',
+        ['charge_id', 'chargeId'],
         [Sequelize.fn('sum', Sequelize.col('amount')), 'amount'],
       ],
       group: ['charge_id'],
@@ -222,7 +222,7 @@ export default class ChargeService {
 
     const result: ChargeCollected[] = [];
     for (const charge of charges) {
-      const amount = data.find(d => d.charge_id === charge.id)?.amount;
+      const amount = data.find(d => d.chargeId === charge.id)?.amount;
       result.push({
         charge,
         amount: amount ?? 0,

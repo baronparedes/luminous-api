@@ -1,10 +1,10 @@
 import faker from 'faker';
-import {Sequelize} from 'sequelize';
+import {Sequelize} from 'sequelize-typescript';
 
-import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
-import {CONSTANTS} from '../../constants';
-import Disbursement from '../../models/disbursement-model';
-import PurchaseOrder from '../../models/purchase-order-model';
+import {initInMemoryDb, SEED} from '../../../@utils/seeded-test-data';
+import {CONSTANTS} from '../../../constants';
+import Disbursement from '../../../models/disbursement-model';
+import PurchaseOrder from '../../../models/purchase-order-model';
 import useDisbursementBreakdown from '../use-disbursement-breakdown';
 
 describe('useDisbursementBreakdown', () => {

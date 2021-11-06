@@ -1,6 +1,6 @@
 import {PaymentDetailAttr, Period, TransactionAttr} from '../@types/models';
 import {toTransactionPeriod} from '../@utils/dates';
-import useTransactionBreakdown from '../hooks/use-transaction-breakdown';
+import useTransactionBreakdown from '../hooks/views/use-transaction-breakdown';
 import Charge from '../models/charge-model';
 import PaymentDetail from '../models/payment-detail-model';
 import Transaction from '../models/transaction-model';
@@ -53,7 +53,7 @@ export default class CollectionService extends BaseService {
       if (amountLeft <= 0) {
         break;
       }
-      const balance = breakdown.find(b => b.charge_id === c.id);
+      const balance = breakdown.find(b => b.chargeId === c.id);
       if (balance) {
         let collected = balance.amount;
         if (amountLeft - balance.amount <= 0) {

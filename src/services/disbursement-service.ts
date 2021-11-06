@@ -1,4 +1,4 @@
-import useDisbursementBreakdown from '../hooks/use-disbursement-breakdown';
+import useDisbursementBreakdown from '../hooks/views/use-disbursement-breakdown';
 import BaseService from './@base-service';
 
 export default class DisbursementService extends BaseService {

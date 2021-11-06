@@ -1,9 +1,9 @@
-import {Sequelize} from 'sequelize';
+import {Sequelize} from 'sequelize-typescript';
 
-import {TransactionType} from '../../@types/models';
-import {toTransactionPeriod} from '../../@utils/dates';
-import {initInMemoryDb} from '../../@utils/seeded-test-data';
-import Transaction from '../../models/transaction-model';
+import {TransactionType} from '../../../@types/models';
+import {toTransactionPeriod} from '../../../@utils/dates';
+import {initInMemoryDb} from '../../../@utils/seeded-test-data';
+import Transaction from '../../../models/transaction-model';
 import useTransactionBreakdown from '../use-transaction-breakdown';
 
 describe('useTransactionBreakdown', () => {
@@ -61,10 +61,10 @@ describe('useTransactionBreakdown', () => {
   it('should query transaction breakdown', async () => {
     const result = await useTransactionBreakdown(1, sequelize);
     expect(result.length).toEqual(5);
-    expect(result.find(c => c.charge_id === 1)?.amount).toEqual(5005);
-    expect(result.find(c => c.charge_id === 2)?.amount).toEqual(1058.75);
-    expect(result.find(c => c.charge_id === 3)?.amount).toEqual(1228.15);
-    expect(result.find(c => c.charge_id === 4)?.amount).toEqual(60.26);
-    expect(result.find(c => c.charge_id === 5)?.amount).toEqual(268.41);
+    expect(result.find(c => c.chargeId === 1)?.amount).toEqual(5005);
+    expect(result.find(c => c.chargeId === 2)?.amount).toEqual(1058.75);
+    expect(result.find(c => c.chargeId === 3)?.amount).toEqual(1228.15);
+    expect(result.find(c => c.chargeId === 4)?.amount).toEqual(60.26);
+    expect(result.find(c => c.chargeId === 5)?.amount).toEqual(268.41);
   });
 });

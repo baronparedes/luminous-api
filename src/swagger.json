@@ -597,6 +597,49 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"PaymentHistoryView": {
+				"properties": {
+					"collectedBy": {
+						"type": "string"
+					},
+					"checkIssuingBank": {
+						"type": "string"
+					},
+					"checkPostingDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"checkNumber": {
+						"type": "string"
+					},
+					"paymentType": {
+						"$ref": "#/components/schemas/PaymentType"
+					},
+					"orNumber": {
+						"type": "string"
+					},
+					"code": {
+						"type": "string"
+					},
+					"transactionPeriod": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"collectedBy",
+					"paymentType",
+					"orNumber",
+					"code",
+					"transactionPeriod",
+					"amount"
+				],
+				"type": "object"
+			},
 			"RequestStatus": {
 				"type": "string",
 				"enum": [
@@ -1778,6 +1821,51 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/property/getPaymentHistory/{propertyId}/{year}": {
+			"get": {
+				"operationId": "GetPaymentHistory",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PaymentHistoryView"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/purchase-order/getPurchaseOrder/{id}": {

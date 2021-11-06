@@ -105,4 +105,12 @@ export class PropertyController extends Controller {
   ): Promise<void> {
     return await this.propertyService.updateAssignments(id, profileIds);
   }
+
+  @Get('/getPaymentHistory/{propertyId}/{year}')
+  public async getPaymentHistory(
+    @Path() propertyId: number,
+    @Path() year: number
+  ) {
+    return await this.propertyService.getPaymentHistory(propertyId, year);
+  }
 }

@@ -3,6 +3,7 @@ import {FindOptions, Op} from 'sequelize';
 import {PropertyAttr, RecordStatus} from '../@types/models';
 import {iLike} from '../@utils/helpers-sequelize';
 import {CONSTANTS, VERBIAGE} from '../constants';
+import usePaymentHistory from '../hooks/views/use-payment-history';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
@@ -103,5 +104,10 @@ export default class PropertyService extends BaseService {
         PropertyAssignment.bulkCreate(records, {transaction}),
       ]);
     });
+  }
+
+  public async getPaymentHistory(propertyId: number, year: number) {
+    const data = await usePaymentHistory(propertyId, year, this.repository);
+    return data;
   }
 }

@@ -1,7 +1,7 @@
-import {Sequelize} from 'sequelize/types';
+import {Sequelize} from 'sequelize-typescript';
 
-import {TransactionBreakdownView} from '../@types/views';
-import useSql from './use-sql';
+import {TransactionBreakdownView} from '../../@types/views';
+import useSql from '../use-sql';
 
 export default async function useTransactionBreakdown(
   propertyId: number,
@@ -27,7 +27,11 @@ export default async function useTransactionBreakdown(
       ) AS breakdown
       GROUP BY charge_id
     )
-    SELECT * FROM calculated_breakdown WHERE amount > 0`;
+    SELECT 
+      charge_id AS "chargeId", 
+      amount 
+    FROM calculated_breakdown WHERE amount > 0`;
+
   const {query} = useSql(db);
   const result = await query<TransactionBreakdownView>(sql, {propertyId});
   return result;

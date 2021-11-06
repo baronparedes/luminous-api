@@ -1,5 +1,7 @@
+import {PaymentType} from './models';
+
 export type TransactionBreakdownView = {
-  charge_id: number;
+  chargeId: number;
   amount: number;
 };
 
@@ -9,6 +11,18 @@ export type DisbursementBreakdownView = {
 };
 
 export type ChargeCollectedView = {
-  charge_id: number;
+  chargeId: number;
   amount: number;
+};
+
+export type PaymentHistoryView = {
+  amount: number;
+  transactionPeriod: Date;
+  code: string;
+  orNumber: string;
+  paymentType: PaymentType;
+  checkNumber?: string;
+  checkPostingDate?: Date;
+  checkIssuingBank?: string;
+  collectedBy: string;
 };
