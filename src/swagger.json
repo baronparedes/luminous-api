@@ -190,6 +190,112 @@
 				],
 				"type": "object"
 			},
+			"PaymentType": {
+				"type": "string",
+				"enum": [
+					"cash",
+					"check"
+				]
+			},
+			"ProfileAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"mobileNumber": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/ProfileType"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RecordStatus"
+					},
+					"scopes": {
+						"type": "string"
+					},
+					"remarks": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"username",
+					"password",
+					"email",
+					"type",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"DisbursementAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"purchaseOrderId": {
+						"type": "number",
+						"format": "double"
+					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"releasedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"paymentType": {
+						"$ref": "#/components/schemas/PaymentType"
+					},
+					"details": {
+						"type": "string"
+					},
+					"checkNumber": {
+						"type": "string"
+					},
+					"checkPostingDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"checkIssuingBank": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"releasedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"charge": {
+						"$ref": "#/components/schemas/ChargeAttr"
+					}
+				},
+				"required": [
+					"releasedBy",
+					"paymentType",
+					"details",
+					"amount"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"FieldError": {
 				"properties": {
 					"value": {
@@ -359,63 +465,11 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"ProfileAttr": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"username": {
-						"type": "string"
-					},
-					"password": {
-						"type": "string"
-					},
-					"email": {
-						"type": "string"
-					},
-					"mobileNumber": {
-						"type": "string"
-					},
-					"type": {
-						"$ref": "#/components/schemas/ProfileType"
-					},
-					"status": {
-						"$ref": "#/components/schemas/RecordStatus"
-					},
-					"scopes": {
-						"type": "string"
-					},
-					"remarks": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"name",
-					"username",
-					"password",
-					"email",
-					"type",
-					"status"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"TransactionType": {
 				"type": "string",
 				"enum": [
 					"charged",
 					"collected"
-				]
-			},
-			"PaymentType": {
-				"type": "string",
-				"enum": [
-					"cash",
-					"check"
 				]
 			},
 			"PaymentDetailAttr": {
@@ -683,54 +737,6 @@
 					"quantity",
 					"unitCost",
 					"totalCost"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"DisbursementAttr": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"purchaseOrderId": {
-						"type": "number",
-						"format": "double"
-					},
-					"chargeId": {
-						"type": "number",
-						"format": "double"
-					},
-					"releasedBy": {
-						"type": "number",
-						"format": "double"
-					},
-					"paymentType": {
-						"$ref": "#/components/schemas/PaymentType"
-					},
-					"details": {
-						"type": "string"
-					},
-					"checkNumber": {
-						"type": "string"
-					},
-					"checkPostingDate": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"checkIssuingBank": {
-						"type": "string"
-					},
-					"amount": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"releasedBy",
-					"paymentType",
-					"details",
-					"amount"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -1095,6 +1101,58 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/api/disbursement/getAllPassOnDisbursements": {
+			"get": {
+				"operationId": "GetAllPassOnDisbursements",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/DisbursementAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/disbursement/postChargeDisbursement": {
+			"post": {
+				"operationId": "PostChargeDisbursement",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DisbursementAttr"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/api/profile/getAll": {

@@ -206,6 +206,8 @@ export interface DisbursementAttr {
   checkPostingDate?: Date;
   checkIssuingBank?: string;
   amount: number;
+  releasedByProfile?: ProfileAttr;
+  charge?: ChargeAttr;
 }
 
 export type ApprovalCodeAttr = {

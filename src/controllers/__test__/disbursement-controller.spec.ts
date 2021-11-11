@@ -1,6 +1,7 @@
 import faker from 'faker';
 
 import {DisbursementBreakdownView} from '../../@types/views';
+import {generateDisbursement} from '../../@utils/fake-data';
 import {CONSTANTS} from '../../constants';
 import {DisbursementController} from '../../controllers/disbursement-controller';
 import DisbursementService from '../../services/disbursement-service';
@@ -26,5 +27,38 @@ describe('DisbursementController', () => {
     expect(mock).toBeCalledTimes(1);
     expect(mock).toBeCalledWith(CONSTANTS.COMMUNITY_ID);
     expect(actual).toStrictEqual(mockedDisbursementBreakdown);
+  });
+
+  it('should get all pass on disbursements', async () => {
+    const mockedDisbursements = [
+      generateDisbursement(),
+      generateDisbursement(),
+    ];
+
+    const mock = jest
+      .spyOn(DisbursementService.prototype, 'getPassOnDisbursements')
+      .mockReturnValueOnce(
+        new Promise(resolve => resolve(mockedDisbursements))
+      );
+
+    const target = new DisbursementController();
+    const actual = await target.getAllPassOnDisbursements();
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(CONSTANTS.COMMUNITY_ID);
+    expect(actual).toStrictEqual(mockedDisbursements);
+  });
+
+  it('should post charge disbursements', async () => {
+    const mockedDisbursements = generateDisbursement();
+    const mock = jest
+      .spyOn(DisbursementService.prototype, 'createChargeDisbursement')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+
+    const target = new DisbursementController();
+    await target.postChargeDisbursement(mockedDisbursements);
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(mockedDisbursements);
   });
 });

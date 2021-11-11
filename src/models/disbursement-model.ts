@@ -1,5 +1,6 @@
 import {
   AllowNull,
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -8,7 +9,12 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-import {DisbursementAttr, PaymentType} from '../@types/models';
+import {
+  ChargeAttr,
+  DisbursementAttr,
+  PaymentType,
+  ProfileAttr,
+} from '../@types/models';
 import Charge from './charge-model';
 import Profile from './profile-model';
 import PurchaseOrder from './purchase-order-model';
@@ -49,6 +55,12 @@ class Disbursement extends Model implements DisbursementAttr {
   @AllowNull(false)
   @Column(DataType.DECIMAL)
   amount!: number;
+
+  @BelongsTo(() => Profile)
+  releasedByProfile?: ProfileAttr;
+
+  @BelongsTo(() => Charge)
+  charge?: ChargeAttr;
 }
 
 export default Disbursement;

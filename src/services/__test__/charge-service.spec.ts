@@ -86,6 +86,7 @@ describe('ChargeService', () => {
           rate: expected.rate,
           priority: expected.priority,
           thresholdInMonths: expected.thresholdInMonths,
+          passOn: expected.passOn,
         };
         expect(a).toEqual(e);
       }

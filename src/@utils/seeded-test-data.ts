@@ -84,6 +84,7 @@ export const SEED = {
       chargeType: 'unit' as ChargeType,
       postingType: 'monthly' as PostingType,
       priority: 2,
+      passOn: true,
     },
     {
       id: 3,
@@ -93,6 +94,7 @@ export const SEED = {
       chargeType: 'unit' as ChargeType,
       postingType: 'monthly' as PostingType,
       priority: 3,
+      passOn: true,
     },
     {
       id: 4,
@@ -127,6 +129,7 @@ export const SEED = {
       chargeType: 'amount' as ChargeType,
       postingType: 'manual' as PostingType,
       priority: 4,
+      passOn: true,
     },
   ],
   PROFILES: [PROFILE_ADMIN, PROFILE_USER, PROFILE_STAKEHOLDER],

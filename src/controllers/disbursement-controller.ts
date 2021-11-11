@@ -1,5 +1,6 @@
-import {Controller, Get, Route, Security} from 'tsoa';
+import {Body, Controller, Get, Post, Route, Security} from 'tsoa';
 
+import {DisbursementAttr} from '../@types/models';
 import {CONSTANTS} from '../constants';
 import DisbursementService from '../services/disbursement-service';
 
@@ -19,5 +20,18 @@ export class DisbursementController extends Controller {
       CONSTANTS.COMMUNITY_ID
     );
     return result;
+  }
+
+  @Get('/getAllPassOnDisbursements')
+  public async getAllPassOnDisbursements() {
+    const result = await this.disbursementService.getPassOnDisbursements(
+      CONSTANTS.COMMUNITY_ID
+    );
+    return result;
+  }
+
+  @Post('/postChargeDisbursement')
+  public async postChargeDisbursement(@Body() body: DisbursementAttr) {
+    await this.disbursementService.createChargeDisbursement(body);
   }
 }

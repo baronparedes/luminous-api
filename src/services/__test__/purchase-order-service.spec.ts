@@ -116,6 +116,7 @@ describe('PurchaseOrderService', () => {
           {
             ...generateDisbursement(),
             purchaseOrderId: toBeApprovedPurchaseOrderId,
+            releasedBy: Number(profile.id),
           },
         ],
       };

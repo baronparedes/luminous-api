@@ -97,6 +97,47 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"amount":{"dataType":"double","required":true},"code":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PaymentType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["cash"]},{"dataType":"enum","enums":["check"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ProfileAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "name": {"dataType":"string","required":true},
+            "username": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
+            "mobileNumber": {"dataType":"string"},
+            "type": {"ref":"ProfileType","required":true},
+            "status": {"ref":"RecordStatus","required":true},
+            "scopes": {"dataType":"string"},
+            "remarks": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "DisbursementAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "purchaseOrderId": {"dataType":"double"},
+            "chargeId": {"dataType":"double"},
+            "releasedBy": {"dataType":"double","required":true},
+            "paymentType": {"ref":"PaymentType","required":true},
+            "details": {"dataType":"string","required":true},
+            "checkNumber": {"dataType":"string"},
+            "checkPostingDate": {"dataType":"datetime"},
+            "checkIssuingBank": {"dataType":"string"},
+            "amount": {"dataType":"double","required":true},
+            "releasedByProfile": {"ref":"ProfileAttr"},
+            "charge": {"ref":"ChargeAttr"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "FieldError": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"value":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"field":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"type":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"message":{"dataType":"string","required":true}},"validators":{}},
@@ -147,31 +188,9 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ProfileAttr": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "name": {"dataType":"string","required":true},
-            "username": {"dataType":"string","required":true},
-            "password": {"dataType":"string","required":true},
-            "email": {"dataType":"string","required":true},
-            "mobileNumber": {"dataType":"string"},
-            "type": {"ref":"ProfileType","required":true},
-            "status": {"ref":"RecordStatus","required":true},
-            "scopes": {"dataType":"string"},
-            "remarks": {"dataType":"string"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "TransactionType": {
         "dataType": "refAlias",
         "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["charged"]},{"dataType":"enum","enums":["collected"]}],"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PaymentType": {
-        "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["cash"]},{"dataType":"enum","enums":["check"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PaymentDetailAttr": {
@@ -258,23 +277,6 @@ const models: TsoaRoute.Models = {
             "unitCost": {"dataType":"double","required":true},
             "totalCost": {"dataType":"double","required":true},
             "waivedBy": {"dataType":"double"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "DisbursementAttr": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "purchaseOrderId": {"dataType":"double"},
-            "chargeId": {"dataType":"double"},
-            "releasedBy": {"dataType":"double","required":true},
-            "paymentType": {"ref":"PaymentType","required":true},
-            "details": {"dataType":"string","required":true},
-            "checkNumber": {"dataType":"string"},
-            "checkPostingDate": {"dataType":"datetime"},
-            "checkIssuingBank": {"dataType":"string"},
-            "amount": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -462,6 +464,53 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getDisbursementBreakdown.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/disbursement/getAllPassOnDisbursements',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function DisbursementController_getAllPassOnDisbursements(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new DisbursementController();
+
+
+            const promise = controller.getAllPassOnDisbursements.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/disbursement/postChargeDisbursement',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function DisbursementController_postChargeDisbursement(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"DisbursementAttr"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new DisbursementController();
+
+
+            const promise = controller.postChargeDisbursement.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

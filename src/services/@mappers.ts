@@ -1,6 +1,7 @@
 import {
   AuthProfile,
   ChargeAttr,
+  DisbursementAttr,
   ExpenseAttr,
   PaymentDetailAttr,
   ProfileAttr,
@@ -11,6 +12,7 @@ import {
   TransactionAttr,
 } from '../@types/models';
 import Charge from '../models/charge-model';
+import Disbursement from '../models/disbursement-model';
 import Expense from '../models/expense-model';
 import PaymentDetail from '../models/payment-detail-model';
 import Profile from '../models/profile-model';
@@ -155,5 +157,24 @@ export function mapPurchaseOrder(model: PurchaseOrder): PurchaseOrderAttr {
     requestedByProfile: model.requestedByProfile
       ? mapProfile(model.requestedByProfile as Profile)
       : undefined,
+  };
+}
+
+export function mapDisbursement(model: Disbursement): DisbursementAttr {
+  return {
+    id: model.id,
+    amount: model.amount,
+    details: model.details,
+    paymentType: model.paymentType,
+    releasedBy: model.releasedBy,
+    chargeId: model.chargeId,
+    purchaseOrderId: model.purchaseOrderId,
+    checkIssuingBank: model.checkIssuingBank,
+    checkNumber: model.checkNumber,
+    checkPostingDate: model.checkPostingDate,
+    releasedByProfile: model.releasedByProfile
+      ? mapProfile(model.releasedByProfile as Profile)
+      : undefined,
+    charge: model.charge ? mapCharge(model.charge as Charge) : undefined,
   };
 }
