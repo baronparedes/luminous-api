@@ -30,6 +30,11 @@ describe('DisbursementController', () => {
   });
 
   it('should get all pass on disbursements', async () => {
+    const targetYear = faker.random.arrayElement<number | undefined>([
+      undefined,
+      faker.datatype.number(),
+    ]);
+
     const mockedDisbursements = [
       generateDisbursement(),
       generateDisbursement(),
@@ -42,10 +47,10 @@ describe('DisbursementController', () => {
       );
 
     const target = new DisbursementController();
-    const actual = await target.getAllPassOnDisbursements();
+    const actual = await target.getAllPassOnDisbursements(targetYear);
 
     expect(mock).toBeCalledTimes(1);
-    expect(mock).toBeCalledWith(CONSTANTS.COMMUNITY_ID);
+    expect(mock).toBeCalledWith(CONSTANTS.COMMUNITY_ID, targetYear);
     expect(actual).toStrictEqual(mockedDisbursements);
   });
 

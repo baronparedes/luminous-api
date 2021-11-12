@@ -1,4 +1,8 @@
+import {Op} from 'sequelize';
+
 import {DisbursementAttr} from '../@types/models';
+import {getCurrentMonthYear} from '../@utils/dates';
+import {byYear} from '../@utils/helpers-sequelize';
 import {VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import useDisbursementBreakdown from '../hooks/views/use-disbursement-breakdown';
@@ -17,7 +21,8 @@ export default class DisbursementService extends BaseService {
     return breakdown;
   }
 
-  public async getPassOnDisbursements(communityId: number) {
+  public async getPassOnDisbursements(communityId: number, year?: number) {
+    const {year: yearNow} = getCurrentMonthYear();
     const data = await Disbursement.findAll({
       include: [
         {
@@ -34,6 +39,9 @@ export default class DisbursementService extends BaseService {
           },
         },
       ],
+      where: {
+        [Op.and]: [byYear('"Disbursement"."created_at"', year ?? yearNow)],
+      },
     });
     return data.map(d => mapDisbursement(d));
   }

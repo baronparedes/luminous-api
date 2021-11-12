@@ -5,3 +5,7 @@ export function iLike(column: string, searchCriteria?: string) {
     [Op.like]: `%${searchCriteria?.toLowerCase()}%`,
   });
 }
+
+export function byYear(column: string, year: number) {
+  return Sequelize.literal(`SUBSTR(CAST(${column} AS text), 1, 4) = '${year}'`);
+}
