@@ -29,6 +29,7 @@ const config = {
     USER_NAME: process.env.SMTP_USER_NAME || '',
     PASSWORD: process.env.SMTP_PASSWORD || '',
     SENDER: process.env.SMTP_SENDER || 'luminous.webapp@gmail.com',
+    ENABLED: process.env.SMTP_ENABLED === 'true',
   },
 };
 

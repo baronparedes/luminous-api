@@ -21,7 +21,11 @@ export default function useSendMail() {
       html: mailContent,
     };
 
-    await transporter.sendMail(mailOptions);
+    if (config.SMTP.ENABLED) {
+      await transporter.sendMail(mailOptions);
+    } else {
+      console.info('SMTP is disabled');
+    }
   }
 
   return {
