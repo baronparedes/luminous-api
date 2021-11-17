@@ -30,7 +30,10 @@ describe('DisbursementService', () => {
     };
     await target.createChargeDisbursement(expectedDisbursement);
 
-    const actual = await target.getPassOnDisbursements(CONSTANTS.COMMUNITY_ID);
+    const actual = await target.getDisbursements(
+      CONSTANTS.COMMUNITY_ID,
+      Number(expectedCharge.id)
+    );
     expect(actual[0].charge?.id).toEqual(expectedCharge.id);
     expect(actual[0].releasedByProfile?.id).toEqual(expectedProfile.id);
     expect({

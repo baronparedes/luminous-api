@@ -1103,9 +1103,9 @@
 				"parameters": []
 			}
 		},
-		"/api/disbursement/getAllPassOnDisbursements": {
+		"/api/disbursement/getAllDisbursements/{chargeId}": {
 			"get": {
-				"operationId": "GetAllPassOnDisbursements",
+				"operationId": "GetAllDisbursements",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -1127,6 +1127,15 @@
 					}
 				],
 				"parameters": [
+					{
+						"in": "path",
+						"name": "chargeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
 					{
 						"in": "query",
 						"name": "year",

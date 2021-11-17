@@ -21,7 +21,11 @@ export default class DisbursementService extends BaseService {
     return breakdown;
   }
 
-  public async getPassOnDisbursements(communityId: number, year?: number) {
+  public async getDisbursements(
+    communityId: number,
+    chargeId: number,
+    year?: number
+  ) {
     const {year: yearNow} = getCurrentMonthYear();
     const data = await Disbursement.findAll({
       include: [
@@ -36,6 +40,7 @@ export default class DisbursementService extends BaseService {
           where: {
             passOn: true,
             communityId,
+            id: chargeId,
           },
         },
       ],

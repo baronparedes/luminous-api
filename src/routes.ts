@@ -467,11 +467,12 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/disbursement/getAllPassOnDisbursements',
+        app.get('/api/disbursement/getAllDisbursements/:chargeId',
             authenticateMiddleware([{"bearer":[]}]),
 
-            function DisbursementController_getAllPassOnDisbursements(request: any, response: any, next: any) {
+            function DisbursementController_getAllDisbursements(request: any, response: any, next: any) {
             const args = {
+                    chargeId: {"in":"path","name":"chargeId","required":true,"dataType":"double"},
                     year: {"in":"query","name":"year","dataType":"double"},
             };
 
@@ -487,7 +488,7 @@ export function RegisterRoutes(app: express.Router) {
             const controller = new DisbursementController();
 
 
-            const promise = controller.getAllPassOnDisbursements.apply(controller, validatedArgs as any);
+            const promise = controller.getAllDisbursements.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

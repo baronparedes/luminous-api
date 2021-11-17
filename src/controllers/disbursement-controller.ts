@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Query, Route, Security} from 'tsoa';
+import {Body, Controller, Get, Path, Post, Query, Route, Security} from 'tsoa';
 
 import {DisbursementAttr} from '../@types/models';
 import {CONSTANTS} from '../constants';
@@ -22,10 +22,14 @@ export class DisbursementController extends Controller {
     return result;
   }
 
-  @Get('/getAllPassOnDisbursements')
-  public async getAllPassOnDisbursements(@Query() year?: number) {
-    const result = await this.disbursementService.getPassOnDisbursements(
+  @Get('/getAllDisbursements/{chargeId}')
+  public async getAllDisbursements(
+    @Path() chargeId: number,
+    @Query() year?: number
+  ) {
+    const result = await this.disbursementService.getDisbursements(
       CONSTANTS.COMMUNITY_ID,
+      chargeId,
       year
     );
     return result;

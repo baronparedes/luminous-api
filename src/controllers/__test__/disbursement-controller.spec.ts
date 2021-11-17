@@ -34,6 +34,7 @@ describe('DisbursementController', () => {
       undefined,
       faker.datatype.number(),
     ]);
+    const targetChargeId = faker.datatype.number();
 
     const mockedDisbursements = [
       generateDisbursement(),
@@ -41,16 +42,20 @@ describe('DisbursementController', () => {
     ];
 
     const mock = jest
-      .spyOn(DisbursementService.prototype, 'getPassOnDisbursements')
+      .spyOn(DisbursementService.prototype, 'getDisbursements')
       .mockReturnValueOnce(
         new Promise(resolve => resolve(mockedDisbursements))
       );
 
     const target = new DisbursementController();
-    const actual = await target.getAllPassOnDisbursements(targetYear);
+    const actual = await target.getAllDisbursements(targetChargeId, targetYear);
 
     expect(mock).toBeCalledTimes(1);
-    expect(mock).toBeCalledWith(CONSTANTS.COMMUNITY_ID, targetYear);
+    expect(mock).toBeCalledWith(
+      CONSTANTS.COMMUNITY_ID,
+      targetChargeId,
+      targetYear
+    );
     expect(actual).toStrictEqual(mockedDisbursements);
   });
 
