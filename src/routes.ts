@@ -271,6 +271,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "purchaseOrderId": {"dataType":"double"},
+            "categoryId": {"dataType":"double","required":true},
             "category": {"dataType":"string","required":true},
             "description": {"dataType":"string","required":true},
             "quantity": {"dataType":"double","required":true},
@@ -324,6 +325,11 @@ const models: TsoaRoute.Models = {
             "value": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CategoryAttr": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"subCategories":{"dataType":"string","required":true},"description":{"dataType":"string","required":true},"communityId":{"dataType":"double","required":true},"id":{"dataType":"double"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PostTransactionBody": {
@@ -1191,6 +1197,53 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.updateSettingValue.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/setting/getAllCategories',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function SettingController_getAllCategories(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new SettingController();
+
+
+            const promise = controller.getAllCategories.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.patch('/api/setting/updateCategories',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function SettingController_updateCategories(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"dataType":"array","array":{"dataType":"refAlias","ref":"CategoryAttr"}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new SettingController();
+
+
+            const promise = controller.updateCategories.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

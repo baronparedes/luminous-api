@@ -708,6 +708,10 @@
 						"type": "number",
 						"format": "double"
 					},
+					"categoryId": {
+						"type": "number",
+						"format": "double"
+					},
 					"category": {
 						"type": "string"
 					},
@@ -732,6 +736,7 @@
 					}
 				},
 				"required": [
+					"categoryId",
 					"category",
 					"description",
 					"quantity",
@@ -902,6 +907,30 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"CategoryAttr": {
+				"properties": {
+					"subCategories": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"communityId": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"subCategories",
+					"description",
+					"communityId"
+				],
+				"type": "object"
 			},
 			"PostTransactionBody": {
 				"properties": {
@@ -2199,6 +2228,61 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/SettingAttr"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/setting/getAllCategories": {
+			"get": {
+				"operationId": "GetAllCategories",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CategoryAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/setting/updateCategories": {
+			"patch": {
+				"operationId": "UpdateCategories",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/CategoryAttr"
+								},
+								"type": "array"
 							}
 						}
 					}
