@@ -1,7 +1,9 @@
 import faker from 'faker';
 
+import {generateCategory} from '../../@utils/fake-data';
 import {initInMemoryDb} from '../../@utils/seeded-test-data';
 import {CONSTANTS} from '../../constants';
+import Category from '../../models/category-model';
 import Setting from '../../models/setting-model';
 import SettingService from '../setting-service';
 
@@ -13,9 +15,16 @@ describe('SettingService', () => {
     communityId: CONSTANTS.COMMUNITY_ID,
   };
 
+  const seedCategoryData = {
+    ...generateCategory(),
+    communityId: CONSTANTS.COMMUNITY_ID,
+    id: 1,
+  };
+
   beforeAll(async () => {
     await initInMemoryDb();
     await Setting.bulkCreate([seedData]);
+    await Category.bulkCreate([seedCategoryData]);
   });
 
   it('should fetch empty string when key does not exist', async () => {
@@ -48,5 +57,28 @@ describe('SettingService', () => {
 
     const values = await target.getValues();
     expect(values.length).toEqual(2);
+  });
+
+  it('should update and get all categories', async () => {
+    const actual = await target.getCategories();
+    expect(actual[0]).toEqual(seedCategoryData);
+
+    const updatedCategory = {
+      ...generateCategory(),
+      id: 1,
+      communityId: CONSTANTS.COMMUNITY_ID,
+    };
+
+    const newCategory = {
+      ...generateCategory(),
+      communityId: CONSTANTS.COMMUNITY_ID,
+    };
+
+    await target.saveCategories([updatedCategory, newCategory]);
+    const actualAfterSave = await target.getCategories();
+
+    expect(actualAfterSave).toHaveLength(2);
+    expect(actualAfterSave[0]).toEqual(updatedCategory);
+    expect(actualAfterSave[1]).toEqual({...newCategory, id: 2});
   });
 });

@@ -10,7 +10,7 @@ import {
   Security,
 } from 'tsoa';
 
-import {SettingAttr} from '../@types/models';
+import {CategoryAttr, SettingAttr} from '../@types/models';
 import {CONSTANTS} from '../constants';
 import SettingService from '../services/setting-service';
 
@@ -41,5 +41,16 @@ export class SettingController extends Controller {
   @Patch('/updateSettingValue')
   public async updateSettingValue(@Body() setting: SettingAttr) {
     await this.settingService.setValue(setting.key, setting.value);
+  }
+
+  @Get('/getAllCategories')
+  public async getAllCategories() {
+    const value = await this.settingService.getCategories();
+    return value;
+  }
+
+  @Patch('/updateCategories')
+  public async updateCategories(@Body() body: CategoryAttr[]) {
+    await this.settingService.saveCategories(body);
   }
 }

@@ -1,4 +1,4 @@
-import {generateSetting} from '../../@utils/fake-data';
+import {generateCategory, generateSetting} from '../../@utils/fake-data';
 import SettingService from '../../services/setting-service';
 import {SettingController} from '../setting-controller';
 
@@ -34,6 +34,28 @@ describe('SettingController', () => {
     const target = new SettingController();
     await target.updateSettingValue(setting);
     expect(mock).toBeCalledWith(setting.key, setting.value);
+    expect(mock).toBeCalledTimes(1);
+  });
+
+  it('should get all categories', async () => {
+    const categories = [generateCategory(), generateCategory()];
+    const mock = jest
+      .spyOn(SettingService.prototype, 'getCategories')
+      .mockReturnValueOnce(new Promise(resolve => resolve(categories)));
+    const target = new SettingController();
+    const actual = await target.getAllCategories();
+    expect(actual).toStrictEqual(categories);
+    expect(mock).toBeCalledTimes(1);
+  });
+
+  it('should update categories', async () => {
+    const categories = [generateCategory(), generateCategory()];
+    const mock = jest
+      .spyOn(SettingService.prototype, 'saveCategories')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new SettingController();
+    await target.updateCategories(categories);
+    expect(mock).toBeCalledWith(categories);
     expect(mock).toBeCalledTimes(1);
   });
 });

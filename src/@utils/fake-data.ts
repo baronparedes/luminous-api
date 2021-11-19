@@ -2,6 +2,7 @@ import faker from 'faker';
 
 import {
   AuthProfile,
+  CategoryAttr,
   ChargeAttr,
   ChargeType,
   DisbursementAttr,
@@ -130,6 +131,14 @@ export const generateSetting = (): SettingAttr => {
   };
 };
 
+export const generateCategory = (): CategoryAttr => {
+  return {
+    communityId: faker.datatype.number(),
+    description: faker.random.word(),
+    subCategories: JSON.stringify([faker.random.words(), faker.random.words()]),
+  };
+};
+
 export const generateCharge = (): ChargeAttr => {
   return {
     chargeType: faker.random.arrayElement<ChargeType>([
@@ -157,6 +166,7 @@ export const generateExpense = (): ExpenseAttr => {
   const unitCost = faker.datatype.number();
   return {
     category: faker.random.words(2),
+    categoryId: faker.datatype.number(),
     description: faker.random.words(10),
     quantity,
     unitCost,

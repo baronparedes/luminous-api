@@ -170,6 +170,7 @@ export interface PaymentDetailAttr {
 
 export interface ExpenseAttr {
   purchaseOrderId?: number;
+  categoryId: number;
   category: string;
   description: string;
   quantity: number;
@@ -215,4 +216,11 @@ export type ApprovalCodeAttr = {
   email: string;
   code: string;
   purchaseOrderId?: number | null;
+};
+
+export type CategoryAttr = {
+  id?: number;
+  communityId: number;
+  description: string;
+  subCategories: string;
 };

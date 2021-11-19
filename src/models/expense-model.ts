@@ -9,6 +9,7 @@ import {
 } from 'sequelize-typescript';
 
 import {ExpenseAttr} from '../@types/models';
+import Category from './category-model';
 import Profile from './profile-model';
 import PurchaseOrder from './purchase-order-model';
 
@@ -22,6 +23,10 @@ class Expense extends Model implements ExpenseAttr {
   @ForeignKey(() => Profile)
   @Column
   waivedBy?: number;
+
+  @ForeignKey(() => Category)
+  @Column
+  categoryId!: number;
 
   @AllowNull(false)
   @NotEmpty

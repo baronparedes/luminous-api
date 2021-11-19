@@ -1,0 +1,7 @@
+[
+    {
+        "id": 1,
+        "description": "Category 1",
+        "subCategories": "[\"Sub-Category 1\",\"Sub-Cartegory 2\"]"
+    }
+]

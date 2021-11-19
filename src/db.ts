@@ -1,6 +1,7 @@
 import {Dialect} from 'sequelize';
 import {Sequelize} from 'sequelize-typescript';
 
+import categoriesData from './@seed/categories.json';
 import chargesData from './@seed/charges.json';
 import communitiesData from './@seed/communities.json';
 import profilesData from './@seed/profiles.json';
@@ -8,6 +9,7 @@ import propertiesData from './@seed/properties.json';
 import settingsData from './@seed/settings.json';
 import config from './config';
 import {CONSTANTS} from './constants';
+import Category from './models/category-model';
 import Charge from './models/charge-model';
 import Community from './models/community-model';
 import Profile from './models/profile-model';
@@ -47,6 +49,10 @@ async function seed() {
     return {...p, communityId: CONSTANTS.COMMUNITY_ID};
   });
 
+  const categories = categoriesData.map(c => {
+    return {...c, communityId: CONSTANTS.COMMUNITY_ID};
+  });
+
   await Community.bulkCreate(communitiesData, {
     updateOnDuplicate: ['description', 'code'],
   });
@@ -77,6 +83,10 @@ async function seed() {
       'status',
       'communityId',
     ],
+  });
+
+  await Category.bulkCreate(categories, {
+    updateOnDuplicate: ['description', 'subCategories'],
   });
 
   await Profile.bulkCreate(profilesData, {

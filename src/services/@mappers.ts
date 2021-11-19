@@ -1,5 +1,6 @@
 import {
   AuthProfile,
+  CategoryAttr,
   ChargeAttr,
   DisbursementAttr,
   ExpenseAttr,
@@ -11,6 +12,7 @@ import {
   SettingAttr,
   TransactionAttr,
 } from '../@types/models';
+import Category from '../models/category-model';
 import Charge from '../models/charge-model';
 import Disbursement from '../models/disbursement-model';
 import Expense from '../models/expense-model';
@@ -128,6 +130,7 @@ export function mapCharge(model: Charge): ChargeAttr {
 
 export function mapExpense(model: Expense): ExpenseAttr {
   return {
+    categoryId: model.categoryId,
     category: model.category,
     description: model.description,
     quantity: model.quantity,
@@ -176,5 +179,14 @@ export function mapDisbursement(model: Disbursement): DisbursementAttr {
       ? mapProfile(model.releasedByProfile as Profile)
       : undefined,
     charge: model.charge ? mapCharge(model.charge as Charge) : undefined,
+  };
+}
+
+export function mapCategories(model: Category): CategoryAttr {
+  return {
+    id: model.id,
+    communityId: model.communityId,
+    description: model.description,
+    subCategories: model.subCategories,
   };
 }
