@@ -3,5 +3,10 @@
         "id": 1,
         "description": "Category 1",
         "subCategories": "[\"Sub-Category 1\",\"Sub-Cartegory 2\"]"
+    },
+    {
+        "id": 2,
+        "description": "Category 2",
+        "subCategories": "[\"Sub-Category 3\",\"Sub-Cartegory 4\"]"
     }
 ]
