@@ -57,7 +57,7 @@ export default class DisbursementService extends BaseService {
 
     const sanitized: DisbursementAttr = {
       ...disbursement,
-      purchaseOrderId: undefined,
+      voucherId: undefined,
       releasedByProfile: undefined,
       charge: undefined,
     };

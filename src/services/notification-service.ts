@@ -1,16 +1,16 @@
 import {
-  purchaseRequestApprovalTemplate,
   resetPasswordTemplate,
+  voucherApprovalTemplate,
 } from '../@utils/email-templates';
 import useSendMail from '../hooks/use-send-mail';
 import ApprovalCode from '../models/approval-code-model';
-import PurchaseOrderService from './purchase-order-service';
+import VoucherService from './voucher-service';
 
 export default class NotificationService {
-  private purchaseOrderService: PurchaseOrderService;
+  private voucherService: VoucherService;
 
   constructor() {
-    this.purchaseOrderService = new PurchaseOrderService();
+    this.voucherService = new VoucherService();
   }
 
   public async notifyResetPassword(email: string, password: string) {
@@ -20,21 +20,19 @@ export default class NotificationService {
     await send(email, subject, content);
   }
 
-  public async notifyPurchaseOrderApprovers(purchaseOrderId: number) {
-    const purchaseOrder = await this.purchaseOrderService.getPurchaseOrder(
-      purchaseOrderId
-    );
+  public async notifyVoucherApprovers(voucherId: number) {
+    const voucher = await this.voucherService.getVoucher(voucherId);
     const approvalCodes = await ApprovalCode.findAll({
       where: {
-        purchaseOrderId,
+        voucherId,
       },
     });
 
     const {send} = useSendMail();
 
     const promises = approvalCodes.map(ac => {
-      const subject = `[Luminous] Approval for PO-${purchaseOrderId}`;
-      const content = purchaseRequestApprovalTemplate(purchaseOrder, ac.code);
+      const subject = `[Luminous] Approval for V-${voucherId}`;
+      const content = voucherApprovalTemplate(voucher, ac.code);
       return send(ac.email, subject, content);
     });
 

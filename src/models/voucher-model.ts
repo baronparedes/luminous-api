@@ -15,8 +15,8 @@ import {
   DisbursementAttr,
   ExpenseAttr,
   ProfileAttr,
-  PurchaseOrderAttr,
   RequestStatus,
+  VoucherAttr,
 } from '../@types/models';
 import Community from './community-model';
 import Disbursement from './disbursement-model';
@@ -24,7 +24,7 @@ import Expense from './expense-model';
 import Profile from './profile-model';
 
 @Table
-class PurchaseOrder extends Model implements PurchaseOrderAttr {
+class Voucher extends Model implements VoucherAttr {
   @AllowNull(false)
   @NotEmpty
   @Column
@@ -76,4 +76,4 @@ class PurchaseOrder extends Model implements PurchaseOrderAttr {
   disbursements?: DisbursementAttr[];
 }
 
-export default PurchaseOrder;
+export default Voucher;

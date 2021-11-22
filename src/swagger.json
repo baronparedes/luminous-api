@@ -248,7 +248,7 @@
 						"type": "number",
 						"format": "double"
 					},
-					"purchaseOrderId": {
+					"voucherId": {
 						"type": "number",
 						"format": "double"
 					},
@@ -694,204 +694,6 @@
 				],
 				"type": "object"
 			},
-			"RequestStatus": {
-				"type": "string",
-				"enum": [
-					"approved",
-					"rejected",
-					"pending"
-				]
-			},
-			"ExpenseAttr": {
-				"properties": {
-					"purchaseOrderId": {
-						"type": "number",
-						"format": "double"
-					},
-					"categoryId": {
-						"type": "number",
-						"format": "double"
-					},
-					"category": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"quantity": {
-						"type": "number",
-						"format": "double"
-					},
-					"unitCost": {
-						"type": "number",
-						"format": "double"
-					},
-					"totalCost": {
-						"type": "number",
-						"format": "double"
-					},
-					"waivedBy": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"categoryId",
-					"category",
-					"description",
-					"quantity",
-					"unitCost",
-					"totalCost"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"PurchaseOrderAttr": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"description": {
-						"type": "string"
-					},
-					"totalCost": {
-						"type": "number",
-						"format": "double"
-					},
-					"status": {
-						"$ref": "#/components/schemas/RequestStatus"
-					},
-					"requestedBy": {
-						"type": "number",
-						"format": "double"
-					},
-					"requestedDate": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"approvedBy": {
-						"type": "string",
-						"nullable": true
-					},
-					"rejectedBy": {
-						"type": "number",
-						"format": "double"
-					},
-					"comments": {
-						"type": "string",
-						"nullable": true
-					},
-					"expenses": {
-						"items": {
-							"$ref": "#/components/schemas/ExpenseAttr"
-						},
-						"type": "array"
-					},
-					"disbursements": {
-						"items": {
-							"$ref": "#/components/schemas/DisbursementAttr"
-						},
-						"type": "array"
-					},
-					"requestedByProfile": {
-						"$ref": "#/components/schemas/ProfileAttr"
-					},
-					"rejectedByProfile": {
-						"$ref": "#/components/schemas/ProfileAttr"
-					},
-					"approverProfiles": {
-						"items": {
-							"$ref": "#/components/schemas/ProfileAttr"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"description",
-					"totalCost",
-					"status",
-					"requestedBy",
-					"requestedDate"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"CreatePurchaseRequest": {
-				"properties": {
-					"expenses": {
-						"items": {
-							"$ref": "#/components/schemas/ExpenseAttr"
-						},
-						"type": "array"
-					},
-					"requestedDate": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"requestedBy": {
-						"type": "number",
-						"format": "double"
-					},
-					"description": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"expenses",
-					"requestedDate",
-					"requestedBy",
-					"description"
-				],
-				"type": "object"
-			},
-			"ApprovePurchaseRequest": {
-				"properties": {
-					"disbursements": {
-						"items": {
-							"$ref": "#/components/schemas/DisbursementAttr"
-						},
-						"type": "array"
-					},
-					"codes": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"purchaseOrderId": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"disbursements",
-					"codes",
-					"purchaseOrderId"
-				],
-				"type": "object"
-			},
-			"RejectPurchaseRequest": {
-				"properties": {
-					"rejectedBy": {
-						"type": "number",
-						"format": "double"
-					},
-					"comments": {
-						"type": "string"
-					},
-					"id": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"rejectedBy",
-					"comments",
-					"id"
-				],
-				"type": "object"
-			},
 			"SettingAttr": {
 				"properties": {
 					"key": {
@@ -984,6 +786,204 @@
 				"required": [
 					"month",
 					"year"
+				],
+				"type": "object"
+			},
+			"RequestStatus": {
+				"type": "string",
+				"enum": [
+					"approved",
+					"rejected",
+					"pending"
+				]
+			},
+			"ExpenseAttr": {
+				"properties": {
+					"voucherId": {
+						"type": "number",
+						"format": "double"
+					},
+					"categoryId": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"quantity": {
+						"type": "number",
+						"format": "double"
+					},
+					"unitCost": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalCost": {
+						"type": "number",
+						"format": "double"
+					},
+					"waivedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"categoryId",
+					"category",
+					"description",
+					"quantity",
+					"unitCost",
+					"totalCost"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"VoucherAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"totalCost": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RequestStatus"
+					},
+					"requestedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"requestedDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"approvedBy": {
+						"type": "string",
+						"nullable": true
+					},
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string",
+						"nullable": true
+					},
+					"expenses": {
+						"items": {
+							"$ref": "#/components/schemas/ExpenseAttr"
+						},
+						"type": "array"
+					},
+					"disbursements": {
+						"items": {
+							"$ref": "#/components/schemas/DisbursementAttr"
+						},
+						"type": "array"
+					},
+					"requestedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"rejectedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"approverProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileAttr"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"description",
+					"totalCost",
+					"status",
+					"requestedBy",
+					"requestedDate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateVoucher": {
+				"properties": {
+					"expenses": {
+						"items": {
+							"$ref": "#/components/schemas/ExpenseAttr"
+						},
+						"type": "array"
+					},
+					"requestedDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"requestedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"expenses",
+					"requestedDate",
+					"requestedBy",
+					"description"
+				],
+				"type": "object"
+			},
+			"ApproveVoucher": {
+				"properties": {
+					"disbursements": {
+						"items": {
+							"$ref": "#/components/schemas/DisbursementAttr"
+						},
+						"type": "array"
+					},
+					"codes": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"voucherId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"disbursements",
+					"codes",
+					"voucherId"
+				],
+				"type": "object"
+			},
+			"RejectVoucher": {
+				"properties": {
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"rejectedBy",
+					"comments",
+					"id"
 				],
 				"type": "object"
 			}
@@ -1974,186 +1974,6 @@
 				]
 			}
 		},
-		"/api/purchase-order/getPurchaseOrder/{id}": {
-			"get": {
-				"operationId": "GetPurchaseOrder",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PurchaseOrderAttr"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/api/purchase-order/getAllPurchaseOrderByStatus/{status}": {
-			"get": {
-				"operationId": "GetAllPurchaseOrderByStatus",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/PurchaseOrderAttr"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "status",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/RequestStatus"
-						}
-					}
-				]
-			}
-		},
-		"/api/purchase-order/postPurchaseOrder": {
-			"post": {
-				"operationId": "PostPurchaseOrder",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "number",
-									"format": "double"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreatePurchaseRequest"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/purchase-order/approvePurchaseOrder": {
-			"post": {
-				"operationId": "ApprovePurchaseOrder",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ApprovePurchaseRequest"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/purchase-order/rejectPurchaseOrder": {
-			"post": {
-				"operationId": "RejectPurchaseOrder",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/RejectPurchaseRequest"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api/purchase-order/notifyApprovers/{id}": {
-			"post": {
-				"operationId": "NotifyApprovers",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
 		"/api/setting/getAll": {
 			"get": {
 				"operationId": "GetAllSettings",
@@ -2483,6 +2303,186 @@
 						"required": true,
 						"schema": {
 							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
+		"/api/voucher/getVoucher/{id}": {
+			"get": {
+				"operationId": "GetVoucher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/VoucherAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/voucher/getAllVoucherByStatus/{status}": {
+			"get": {
+				"operationId": "GetAllVoucherByStatus",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/VoucherAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "status",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/RequestStatus"
+						}
+					}
+				]
+			}
+		},
+		"/api/voucher/postVoucher": {
+			"post": {
+				"operationId": "PostVoucher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "number",
+									"format": "double"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateVoucher"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/voucher/approveVoucher": {
+			"post": {
+				"operationId": "ApproveVoucher",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ApproveVoucher"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/voucher/rejectVoucher": {
+			"post": {
+				"operationId": "RejectVoucher",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RejectVoucher"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/voucher/notifyApprovers/{id}": {
+			"post": {
+				"operationId": "NotifyApprovers",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]

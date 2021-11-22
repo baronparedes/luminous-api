@@ -40,15 +40,15 @@ export type AuthProfile = {
   remarks?: string;
 };
 
-export type CreatePurchaseRequest = {
+export type CreateVoucher = {
   description: string;
   requestedBy: number;
   requestedDate: Date;
   expenses: ExpenseAttr[];
 };
 
-export type ApprovePurchaseRequest = {
-  purchaseOrderId: number;
+export type ApproveVoucher = {
+  voucherId: number;
   codes: string[];
   disbursements: DisbursementAttr[];
 };
@@ -169,7 +169,7 @@ export interface PaymentDetailAttr {
 }
 
 export interface ExpenseAttr {
-  purchaseOrderId?: number;
+  voucherId?: number;
   categoryId: number;
   category: string;
   description: string;
@@ -179,7 +179,7 @@ export interface ExpenseAttr {
   waivedBy?: number;
 }
 
-export interface PurchaseOrderAttr {
+export interface VoucherAttr {
   id?: number;
   description: string;
   totalCost: number;
@@ -195,10 +195,9 @@ export interface PurchaseOrderAttr {
   rejectedByProfile?: ProfileAttr;
   approverProfiles?: ProfileAttr[];
 }
-
 export interface DisbursementAttr {
   id?: number;
-  purchaseOrderId?: number;
+  voucherId?: number;
   chargeId?: number;
   releasedBy: number;
   paymentType: PaymentType;
@@ -215,7 +214,7 @@ export type ApprovalCodeAttr = {
   profileId: number;
   email: string;
   code: string;
-  purchaseOrderId?: number | null;
+  voucherId?: number | null;
 };
 
 export type CategoryAttr = {

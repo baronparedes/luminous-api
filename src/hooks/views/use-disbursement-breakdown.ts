@@ -12,8 +12,8 @@ export default async function useDisbursementBreakdown(
         'COMMUNITY EXPENSE' AS code,
         SUM(amount) AS amount
     FROM disbursements d
-    JOIN purchase_orders po ON d.purchase_order_id = po.id
-    WHERE po.status = 'approved' AND po.community_id = :communityId
+    JOIN vouchers v ON d.voucher_id = v.id
+    WHERE v.status = 'approved' AND v.community_id = :communityId
     UNION ALL
     SELECT
         c.code,

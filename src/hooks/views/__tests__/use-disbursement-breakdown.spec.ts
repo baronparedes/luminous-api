@@ -4,7 +4,7 @@ import {Sequelize} from 'sequelize-typescript';
 import {initInMemoryDb, SEED} from '../../../@utils/seeded-test-data';
 import {CONSTANTS} from '../../../constants';
 import Disbursement from '../../../models/disbursement-model';
-import PurchaseOrder from '../../../models/purchase-order-model';
+import Voucher from '../../../models/voucher-model';
 import useDisbursementBreakdown from '../use-disbursement-breakdown';
 
 describe('useDisbursementBreakdown', () => {
@@ -13,7 +13,7 @@ describe('useDisbursementBreakdown', () => {
   const charge = faker.random.arrayElement(SEED.CHARGES);
   const profile = faker.random.arrayElement(SEED.PROFILES);
 
-  const seedPurchaseOrder = [
+  const seedVoucher = [
     {
       id: 1,
       description: faker.random.words(10),
@@ -54,7 +54,7 @@ describe('useDisbursementBreakdown', () => {
       amount: 1000,
     },
     {
-      purchaseOrderId: 1,
+      voucherId: 1,
       releasedBy: profile.id,
       paymentType: 'cash',
       details: faker.random.words(10),
@@ -64,7 +64,7 @@ describe('useDisbursementBreakdown', () => {
 
   beforeAll(async () => {
     sequelize = await initInMemoryDb();
-    await PurchaseOrder.bulkCreate([...seedPurchaseOrder]);
+    await Voucher.bulkCreate([...seedVoucher]);
     await Disbursement.bulkCreate([...seedChargeDisbursement]);
   });
 

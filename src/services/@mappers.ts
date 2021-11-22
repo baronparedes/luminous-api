@@ -8,9 +8,9 @@ import {
   ProfileAttr,
   PropertyAssignmentAttr,
   PropertyAttr,
-  PurchaseOrderAttr,
   SettingAttr,
   TransactionAttr,
+  VoucherAttr,
 } from '../@types/models';
 import Category from '../models/category-model';
 import Charge from '../models/charge-model';
@@ -20,9 +20,9 @@ import PaymentDetail from '../models/payment-detail-model';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
-import PurchaseOrder from '../models/purchase-order-model';
 import Setting from '../models/setting-model';
 import Transaction from '../models/transaction-model';
+import Voucher from '../models/voucher-model';
 
 export function mapPaymentDetail(
   paymentDetail: PaymentDetail
@@ -136,12 +136,12 @@ export function mapExpense(model: Expense): ExpenseAttr {
     quantity: model.quantity,
     totalCost: model.totalCost,
     unitCost: model.unitCost,
-    purchaseOrderId: model.purchaseOrderId,
+    voucherId: model.voucherId,
     waivedBy: model.waivedBy,
   };
 }
 
-export function mapPurchaseOrder(model: PurchaseOrder): PurchaseOrderAttr {
+export function mapVoucher(model: Voucher): VoucherAttr {
   return {
     id: model.id,
     description: model.description,
@@ -171,7 +171,7 @@ export function mapDisbursement(model: Disbursement): DisbursementAttr {
     paymentType: model.paymentType,
     releasedBy: model.releasedBy,
     chargeId: model.chargeId,
-    purchaseOrderId: model.purchaseOrderId,
+    voucherId: model.voucherId,
     checkIssuingBank: model.checkIssuingBank,
     checkNumber: model.checkNumber,
     checkPostingDate: model.checkPostingDate,

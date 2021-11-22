@@ -1,4 +1,4 @@
-import {PurchaseOrderAttr} from '../@types/models';
+import {VoucherAttr} from '../@types/models';
 
 function container(content: string) {
   const html = `
@@ -33,14 +33,11 @@ export function resetPasswordTemplate(password: string) {
   return container(html);
 }
 
-export function purchaseRequestApprovalTemplate(
-  purchaseOrder: PurchaseOrderAttr,
-  code: string
-) {
+export function voucherApprovalTemplate(voucher: VoucherAttr, code: string) {
   const html = `
     <p style="font-size:1.1em">Hi,</p>
-    <p><strong>PO-${purchaseOrder.id}</strong> has been requested by <strong>${
-    purchaseOrder.requestedByProfile?.name
+    <p><strong>V-${voucher.id}</strong> has been requested by <strong>${
+    voucher.requestedByProfile?.name
   }</strong></p>
     <p>Use the following OTP for approval of this request.</p>
     <h1 style="background: #03284A;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">
@@ -49,8 +46,8 @@ export function purchaseRequestApprovalTemplate(
     <br/>
     <hr style="border:none;border-top:1px solid #eee" />
     <small>Purpose of the Request</small>
-    <p>${purchaseOrder.description}</p>
-    <h3>Total Cost: ${purchaseOrder.totalCost}</h3>
+    <p>${voucher.description}</p>
+    <h3>Total Cost: ${voucher.totalCost}</h3>
     <small>Expenses</small>
     <table style="width: 100%; text-align: left">
         <tr>
@@ -59,7 +56,7 @@ export function purchaseRequestApprovalTemplate(
             <th>Qty</th>
             <th>Unit Cost</th>
         </tr>
-        ${purchaseOrder.expenses?.map(e => {
+        ${voucher.expenses?.map(e => {
           return `
             <tr>
                 <td>${e.description}</td>

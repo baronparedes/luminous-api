@@ -1,11 +1,11 @@
 import {
   ApprovalCodeAttr,
-  ApprovePurchaseRequest,
-  CreatePurchaseRequest,
+  ApproveVoucher,
+  CreateVoucher,
   ExpenseAttr,
   ProfileAttr,
-  PurchaseOrderAttr,
   RequestStatus,
+  VoucherAttr,
 } from '../@types/models';
 import {generateOTP, sum} from '../@utils/helpers';
 import config from '../config';
@@ -15,11 +15,11 @@ import ApprovalCode from '../models/approval-code-model';
 import Disbursement from '../models/disbursement-model';
 import Expense from '../models/expense-model';
 import Profile from '../models/profile-model';
-import PurchaseOrder from '../models/purchase-order-model';
+import Voucher from '../models/voucher-model';
 import BaseService from './@base-service';
-import {mapProfile, mapPurchaseOrder} from './@mappers';
+import {mapProfile, mapVoucher} from './@mappers';
 
-export default class PurchaseOrderService extends BaseService {
+export default class VoucherService extends BaseService {
   private async generateApprovalCodes() {
     const profiles = await Profile.findAll({
       attributes: ['id', 'email'],
@@ -38,15 +38,15 @@ export default class PurchaseOrderService extends BaseService {
     return approvalCodes;
   }
 
-  public async rejectPurchaseRequest(
-    purchaseOrderId: number,
+  public async rejectVoucher(
+    voucherId: number,
     comments: string,
     rejectedBy: number
   ) {
     return await this.repository.transaction(async transaction => {
-      const request = await PurchaseOrder.findOne({
+      const request = await Voucher.findOne({
         where: {
-          id: purchaseOrderId,
+          id: voucherId,
           status: 'pending',
         },
       });
@@ -61,22 +61,22 @@ export default class PurchaseOrderService extends BaseService {
       await request.save({transaction});
       await ApprovalCode.destroy({
         where: {
-          purchaseOrderId,
+          voucherId,
         },
         transaction,
       });
     });
   }
 
-  public async approvePurchaseRequest(approveRequest: ApprovePurchaseRequest) {
+  public async approveVoucher(approveRequest: ApproveVoucher) {
     return await this.repository.transaction(async transaction => {
       if (approveRequest.disbursements.length <= 0) {
         throw new ApiError(400, VERBIAGE.BAD_REQUEST);
       }
 
-      const request = await PurchaseOrder.findOne({
+      const request = await Voucher.findOne({
         where: {
-          id: approveRequest.purchaseOrderId,
+          id: approveRequest.voucherId,
           status: 'pending',
         },
       });
@@ -87,7 +87,7 @@ export default class PurchaseOrderService extends BaseService {
 
       const matchedCodes = await ApprovalCode.findAll({
         where: {
-          purchaseOrderId: approveRequest.purchaseOrderId,
+          voucherId: approveRequest.voucherId,
           code: [...approveRequest.codes],
         },
       });
@@ -105,7 +105,7 @@ export default class PurchaseOrderService extends BaseService {
           ...approveRequest.disbursements.map(d => {
             return {
               ...d,
-              purchaseOrderId: Number(request.id),
+              voucherId: Number(request.id),
             };
           }),
         ],
@@ -113,16 +113,16 @@ export default class PurchaseOrderService extends BaseService {
       );
       await ApprovalCode.destroy({
         where: {
-          purchaseOrderId: approveRequest.purchaseOrderId,
+          voucherId: approveRequest.voucherId,
         },
         transaction,
       });
     });
   }
 
-  public async createPurchaseOrder(purchaseRequest: CreatePurchaseRequest) {
+  public async createVoucher(voucher: CreateVoucher) {
     return await this.repository.transaction(async transaction => {
-      if (purchaseRequest.expenses.length < 0) {
+      if (voucher.expenses.length < 0) {
         throw new ApiError(400, VERBIAGE.SHOULD_HAVE_EXPENSES);
       }
 
@@ -131,14 +131,12 @@ export default class PurchaseOrderService extends BaseService {
         throw new ApiError(400, VERBIAGE.MIN_APPROVER_NOT_REACHED);
       }
 
-      const totalCost = sum(
-        purchaseRequest.expenses.map(e => e.unitCost * e.quantity)
-      );
+      const totalCost = sum(voucher.expenses.map(e => e.unitCost * e.quantity));
 
-      const newRecord = new PurchaseOrder({
-        description: purchaseRequest.description,
-        requestedBy: purchaseRequest.requestedBy,
-        requestedDate: purchaseRequest.requestedDate,
+      const newRecord = new Voucher({
+        description: voucher.description,
+        requestedBy: voucher.requestedBy,
+        requestedDate: voucher.requestedDate,
         communityId: CONSTANTS.COMMUNITY_ID,
         totalCost,
         status: 'pending',
@@ -150,16 +148,16 @@ export default class PurchaseOrderService extends BaseService {
         ...approvalCodes.map(a => {
           return {
             ...a,
-            purchaseOrderId: newRecord.id,
+            voucherId: newRecord.id,
           };
         }),
       ];
 
       const expensesToBeCreated: ExpenseAttr[] = [
-        ...purchaseRequest.expenses.map(a => {
+        ...voucher.expenses.map(a => {
           return {
             ...a,
-            purchaseOrderId: newRecord.id,
+            voucherId: newRecord.id,
           };
         }),
       ];
@@ -173,8 +171,8 @@ export default class PurchaseOrderService extends BaseService {
     });
   }
 
-  public async getPurchaseOrder(id: number) {
-    const result = await PurchaseOrder.findByPk(id, {
+  public async getVoucher(id: number) {
+    const result = await Voucher.findByPk(id, {
       include: [
         Expense,
         {model: Profile, as: 'requestedByProfile'},
@@ -193,15 +191,15 @@ export default class PurchaseOrderService extends BaseService {
       }
     }
 
-    const purchaseOrder: PurchaseOrderAttr = {
-      ...mapPurchaseOrder(result as PurchaseOrder),
+    const voucher: VoucherAttr = {
+      ...mapVoucher(result as Voucher),
       approverProfiles,
     };
-    return purchaseOrder;
+    return voucher;
   }
 
-  public async getPurchaseOrdersByStatus(status: RequestStatus) {
-    const result = await PurchaseOrder.findAll({
+  public async getVouchersByStatus(status: RequestStatus) {
+    const result = await Voucher.findAll({
       where: {
         status,
       },
@@ -211,6 +209,6 @@ export default class PurchaseOrderService extends BaseService {
         Disbursement,
       ],
     });
-    return result.map(po => mapPurchaseOrder(po));
+    return result.map(po => mapVoucher(po));
   }
 }

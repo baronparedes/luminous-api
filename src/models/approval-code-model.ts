@@ -10,7 +10,7 @@ import {
 
 import {ApprovalCodeAttr} from '../@types/models';
 import Profile from './profile-model';
-import PurchaseOrder from './purchase-order-model';
+import Voucher from './voucher-model';
 
 @Table
 class ApprovalCode extends Model implements ApprovalCodeAttr {
@@ -30,9 +30,9 @@ class ApprovalCode extends Model implements ApprovalCodeAttr {
   code!: string;
 
   @AllowNull(true)
-  @ForeignKey(() => PurchaseOrder)
+  @ForeignKey(() => Voucher)
   @Column
-  purchaseOrderId?: number;
+  voucherId?: number;
 }
 
 export default ApprovalCode;

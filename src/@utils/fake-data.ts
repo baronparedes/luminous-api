@@ -14,13 +14,13 @@ import {
   PropertyAccount,
   PropertyAssignmentAttr,
   PropertyAttr,
-  PurchaseOrderAttr,
   RecordStatus,
   RegisterProfile,
   RequestStatus,
   SettingAttr,
   TransactionAttr,
   TransactionType,
+  VoucherAttr,
 } from '../@types/models';
 import {generateNumberedSeries} from './helpers';
 
@@ -171,11 +171,11 @@ export const generateExpense = (): ExpenseAttr => {
     quantity,
     unitCost,
     totalCost: quantity * unitCost,
-    purchaseOrderId: faker.datatype.number(),
+    voucherId: faker.datatype.number(),
   };
 };
 
-export const generatePurchaseOrder = (): PurchaseOrderAttr => {
+export const generateVoucher = (): VoucherAttr => {
   return {
     description: faker.random.words(2),
     requestedBy: faker.datatype.number(),

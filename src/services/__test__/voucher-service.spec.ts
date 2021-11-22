@@ -1,21 +1,17 @@
 import faker from 'faker';
 
-import {
-  ApprovePurchaseRequest,
-  CreatePurchaseRequest,
-  ProfileAttr,
-} from '../../@types/models';
+import {ApproveVoucher, CreateVoucher, ProfileAttr} from '../../@types/models';
 import {generateDisbursement, generateExpense} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
 import ApprovalCode from '../../models/approval-code-model';
 import Expense from '../../models/expense-model';
 import Profile from '../../models/profile-model';
-import PurchaseOrderService from '../purchase-order-service';
+import VoucherService from '../voucher-service';
 
-describe('PurchaseOrderService', () => {
-  let target: PurchaseOrderService;
-  let toBeApprovedPurchaseOrderId: number;
-  let toBeRejectedPurchaseOrderId: number;
+describe('VoucherService', () => {
+  let target: VoucherService;
+  let toBeApprovedVoucherId: number;
+  let toBeRejectedVoucherId: number;
 
   const profile = faker.random.arrayElement(SEED.PROFILES);
 
@@ -41,13 +37,13 @@ describe('PurchaseOrderService', () => {
 
   beforeAll(async () => {
     const sequelize = await initInMemoryDb();
-    target = new PurchaseOrderService(sequelize);
+    target = new VoucherService(sequelize);
   });
 
   it('should validate and create purhcase requests', async () => {
     await Profile.bulkCreate([approver1]);
 
-    const request: CreatePurchaseRequest = {
+    const request: CreateVoucher = {
       description: faker.random.words(10),
       expenses: [generateExpense(), generateExpense()],
       requestedBy: Number(profile.id),
@@ -55,82 +51,82 @@ describe('PurchaseOrderService', () => {
     };
 
     await expect(
-      target.createPurchaseOrder({...request, expenses: []})
+      target.createVoucher({...request, expenses: []})
     ).rejects.toThrow();
-    await expect(target.createPurchaseOrder(request)).rejects.toThrow();
+    await expect(target.createVoucher(request)).rejects.toThrow();
 
     await Profile.bulkCreate([approver2]);
-    toBeApprovedPurchaseOrderId = await target.createPurchaseOrder(request);
+    toBeApprovedVoucherId = await target.createVoucher(request);
 
     const actualApprovalCodeCount = await ApprovalCode.count();
     const actualExpenseCount = await Expense.count();
 
-    expect(toBeApprovedPurchaseOrderId).toBeDefined();
+    expect(toBeApprovedVoucherId).toBeDefined();
     expect(actualApprovalCodeCount).toBeGreaterThan(0);
     expect(actualExpenseCount).toBeGreaterThan(0);
   });
 
-  describe('when purchase order is created', () => {
+  describe('when voucher is created', () => {
     beforeAll(async () => {
-      const request: CreatePurchaseRequest = {
+      const request: CreateVoucher = {
         description: faker.random.words(10),
         expenses: [generateExpense(), generateExpense()],
         requestedBy: Number(profile.id),
         requestedDate: faker.datatype.datetime(),
       };
 
-      await target.createPurchaseOrder(request);
-      toBeRejectedPurchaseOrderId = await target.createPurchaseOrder(request);
+      await target.createVoucher(request);
+      toBeRejectedVoucherId = await target.createVoucher(request);
     });
 
-    it('should reject purchase order', async () => {
+    it('should reject voucher', async () => {
       const expectedComments = faker.random.words(10);
-      await target.rejectPurchaseRequest(
-        toBeRejectedPurchaseOrderId,
+      await target.rejectVoucher(
+        toBeRejectedVoucherId,
         expectedComments,
         Number(profile.id)
       );
 
-      const actual = await target.getPurchaseOrder(toBeRejectedPurchaseOrderId);
+      const actual = await target.getVoucher(toBeRejectedVoucherId);
       expect(actual.status).toEqual('rejected');
       expect(actual.comments).toEqual(expectedComments);
       expect(actual.rejectedBy).toEqual(profile.id);
       expect(actual.rejectedByProfile?.id).toEqual(profile.id);
 
       const approvalCodesCount = await ApprovalCode.count({
-        where: {purchaseOrderId: toBeRejectedPurchaseOrderId},
+        where: {voucherId: toBeRejectedVoucherId},
       });
       expect(approvalCodesCount).toBe(0);
     });
 
-    it('should validate approve purchase order', async () => {
+    it('should validate approve voucher', async () => {
       const approvalCodes = await ApprovalCode.findAll({
-        where: {purchaseOrderId: toBeApprovedPurchaseOrderId},
+        where: {voucherId: toBeApprovedVoucherId},
       });
       const codes = approvalCodes.map(c => c.code);
 
-      const request: ApprovePurchaseRequest = {
+      const request: ApproveVoucher = {
         codes,
-        purchaseOrderId: toBeApprovedPurchaseOrderId,
+        voucherId: toBeApprovedVoucherId,
         disbursements: [
           {
             ...generateDisbursement(),
-            purchaseOrderId: toBeApprovedPurchaseOrderId,
+            voucherId: toBeApprovedVoucherId,
             releasedBy: Number(profile.id),
           },
         ],
       };
 
       await expect(
-        target.approvePurchaseRequest({...request, disbursements: []})
+        target.approveVoucher({...request, disbursements: []})
       ).rejects.toThrow();
       await expect(
-        target.approvePurchaseRequest({...request, codes: [codes[0], codes[1]]})
+        target.approveVoucher({...request, codes: [codes[0], codes[1]]})
       ).rejects.toThrow();
 
-      await target.approvePurchaseRequest(request);
+      await target.approveVoucher(request);
 
-      const actual = await target.getPurchaseOrder(toBeApprovedPurchaseOrderId);
+      const actual = await target.getVoucher(toBeApprovedVoucherId);
       expect(actual.status).toEqual('approved');
       expect(actual.approvedBy).toEqual(
         JSON.stringify(approvalCodes.map(a => a.profileId))
@@ -140,7 +136,7 @@ describe('PurchaseOrderService', () => {
       );
 
       const approvalCodesCount = await ApprovalCode.count({
-        where: {purchaseOrderId: toBeApprovedPurchaseOrderId},
+        where: {voucherId: toBeApprovedVoucherId},
       });
       expect(approvalCodesCount).toBe(0);
     });
@@ -150,57 +146,57 @@ describe('PurchaseOrderService', () => {
       ${'approved'}
       ${'rejected'}
       ${'pending'}
-    `('should get all purchase orders by $status', async ({status}) => {
-      const actual = await target.getPurchaseOrdersByStatus(status);
+    `('should get all vouchers by $status', async ({status}) => {
+      const actual = await target.getVouchersByStatus(status);
       const actualCount = actual.filter(a => a.status === status).length;
       expect(actualCount).toEqual(actual.length);
     });
 
-    it('should only reject pending purchase orders', async () => {
+    it('should only reject pending vouchers', async () => {
       await expect(
-        target.rejectPurchaseRequest(
-          toBeRejectedPurchaseOrderId,
+        target.rejectVoucher(
+          toBeRejectedVoucherId,
           faker.random.words(10),
           Number(profile.id)
         )
       ).rejects.toThrow();
 
       await expect(
-        target.rejectPurchaseRequest(
-          toBeApprovedPurchaseOrderId,
+        target.rejectVoucher(
+          toBeApprovedVoucherId,
           faker.random.words(10),
           Number(profile.id)
         )
       ).rejects.toThrow();
     });
 
-    it('should only approve pending purchase orders', async () => {
-      const request: ApprovePurchaseRequest = {
+    it('should only approve pending vouchers', async () => {
+      const request: ApproveVoucher = {
         codes: [
           faker.random.alphaNumeric(6),
           faker.random.alphaNumeric(6),
           faker.random.alphaNumeric(6),
         ],
-        purchaseOrderId: 0,
+        voucherId: 0,
         disbursements: [
           {
             ...generateDisbursement(),
-            purchaseOrderId: toBeApprovedPurchaseOrderId,
+            voucherId: toBeApprovedVoucherId,
           },
         ],
       };
 
       await expect(
-        target.approvePurchaseRequest({
+        target.approveVoucher({
           ...request,
-          purchaseOrderId: toBeApprovedPurchaseOrderId,
+          voucherId: toBeApprovedVoucherId,
         })
       ).rejects.toThrow();
 
       await expect(
-        target.approvePurchaseRequest({
+        target.approveVoucher({
           ...request,
-          purchaseOrderId: toBeApprovedPurchaseOrderId,
+          voucherId: toBeApprovedVoucherId,
         })
       ).rejects.toThrow();
     });
