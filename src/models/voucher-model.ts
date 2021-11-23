@@ -18,6 +18,7 @@ import {
   RequestStatus,
   VoucherAttr,
 } from '../@types/models';
+import Charge from './charge-model';
 import Community from './community-model';
 import Disbursement from './disbursement-model';
 import Expense from './expense-model';
@@ -45,6 +46,10 @@ class Voucher extends Model implements VoucherAttr {
 
   @Column(DataType.DATEONLY)
   requestedDate!: Date;
+
+  @Column
+  @ForeignKey(() => Charge)
+  chargeId!: number;
 
   @AllowNull(true)
   @Column

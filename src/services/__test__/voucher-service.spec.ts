@@ -48,6 +48,7 @@ describe('VoucherService', () => {
       expenses: [generateExpense(), generateExpense()],
       requestedBy: Number(profile.id),
       requestedDate: faker.datatype.datetime(),
+      chargeId: faker.datatype.number(),
     };
 
     await expect(
@@ -73,6 +74,7 @@ describe('VoucherService', () => {
         expenses: [generateExpense(), generateExpense()],
         requestedBy: Number(profile.id),
         requestedDate: faker.datatype.datetime(),
+        chargeId: faker.datatype.number(),
       };
 
       await target.createVoucher(request);

@@ -52,6 +52,7 @@ describe('VoucherController', () => {
       expenses: [generateExpense(), generateExpense()],
       requestedBy: faker.datatype.number(),
       requestedDate: faker.datatype.datetime(),
+      chargeId: faker.datatype.number(),
     };
     const expected = faker.datatype.number();
     const mock = jest

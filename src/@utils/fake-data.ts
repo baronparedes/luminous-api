@@ -188,6 +188,7 @@ export const generateVoucher = (): VoucherAttr => {
     totalCost: faker.datatype.number(),
     comments: faker.random.words(10),
     expenses: [generateExpense(), generateExpense()],
+    chargeId: faker.datatype.number(),
   };
 };
 

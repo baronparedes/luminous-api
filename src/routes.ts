@@ -315,6 +315,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double"},
+            "chargeId": {"dataType":"double","required":true},
             "description": {"dataType":"string","required":true},
             "totalCost": {"dataType":"double","required":true},
             "status": {"ref":"RequestStatus","required":true},
@@ -334,7 +335,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CreateVoucher": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"expenses":{"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"},"required":true},"requestedDate":{"dataType":"datetime","required":true},"requestedBy":{"dataType":"double","required":true},"description":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"expenses":{"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"},"required":true},"chargeId":{"dataType":"double","required":true},"requestedDate":{"dataType":"datetime","required":true},"requestedBy":{"dataType":"double","required":true},"description":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ApproveVoucher": {

@@ -847,6 +847,10 @@
 						"type": "number",
 						"format": "double"
 					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
 					"description": {
 						"type": "string"
 					},
@@ -903,6 +907,7 @@
 					}
 				},
 				"required": [
+					"chargeId",
 					"description",
 					"totalCost",
 					"status",
@@ -920,6 +925,10 @@
 						},
 						"type": "array"
 					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
 					"requestedDate": {
 						"type": "string",
 						"format": "date-time"
@@ -934,6 +943,7 @@
 				},
 				"required": [
 					"expenses",
+					"chargeId",
 					"requestedDate",
 					"requestedBy",
 					"description"

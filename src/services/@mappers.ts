@@ -144,6 +144,7 @@ export function mapExpense(model: Expense): ExpenseAttr {
 export function mapVoucher(model: Voucher): VoucherAttr {
   return {
     id: model.id,
+    chargeId: model.chargeId,
     description: model.description,
     requestedBy: model.requestedBy,
     requestedDate: model.requestedDate,

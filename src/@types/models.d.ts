@@ -44,6 +44,7 @@ export type CreateVoucher = {
   description: string;
   requestedBy: number;
   requestedDate: Date;
+  chargeId: number;
   expenses: ExpenseAttr[];
 };
 
@@ -181,6 +182,7 @@ export interface ExpenseAttr {
 
 export interface VoucherAttr {
   id?: number;
+  chargeId: number;
   description: string;
   totalCost: number;
   status: RequestStatus;

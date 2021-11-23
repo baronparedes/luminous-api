@@ -137,6 +137,7 @@ export default class VoucherService extends BaseService {
         description: voucher.description,
         requestedBy: voucher.requestedBy,
         requestedDate: voucher.requestedDate,
+        chargeId: voucher.chargeId,
         communityId: CONSTANTS.COMMUNITY_ID,
         totalCost,
         status: 'pending',
