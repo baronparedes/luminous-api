@@ -2351,9 +2351,9 @@
 				]
 			}
 		},
-		"/api/voucher/getAllVoucherByStatus/{status}": {
+		"/api/voucher/getAllVouchersByChargeAndStatus/{chargeId}/{status}": {
 			"get": {
-				"operationId": "GetAllVoucherByStatus",
+				"operationId": "GetAllVouchersByChargeAndStatus",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -2375,6 +2375,15 @@
 					}
 				],
 				"parameters": [
+					{
+						"in": "path",
+						"name": "chargeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
 					{
 						"in": "path",
 						"name": "status",

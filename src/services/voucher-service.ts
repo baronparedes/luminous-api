@@ -199,10 +199,14 @@ export default class VoucherService extends BaseService {
     return voucher;
   }
 
-  public async getVouchersByStatus(status: RequestStatus) {
+  public async getVouchersByChargeAndStatus(
+    chargeId: number,
+    status: RequestStatus
+  ) {
     const result = await Voucher.findAll({
       where: {
         status,
+        chargeId,
       },
       include: [
         Expense,

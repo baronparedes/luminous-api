@@ -14,6 +14,7 @@ describe('VoucherService', () => {
   let toBeRejectedVoucherId: number;
 
   const profile = faker.random.arrayElement(SEED.PROFILES);
+  const {id: chargeId} = faker.random.arrayElement(SEED.CHARGES);
 
   const approver1: ProfileAttr = {
     name: 'Approver 1',
@@ -149,7 +150,10 @@ describe('VoucherService', () => {
       ${'rejected'}
       ${'pending'}
     `('should get all vouchers by $status', async ({status}) => {
-      const actual = await target.getVouchersByStatus(status);
+      const actual = await target.getVouchersByChargeAndStatus(
+        chargeId,
+        status
+      );
       const actualCount = actual.filter(a => a.status === status).length;
       expect(actualCount).toEqual(actual.length);
     });

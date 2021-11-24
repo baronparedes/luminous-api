@@ -27,9 +27,15 @@ export class VoucherController extends Controller {
     return await this.voucherService.getVoucher(id);
   }
 
-  @Get('/getAllVoucherByStatus/{status}')
-  public async getAllVoucherByStatus(@Path() status: RequestStatus) {
-    return await this.voucherService.getVouchersByStatus(status);
+  @Get('/getAllVouchersByChargeAndStatus/{chargeId}/{status}')
+  public async getAllVouchersByChargeAndStatus(
+    @Path() chargeId: number,
+    @Path() status: RequestStatus
+  ) {
+    return await this.voucherService.getVouchersByChargeAndStatus(
+      chargeId,
+      status
+    );
   }
 
   @Post('/postVoucher')

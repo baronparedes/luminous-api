@@ -35,14 +35,18 @@ describe('VoucherController', () => {
       'pending',
       'rejected',
     ]);
+    const chargeId = faker.datatype.number();
     const expected = [generateVoucher(), generateVoucher()];
     const mock = jest
-      .spyOn(VoucherService.prototype, 'getVouchersByStatus')
+      .spyOn(VoucherService.prototype, 'getVouchersByChargeAndStatus')
       .mockReturnValueOnce(new Promise(resolve => resolve(expected)));
     const target = new VoucherController();
-    const actual = await target.getAllVoucherByStatus(status);
+    const actual = await target.getAllVouchersByChargeAndStatus(
+      chargeId,
+      status
+    );
     expect(actual).toStrictEqual(expected);
-    expect(mock).toBeCalledWith(status);
+    expect(mock).toBeCalledWith(chargeId, status);
     expect(mock).toBeCalledTimes(1);
   });
 
