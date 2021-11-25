@@ -19,6 +19,7 @@ jest.mock('../../hooks/use-send-mail');
 describe('NotificationService', () => {
   const target = new NotificationService();
   const profile = faker.random.arrayElement(SEED.PROFILES);
+  const charge = faker.random.arrayElement(SEED.CHARGES);
   const expectedVoucherId = faker.datatype.number();
 
   const useSendMailMock = useSendMail as jest.MockedFunction<
@@ -29,6 +30,7 @@ describe('NotificationService', () => {
     ...generateVoucher(),
     communityId: CONSTANTS.COMMUNITY_ID,
     requestedBy: Number(profile.id),
+    chargeId: Number(charge.id),
     status: 'pending',
     expenses: undefined,
     id: expectedVoucherId,

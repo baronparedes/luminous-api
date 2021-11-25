@@ -12,6 +12,7 @@ import {
 } from 'sequelize-typescript';
 
 import {
+  ChargeAttr,
   DisbursementAttr,
   ExpenseAttr,
   ProfileAttr,
@@ -73,6 +74,9 @@ class Voucher extends Model implements VoucherAttr {
 
   @BelongsTo(() => Profile)
   rejectedByProfile?: ProfileAttr;
+
+  @BelongsTo(() => Charge)
+  charge?: ChargeAttr;
 
   @HasMany(() => Expense)
   expenses?: ExpenseAttr[];

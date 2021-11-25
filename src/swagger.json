@@ -904,6 +904,9 @@
 							"$ref": "#/components/schemas/ProfileAttr"
 						},
 						"type": "array"
+					},
+					"charge": {
+						"$ref": "#/components/schemas/ChargeAttr"
 					}
 				},
 				"required": [

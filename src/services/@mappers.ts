@@ -161,6 +161,7 @@ export function mapVoucher(model: Voucher): VoucherAttr {
     requestedByProfile: model.requestedByProfile
       ? mapProfile(model.requestedByProfile as Profile)
       : undefined,
+    charge: model.charge ? mapCharge(model.charge as Charge) : undefined,
   };
 }
 

@@ -41,7 +41,7 @@ describe('VoucherService', () => {
     target = new VoucherService(sequelize);
   });
 
-  it('should validate and create purhcase requests', async () => {
+  it('should validate and create purchase requests', async () => {
     await Profile.bulkCreate([approver1]);
 
     const request: CreateVoucher = {
@@ -49,7 +49,7 @@ describe('VoucherService', () => {
       expenses: [generateExpense(), generateExpense()],
       requestedBy: Number(profile.id),
       requestedDate: faker.datatype.datetime(),
-      chargeId: faker.datatype.number(),
+      chargeId,
     };
 
     await expect(
@@ -75,7 +75,7 @@ describe('VoucherService', () => {
         expenses: [generateExpense(), generateExpense()],
         requestedBy: Number(profile.id),
         requestedDate: faker.datatype.datetime(),
-        chargeId: faker.datatype.number(),
+        chargeId,
       };
 
       await target.createVoucher(request);
@@ -95,6 +95,7 @@ describe('VoucherService', () => {
       expect(actual.comments).toEqual(expectedComments);
       expect(actual.rejectedBy).toEqual(profile.id);
       expect(actual.rejectedByProfile?.id).toEqual(profile.id);
+      expect(actual.charge?.id).toEqual(chargeId);
 
       const approvalCodesCount = await ApprovalCode.count({
         where: {voucherId: toBeRejectedVoucherId},

@@ -12,6 +12,7 @@ import config from '../config';
 import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import ApprovalCode from '../models/approval-code-model';
+import Charge from '../models/charge-model';
 import Disbursement from '../models/disbursement-model';
 import Expense from '../models/expense-model';
 import Profile from '../models/profile-model';
@@ -175,6 +176,7 @@ export default class VoucherService extends BaseService {
   public async getVoucher(id: number) {
     const result = await Voucher.findByPk(id, {
       include: [
+        Charge,
         Expense,
         {model: Profile, as: 'requestedByProfile'},
         {model: Profile, as: 'rejectedByProfile'},

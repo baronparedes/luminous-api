@@ -329,6 +329,7 @@ const models: TsoaRoute.Models = {
             "requestedByProfile": {"ref":"ProfileAttr"},
             "rejectedByProfile": {"ref":"ProfileAttr"},
             "approverProfiles": {"dataType":"array","array":{"dataType":"refObject","ref":"ProfileAttr"}},
+            "charge": {"ref":"ChargeAttr"},
         },
         "additionalProperties": false,
     },
