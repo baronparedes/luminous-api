@@ -8,6 +8,7 @@ import {
   ProfileAttr,
   PropertyAssignmentAttr,
   PropertyAttr,
+  PurchaseRequestAttr,
   SettingAttr,
   TransactionAttr,
   VoucherAttr,
@@ -20,6 +21,7 @@ import PaymentDetail from '../models/payment-detail-model';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
+import PurchaseRequest from '../models/purchase-request-model';
 import Setting from '../models/setting-model';
 import Transaction from '../models/transaction-model';
 import Voucher from '../models/voucher-model';
@@ -162,6 +164,30 @@ export function mapVoucher(model: Voucher): VoucherAttr {
       ? mapProfile(model.requestedByProfile as Profile)
       : undefined,
     charge: model.charge ? mapCharge(model.charge as Charge) : undefined,
+  };
+}
+
+export function mapPurchaseRequest(
+  model: PurchaseRequest
+): PurchaseRequestAttr {
+  return {
+    id: model.id,
+    chargeId: model.chargeId,
+    description: model.description,
+    requestedBy: model.requestedBy,
+    requestedDate: model.requestedDate,
+    status: model.status,
+    totalCost: model.totalCost,
+    approvedBy: model.approvedBy,
+    rejectedBy: model.rejectedBy,
+    expenses: model.expenses,
+    comments: model.comments,
+    rejectedByProfile: model.rejectedByProfile
+      ? mapProfile(model.rejectedByProfile as Profile)
+      : undefined,
+    requestedByProfile: model.requestedByProfile
+      ? mapProfile(model.requestedByProfile as Profile)
+      : undefined,
   };
 }
 

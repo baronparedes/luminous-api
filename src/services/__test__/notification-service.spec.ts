@@ -1,16 +1,20 @@
 import faker from 'faker';
 
-import {ApprovalCodeAttr, ExpenseAttr, VoucherAttr} from '../../@types/models';
+import {ApprovalCodeAttr, ExpenseAttr} from '../../@types/models';
 import {
+  expenseApprovalTemplate,
   resetPasswordTemplate,
-  voucherApprovalTemplate,
 } from '../../@utils/email-templates';
-import {generateExpense, generateVoucher} from '../../@utils/fake-data';
+import {
+  generateExpense,
+  generatePurchaseRequest,
+  generateVoucher,
+} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
-import {CONSTANTS} from '../../constants';
 import useSendMail from '../../hooks/use-send-mail';
 import ApprovalCode from '../../models/approval-code-model';
 import Expense from '../../models/expense-model';
+import PurchaseRequest from '../../models/purchase-request-model';
 import Voucher from '../../models/voucher-model';
 import NotificationService from '../notification-service';
 
@@ -21,6 +25,7 @@ describe('NotificationService', () => {
   const profile = faker.random.arrayElement(SEED.PROFILES);
   const charge = faker.random.arrayElement(SEED.CHARGES);
   const expectedVoucherId = faker.datatype.number();
+  const expectedPurchaseRequestId = faker.datatype.number();
 
   const useSendMailMock = useSendMail as jest.MockedFunction<
     typeof useSendMail
@@ -28,16 +33,37 @@ describe('NotificationService', () => {
 
   const seedVoucher = {
     ...generateVoucher(),
-    communityId: CONSTANTS.COMMUNITY_ID,
     requestedBy: Number(profile.id),
     chargeId: Number(charge.id),
     status: 'pending',
     expenses: undefined,
     id: expectedVoucherId,
   };
+  const seedPurchaseRequest = {
+    ...generatePurchaseRequest(),
+    requestedBy: Number(profile.id),
+    chargeId: Number(charge.id),
+    status: 'pending',
+    expenses: undefined,
+    id: expectedPurchaseRequestId,
+  };
   const seedExpenses: ExpenseAttr[] = [
-    {...generateExpense(), voucherId: expectedVoucherId},
-    {...generateExpense(), voucherId: expectedVoucherId},
+    {
+      ...generateExpense(),
+      voucherId: expectedVoucherId,
+    },
+    {
+      ...generateExpense(),
+      voucherId: expectedVoucherId,
+    },
+    {
+      ...generateExpense(),
+      purchaseRequestId: expectedPurchaseRequestId,
+    },
+    {
+      ...generateExpense(),
+      purchaseRequestId: expectedPurchaseRequestId,
+    },
   ];
   const seedApprovalCodes: ApprovalCodeAttr[] = [
     {
@@ -52,10 +78,23 @@ describe('NotificationService', () => {
       profileId: Number(profile.id),
       voucherId: expectedVoucherId,
     },
+    {
+      code: faker.random.alphaNumeric(6),
+      email: faker.internet.email(),
+      profileId: Number(profile.id),
+      purchaseRequestId: expectedPurchaseRequestId,
+    },
+    {
+      code: faker.random.alphaNumeric(6),
+      email: faker.internet.email(),
+      profileId: Number(profile.id),
+      purchaseRequestId: expectedPurchaseRequestId,
+    },
   ];
 
   beforeAll(async () => {
     await initInMemoryDb();
+    await PurchaseRequest.bulkCreate([seedPurchaseRequest]);
     await Voucher.bulkCreate([seedVoucher]);
     await Expense.bulkCreate([...seedExpenses]);
     await ApprovalCode.bulkCreate([...seedApprovalCodes]);
@@ -82,7 +121,7 @@ describe('NotificationService', () => {
     );
   });
 
-  it('should notify approvers', async () => {
+  it('should notify voucher approvers', async () => {
     const mockSend = jest.fn().mockImplementation(() => Promise.resolve());
     useSendMailMock.mockReturnValue({
       send: mockSend,
@@ -92,15 +131,55 @@ describe('NotificationService', () => {
     expect(mockSend).toHaveBeenCalledTimes(2);
 
     let index = 1;
-    for (const ac of seedApprovalCodes) {
+    for (const ac of seedApprovalCodes.filter(
+      ac => ac.voucherId !== undefined
+    )) {
       const expectedSubject = `[Luminous] Approval for V-${expectedVoucherId}`;
-      const expectedContent = voucherApprovalTemplate(
+      const expectedContent = expenseApprovalTemplate(
         {
-          ...seedVoucher,
           requestedByProfile: profile,
-          expenses: seedExpenses,
-        } as VoucherAttr,
-        ac.code
+          expenses: seedExpenses.filter(e => e.voucherId),
+          code: ac.code,
+          description: seedVoucher.description,
+          totalCost: seedVoucher.totalCost,
+          id: seedVoucher.id,
+        },
+        'V'
+      );
+      expect(mockSend).toHaveBeenNthCalledWith(
+        index,
+        ac.email,
+        expectedSubject,
+        expectedContent
+      );
+      index++;
+    }
+  });
+
+  it('should notify purchase request approvers', async () => {
+    const mockSend = jest.fn().mockImplementation(() => Promise.resolve());
+    useSendMailMock.mockReturnValue({
+      send: mockSend,
+    });
+
+    await target.notifyPurchaseRequestApprovers(expectedPurchaseRequestId);
+    expect(mockSend).toHaveBeenCalledTimes(2);
+
+    let index = 1;
+    for (const ac of seedApprovalCodes.filter(
+      ac => ac.purchaseRequestId !== undefined
+    )) {
+      const expectedSubject = `[Luminous] Approval for PR-${expectedPurchaseRequestId}`;
+      const expectedContent = expenseApprovalTemplate(
+        {
+          requestedByProfile: profile,
+          expenses: seedExpenses.filter(e => e.purchaseRequestId),
+          code: ac.code,
+          description: seedPurchaseRequest.description,
+          totalCost: seedPurchaseRequest.totalCost,
+          id: seedPurchaseRequest.id,
+        },
+        'PR'
       );
       expect(mockSend).toHaveBeenNthCalledWith(
         index,

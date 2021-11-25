@@ -5,43 +5,42 @@ import {
   CreateVoucherOrOrder,
   RequestStatus,
 } from '../../@types/models';
-import {
-  generateDisbursement,
-  generateExpense,
-  generateVoucher,
-} from '../../@utils/fake-data';
+import {generateExpense, generatePurchaseRequest} from '../../@utils/fake-data';
 import {generateOTP} from '../../@utils/helpers';
 import NotificationService from '../../services/notification-service';
-import VoucherService from '../../services/voucher-service';
-import {VoucherController} from '../voucher-controller';
+import PurchaseRequestService from '../../services/purchase-request-service';
+import {PurchaseRequestController} from '../purchase-request-controller';
 
-describe('VoucherController', () => {
-  it('should get voucher', async () => {
+describe('PurchaseRequestController', () => {
+  it('should get purchase request', async () => {
     const id = faker.datatype.number();
-    const expected = generateVoucher();
+    const expected = generatePurchaseRequest();
     const mock = jest
-      .spyOn(VoucherService.prototype, 'getVoucher')
+      .spyOn(PurchaseRequestService.prototype, 'getPurchaseRequest')
       .mockReturnValueOnce(new Promise(resolve => resolve(expected)));
-    const target = new VoucherController();
-    const actual = await target.getVoucher(id);
+    const target = new PurchaseRequestController();
+    const actual = await target.getPurchaseRequest(id);
     expect(actual).toStrictEqual(expected);
     expect(mock).toBeCalledWith(id);
     expect(mock).toBeCalledTimes(1);
   });
 
-  it('should get all vouchers by status', async () => {
+  it('should get all purchase requests by status', async () => {
     const status = faker.random.arrayElement<RequestStatus>([
       'approved',
       'pending',
       'rejected',
     ]);
     const chargeId = faker.datatype.number();
-    const expected = [generateVoucher(), generateVoucher()];
+    const expected = [generatePurchaseRequest(), generatePurchaseRequest()];
     const mock = jest
-      .spyOn(VoucherService.prototype, 'getVouchersByChargeAndStatus')
+      .spyOn(
+        PurchaseRequestService.prototype,
+        'getPurchaseRequestsByChargeAndStatus'
+      )
       .mockReturnValueOnce(new Promise(resolve => resolve(expected)));
-    const target = new VoucherController();
-    const actual = await target.getAllVouchersByChargeAndStatus(
+    const target = new PurchaseRequestController();
+    const actual = await target.getAllPurchaseRequestsByChargeAndStatus(
       chargeId,
       status
     );
@@ -50,7 +49,7 @@ describe('VoucherController', () => {
     expect(mock).toBeCalledTimes(1);
   });
 
-  it('should post voucher', async () => {
+  it('should post purchase request', async () => {
     const request: CreateVoucherOrOrder = {
       description: faker.random.words(10),
       expenses: [generateExpense(), generateExpense()],
@@ -60,13 +59,13 @@ describe('VoucherController', () => {
     };
     const expected = faker.datatype.number();
     const mock = jest
-      .spyOn(VoucherService.prototype, 'createVoucher')
+      .spyOn(PurchaseRequestService.prototype, 'createPurchaseRequest')
       .mockReturnValueOnce(new Promise(resolve => resolve(expected)));
     const mockNotifyApprovers = jest
-      .spyOn(NotificationService.prototype, 'notifyVoucherApprovers')
+      .spyOn(NotificationService.prototype, 'notifyPurchaseRequestApprovers')
       .mockReturnValueOnce(new Promise(resolve => resolve()));
-    const target = new VoucherController();
-    const actual = await target.postVoucher(request);
+    const target = new PurchaseRequestController();
+    const actual = await target.postPurchaseRequest(request);
     expect(actual).toStrictEqual(expected);
     expect(mock).toBeCalledWith(request);
     expect(mock).toBeCalledTimes(1);
@@ -74,41 +73,40 @@ describe('VoucherController', () => {
     expect(mockNotifyApprovers).toBeCalledWith(expected);
   });
 
-  it('should approve voucher', async () => {
+  it('should approve purchase request', async () => {
     const request: ApproveVoucherOrOrder = {
-      voucherId: faker.datatype.number(),
+      purchaseRequestId: faker.datatype.number(),
       codes: [generateOTP(), generateOTP()],
-      disbursements: [generateDisbursement()],
     };
     const mock = jest
-      .spyOn(VoucherService.prototype, 'approveVoucher')
+      .spyOn(PurchaseRequestService.prototype, 'approvePurchaseRequest')
       .mockReturnValueOnce(new Promise(resolve => resolve()));
-    const target = new VoucherController();
-    await target.approveVoucher(request);
+    const target = new PurchaseRequestController();
+    await target.approvePurchaseRequest(request);
     expect(mock).toBeCalledWith(request);
     expect(mock).toBeCalledTimes(1);
   });
 
-  it('should reject voucher', async () => {
+  it('should reject purchase request', async () => {
     const id = faker.datatype.number();
     const rejectedBy = faker.datatype.number();
     const comments = faker.random.words(10);
     const mock = jest
-      .spyOn(VoucherService.prototype, 'rejectVoucher')
+      .spyOn(PurchaseRequestService.prototype, 'rejectPurchaseRequest')
       .mockReturnValueOnce(new Promise(resolve => resolve()));
-    const target = new VoucherController();
-    await target.rejectVoucher({id, comments, rejectedBy});
+    const target = new PurchaseRequestController();
+    await target.rejectPurchaseRequest({id, comments, rejectedBy});
     expect(mock).toBeCalledWith(id, comments, rejectedBy);
     expect(mock).toBeCalledTimes(1);
   });
 
-  it('should notify voucher approvers', async () => {
+  it('should notify purchase request approvers', async () => {
     const id = faker.datatype.number();
     const mock = jest
-      .spyOn(NotificationService.prototype, 'notifyVoucherApprovers')
+      .spyOn(NotificationService.prototype, 'notifyPurchaseRequestApprovers')
       .mockReturnValueOnce(new Promise(resolve => resolve()));
-    const target = new VoucherController();
-    await target.notifyVoucherApprovers(id);
+    const target = new PurchaseRequestController();
+    await target.notifyPurchaseRequestApprovers(id);
     expect(mock).toBeCalledWith(id);
     expect(mock).toBeCalledTimes(1);
   });

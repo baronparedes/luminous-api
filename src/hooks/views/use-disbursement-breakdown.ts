@@ -9,19 +9,13 @@ export default async function useDisbursementBreakdown(
 ) {
   const sql = `
     SELECT
-        'COMMUNITY EXPENSE' AS code,
-        SUM(amount) AS amount
-    FROM disbursements d
-    JOIN vouchers v ON d.voucher_id = v.id
-    WHERE v.status = 'approved' AND v.community_id = :communityId
-    UNION ALL
-    SELECT
-        c.code,
-        SUM(amount) AS amount
+      c.pass_on as "passOn",
+      c.code,
+      SUM(amount) AS amount
     FROM disbursements d
     JOIN charges c ON d.charge_id = c.id
-    WHERE c.community_id = :communityId
-    GROUP BY d.charge_id, c.code`;
+    WHERE c.community_id = 1
+    GROUP BY d.charge_id, c.code, c.pass_on`;
 
   const {query} = useSql(db);
   const result = await query<DisbursementBreakdownView>(sql, {communityId});

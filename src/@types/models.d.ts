@@ -40,7 +40,7 @@ export type AuthProfile = {
   remarks?: string;
 };
 
-export type CreateVoucher = {
+export type CreateVoucherOrOrder = {
   description: string;
   requestedBy: number;
   requestedDate: Date;
@@ -48,10 +48,11 @@ export type CreateVoucher = {
   expenses: ExpenseAttr[];
 };
 
-export type ApproveVoucher = {
-  voucherId: number;
+export type ApproveVoucherOrOrder = {
+  voucherId?: number;
+  purchaseRequestId?: number;
   codes: string[];
-  disbursements: DisbursementAttr[];
+  disbursements?: DisbursementAttr[];
 };
 
 export type RegisterProfile = {
@@ -171,6 +172,7 @@ export interface PaymentDetailAttr {
 
 export interface ExpenseAttr {
   voucherId?: number;
+  purchaseRequestId?: number;
   categoryId: number;
   category: string;
   description: string;
@@ -218,6 +220,7 @@ export type ApprovalCodeAttr = {
   email: string;
   code: string;
   voucherId?: number | null;
+  purchaseRequestId?: number | null;
 };
 
 export type CategoryAttr = {
@@ -225,4 +228,21 @@ export type CategoryAttr = {
   communityId: number;
   description: string;
   subCategories: string;
+};
+
+export type PurchaseRequestAttr = {
+  id?: number;
+  chargeId: number;
+  description: string;
+  totalCost: number;
+  status: RequestStatus;
+  requestedBy: number;
+  requestedDate: Date;
+  approvedBy?: string | null;
+  rejectedBy?: number;
+  comments?: string | null;
+  expenses?: ExpenseAttr[];
+  requestedByProfile?: ProfileAttr;
+  rejectedByProfile?: ProfileAttr;
+  approverProfiles?: ProfileAttr[];
 };

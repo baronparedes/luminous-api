@@ -12,20 +12,17 @@ import {
 } from 'sequelize-typescript';
 
 import {
-  ChargeAttr,
-  DisbursementAttr,
   ExpenseAttr,
   ProfileAttr,
+  PurchaseRequestAttr,
   RequestStatus,
-  VoucherAttr,
 } from '../@types/models';
 import Charge from './charge-model';
-import Disbursement from './disbursement-model';
 import Expense from './expense-model';
 import Profile from './profile-model';
 
 @Table
-class Voucher extends Model implements VoucherAttr {
+class PurchaseRequest extends Model implements PurchaseRequestAttr {
   @AllowNull(false)
   @NotEmpty
   @Column
@@ -69,14 +66,8 @@ class Voucher extends Model implements VoucherAttr {
   @BelongsTo(() => Profile)
   rejectedByProfile?: ProfileAttr;
 
-  @BelongsTo(() => Charge)
-  charge?: ChargeAttr;
-
   @HasMany(() => Expense)
   expenses?: ExpenseAttr[];
-
-  @HasMany(() => Disbursement)
-  disbursements?: DisbursementAttr[];
 }
 
-export default Voucher;
+export default PurchaseRequest;

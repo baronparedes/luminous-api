@@ -8,6 +8,7 @@ export type TransactionBreakdownView = {
 export type DisbursementBreakdownView = {
   code: string;
   amount: number;
+  passOn?: boolean;
 };
 
 export type ChargeCollectedView = {

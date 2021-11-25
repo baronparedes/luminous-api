@@ -11,13 +11,20 @@ import {
 import {ExpenseAttr} from '../@types/models';
 import Category from './category-model';
 import Profile from './profile-model';
+import PurchaseRequest from './purchase-request-model';
 import Voucher from './voucher-model';
 
 @Table
 class Expense extends Model implements ExpenseAttr {
+  @AllowNull(true)
   @ForeignKey(() => Voucher)
   @Column
-  voucherId!: number;
+  voucherId?: number;
+
+  @AllowNull(true)
+  @ForeignKey(() => PurchaseRequest)
+  @Column
+  purchaseRequestId?: number;
 
   @AllowNull(true)
   @ForeignKey(() => Profile)

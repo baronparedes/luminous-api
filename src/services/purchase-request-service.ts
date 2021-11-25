@@ -5,24 +5,22 @@ import {
   CreateVoucherOrOrder,
   ExpenseAttr,
   ProfileAttr,
+  PurchaseRequestAttr,
   RequestStatus,
-  VoucherAttr,
 } from '../@types/models';
 import {sum} from '../@utils/helpers';
 import config from '../config';
 import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import ApprovalCode from '../models/approval-code-model';
-import Charge from '../models/charge-model';
-import Disbursement from '../models/disbursement-model';
 import Expense from '../models/expense-model';
 import Profile from '../models/profile-model';
-import Voucher from '../models/voucher-model';
+import PurchaseRequest from '../models/purchase-request-model';
 import BaseService from './@base-service';
-import {mapProfile, mapVoucher} from './@mappers';
+import {mapProfile, mapPurchaseRequest} from './@mappers';
 import ApprovalCodeService from './approval-code-service';
 
-export default class VoucherService extends BaseService {
+export default class PurchaseRequestService extends BaseService {
   private approvalCodeService: ApprovalCodeService;
 
   constructor(repository?: Sequelize) {
@@ -30,15 +28,15 @@ export default class VoucherService extends BaseService {
     this.approvalCodeService = new ApprovalCodeService();
   }
 
-  public async rejectVoucher(
-    voucherId: number,
+  public async rejectPurchaseRequest(
+    purchaseRequestId: number,
     comments: string,
     rejectedBy: number
   ) {
     return await this.repository.transaction(async transaction => {
-      const request = await Voucher.findOne({
+      const request = await PurchaseRequest.findOne({
         where: {
-          id: voucherId,
+          id: purchaseRequestId,
           status: 'pending',
         },
       });
@@ -53,25 +51,18 @@ export default class VoucherService extends BaseService {
       await request.save({transaction});
       await ApprovalCode.destroy({
         where: {
-          voucherId,
+          purchaseRequestId,
         },
         transaction,
       });
     });
   }
 
-  public async approveVoucher(approveRequest: ApproveVoucherOrOrder) {
+  public async approvePurchaseRequest(approveRequest: ApproveVoucherOrOrder) {
     return await this.repository.transaction(async transaction => {
-      if (
-        !approveRequest.disbursements ||
-        approveRequest.disbursements.length <= 0
-      ) {
-        throw new ApiError(400, VERBIAGE.BAD_REQUEST);
-      }
-
-      const request = await Voucher.findOne({
+      const request = await PurchaseRequest.findOne({
         where: {
-          id: approveRequest.voucherId,
+          id: approveRequest.purchaseRequestId,
           status: 'pending',
         },
       });
@@ -82,7 +73,7 @@ export default class VoucherService extends BaseService {
 
       const matchedCodes = await ApprovalCode.findAll({
         where: {
-          voucherId: approveRequest.voucherId,
+          purchaseRequestId: approveRequest.purchaseRequestId,
           code: [...approveRequest.codes],
         },
       });
@@ -95,30 +86,18 @@ export default class VoucherService extends BaseService {
       request.approvedBy = JSON.stringify(matchedCodes.map(c => c.profileId));
 
       await request.save({transaction});
-      await Disbursement.bulkCreate(
-        [
-          ...approveRequest.disbursements.map(d => {
-            return {
-              ...d,
-              voucherId: Number(request.id),
-              chargeId: Number(request.chargeId),
-            };
-          }),
-        ],
-        {transaction}
-      );
       await ApprovalCode.destroy({
         where: {
-          voucherId: approveRequest.voucherId,
+          purchaseRequestId: approveRequest.purchaseRequestId,
         },
         transaction,
       });
     });
   }
 
-  public async createVoucher(voucher: CreateVoucherOrOrder) {
+  public async createPurchaseRequest(purchaseRequest: CreateVoucherOrOrder) {
     return await this.repository.transaction(async transaction => {
-      if (voucher.expenses.length < 0) {
+      if (purchaseRequest.expenses.length < 0) {
         throw new ApiError(400, VERBIAGE.SHOULD_HAVE_EXPENSES);
       }
 
@@ -128,13 +107,15 @@ export default class VoucherService extends BaseService {
         throw new ApiError(400, VERBIAGE.MIN_APPROVER_NOT_REACHED);
       }
 
-      const totalCost = sum(voucher.expenses.map(e => e.unitCost * e.quantity));
+      const totalCost = sum(
+        purchaseRequest.expenses.map(e => e.unitCost * e.quantity)
+      );
 
-      const newRecord = new Voucher({
-        description: voucher.description,
-        requestedBy: voucher.requestedBy,
-        requestedDate: voucher.requestedDate,
-        chargeId: voucher.chargeId,
+      const newRecord = new PurchaseRequest({
+        description: purchaseRequest.description,
+        requestedBy: purchaseRequest.requestedBy,
+        requestedDate: purchaseRequest.requestedDate,
+        chargeId: purchaseRequest.chargeId,
         communityId: CONSTANTS.COMMUNITY_ID,
         totalCost,
         status: 'pending',
@@ -146,16 +127,16 @@ export default class VoucherService extends BaseService {
         ...approvalCodes.map(a => {
           return {
             ...a,
-            voucherId: newRecord.id,
+            purchaseRequestId: newRecord.id,
           };
         }),
       ];
 
       const expensesToBeCreated: ExpenseAttr[] = [
-        ...voucher.expenses.map(a => {
+        ...purchaseRequest.expenses.map(a => {
           return {
             ...a,
-            voucherId: newRecord.id,
+            purchaseRequestId: newRecord.id,
           };
         }),
       ];
@@ -164,19 +145,16 @@ export default class VoucherService extends BaseService {
         transaction,
       });
       await Expense.bulkCreate([...expensesToBeCreated], {transaction});
-
       return Number(newRecord.id);
     });
   }
 
-  public async getVoucher(id: number) {
-    const result = await Voucher.findByPk(id, {
+  public async getPurchaseRequest(id: number) {
+    const result = await PurchaseRequest.findByPk(id, {
       include: [
-        Charge,
         Expense,
         {model: Profile, as: 'requestedByProfile'},
         {model: Profile, as: 'rejectedByProfile'},
-        Disbursement,
       ],
     });
     if (!result) throw new ApiError(404, VERBIAGE.NOT_FOUND);
@@ -190,28 +168,24 @@ export default class VoucherService extends BaseService {
       }
     }
 
-    const voucher: VoucherAttr = {
-      ...mapVoucher(result as Voucher),
+    const purchaseRequest: PurchaseRequestAttr = {
+      ...mapPurchaseRequest(result as PurchaseRequest),
       approverProfiles,
     };
-    return voucher;
+    return purchaseRequest;
   }
 
-  public async getVouchersByChargeAndStatus(
+  public async getPurchaseRequestsByChargeAndStatus(
     chargeId: number,
     status: RequestStatus
   ) {
-    const result = await Voucher.findAll({
+    const result = await PurchaseRequest.findAll({
       where: {
         status,
         chargeId,
       },
-      include: [
-        Expense,
-        {model: Profile, as: 'requestedByProfile'},
-        Disbursement,
-      ],
+      include: [Expense, {model: Profile, as: 'requestedByProfile'}],
     });
-    return result.map(po => mapVoucher(po));
+    return result.map(data => mapPurchaseRequest(data));
   }
 }
