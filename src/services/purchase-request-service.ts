@@ -187,9 +187,9 @@ export default class PurchaseRequestService extends BaseService {
       ];
 
       const expensesToBeCreated: ExpenseAttr[] = [
-        ...purchaseRequest.expenses.map(a => {
+        ...purchaseRequest.expenses.map(e => {
           return {
-            ...a,
+            ...e,
             purchaseRequestId: id,
           };
         }),
