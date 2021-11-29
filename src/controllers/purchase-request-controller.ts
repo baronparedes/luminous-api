@@ -49,7 +49,7 @@ export class PurchaseRequestController extends Controller {
     return id;
   }
 
-  @Patch('/postPurchaseRequest/{id')
+  @Patch('/updatePurchaseRequest/{id}')
   public async updatePurchaseRequest(
     @Path() id: number,
     @Body() body: CreateVoucherOrOrder
