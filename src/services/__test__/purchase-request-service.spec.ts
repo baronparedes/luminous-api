@@ -7,6 +7,7 @@ import {
 } from '../../@types/models';
 import {generateExpense} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
+import {VERBIAGE} from '../../constants';
 import ApprovalCode from '../../models/approval-code-model';
 import Expense from '../../models/expense-model';
 import Profile from '../../models/profile-model';
@@ -14,8 +15,6 @@ import PurchaseRequestService from '../purchase-request-service';
 
 describe('PurchaseRequestService', () => {
   let target: PurchaseRequestService;
-  let toBeApprovedPurchaseRequestId: number;
-  let toBeRejectedPurchaseRequestId: number;
 
   const profile = faker.random.arrayElement(SEED.PROFILES);
   const {id: chargeId} = faker.random.arrayElement(SEED.CHARGES);
@@ -40,12 +39,22 @@ describe('PurchaseRequestService', () => {
     status: 'active',
   };
 
+  const approver3: ProfileAttr = {
+    name: 'Approver 3',
+    username: 'approver3',
+    password: '$2b$12$Iguc6yD88XvQdkb5AlOXmOKLbGRWeQXcg3SPNIlp.50XhnVDLUAS6',
+    email: 'admin@luminous.com',
+    mobileNumber: '09999999999',
+    type: 'stakeholder',
+    status: 'active',
+  };
+
   beforeAll(async () => {
     const sequelize = await initInMemoryDb();
     target = new PurchaseRequestService(sequelize);
   });
 
-  it('should validate and create purchase requests', async () => {
+  it('should validate, create, and update purchase requests', async () => {
     await Profile.bulkCreate([approver1]);
 
     const request: CreateVoucherOrOrder = {
@@ -58,21 +67,46 @@ describe('PurchaseRequestService', () => {
 
     await expect(
       target.createPurchaseRequest({...request, expenses: []})
-    ).rejects.toThrow();
-    await expect(target.createPurchaseRequest(request)).rejects.toThrow();
+    ).rejects.toThrow(VERBIAGE.SHOULD_HAVE_EXPENSES);
+
+    await expect(target.createPurchaseRequest({...request})).rejects.toThrow(
+      VERBIAGE.MIN_APPROVER_NOT_REACHED
+    );
 
     await Profile.bulkCreate([approver2]);
-    toBeApprovedPurchaseRequestId = await target.createPurchaseRequest(request);
+    const actualId = await target.createPurchaseRequest(request);
 
     const actualApprovalCodeCount = await ApprovalCode.count();
     const actualExpenseCount = await Expense.count();
 
-    expect(toBeApprovedPurchaseRequestId).toBeDefined();
-    expect(actualApprovalCodeCount).toBeGreaterThan(0);
-    expect(actualExpenseCount).toBeGreaterThan(0);
+    expect(actualId).toBeDefined();
+    expect(actualApprovalCodeCount).toEqual(3);
+    expect(actualExpenseCount).toEqual(2);
+
+    await expect(
+      target.updatePurchaseRequest(actualId, {
+        ...request,
+        expenses: [],
+      })
+    ).rejects.toThrow(VERBIAGE.SHOULD_HAVE_EXPENSES);
+
+    await Profile.bulkCreate([approver3]);
+    await target.updatePurchaseRequest(actualId, {
+      ...request,
+      expenses: [generateExpense(), generateExpense(), generateExpense()],
+    });
+
+    const actualApprovalCodeCountAfterUpdate = await ApprovalCode.count();
+    const actualExpenseCountAfterUpdate = await Expense.count();
+
+    expect(actualApprovalCodeCountAfterUpdate).toEqual(4);
+    expect(actualExpenseCountAfterUpdate).toEqual(3);
   });
 
   describe('when purchase request is created', () => {
+    let toBeApprovedPurchaseRequestId: number;
+    let toBeRejectedPurchaseRequestId: number;
+
     beforeAll(async () => {
       const request: CreateVoucherOrOrder = {
         description: faker.random.words(10),
@@ -82,7 +116,9 @@ describe('PurchaseRequestService', () => {
         chargeId,
       };
 
-      await target.createPurchaseRequest(request);
+      toBeApprovedPurchaseRequestId = await target.createPurchaseRequest(
+        request
+      );
       toBeRejectedPurchaseRequestId = await target.createPurchaseRequest(
         request
       );
@@ -149,7 +185,7 @@ describe('PurchaseRequestService', () => {
       ${'approved'}
       ${'rejected'}
       ${'pending'}
-    `('should get all vouchers by $status', async ({status}) => {
+    `('should get all purchase requests by $status', async ({status}) => {
       const actual = await target.getPurchaseRequestsByChargeAndStatus(
         chargeId,
         status
@@ -158,7 +194,7 @@ describe('PurchaseRequestService', () => {
       expect(actualCount).toEqual(actual.length);
     });
 
-    it('should only reject pending vouchers', async () => {
+    it('should only reject pending purchase requests', async () => {
       await expect(
         target.rejectPurchaseRequest(
           toBeRejectedPurchaseRequestId,
@@ -176,7 +212,7 @@ describe('PurchaseRequestService', () => {
       ).rejects.toThrow();
     });
 
-    it('should only approve pending vouchers', async () => {
+    it('should only approve pending purchase requests', async () => {
       const request: ApproveVoucherOrOrder = {
         codes: [
           faker.random.alphaNumeric(6),
@@ -198,6 +234,24 @@ describe('PurchaseRequestService', () => {
           ...request,
           purchaseRequestId: toBeApprovedPurchaseRequestId,
         })
+      ).rejects.toThrow();
+    });
+
+    it('should only update pending purchase requests', async () => {
+      const request: CreateVoucherOrOrder = {
+        description: faker.random.words(10),
+        expenses: [generateExpense(), generateExpense()],
+        requestedBy: Number(profile.id),
+        requestedDate: faker.datatype.datetime(),
+        chargeId,
+      };
+
+      await expect(
+        target.updatePurchaseRequest(toBeRejectedPurchaseRequestId, request)
+      ).rejects.toThrow();
+
+      await expect(
+        target.updatePurchaseRequest(toBeApprovedPurchaseRequestId, request)
       ).rejects.toThrow();
     });
   });

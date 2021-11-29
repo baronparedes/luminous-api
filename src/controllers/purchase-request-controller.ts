@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Path, Post, Route, Security} from 'tsoa';
+import {Body, Controller, Get, Patch, Path, Post, Route, Security} from 'tsoa';
 
 import {
   ApproveVoucherOrOrder,
@@ -47,6 +47,15 @@ export class PurchaseRequestController extends Controller {
     const id = await this.purchaseRequestService.createPurchaseRequest(body);
     await this.notificationService.notifyPurchaseRequestApprovers(id);
     return id;
+  }
+
+  @Patch('/postPurchaseRequest/{id')
+  public async updatePurchaseRequest(
+    @Path() id: number,
+    @Body() body: CreateVoucherOrOrder
+  ) {
+    await this.purchaseRequestService.updatePurchaseRequest(id, body);
+    await this.notificationService.notifyPurchaseRequestApprovers(id);
   }
 
   @Post('/approvePurchaseRequest')

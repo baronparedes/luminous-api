@@ -73,6 +73,29 @@ describe('PurchaseRequestController', () => {
     expect(mockNotifyApprovers).toBeCalledWith(expected);
   });
 
+  it('should patch purchase request', async () => {
+    const request: CreateVoucherOrOrder = {
+      description: faker.random.words(10),
+      expenses: [generateExpense(), generateExpense()],
+      requestedBy: faker.datatype.number(),
+      requestedDate: faker.datatype.datetime(),
+      chargeId: faker.datatype.number(),
+    };
+    const expected = faker.datatype.number();
+    const mock = jest
+      .spyOn(PurchaseRequestService.prototype, 'updatePurchaseRequest')
+      .mockReturnValueOnce(new Promise(resolve => resolve(expected)));
+    const mockNotifyApprovers = jest
+      .spyOn(NotificationService.prototype, 'notifyPurchaseRequestApprovers')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new PurchaseRequestController();
+    await target.updatePurchaseRequest(expected, request);
+    expect(mock).toBeCalledWith(expected, request);
+    expect(mock).toBeCalledTimes(1);
+    expect(mockNotifyApprovers).toBeCalledTimes(1);
+    expect(mockNotifyApprovers).toBeCalledWith(expected);
+  });
+
   it('should approve purchase request', async () => {
     const request: ApproveVoucherOrOrder = {
       purchaseRequestId: faker.datatype.number(),
