@@ -74,6 +74,29 @@ describe('VoucherController', () => {
     expect(mockNotifyApprovers).toBeCalledWith(expected);
   });
 
+  it('should patch voucher', async () => {
+    const request: CreateVoucherOrOrder = {
+      description: faker.random.words(10),
+      expenses: [generateExpense(), generateExpense()],
+      requestedBy: faker.datatype.number(),
+      requestedDate: faker.datatype.datetime(),
+      chargeId: faker.datatype.number(),
+    };
+    const expected = faker.datatype.number();
+    const mock = jest
+      .spyOn(VoucherService.prototype, 'updateVoucher')
+      .mockReturnValueOnce(new Promise(resolve => resolve(expected)));
+    const mockNotifyApprovers = jest
+      .spyOn(NotificationService.prototype, 'notifyVoucherApprovers')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new VoucherController();
+    await target.updateVoucher(expected, request);
+    expect(mock).toBeCalledWith(expected, request);
+    expect(mock).toBeCalledTimes(1);
+    expect(mockNotifyApprovers).toBeCalledTimes(1);
+    expect(mockNotifyApprovers).toBeCalledWith(expected);
+  });
+
   it('should approve voucher', async () => {
     const request: ApproveVoucherOrOrder = {
       voucherId: faker.datatype.number(),

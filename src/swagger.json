@@ -2756,6 +2756,42 @@
 				}
 			}
 		},
+		"/api/voucher/updateVoucher/{id}": {
+			"patch": {
+				"operationId": "UpdateVoucher",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/voucher/approveVoucher": {
 			"post": {
 				"operationId": "ApproveVoucher",

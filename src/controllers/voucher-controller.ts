@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Path, Post, Route, Security} from 'tsoa';
+import {Body, Controller, Get, Patch, Path, Post, Route, Security} from 'tsoa';
 
 import {
   ApproveVoucherOrOrder,
@@ -47,6 +47,15 @@ export class VoucherController extends Controller {
     const id = await this.voucherService.createVoucher(body);
     await this.notificationService.notifyVoucherApprovers(id);
     return id;
+  }
+
+  @Patch('/updateVoucher/{id}')
+  public async updateVoucher(
+    @Path() id: number,
+    @Body() body: CreateVoucherOrOrder
+  ) {
+    await this.voucherService.updateVoucher(id, body);
+    await this.notificationService.notifyVoucherApprovers(id);
   }
 
   @Post('/approveVoucher')

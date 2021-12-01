@@ -118,7 +118,7 @@ export default class VoucherService extends BaseService {
 
   public async createVoucher(voucher: CreateVoucherOrOrder) {
     return await this.repository.transaction(async transaction => {
-      if (voucher.expenses.length < 0) {
+      if (voucher.expenses.length <= 0) {
         throw new ApiError(400, VERBIAGE.SHOULD_HAVE_EXPENSES);
       }
 
@@ -166,6 +166,74 @@ export default class VoucherService extends BaseService {
       await Expense.bulkCreate([...expensesToBeCreated], {transaction});
 
       return Number(newRecord.id);
+    });
+  }
+
+  public async updateVoucher(id: number, voucher: CreateVoucherOrOrder) {
+    return await this.repository.transaction(async transaction => {
+      if (voucher.expenses.length <= 0) {
+        throw new ApiError(400, VERBIAGE.SHOULD_HAVE_EXPENSES);
+      }
+
+      const newApprovalCodes =
+        await this.approvalCodeService.generateApprovalCodes();
+      if (newApprovalCodes.length < config.APP.MIN_APPROVERS) {
+        throw new ApiError(400, VERBIAGE.MIN_APPROVER_NOT_REACHED);
+      }
+
+      const record = await Voucher.findByPk(id);
+      if (!record) {
+        throw new ApiError(404, VERBIAGE.NOT_FOUND);
+      }
+
+      if (record.status !== 'pending') {
+        throw new ApiError(400, VERBIAGE.BAD_REQUEST);
+      }
+
+      const totalCost = sum(voucher.expenses.map(e => e.unitCost * e.quantity));
+
+      const approvalCodesToBeCreated = [
+        ...newApprovalCodes.map(a => {
+          return {
+            ...a,
+            voucherId: id,
+          };
+        }),
+      ];
+
+      const expensesToBeCreated: ExpenseAttr[] = [
+        ...voucher.expenses.map(e => {
+          return {
+            ...e,
+            voucherId: id,
+          };
+        }),
+      ];
+
+      record.description = voucher.description;
+      record.totalCost = totalCost;
+
+      await record.save({transaction});
+
+      await ApprovalCode.destroy({
+        where: {
+          voucherId: id,
+        },
+        transaction,
+      });
+
+      await Expense.destroy({
+        where: {
+          voucherId: id,
+        },
+        transaction,
+      });
+
+      await ApprovalCode.bulkCreate([...approvalCodesToBeCreated], {
+        transaction,
+      });
+      await Expense.bulkCreate([...expensesToBeCreated], {transaction});
+      return Number(id);
     });
   }
 

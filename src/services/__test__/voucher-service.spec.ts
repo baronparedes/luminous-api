@@ -7,6 +7,7 @@ import {
 } from '../../@types/models';
 import {generateDisbursement, generateExpense} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
+import {VERBIAGE} from '../../constants';
 import ApprovalCode from '../../models/approval-code-model';
 import Expense from '../../models/expense-model';
 import Profile from '../../models/profile-model';
@@ -14,8 +15,6 @@ import VoucherService from '../voucher-service';
 
 describe('VoucherService', () => {
   let target: VoucherService;
-  let toBeApprovedVoucherId: number;
-  let toBeRejectedVoucherId: number;
 
   const profile = faker.random.arrayElement(SEED.PROFILES);
   const {id: chargeId} = faker.random.arrayElement(SEED.CHARGES);
@@ -40,12 +39,22 @@ describe('VoucherService', () => {
     status: 'active',
   };
 
+  const approver3: ProfileAttr = {
+    name: 'Approver 3',
+    username: 'approver3',
+    password: '$2b$12$Iguc6yD88XvQdkb5AlOXmOKLbGRWeQXcg3SPNIlp.50XhnVDLUAS6',
+    email: 'admin@luminous.com',
+    mobileNumber: '09999999999',
+    type: 'stakeholder',
+    status: 'active',
+  };
+
   beforeAll(async () => {
     const sequelize = await initInMemoryDb();
     target = new VoucherService(sequelize);
   });
 
-  it('should validate and create vouchers', async () => {
+  it('should validate, create, and update vouchers', async () => {
     await Profile.bulkCreate([approver1]);
 
     const request: CreateVoucherOrOrder = {
@@ -58,21 +67,46 @@ describe('VoucherService', () => {
 
     await expect(
       target.createVoucher({...request, expenses: []})
-    ).rejects.toThrow();
-    await expect(target.createVoucher(request)).rejects.toThrow();
+    ).rejects.toThrow(VERBIAGE.SHOULD_HAVE_EXPENSES);
+
+    await expect(target.createVoucher(request)).rejects.toThrow(
+      VERBIAGE.MIN_APPROVER_NOT_REACHED
+    );
 
     await Profile.bulkCreate([approver2]);
-    toBeApprovedVoucherId = await target.createVoucher(request);
+    const actualId = await target.createVoucher(request);
 
     const actualApprovalCodeCount = await ApprovalCode.count();
     const actualExpenseCount = await Expense.count();
 
-    expect(toBeApprovedVoucherId).toBeDefined();
-    expect(actualApprovalCodeCount).toBeGreaterThan(0);
-    expect(actualExpenseCount).toBeGreaterThan(0);
+    expect(actualId).toBeDefined();
+    expect(actualApprovalCodeCount).toEqual(3);
+    expect(actualExpenseCount).toEqual(2);
+
+    await expect(
+      target.updateVoucher(actualId, {
+        ...request,
+        expenses: [],
+      })
+    ).rejects.toThrow(VERBIAGE.SHOULD_HAVE_EXPENSES);
+
+    await Profile.bulkCreate([approver3]);
+    await target.updateVoucher(actualId, {
+      ...request,
+      expenses: [generateExpense(), generateExpense(), generateExpense()],
+    });
+
+    const actualApprovalCodeCountAfterUpdate = await ApprovalCode.count();
+    const actualExpenseCountAfterUpdate = await Expense.count();
+
+    expect(actualApprovalCodeCountAfterUpdate).toEqual(4);
+    expect(actualExpenseCountAfterUpdate).toEqual(3);
   });
 
   describe('when voucher is created', () => {
+    let toBeApprovedVoucherId: number;
+    let toBeRejectedVoucherId: number;
+
     beforeAll(async () => {
       const request: CreateVoucherOrOrder = {
         description: faker.random.words(10),
@@ -82,7 +116,7 @@ describe('VoucherService', () => {
         chargeId,
       };
 
-      await target.createVoucher(request);
+      toBeApprovedVoucherId = await target.createVoucher(request);
       toBeRejectedVoucherId = await target.createVoucher(request);
     });
 
