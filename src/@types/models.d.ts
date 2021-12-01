@@ -46,11 +46,20 @@ export type CreateVoucherOrOrder = {
   requestedDate: Date;
   chargeId: number;
   expenses: ExpenseAttr[];
+  orderData?: CreatePurchaseOrder;
+};
+
+export type CreatePurchaseOrder = {
+  vendorName: string;
+  fulfillmentDate: Date;
+  otherDetails: string;
+  purchaseRequestId: number;
 };
 
 export type ApproveVoucherOrOrder = {
   voucherId?: number;
   purchaseRequestId?: number;
+  purchaseOrderId?: number;
   codes: string[];
   disbursements?: DisbursementAttr[];
 };
@@ -173,6 +182,7 @@ export interface PaymentDetailAttr {
 export interface ExpenseAttr {
   voucherId?: number;
   purchaseRequestId?: number;
+  purchaseOrderId?: number;
   categoryId: number;
   category: string;
   description: string;
@@ -203,7 +213,8 @@ export interface VoucherAttr {
 export interface DisbursementAttr {
   id?: number;
   voucherId?: number;
-  chargeId?: number;
+  purchaseOrderId?: number;
+  chargeId: number;
   releasedBy: number;
   paymentType: PaymentType;
   details: string;
@@ -221,6 +232,7 @@ export type ApprovalCodeAttr = {
   code: string;
   voucherId?: number | null;
   purchaseRequestId?: number | null;
+  purchaseOrderId?: number | null;
 };
 
 export type CategoryAttr = {
@@ -232,6 +244,27 @@ export type CategoryAttr = {
 
 export type PurchaseRequestAttr = {
   id?: number;
+  chargeId: number;
+  description: string;
+  totalCost: number;
+  status: RequestStatus;
+  requestedBy: number;
+  requestedDate: Date;
+  approvedBy?: string | null;
+  rejectedBy?: number;
+  comments?: string | null;
+  expenses?: ExpenseAttr[];
+  requestedByProfile?: ProfileAttr;
+  rejectedByProfile?: ProfileAttr;
+  approverProfiles?: ProfileAttr[];
+};
+
+export type PurchaseOrderAttr = {
+  id?: number;
+  purchaseRequestId: number;
+  vendorName: string;
+  fulfillmentDate: Date;
+  otherDetails?: string | null;
   chargeId: number;
   description: string;
   totalCost: number;

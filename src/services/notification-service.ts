@@ -1,19 +1,23 @@
 import {
   expenseApprovalTemplate,
+  purchaseOrderApprovalTemplate,
   resetPasswordTemplate,
 } from '../@utils/email-templates';
 import useSendMail from '../hooks/use-send-mail';
 import ApprovalCode from '../models/approval-code-model';
+import PurchaseOrderService from './purchase-order-service';
 import PurchaseRequestService from './purchase-request-service';
 import VoucherService from './voucher-service';
 
 export default class NotificationService {
   private voucherService: VoucherService;
   private purchaseRequestService: PurchaseRequestService;
+  private purchaseOrderService: PurchaseOrderService;
 
   constructor() {
     this.voucherService = new VoucherService();
     this.purchaseRequestService = new PurchaseRequestService();
+    this.purchaseOrderService = new PurchaseOrderService();
   }
 
   public async notifyResetPassword(email: string, password: string) {
@@ -76,6 +80,37 @@ export default class NotificationService {
         },
         'V'
       );
+      return send(ac.email, subject, content);
+    });
+
+    await Promise.all(promises);
+  }
+
+  public async notifyPurchaseOrderApprovers(purchaseOrderId: number) {
+    const purchaseOrder = await this.purchaseOrderService.getPurchaseOrder(
+      purchaseOrderId
+    );
+    const approvalCodes = await ApprovalCode.findAll({
+      where: {
+        purchaseOrderId,
+      },
+    });
+
+    const {send} = useSendMail();
+
+    const promises = approvalCodes.map(ac => {
+      const subject = `[Luminous] Approval for PO-${purchaseOrderId}`;
+      const content = purchaseOrderApprovalTemplate({
+        code: ac.code,
+        description: purchaseOrder.description,
+        totalCost: purchaseOrder.totalCost,
+        expenses: purchaseOrder.expenses,
+        id: purchaseOrder.id,
+        requestedByProfile: purchaseOrder.requestedByProfile,
+        fulfillmentDate: purchaseOrder.fulfillmentDate,
+        vendorName: purchaseOrder.vendorName,
+        otherDetails: purchaseOrder.otherDetails,
+      });
       return send(ac.email, subject, content);
     });
 

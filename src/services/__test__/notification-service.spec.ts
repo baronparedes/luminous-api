@@ -3,10 +3,12 @@ import faker from 'faker';
 import {ApprovalCodeAttr, ExpenseAttr} from '../../@types/models';
 import {
   expenseApprovalTemplate,
+  purchaseOrderApprovalTemplate,
   resetPasswordTemplate,
 } from '../../@utils/email-templates';
 import {
   generateExpense,
+  generatePurchaseOrder,
   generatePurchaseRequest,
   generateVoucher,
 } from '../../@utils/fake-data';
@@ -14,6 +16,7 @@ import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
 import useSendMail from '../../hooks/use-send-mail';
 import ApprovalCode from '../../models/approval-code-model';
 import Expense from '../../models/expense-model';
+import PurchaseOrder from '../../models/purchase-order-model';
 import PurchaseRequest from '../../models/purchase-request-model';
 import Voucher from '../../models/voucher-model';
 import NotificationService from '../notification-service';
@@ -26,6 +29,7 @@ describe('NotificationService', () => {
   const charge = faker.random.arrayElement(SEED.CHARGES);
   const expectedVoucherId = faker.datatype.number();
   const expectedPurchaseRequestId = faker.datatype.number();
+  const expectedPurchaseOrderId = faker.datatype.number();
 
   const useSendMailMock = useSendMail as jest.MockedFunction<
     typeof useSendMail
@@ -47,6 +51,15 @@ describe('NotificationService', () => {
     expenses: undefined,
     id: expectedPurchaseRequestId,
   };
+  const seedPurchaseOrder = {
+    ...generatePurchaseOrder(),
+    requestedBy: Number(profile.id),
+    chargeId: Number(charge.id),
+    status: 'pending',
+    expenses: undefined,
+    purchaseRequestId: expectedPurchaseRequestId,
+    id: expectedPurchaseOrderId,
+  };
   const seedExpenses: ExpenseAttr[] = [
     {
       ...generateExpense(),
@@ -63,6 +76,14 @@ describe('NotificationService', () => {
     {
       ...generateExpense(),
       purchaseRequestId: expectedPurchaseRequestId,
+    },
+    {
+      ...generateExpense(),
+      purchaseOrderId: expectedPurchaseOrderId,
+    },
+    {
+      ...generateExpense(),
+      purchaseOrderId: expectedPurchaseOrderId,
     },
   ];
   const seedApprovalCodes: ApprovalCodeAttr[] = [
@@ -90,12 +111,25 @@ describe('NotificationService', () => {
       profileId: Number(profile.id),
       purchaseRequestId: expectedPurchaseRequestId,
     },
+    {
+      code: faker.random.alphaNumeric(6),
+      email: faker.internet.email(),
+      profileId: Number(profile.id),
+      purchaseOrderId: expectedPurchaseOrderId,
+    },
+    {
+      code: faker.random.alphaNumeric(6),
+      email: faker.internet.email(),
+      profileId: Number(profile.id),
+      purchaseOrderId: expectedPurchaseOrderId,
+    },
   ];
 
   beforeAll(async () => {
     await initInMemoryDb();
     await PurchaseRequest.bulkCreate([seedPurchaseRequest]);
     await Voucher.bulkCreate([seedVoucher]);
+    await PurchaseOrder.bulkCreate([seedPurchaseOrder]);
     await Expense.bulkCreate([...seedExpenses]);
     await ApprovalCode.bulkCreate([...seedApprovalCodes]);
   });
@@ -181,6 +215,41 @@ describe('NotificationService', () => {
         },
         'PR'
       );
+      expect(mockSend).toHaveBeenNthCalledWith(
+        index,
+        ac.email,
+        expectedSubject,
+        expectedContent
+      );
+      index++;
+    }
+  });
+
+  it('should notify purchase order approvers', async () => {
+    const mockSend = jest.fn().mockImplementation(() => Promise.resolve());
+    useSendMailMock.mockReturnValue({
+      send: mockSend,
+    });
+
+    await target.notifyPurchaseOrderApprovers(expectedPurchaseOrderId);
+    expect(mockSend).toHaveBeenCalledTimes(2);
+
+    let index = 1;
+    for (const ac of seedApprovalCodes.filter(
+      ac => ac.purchaseOrderId !== undefined
+    )) {
+      const expectedSubject = `[Luminous] Approval for PO-${expectedPurchaseOrderId}`;
+      const expectedContent = purchaseOrderApprovalTemplate({
+        requestedByProfile: profile,
+        expenses: seedExpenses.filter(e => e.purchaseOrderId),
+        code: ac.code,
+        description: seedPurchaseOrder.description,
+        totalCost: seedPurchaseOrder.totalCost,
+        id: seedPurchaseOrder.id,
+        fulfillmentDate: seedPurchaseOrder.fulfillmentDate,
+        vendorName: seedPurchaseOrder.vendorName,
+        otherDetails: seedPurchaseOrder.otherDetails,
+      });
       expect(mockSend).toHaveBeenNthCalledWith(
         index,
         ac.email,

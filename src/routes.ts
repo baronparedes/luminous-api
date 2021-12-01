@@ -15,6 +15,8 @@ import { PropertyAccountController } from './controllers/property-account-contro
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PropertyController } from './controllers/property-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { PurchaseOrderController } from './controllers/purchase-order-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PurchaseRequestController } from './controllers/purchase-request-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SettingController } from './controllers/setting-controller';
@@ -126,7 +128,8 @@ const models: TsoaRoute.Models = {
         "properties": {
             "id": {"dataType":"double"},
             "voucherId": {"dataType":"double"},
-            "chargeId": {"dataType":"double"},
+            "purchaseOrderId": {"dataType":"double"},
+            "chargeId": {"dataType":"double","required":true},
             "releasedBy": {"dataType":"double","required":true},
             "paymentType": {"ref":"PaymentType","required":true},
             "details": {"dataType":"string","required":true},
@@ -274,6 +277,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "voucherId": {"dataType":"double"},
             "purchaseRequestId": {"dataType":"double"},
+            "purchaseOrderId": {"dataType":"double"},
             "categoryId": {"dataType":"double","required":true},
             "category": {"dataType":"string","required":true},
             "description": {"dataType":"string","required":true},
@@ -285,19 +289,34 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PurchaseRequestAttr": {
+    "PurchaseOrderAttr": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"approverProfiles":{"dataType":"array","array":{"dataType":"refObject","ref":"ProfileAttr"}},"rejectedByProfile":{"ref":"ProfileAttr"},"requestedByProfile":{"ref":"ProfileAttr"},"expenses":{"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"}},"comments":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"rejectedBy":{"dataType":"double"},"approvedBy":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"requestedDate":{"dataType":"datetime","required":true},"requestedBy":{"dataType":"double","required":true},"status":{"ref":"RequestStatus","required":true},"totalCost":{"dataType":"double","required":true},"description":{"dataType":"string","required":true},"chargeId":{"dataType":"double","required":true},"id":{"dataType":"double"}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"approverProfiles":{"dataType":"array","array":{"dataType":"refObject","ref":"ProfileAttr"}},"rejectedByProfile":{"ref":"ProfileAttr"},"requestedByProfile":{"ref":"ProfileAttr"},"expenses":{"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"}},"comments":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"rejectedBy":{"dataType":"double"},"approvedBy":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"requestedDate":{"dataType":"datetime","required":true},"requestedBy":{"dataType":"double","required":true},"status":{"ref":"RequestStatus","required":true},"totalCost":{"dataType":"double","required":true},"description":{"dataType":"string","required":true},"chargeId":{"dataType":"double","required":true},"otherDetails":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"fulfillmentDate":{"dataType":"datetime","required":true},"vendorName":{"dataType":"string","required":true},"purchaseRequestId":{"dataType":"double","required":true},"id":{"dataType":"double"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CreatePurchaseOrder": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"purchaseRequestId":{"dataType":"double","required":true},"otherDetails":{"dataType":"string","required":true},"fulfillmentDate":{"dataType":"datetime","required":true},"vendorName":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CreateVoucherOrOrder": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"expenses":{"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"},"required":true},"chargeId":{"dataType":"double","required":true},"requestedDate":{"dataType":"datetime","required":true},"requestedBy":{"dataType":"double","required":true},"description":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"orderData":{"ref":"CreatePurchaseOrder"},"expenses":{"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"},"required":true},"chargeId":{"dataType":"double","required":true},"requestedDate":{"dataType":"datetime","required":true},"requestedBy":{"dataType":"double","required":true},"description":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ApproveVoucherOrOrder": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"disbursements":{"dataType":"array","array":{"dataType":"refObject","ref":"DisbursementAttr"}},"codes":{"dataType":"array","array":{"dataType":"string"},"required":true},"purchaseRequestId":{"dataType":"double"},"voucherId":{"dataType":"double"}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"disbursements":{"dataType":"array","array":{"dataType":"refObject","ref":"DisbursementAttr"}},"codes":{"dataType":"array","array":{"dataType":"string"},"required":true},"purchaseOrderId":{"dataType":"double"},"purchaseRequestId":{"dataType":"double"},"voucherId":{"dataType":"double"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "RejectPurchaseOrder": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"rejectedBy":{"dataType":"double","required":true},"comments":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PurchaseRequestAttr": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"approverProfiles":{"dataType":"array","array":{"dataType":"refObject","ref":"ProfileAttr"}},"rejectedByProfile":{"ref":"ProfileAttr"},"requestedByProfile":{"ref":"ProfileAttr"},"expenses":{"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"}},"comments":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"rejectedBy":{"dataType":"double"},"approvedBy":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"requestedDate":{"dataType":"datetime","required":true},"requestedBy":{"dataType":"double","required":true},"status":{"ref":"RequestStatus","required":true},"totalCost":{"dataType":"double","required":true},"description":{"dataType":"string","required":true},"chargeId":{"dataType":"double","required":true},"id":{"dataType":"double"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RejectPurchaseRequest": {
@@ -998,6 +1017,201 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getPaymentHistory.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/purchase-order/getPurchaseOrder/:id',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PurchaseOrderController_getPurchaseOrder(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PurchaseOrderController();
+
+
+            const promise = controller.getPurchaseOrder.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/purchase-order/getAllPurchaseOrdersByChargeAndStatus/:chargeId/:status',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PurchaseOrderController_getAllPurchaseOrdersByChargeAndStatus(request: any, response: any, next: any) {
+            const args = {
+                    chargeId: {"in":"path","name":"chargeId","required":true,"dataType":"double"},
+                    status: {"in":"path","name":"status","required":true,"ref":"RequestStatus"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PurchaseOrderController();
+
+
+            const promise = controller.getAllPurchaseOrdersByChargeAndStatus.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/purchase-order/postPurchaseOrder',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PurchaseOrderController_postPurchaseOrder(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"CreateVoucherOrOrder"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PurchaseOrderController();
+
+
+            const promise = controller.postPurchaseOrder.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.patch('/api/purchase-order/updatePurchaseOrder/:id',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PurchaseOrderController_updatePurchaseOrder(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    body: {"in":"body","name":"body","required":true,"ref":"CreateVoucherOrOrder"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PurchaseOrderController();
+
+
+            const promise = controller.updatePurchaseOrder.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/purchase-order/approvePurchaseOrder',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PurchaseOrderController_approvePurchaseOrder(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"ApproveVoucherOrOrder"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PurchaseOrderController();
+
+
+            const promise = controller.approvePurchaseOrder.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/purchase-order/rejectPurchaseOrder',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PurchaseOrderController_rejectPurchaseOrder(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"RejectPurchaseOrder"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PurchaseOrderController();
+
+
+            const promise = controller.rejectPurchaseOrder.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/purchase-order/notifyPurchaseOrderApprovers/:id',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PurchaseOrderController_notifyPurchaseOrderApprovers(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PurchaseOrderController();
+
+
+            const promise = controller.notifyPurchaseOrderApprovers.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/purchase-order/postPurchaseOrderDisbursement/:id',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PurchaseOrderController_postPurchaseOrderDisbursement(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    body: {"in":"body","name":"body","required":true,"ref":"DisbursementAttr"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PurchaseOrderController();
+
+
+            const promise = controller.postPurchaseOrderDisbursement.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

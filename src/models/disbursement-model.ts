@@ -17,6 +17,7 @@ import {
 } from '../@types/models';
 import Charge from './charge-model';
 import Profile from './profile-model';
+import PurchaseOrder from './purchase-order-model';
 import Voucher from './voucher-model';
 
 @Table
@@ -27,9 +28,14 @@ class Disbursement extends Model implements DisbursementAttr {
   voucherId?: number;
 
   @AllowNull(true)
+  @ForeignKey(() => PurchaseOrder)
+  @Column
+  purchaseOrderId?: number;
+
+  @AllowNull(false)
   @ForeignKey(() => Charge)
   @Column
-  chargeId?: number;
+  chargeId!: number;
 
   @ForeignKey(() => Profile)
   @Column

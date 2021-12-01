@@ -42,6 +42,7 @@ describe('DisbursementService', () => {
       releasedByProfile: undefined,
       id: undefined,
       voucherId: undefined,
+      purchaseOrderId: undefined,
     }).toEqual(expectedDisbursement);
   });
 });

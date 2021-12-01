@@ -14,6 +14,7 @@ import {
   PropertyAccount,
   PropertyAssignmentAttr,
   PropertyAttr,
+  PurchaseOrderAttr,
   PurchaseRequestAttr,
   RecordStatus,
   RegisterProfile,
@@ -209,6 +210,27 @@ export const generatePurchaseRequest = (): PurchaseRequestAttr => {
   };
 };
 
+export const generatePurchaseOrder = (): PurchaseOrderAttr => {
+  return {
+    description: faker.random.words(2),
+    requestedBy: faker.datatype.number(),
+    requestedDate: faker.datatype.datetime(),
+    status: faker.random.arrayElement<RequestStatus>([
+      'approved',
+      'pending',
+      'rejected',
+    ]),
+    totalCost: faker.datatype.number(),
+    comments: faker.random.words(10),
+    expenses: [generateExpense(), generateExpense()],
+    chargeId: faker.datatype.number(),
+    vendorName: faker.random.words(2),
+    fulfillmentDate: faker.date.future(),
+    purchaseRequestId: faker.datatype.number(),
+    otherDetails: faker.random.words(10),
+  };
+};
+
 export const generateDisbursement = (): DisbursementAttr => {
   return {
     amount: faker.datatype.number(),
@@ -218,5 +240,6 @@ export const generateDisbursement = (): DisbursementAttr => {
     checkIssuingBank: faker.random.words(),
     checkPostingDate: faker.datatype.datetime(),
     releasedBy: faker.datatype.number(),
+    chargeId: faker.datatype.number(),
   };
 };

@@ -39,6 +39,11 @@ class ApprovalCode extends Model implements ApprovalCodeAttr {
   @ForeignKey(() => PurchaseRequest)
   @Column
   purchaseRequestId?: number;
+
+  @AllowNull(true)
+  @ForeignKey(() => PurchaseRequest)
+  @Column
+  purchaseOrderId?: number;
 }
 
 export default ApprovalCode;

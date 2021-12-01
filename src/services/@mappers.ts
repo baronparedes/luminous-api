@@ -8,6 +8,7 @@ import {
   ProfileAttr,
   PropertyAssignmentAttr,
   PropertyAttr,
+  PurchaseOrderAttr,
   PurchaseRequestAttr,
   SettingAttr,
   TransactionAttr,
@@ -21,6 +22,7 @@ import PaymentDetail from '../models/payment-detail-model';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
+import PurchaseOrder from '../models/purchase-order-model';
 import PurchaseRequest from '../models/purchase-request-model';
 import Setting from '../models/setting-model';
 import Transaction from '../models/transaction-model';
@@ -138,8 +140,10 @@ export function mapExpense(model: Expense): ExpenseAttr {
     quantity: model.quantity,
     totalCost: model.totalCost,
     unitCost: model.unitCost,
-    voucherId: model.voucherId,
     waivedBy: model.waivedBy,
+    voucherId: model.voucherId,
+    purchaseRequestId: model.purchaseRequestId,
+    purchaseOrderId: model.purchaseOrderId,
   };
 }
 
@@ -191,6 +195,32 @@ export function mapPurchaseRequest(
   };
 }
 
+export function mapPurchaseOrder(model: PurchaseOrder): PurchaseOrderAttr {
+  return {
+    id: model.id,
+    chargeId: model.chargeId,
+    description: model.description,
+    requestedBy: model.requestedBy,
+    requestedDate: model.requestedDate,
+    status: model.status,
+    totalCost: model.totalCost,
+    approvedBy: model.approvedBy,
+    rejectedBy: model.rejectedBy,
+    expenses: model.expenses,
+    comments: model.comments,
+    rejectedByProfile: model.rejectedByProfile
+      ? mapProfile(model.rejectedByProfile as Profile)
+      : undefined,
+    requestedByProfile: model.requestedByProfile
+      ? mapProfile(model.requestedByProfile as Profile)
+      : undefined,
+    fulfillmentDate: model.fulfillmentDate,
+    purchaseRequestId: model.purchaseRequestId,
+    vendorName: model.vendorName,
+    otherDetails: model.otherDetails,
+  };
+}
+
 export function mapDisbursement(model: Disbursement): DisbursementAttr {
   return {
     id: model.id,
@@ -200,6 +230,7 @@ export function mapDisbursement(model: Disbursement): DisbursementAttr {
     releasedBy: model.releasedBy,
     chargeId: model.chargeId,
     voucherId: model.voucherId,
+    purchaseOrderId: model.purchaseOrderId,
     checkIssuingBank: model.checkIssuingBank,
     checkNumber: model.checkNumber,
     checkPostingDate: model.checkPostingDate,
