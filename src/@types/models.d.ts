@@ -275,6 +275,7 @@ export type PurchaseOrderAttr = {
   rejectedBy?: number;
   comments?: string | null;
   expenses?: ExpenseAttr[];
+  disbursements?: DisbursementAttr[];
   requestedByProfile?: ProfileAttr;
   rejectedByProfile?: ProfileAttr;
   approverProfiles?: ProfileAttr[];

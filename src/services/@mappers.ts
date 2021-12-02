@@ -207,6 +207,7 @@ export function mapPurchaseOrder(model: PurchaseOrder): PurchaseOrderAttr {
     approvedBy: model.approvedBy,
     rejectedBy: model.rejectedBy,
     expenses: model.expenses,
+    disbursements: model.disbursements,
     comments: model.comments,
     rejectedByProfile: model.rejectedByProfile
       ? mapProfile(model.rejectedByProfile as Profile)

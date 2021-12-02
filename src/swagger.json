@@ -776,6 +776,12 @@
 					"requestedByProfile": {
 						"$ref": "#/components/schemas/ProfileAttr"
 					},
+					"disbursements": {
+						"items": {
+							"$ref": "#/components/schemas/DisbursementAttr"
+						},
+						"type": "array"
+					},
 					"expenses": {
 						"items": {
 							"$ref": "#/components/schemas/ExpenseAttr"
