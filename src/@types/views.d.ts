@@ -1,4 +1,10 @@
-import {PaymentType} from './models';
+import {PaymentType, TransactionType} from './models';
+
+export type DashboardView = {
+  year: number;
+  collectionEfficieny: CollectionEfficiencyView[];
+  propertyBalance: PropertyBalanceView[];
+};
 
 export type TransactionBreakdownView = {
   chargeId: number;
@@ -26,4 +32,18 @@ export type PaymentHistoryView = {
   checkPostingDate?: Date;
   checkIssuingBank?: string;
   collectedBy: string;
+};
+
+export type CollectionEfficiencyView = {
+  amount: number;
+  transactionPeriod: Date;
+  transactionType: TransactionType;
+};
+
+export type PropertyBalanceView = {
+  id: number;
+  code: string;
+  charged: number;
+  collected: number;
+  balance: number;
 };

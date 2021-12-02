@@ -174,6 +174,91 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"TransactionType": {
+				"type": "string",
+				"enum": [
+					"charged",
+					"collected"
+				]
+			},
+			"CollectionEfficiencyView": {
+				"properties": {
+					"transactionType": {
+						"$ref": "#/components/schemas/TransactionType"
+					},
+					"transactionPeriod": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"transactionType",
+					"transactionPeriod",
+					"amount"
+				],
+				"type": "object"
+			},
+			"PropertyBalanceView": {
+				"properties": {
+					"balance": {
+						"type": "number",
+						"format": "double"
+					},
+					"collected": {
+						"type": "number",
+						"format": "double"
+					},
+					"charged": {
+						"type": "number",
+						"format": "double"
+					},
+					"code": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"balance",
+					"collected",
+					"charged",
+					"code",
+					"id"
+				],
+				"type": "object"
+			},
+			"DashboardView": {
+				"properties": {
+					"propertyBalance": {
+						"items": {
+							"$ref": "#/components/schemas/PropertyBalanceView"
+						},
+						"type": "array"
+					},
+					"collectionEfficieny": {
+						"items": {
+							"$ref": "#/components/schemas/CollectionEfficiencyView"
+						},
+						"type": "array"
+					},
+					"year": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"propertyBalance",
+					"collectionEfficieny",
+					"year"
+				],
+				"type": "object"
+			},
 			"DisbursementBreakdownView": {
 				"properties": {
 					"passOn": {
@@ -472,13 +557,6 @@
 				],
 				"type": "object",
 				"additionalProperties": false
-			},
-			"TransactionType": {
-				"type": "string",
-				"enum": [
-					"charged",
-					"collected"
-				]
 			},
 			"PaymentDetailAttr": {
 				"properties": {
@@ -1371,6 +1449,39 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/dashboard/getDashboardByYear/{year}": {
+			"get": {
+				"operationId": "GetDashboardByYear",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DashboardView"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/disbursement/getDisbursementBreakdown": {
