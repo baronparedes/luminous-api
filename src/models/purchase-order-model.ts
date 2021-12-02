@@ -34,7 +34,7 @@ class PurchaseOrder extends Model implements PurchaseOrderAttr {
 
   @AllowNull(false)
   @NotEmpty
-  @Column
+  @Column(DataType.CITEXT)
   vendorName!: string;
 
   @AllowNull(false)
