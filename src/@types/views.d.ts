@@ -4,6 +4,7 @@ export type DashboardView = {
   year: number;
   collectionEfficieny: CollectionEfficiencyView[];
   propertyBalance: PropertyBalanceView[];
+  chargeExpense: ChargeExpenseView[];
 };
 
 export type TransactionBreakdownView = {
@@ -38,6 +39,12 @@ export type CollectionEfficiencyView = {
   amount: number;
   transactionPeriod: Date;
   transactionType: TransactionType;
+};
+
+export type ChargeExpenseView = {
+  amount: number;
+  transactionPeriod: Date;
+  chargeId: number;
 };
 
 export type PropertyBalanceView = {
