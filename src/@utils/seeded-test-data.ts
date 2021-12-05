@@ -3,12 +3,12 @@ import {Sequelize} from 'sequelize-typescript';
 
 import {ChargeType, PostingType, ProfileAttr} from '../@types/models';
 import {CONSTANTS} from '../constants';
+import {useHash} from '../hooks/use-hash';
 import Charge from '../models/charge-model';
 import Community from '../models/community-model';
 import Profile from '../models/profile-model';
 import Property from '../models/property-model';
 import {generateProfile} from './fake-data';
-import {useHash} from './use-hash';
 
 const {hash} = useHash();
 

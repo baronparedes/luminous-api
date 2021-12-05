@@ -103,10 +103,8 @@ async function enableExtensions() {
 export async function dbInit() {
   await sequelize.authenticate();
   await enableExtensions();
-  if (config.DB.SYNC) {
-    await sequelize.sync({alter: true});
-    await seed();
-  }
+  if (config.DB.SYNC) await sequelize.sync({alter: true});
+  if (config.DB.SEED) await seed();
 }
 
 export default sequelize;

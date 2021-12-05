@@ -21,6 +21,7 @@ const config = {
     PORT: process.env.DB_PORT || '',
     DIALECT: process.env.DB_DIALECT || 'postgres',
     SYNC: process.env.DB_SYNC?.toLowerCase() === 'true',
+    SEED: process.env.DB_SEED?.toLowerCase() === 'true',
   },
   APP: {
     MIN_APPROVERS: 3,

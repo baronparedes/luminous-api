@@ -2,7 +2,7 @@
     {
        "id": 1,
        "code": "CONDO DUES",
-       "rate": 52,
+       "rate": 60,
        "chargeType": "unit",
        "postingType": "monthly",
        "priority": 1

@@ -9,9 +9,9 @@ import {
 } from '../@types/models';
 import {generatePassword} from '../@utils/helpers';
 import {iLike} from '../@utils/helpers-sequelize';
-import {useHash} from '../@utils/use-hash';
 import {VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
+import {useHash} from '../hooks/use-hash';
 import Profile from '../models/profile-model';
 import {mapAuthProfile} from './@mappers';
 
