@@ -1,9 +1,12 @@
 import {Sequelize} from 'sequelize-typescript';
 
-import {ChargeExpenseView} from '../../@types/views';
+import {ChargeDisbursedView} from '../../@types/views';
 import useSql from '../use-sql';
 
-export default async function useChargeExpense(year: number, db: Sequelize) {
+export default async function useChargeDisbursements(
+  year: number,
+  db: Sequelize
+) {
   // postgresql only
   const sql = `
     SELECT
@@ -15,7 +18,7 @@ export default async function useChargeExpense(year: number, db: Sequelize) {
     GROUP BY TO_CHAR(d.created_at, 'YYYY-MM-01'), charge_id`;
 
   const {query} = useSql(db);
-  const result = await query<ChargeExpenseView>(sql, {
+  const result = await query<ChargeDisbursedView>(sql, {
     year,
   });
   return result;

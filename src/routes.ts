@@ -113,14 +113,14 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"balance":{"dataType":"double","required":true},"collected":{"dataType":"double","required":true},"charged":{"dataType":"double","required":true},"code":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ChargeExpenseView": {
+    "ChargeDisbursedView": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"chargeId":{"dataType":"double","required":true},"transactionPeriod":{"dataType":"datetime","required":true},"amount":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "DashboardView": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"chargeExpense":{"dataType":"array","array":{"dataType":"refAlias","ref":"ChargeExpenseView"},"required":true},"propertyBalance":{"dataType":"array","array":{"dataType":"refAlias","ref":"PropertyBalanceView"},"required":true},"collectionEfficieny":{"dataType":"array","array":{"dataType":"refAlias","ref":"CollectionEfficiencyView"},"required":true},"year":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"chargeExpense":{"dataType":"array","array":{"dataType":"refAlias","ref":"ChargeDisbursedView"},"required":true},"propertyBalance":{"dataType":"array","array":{"dataType":"refAlias","ref":"PropertyBalanceView"},"required":true},"collectionEfficieny":{"dataType":"array","array":{"dataType":"refAlias","ref":"CollectionEfficiencyView"},"required":true},"year":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "DisbursementBreakdownView": {

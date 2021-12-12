@@ -233,7 +233,7 @@
 				],
 				"type": "object"
 			},
-			"ChargeExpenseView": {
+			"ChargeDisbursedView": {
 				"properties": {
 					"chargeId": {
 						"type": "number",
@@ -259,7 +259,7 @@
 				"properties": {
 					"chargeExpense": {
 						"items": {
-							"$ref": "#/components/schemas/ChargeExpenseView"
+							"$ref": "#/components/schemas/ChargeDisbursedView"
 						},
 						"type": "array"
 					},

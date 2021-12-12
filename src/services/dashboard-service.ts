@@ -1,5 +1,5 @@
 import {DashboardView} from '../@types/views';
-import useChargeExpense from '../hooks/views/use-charge-expense';
+import useChargeDisbursements from '../hooks/views/use-charge-disbursements';
 import useCollectionEfficiency from '../hooks/views/use-collection-efficiency';
 import usePropertyBalance from '../hooks/views/use-property-balance';
 import BaseService from './@base-service';
@@ -22,7 +22,7 @@ export default class DashboardService extends BaseService {
         this.repository
       );
 
-      const chargeExpense = await useChargeExpense(year, this.repository);
+      const chargeExpense = await useChargeDisbursements(year, this.repository);
 
       const result: DashboardView = {
         year,
