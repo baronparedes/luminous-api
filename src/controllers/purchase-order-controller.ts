@@ -15,6 +15,12 @@ type RejectPurchaseOrder = {
   rejectedBy: number;
 };
 
+type CancelPurchaseOrder = {
+  id: number;
+  comments: string;
+  cancelledBy: number;
+};
+
 @Security('bearer')
 @Route('/api/purchase-order')
 export class PurchaseOrderController extends Controller {
@@ -70,6 +76,15 @@ export class PurchaseOrderController extends Controller {
       body.id,
       body.comments,
       body.rejectedBy
+    );
+  }
+
+  @Post('/cancelPurchaseOrder')
+  public async cancelPurchaseOrder(@Body() body: CancelPurchaseOrder) {
+    await this.purchaseOrderService.cancelPurchaseOrder(
+      body.id,
+      body.comments,
+      body.cancelledBy
     );
   }
 

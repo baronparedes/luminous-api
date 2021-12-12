@@ -291,7 +291,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RequestStatus": {
         "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["approved"]},{"dataType":"enum","enums":["rejected"]},{"dataType":"enum","enums":["pending"]}],"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["approved"]},{"dataType":"enum","enums":["rejected"]},{"dataType":"enum","enums":["pending"]},{"dataType":"enum","enums":["cancelled"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ExpenseAttr": {
@@ -313,7 +313,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PurchaseOrderAttr": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"approverProfiles":{"dataType":"array","array":{"dataType":"refObject","ref":"ProfileAttr"}},"rejectedByProfile":{"ref":"ProfileAttr"},"requestedByProfile":{"ref":"ProfileAttr"},"disbursements":{"dataType":"array","array":{"dataType":"refObject","ref":"DisbursementAttr"}},"expenses":{"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"}},"comments":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"rejectedBy":{"dataType":"double"},"approvedBy":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"requestedDate":{"dataType":"datetime","required":true},"requestedBy":{"dataType":"double","required":true},"status":{"ref":"RequestStatus","required":true},"totalCost":{"dataType":"double","required":true},"description":{"dataType":"string","required":true},"chargeId":{"dataType":"double","required":true},"otherDetails":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"fulfillmentDate":{"dataType":"datetime","required":true},"vendorName":{"dataType":"string","required":true},"purchaseRequestId":{"dataType":"double","required":true},"id":{"dataType":"double"}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"isClosed":{"dataType":"boolean"},"approverProfiles":{"dataType":"array","array":{"dataType":"refObject","ref":"ProfileAttr"}},"rejectedByProfile":{"ref":"ProfileAttr"},"requestedByProfile":{"ref":"ProfileAttr"},"disbursements":{"dataType":"array","array":{"dataType":"refObject","ref":"DisbursementAttr"}},"expenses":{"dataType":"array","array":{"dataType":"refObject","ref":"ExpenseAttr"}},"comments":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"rejectedBy":{"dataType":"double"},"approvedBy":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"requestedDate":{"dataType":"datetime","required":true},"requestedBy":{"dataType":"double","required":true},"status":{"ref":"RequestStatus","required":true},"totalCost":{"dataType":"double","required":true},"description":{"dataType":"string","required":true},"chargeId":{"dataType":"double","required":true},"otherDetails":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"fulfillmentDate":{"dataType":"datetime","required":true},"vendorName":{"dataType":"string","required":true},"purchaseRequestId":{"dataType":"double","required":true},"id":{"dataType":"double"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CreatePurchaseOrder": {
@@ -334,6 +334,11 @@ const models: TsoaRoute.Models = {
     "RejectPurchaseOrder": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"rejectedBy":{"dataType":"double","required":true},"comments":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CancelPurchaseOrder": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"cancelledBy":{"dataType":"double","required":true},"comments":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PurchaseRequestAttr": {
@@ -1209,6 +1214,30 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.rejectPurchaseOrder.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/purchase-order/cancelPurchaseOrder',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PurchaseOrderController_cancelPurchaseOrder(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"CancelPurchaseOrder"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PurchaseOrderController();
+
+
+            const promise = controller.cancelPurchaseOrder.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

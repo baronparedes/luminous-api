@@ -161,10 +161,10 @@ describe('VoucherService', () => {
 
       await expect(
         target.approveVoucher({...request, disbursements: []})
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.BAD_REQUEST);
       await expect(
         target.approveVoucher({...request, codes: [codes[0], codes[1]]})
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.INVALID_APPROVAL_CODES);
 
       await target.approveVoucher(request);
 
@@ -204,7 +204,7 @@ describe('VoucherService', () => {
           faker.random.words(10),
           Number(profile.id)
         )
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
 
       await expect(
         target.rejectVoucher(
@@ -212,7 +212,7 @@ describe('VoucherService', () => {
           faker.random.words(10),
           Number(profile.id)
         )
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
     });
 
     it('should only approve pending vouchers', async () => {
@@ -236,14 +236,14 @@ describe('VoucherService', () => {
           ...request,
           voucherId: toBeApprovedVoucherId,
         })
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
 
       await expect(
         target.approveVoucher({
           ...request,
           voucherId: toBeApprovedVoucherId,
         })
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
     });
   });
 });

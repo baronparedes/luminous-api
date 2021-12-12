@@ -814,7 +814,8 @@
 				"enum": [
 					"approved",
 					"rejected",
-					"pending"
+					"pending",
+					"cancelled"
 				]
 			},
 			"ExpenseAttr": {
@@ -871,6 +872,9 @@
 			},
 			"PurchaseOrderAttr": {
 				"properties": {
+					"isClosed": {
+						"type": "boolean"
+					},
 					"approverProfiles": {
 						"items": {
 							"$ref": "#/components/schemas/ProfileAttr"
@@ -1071,6 +1075,27 @@
 				},
 				"required": [
 					"rejectedBy",
+					"comments",
+					"id"
+				],
+				"type": "object"
+			},
+			"CancelPurchaseOrder": {
+				"properties": {
+					"cancelledBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"cancelledBy",
 					"comments",
 					"id"
 				],
@@ -2574,6 +2599,32 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/RejectPurchaseOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-order/cancelPurchaseOrder": {
+			"post": {
+				"operationId": "CancelPurchaseOrder",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CancelPurchaseOrder"
 							}
 						}
 					}

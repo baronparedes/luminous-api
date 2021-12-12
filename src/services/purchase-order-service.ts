@@ -31,6 +31,35 @@ export default class PurchaseOrderService extends BaseService {
     this.approvalCodeService = new ApprovalCodeService();
   }
 
+  public async cancelPurchaseOrder(
+    purchaseOrderId: number,
+    comments: string,
+    cancelledBy: number
+  ) {
+    return await this.repository.transaction(async transaction => {
+      const request = await PurchaseOrder.findOne({
+        where: {
+          id: purchaseOrderId,
+          status: 'approved',
+        },
+        include: [Disbursement],
+      });
+
+      if (!request) {
+        throw new ApiError(404, VERBIAGE.NOT_FOUND);
+      }
+
+      if (request.disbursements && request.disbursements?.length > 0) {
+        throw new ApiError(400, VERBIAGE.BAD_REQUEST);
+      }
+
+      request.comments = comments;
+      request.status = 'cancelled';
+      request.rejectedBy = cancelledBy;
+      await request.save({transaction});
+    });
+  }
+
   public async rejectPurchaseOrder(
     purchaseOrderId: number,
     comments: string,

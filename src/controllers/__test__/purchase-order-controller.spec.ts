@@ -127,6 +127,19 @@ describe('PurchaseOrderController', () => {
     expect(mock).toBeCalledTimes(1);
   });
 
+  it('should cancel purchase order', async () => {
+    const id = faker.datatype.number();
+    const cancelledBy = faker.datatype.number();
+    const comments = faker.random.words(10);
+    const mock = jest
+      .spyOn(PurchaseOrderService.prototype, 'cancelPurchaseOrder')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new PurchaseOrderController();
+    await target.cancelPurchaseOrder({id, comments, cancelledBy});
+    expect(mock).toBeCalledWith(id, comments, cancelledBy);
+    expect(mock).toBeCalledTimes(1);
+  });
+
   it('should notify purchase order approvers', async () => {
     const id = faker.datatype.number();
     const mock = jest

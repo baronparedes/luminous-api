@@ -4,7 +4,7 @@ export type PostingType = 'monthly' | 'manual' | 'accrued' | 'interest';
 export type PaymentType = 'cash' | 'check';
 export type TransactionType = 'charged' | 'collected';
 export type RecordStatus = 'active' | 'inactive';
-export type RequestStatus = 'approved' | 'rejected' | 'pending';
+export type RequestStatus = 'approved' | 'rejected' | 'pending' | 'cancelled';
 export type Month =
   | 'JAN'
   | 'FEB'
@@ -279,4 +279,5 @@ export type PurchaseOrderAttr = {
   requestedByProfile?: ProfileAttr;
   rejectedByProfile?: ProfileAttr;
   approverProfiles?: ProfileAttr[];
+  isClosed?: boolean;
 };

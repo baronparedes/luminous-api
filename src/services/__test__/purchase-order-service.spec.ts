@@ -130,6 +130,7 @@ describe('PurchaseOrderService', () => {
   describe('when purchase order is created', () => {
     let toBeApprovedPurchaseOrderId: number;
     let toBeRejectedPurchaseOrderId: number;
+    let toBeCancelledPurchaseOrderId: number;
 
     beforeAll(async () => {
       const request: CreateVoucherOrOrder = {
@@ -145,8 +146,10 @@ describe('PurchaseOrderService', () => {
           vendorName: faker.random.words(2),
         },
       };
+
       toBeApprovedPurchaseOrderId = await target.createPurchaseOrder(request);
       toBeRejectedPurchaseOrderId = await target.createPurchaseOrder(request);
+      toBeCancelledPurchaseOrderId = await target.createPurchaseOrder(request);
     });
 
     it('should reject purchase order', async () => {
@@ -159,6 +162,46 @@ describe('PurchaseOrderService', () => {
 
       const actual = await target.getPurchaseOrder(toBeRejectedPurchaseOrderId);
       expect(actual.status).toEqual('rejected');
+      expect(actual.comments).toEqual(expectedComments);
+      expect(actual.rejectedBy).toEqual(profile.id);
+      expect(actual.rejectedByProfile?.id).toEqual(profile.id);
+
+      const approvalCodesCount = await ApprovalCode.count({
+        where: {purchaseOrderId: toBeRejectedPurchaseOrderId},
+      });
+      expect(approvalCodesCount).toBe(0);
+    });
+
+    it('should cancel purchase order', async () => {
+      const expectedComments = faker.random.words(10);
+      await expect(
+        target.cancelPurchaseOrder(
+          toBeCancelledPurchaseOrderId,
+          expectedComments,
+          Number(profile.id)
+        )
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
+
+      const approvalCodes = await ApprovalCode.findAll({
+        where: {purchaseOrderId: toBeCancelledPurchaseOrderId},
+      });
+      const codes = approvalCodes.map(c => c.code);
+
+      await target.approvePurchaseOrder({
+        codes,
+        purchaseOrderId: toBeCancelledPurchaseOrderId,
+      });
+
+      await target.cancelPurchaseOrder(
+        toBeCancelledPurchaseOrderId,
+        expectedComments,
+        Number(profile.id)
+      );
+
+      const actual = await target.getPurchaseOrder(
+        toBeCancelledPurchaseOrderId
+      );
+      expect(actual.status).toEqual('cancelled');
       expect(actual.comments).toEqual(expectedComments);
       expect(actual.rejectedBy).toEqual(profile.id);
       expect(actual.rejectedByProfile?.id).toEqual(profile.id);
@@ -182,7 +225,7 @@ describe('PurchaseOrderService', () => {
 
       await expect(
         target.approvePurchaseOrder({...request, codes: [codes[0], codes[1]]})
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.INVALID_APPROVAL_CODES);
 
       await target.approvePurchaseOrder(request);
 
@@ -206,6 +249,7 @@ describe('PurchaseOrderService', () => {
       ${'approved'}
       ${'rejected'}
       ${'pending'}
+      ${'cancelled'}
     `('should get all purchase orders by $status', async ({status}) => {
       const actual = await target.getPurchaseOrdersByChargeAndStatus(
         chargeId,
@@ -222,7 +266,7 @@ describe('PurchaseOrderService', () => {
           faker.random.words(10),
           Number(profile.id)
         )
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
 
       await expect(
         target.rejectPurchaseOrder(
@@ -230,7 +274,15 @@ describe('PurchaseOrderService', () => {
           faker.random.words(10),
           Number(profile.id)
         )
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
+
+      await expect(
+        target.rejectPurchaseOrder(
+          toBeCancelledPurchaseOrderId,
+          faker.random.words(10),
+          Number(profile.id)
+        )
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
     });
 
     it('should only approve pending purchase orders', async () => {
@@ -248,14 +300,21 @@ describe('PurchaseOrderService', () => {
           ...request,
           purchaseOrderId: toBeApprovedPurchaseOrderId,
         })
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
 
       await expect(
         target.approvePurchaseOrder({
           ...request,
           purchaseOrderId: toBeApprovedPurchaseOrderId,
         })
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
+
+      await expect(
+        target.approvePurchaseOrder({
+          ...request,
+          purchaseOrderId: toBeCancelledPurchaseOrderId,
+        })
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
     });
 
     it('should only update pending purchase orders', async () => {
@@ -269,11 +328,15 @@ describe('PurchaseOrderService', () => {
 
       await expect(
         target.updatePurchaseOrder(toBeRejectedPurchaseOrderId, request)
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.BAD_REQUEST);
 
       await expect(
         target.updatePurchaseOrder(toBeApprovedPurchaseOrderId, request)
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.BAD_REQUEST);
+
+      await expect(
+        target.updatePurchaseOrder(toBeCancelledPurchaseOrderId, request)
+      ).rejects.toThrow(VERBIAGE.BAD_REQUEST);
     });
 
     it('should add disbursements when purchase order is approved', async () => {
@@ -285,7 +348,11 @@ describe('PurchaseOrderService', () => {
 
       await expect(
         target.addDisbursement(toBeRejectedPurchaseOrderId, disbursement)
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.BAD_REQUEST);
+
+      await expect(
+        target.addDisbursement(toBeCancelledPurchaseOrderId, disbursement)
+      ).rejects.toThrow(VERBIAGE.BAD_REQUEST);
 
       const actual = await target.addDisbursement(
         toBeApprovedPurchaseOrderId,
@@ -295,6 +362,23 @@ describe('PurchaseOrderService', () => {
       expect(actual.id).toBeDefined();
       expect(actual.purchaseOrderId).toEqual(toBeApprovedPurchaseOrderId);
       expect(actual.voucherId).toBeUndefined();
+    });
+
+    it('should not cancel purchase order when disbursements are made', async () => {
+      const disbursement = {
+        ...generateDisbursement(),
+        chargeId,
+        releasedBy: Number(profile.id),
+      };
+      await target.addDisbursement(toBeApprovedPurchaseOrderId, disbursement);
+
+      await expect(
+        target.cancelPurchaseOrder(
+          toBeApprovedPurchaseOrderId,
+          faker.random.words(2),
+          Number(profile.id)
+        )
+      ).rejects.toThrow(VERBIAGE.BAD_REQUEST);
     });
   });
 });

@@ -67,7 +67,10 @@ export default class AuthService {
       }
       const verified: jwt.VerifyCallback<ApprovedAny> = (err, decoded) => {
         if (err) {
-          if (err instanceof jwt.TokenExpiredError) {
+          if (
+            err instanceof jwt.TokenExpiredError ||
+            err instanceof jwt.JsonWebTokenError
+          ) {
             reject(new ApiError(401, VERBIAGE.FAILED_AUTHENTICATION));
           } else {
             reject(err);

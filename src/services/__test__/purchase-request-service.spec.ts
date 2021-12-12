@@ -159,7 +159,7 @@ describe('PurchaseRequestService', () => {
 
       await expect(
         target.approvePurchaseRequest({...request, codes: [codes[0], codes[1]]})
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.INVALID_APPROVAL_CODES);
 
       await target.approvePurchaseRequest(request);
 
@@ -201,7 +201,7 @@ describe('PurchaseRequestService', () => {
           faker.random.words(10),
           Number(profile.id)
         )
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
 
       await expect(
         target.rejectPurchaseRequest(
@@ -209,7 +209,7 @@ describe('PurchaseRequestService', () => {
           faker.random.words(10),
           Number(profile.id)
         )
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
     });
 
     it('should only approve pending purchase requests', async () => {
@@ -227,14 +227,14 @@ describe('PurchaseRequestService', () => {
           ...request,
           purchaseRequestId: toBeApprovedPurchaseRequestId,
         })
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
 
       await expect(
         target.approvePurchaseRequest({
           ...request,
           purchaseRequestId: toBeApprovedPurchaseRequestId,
         })
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.NOT_FOUND);
     });
 
     it('should only update pending purchase requests', async () => {
@@ -248,11 +248,11 @@ describe('PurchaseRequestService', () => {
 
       await expect(
         target.updatePurchaseRequest(toBeRejectedPurchaseRequestId, request)
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.BAD_REQUEST);
 
       await expect(
         target.updatePurchaseRequest(toBeApprovedPurchaseRequestId, request)
-      ).rejects.toThrow();
+      ).rejects.toThrow(VERBIAGE.BAD_REQUEST);
     });
   });
 });
