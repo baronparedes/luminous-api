@@ -22,6 +22,7 @@ export type PostTransactionBody = {
   year: number;
   month: Month;
   propertyId: number;
+  batchId?: string;
 };
 
 export type PostCollectionBody = {
@@ -48,7 +49,8 @@ export class TransactionController extends Controller {
     await this.transactionService.postMonthlyCharges(
       body.year,
       body.month,
-      body.propertyId
+      body.propertyId,
+      body.batchId
     );
   }
 

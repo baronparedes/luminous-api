@@ -28,7 +28,30 @@ describe('TransactionController', () => {
     expect(mock).toBeCalledWith(
       requestBody.year,
       requestBody.month,
-      requestBody.propertyId
+      requestBody.propertyId,
+      undefined
+    );
+    expect(mock).toBeCalledTimes(1);
+  });
+
+  it('should post transactions with batch id', async () => {
+    const batchId = faker.datatype.uuid();
+    const requestBody: PostTransactionBody = {
+      year: faker.datatype.number(),
+      month: 'APR',
+      propertyId: faker.datatype.number(),
+      batchId,
+    };
+    const mock = jest
+      .spyOn(TransactionService.prototype, 'postMonthlyCharges')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+    const target = new TransactionController();
+    await target.postMonthlyCharges(requestBody);
+    expect(mock).toBeCalledWith(
+      requestBody.year,
+      requestBody.month,
+      requestBody.propertyId,
+      batchId
     );
     expect(mock).toBeCalledTimes(1);
   });

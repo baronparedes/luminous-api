@@ -45,7 +45,8 @@ export default class TransactionService {
   public async calculateMonthlyCharges(
     year: number,
     month: Month,
-    propertyId: number
+    propertyId: number,
+    batchId?: string
   ) {
     const property = await Property.findByPk(propertyId);
     if (!property) {
@@ -69,6 +70,7 @@ export default class TransactionService {
         transactionType: 'charged',
         transactionPeriod,
         rateSnapshot: charge.rate,
+        batchId,
       };
       return result;
     });
@@ -99,7 +101,8 @@ export default class TransactionService {
   public async postMonthlyCharges(
     year: number,
     month: Month,
-    propertyId: number
+    propertyId: number,
+    batchId?: string
   ) {
     const transactions = await this.getTransactionByYearMonth(
       propertyId,
@@ -110,7 +113,8 @@ export default class TransactionService {
     const transactionsCalculated = await this.calculateMonthlyCharges(
       year,
       month,
-      propertyId
+      propertyId,
+      batchId
     );
     const duplicateCharges = this.getDuplicates(
       transactions,

@@ -1265,6 +1265,9 @@
 			},
 			"PostTransactionBody": {
 				"properties": {
+					"batchId": {
+						"type": "string"
+					},
 					"propertyId": {
 						"type": "number",
 						"format": "double"

@@ -86,6 +86,26 @@ describe('TransactionService', () => {
     }
   });
 
+  it('should post monthly charges with batch id', async () => {
+    const batchId = faker.datatype.uuid();
+    await target.postMonthlyCharges(2021, 'MAR', property.id, batchId);
+    const actualCharges = await target.getTransactionByYearMonth(
+      property.id,
+      2021,
+      'MAR',
+      'charged'
+    );
+    const expectedCharges = SEED.CHARGES.filter(
+      c => c.postingType !== 'manual'
+    );
+    for (const expected of expectedCharges) {
+      const actual = actualCharges.find(c => c.chargeId === expected.id);
+      expect(actual).toBeDefined();
+      expect(actual?.rateSnapshot).toEqual(expected.rate);
+      expect(actual?.batchId).toEqual(batchId);
+    }
+  });
+
   it('should save transactions', async () => {
     const transactionPeriod = toTransactionPeriod(2019, 'DEC');
     const batchId = faker.datatype.uuid();
