@@ -89,7 +89,7 @@ export default class TransactionService {
           t.propertyId === pt.propertyId &&
           isSamePeriod(t.transactionPeriod, pt.transactionPeriod) &&
           t.transactionType === pt.transactionType &&
-          t.amount === pt.amount
+          Number(t.amount) === Number(pt.amount)
       );
       found.length > 0 && dups.push(...found);
     }

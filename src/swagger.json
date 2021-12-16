@@ -255,9 +255,40 @@
 				],
 				"type": "object"
 			},
+			"CategorizedExpenseView": {
+				"properties": {
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"categoryId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"amount",
+					"category",
+					"description",
+					"categoryId"
+				],
+				"type": "object"
+			},
 			"DashboardView": {
 				"properties": {
-					"chargeExpense": {
+					"categorizedExpense": {
+						"items": {
+							"$ref": "#/components/schemas/CategorizedExpenseView"
+						},
+						"type": "array"
+					},
+					"chargeDisbursed": {
 						"items": {
 							"$ref": "#/components/schemas/ChargeDisbursedView"
 						},
@@ -281,7 +312,8 @@
 					}
 				},
 				"required": [
-					"chargeExpense",
+					"categorizedExpense",
+					"chargeDisbursed",
 					"propertyBalance",
 					"collectionEfficieny",
 					"year"
