@@ -1,3 +1,5 @@
+import {Month} from './@types/models';
+
 export const VERBIAGE = {
   FAILED_AUTHENTICATION: 'unable to authenticate',
   EXPIRED_AUTHENTICATION: 'authentication expired',
@@ -15,3 +17,18 @@ export const VERBIAGE = {
 export const CONSTANTS = {
   COMMUNITY_ID: 1, //TODO: Hard coded for now until we migrate to multiple communities
 };
+
+export const MONTHS: Month[] = [
+  'JAN',
+  'FEB',
+  'MAR',
+  'APR',
+  'MAY',
+  'JUN',
+  'JUL',
+  'AUG',
+  'SEP',
+  'OCT',
+  'NOV',
+  'DEC',
+];

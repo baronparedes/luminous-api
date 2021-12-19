@@ -9,7 +9,7 @@ import {
 import {toTransactionPeriod} from '../../@utils/dates';
 import {generateCharge} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
-import {CONSTANTS} from '../../constants';
+import {CONSTANTS, MONTHS} from '../../constants';
 import Transaction from '../../models/transaction-model';
 import ChargeService from '../../services/charge-service';
 
@@ -108,10 +108,10 @@ describe('ChargeService', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('should calculate charge when charge type is unit', async () => {
+  it('should calculate charge when charge type is unit and posting type is monthly', async () => {
     const targetChargeType: ChargeType = 'unit';
     const targetCharge = SEED.CHARGES.find(
-      c => c.chargeType === targetChargeType
+      c => c.chargeType === targetChargeType && c.postingType === 'monthly'
     ) as ChargeAttr;
     const targetProperty: PropertyAttr = {
       ...property,
@@ -125,6 +125,32 @@ describe('ChargeService', () => {
       'JAN'
     );
     expect(actual).toBe(Number(expected.toFixed(2)));
+  });
+
+  it('should calculate charge when charge type is unit and posting type is quarterly', async () => {
+    const targetChargeType: ChargeType = 'unit';
+    const targetCharge = SEED.CHARGES.find(
+      c => c.chargeType === targetChargeType && c.postingType === 'quarterly'
+    ) as ChargeAttr;
+    const targetProperty: PropertyAttr = {
+      ...property,
+      status: 'active',
+    };
+    const expected = targetProperty.floorArea * targetCharge.rate;
+    for (const targetMonth of MONTHS) {
+      const actual = await target.calculateAmountByChargeType(
+        targetProperty,
+        targetCharge,
+        2021,
+        targetMonth
+      );
+      const isQuarterly = ['JAN', 'APR', 'JUL', 'OCT'].includes(targetMonth);
+      if (isQuarterly) {
+        expect(actual).toBe(Number(expected.toFixed(2)));
+      } else {
+        expect(actual).toBe(0);
+      }
+    }
   });
 
   it('should calculate charge when charge type is percentage and posting type is accrued with no threshold', async () => {

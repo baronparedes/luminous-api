@@ -21,7 +21,7 @@
        "code": "RPT COMMON",
        "rate": 12.76,
        "chargeType": "unit",
-       "postingType": "monthly",
+       "postingType": "quarterly",
        "priority": 3,
        "passOn": true
     },

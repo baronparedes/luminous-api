@@ -1,6 +1,11 @@
 export type ProfileType = 'stakeholder' | 'admin' | 'unit owner';
 export type ChargeType = 'unit' | 'percentage' | 'amount';
-export type PostingType = 'monthly' | 'manual' | 'accrued' | 'interest';
+export type PostingType =
+  | 'monthly'
+  | 'manual'
+  | 'accrued'
+  | 'interest'
+  | 'quarterly';
 export type PaymentType = 'cash' | 'check';
 export type TransactionType = 'charged' | 'collected';
 export type RecordStatus = 'active' | 'inactive';

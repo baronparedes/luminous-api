@@ -92,7 +92,7 @@ export const SEED = {
       code: 'RPT COMMON',
       rate: 12.76,
       chargeType: 'unit' as ChargeType,
-      postingType: 'monthly' as PostingType,
+      postingType: 'quarterly' as PostingType,
       priority: 3,
       passOn: true,
     },

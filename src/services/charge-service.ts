@@ -161,6 +161,13 @@ export default class ChargeService {
       return Number(amount.toFixed(2));
     }
 
+    if (charge.chargeType === 'unit' && charge.postingType === 'quarterly') {
+      if (['JAN', 'APR', 'JUL', 'OCT'].includes(month)) {
+        const amount = property.floorArea * charge.rate;
+        return Number(amount.toFixed(2));
+      }
+    }
+
     if (
       charge.chargeType === 'percentage' &&
       charge.postingType === 'accrued'
