@@ -103,7 +103,8 @@
 					"monthly",
 					"manual",
 					"accrued",
-					"interest"
+					"interest",
+					"quarterly"
 				]
 			},
 			"ChargeAttr": {

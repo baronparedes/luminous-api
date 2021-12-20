@@ -69,7 +69,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PostingType": {
         "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["monthly"]},{"dataType":"enum","enums":["manual"]},{"dataType":"enum","enums":["accrued"]},{"dataType":"enum","enums":["interest"]}],"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["monthly"]},{"dataType":"enum","enums":["manual"]},{"dataType":"enum","enums":["accrued"]},{"dataType":"enum","enums":["interest"]},{"dataType":"enum","enums":["quarterly"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ChargeAttr": {
