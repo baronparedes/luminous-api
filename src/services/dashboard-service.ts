@@ -3,6 +3,7 @@ import useCategorizedExpense from '../hooks/views/use-categorized-expense';
 import useChargeDisbursements from '../hooks/views/use-charge-disbursements';
 import useCollectionEfficiency from '../hooks/views/use-collection-efficiency';
 import usePropertyBalance from '../hooks/views/use-property-balance';
+import usePropertyBalanceByCharge from '../hooks/views/use-property-balance-by-charge';
 import BaseService from './@base-service';
 
 export default class DashboardService extends BaseService {
@@ -23,6 +24,11 @@ export default class DashboardService extends BaseService {
         this.repository
       );
 
+      const propertyBalanceByCharge = await usePropertyBalanceByCharge(
+        this.communityId,
+        this.repository
+      );
+
       const chargeDisbursed = await useChargeDisbursements(
         year,
         this.repository
@@ -38,6 +44,7 @@ export default class DashboardService extends BaseService {
         year,
         collectionEfficieny,
         propertyBalance,
+        propertyBalanceByCharge,
         chargeDisbursed,
         categorizedExpense,
       };

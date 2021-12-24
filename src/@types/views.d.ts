@@ -6,6 +6,7 @@ export type DashboardView = {
   propertyBalance: PropertyBalanceView[];
   chargeDisbursed: ChargeDisbursedView[];
   categorizedExpense: CategorizedExpenseView[];
+  propertyBalanceByCharge: PropertyBalanceByChargeView[];
 };
 
 export type TransactionBreakdownView = {
@@ -54,6 +55,15 @@ export type PropertyBalanceView = {
   charged: number;
   collected: number;
   balance: number;
+};
+
+export type PropertyBalanceByChargeView = {
+  id: number;
+  code: string;
+  address: string;
+  floorArea: string;
+  balance: number;
+  chargeCode: string;
 };
 
 export type CategorizedExpenseView = {

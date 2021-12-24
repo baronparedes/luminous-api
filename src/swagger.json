@@ -281,8 +281,47 @@
 				],
 				"type": "object"
 			},
+			"PropertyBalanceByChargeView": {
+				"properties": {
+					"chargeCode": {
+						"type": "string"
+					},
+					"balance": {
+						"type": "number",
+						"format": "double"
+					},
+					"floorArea": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"code": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeCode",
+					"balance",
+					"floorArea",
+					"address",
+					"code",
+					"id"
+				],
+				"type": "object"
+			},
 			"DashboardView": {
 				"properties": {
+					"propertyBalanceByCharge": {
+						"items": {
+							"$ref": "#/components/schemas/PropertyBalanceByChargeView"
+						},
+						"type": "array"
+					},
 					"categorizedExpense": {
 						"items": {
 							"$ref": "#/components/schemas/CategorizedExpenseView"
@@ -313,6 +352,7 @@
 					}
 				},
 				"required": [
+					"propertyBalanceByCharge",
 					"categorizedExpense",
 					"chargeDisbursed",
 					"propertyBalance",

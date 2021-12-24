@@ -123,9 +123,14 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"amount":{"dataType":"double","required":true},"category":{"dataType":"string","required":true},"description":{"dataType":"string","required":true},"categoryId":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PropertyBalanceByChargeView": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"chargeCode":{"dataType":"string","required":true},"balance":{"dataType":"double","required":true},"floorArea":{"dataType":"string","required":true},"address":{"dataType":"string","required":true},"code":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "DashboardView": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"categorizedExpense":{"dataType":"array","array":{"dataType":"refAlias","ref":"CategorizedExpenseView"},"required":true},"chargeDisbursed":{"dataType":"array","array":{"dataType":"refAlias","ref":"ChargeDisbursedView"},"required":true},"propertyBalance":{"dataType":"array","array":{"dataType":"refAlias","ref":"PropertyBalanceView"},"required":true},"collectionEfficieny":{"dataType":"array","array":{"dataType":"refAlias","ref":"CollectionEfficiencyView"},"required":true},"year":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"propertyBalanceByCharge":{"dataType":"array","array":{"dataType":"refAlias","ref":"PropertyBalanceByChargeView"},"required":true},"categorizedExpense":{"dataType":"array","array":{"dataType":"refAlias","ref":"CategorizedExpenseView"},"required":true},"chargeDisbursed":{"dataType":"array","array":{"dataType":"refAlias","ref":"ChargeDisbursedView"},"required":true},"propertyBalance":{"dataType":"array","array":{"dataType":"refAlias","ref":"PropertyBalanceView"},"required":true},"collectionEfficieny":{"dataType":"array","array":{"dataType":"refAlias","ref":"CollectionEfficiencyView"},"required":true},"year":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "DisbursementBreakdownView": {
