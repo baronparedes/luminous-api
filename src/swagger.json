@@ -905,6 +905,9 @@
 			},
 			"PurchaseOrderAttr": {
 				"properties": {
+					"series": {
+						"type": "string"
+					},
 					"isClosed": {
 						"type": "boolean"
 					},
@@ -1136,6 +1139,9 @@
 			},
 			"PurchaseRequestAttr": {
 				"properties": {
+					"series": {
+						"type": "string"
+					},
 					"approverProfiles": {
 						"items": {
 							"$ref": "#/components/schemas/ProfileAttr"
@@ -1388,6 +1394,9 @@
 					},
 					"charge": {
 						"$ref": "#/components/schemas/ChargeAttr"
+					},
+					"series": {
+						"type": "string"
 					}
 				},
 				"required": [

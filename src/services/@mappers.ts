@@ -168,6 +168,7 @@ export function mapVoucher(model: Voucher): VoucherAttr {
       ? mapProfile(model.requestedByProfile as Profile)
       : undefined,
     charge: model.charge ? mapCharge(model.charge as Charge) : undefined,
+    series: model.series,
   };
 }
 
@@ -192,6 +193,7 @@ export function mapPurchaseRequest(
     requestedByProfile: model.requestedByProfile
       ? mapProfile(model.requestedByProfile as Profile)
       : undefined,
+    series: model.series,
   };
 }
 
@@ -219,6 +221,7 @@ export function mapPurchaseOrder(model: PurchaseOrder): PurchaseOrderAttr {
     purchaseRequestId: model.purchaseRequestId,
     vendorName: model.vendorName,
     otherDetails: model.otherDetails,
+    series: model.series,
   };
 }
 

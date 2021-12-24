@@ -1,3 +1,4 @@
+import {Op} from 'sequelize';
 import {Sequelize} from 'sequelize-typescript';
 
 import {
@@ -8,7 +9,9 @@ import {
   RequestStatus,
   VoucherAttr,
 } from '../@types/models';
+import {getCurrentMonthYear} from '../@utils/dates';
 import {sum} from '../@utils/helpers';
+import {byYear} from '../@utils/helpers-sequelize';
 import config from '../config';
 import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
@@ -28,6 +31,16 @@ export default class VoucherService extends BaseService {
   constructor(repository?: Sequelize) {
     super(repository);
     this.approvalCodeService = new ApprovalCodeService();
+  }
+
+  private async getCurrentYearSeries() {
+    const {year} = getCurrentMonthYear();
+    const series = await Voucher.count({
+      where: {
+        [Op.and]: [byYear('created_at', year)],
+      },
+    });
+    return `${year}-${series + 1}`;
   }
 
   public async rejectVoucher(
@@ -129,6 +142,7 @@ export default class VoucherService extends BaseService {
       }
 
       const totalCost = sum(voucher.expenses.map(e => e.unitCost * e.quantity));
+      const series = await this.getCurrentYearSeries();
 
       const newRecord = new Voucher({
         description: voucher.description,
@@ -138,6 +152,7 @@ export default class VoucherService extends BaseService {
         communityId: CONSTANTS.COMMUNITY_ID,
         totalCost,
         status: 'pending',
+        series,
       });
 
       await newRecord.save({transaction});

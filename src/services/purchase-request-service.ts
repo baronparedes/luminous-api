@@ -1,3 +1,4 @@
+import {Op} from 'sequelize';
 import {Sequelize} from 'sequelize-typescript';
 
 import {
@@ -8,7 +9,9 @@ import {
   PurchaseRequestAttr,
   RequestStatus,
 } from '../@types/models';
+import {getCurrentMonthYear} from '../@utils/dates';
 import {sum} from '../@utils/helpers';
+import {byYear} from '../@utils/helpers-sequelize';
 import config from '../config';
 import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
@@ -26,6 +29,16 @@ export default class PurchaseRequestService extends BaseService {
   constructor(repository?: Sequelize) {
     super(repository);
     this.approvalCodeService = new ApprovalCodeService();
+  }
+
+  private async getCurrentYearSeries() {
+    const {year} = getCurrentMonthYear();
+    const series = await PurchaseRequest.count({
+      where: {
+        [Op.and]: [byYear('created_at', year)],
+      },
+    });
+    return `${year}-${series + 1}`;
   }
 
   public async rejectPurchaseRequest(
@@ -110,6 +123,7 @@ export default class PurchaseRequestService extends BaseService {
       const totalCost = sum(
         purchaseRequest.expenses.map(e => e.unitCost * e.quantity)
       );
+      const series = await this.getCurrentYearSeries();
 
       const newRecord = new PurchaseRequest({
         description: purchaseRequest.description,
@@ -119,6 +133,7 @@ export default class PurchaseRequestService extends BaseService {
         communityId: CONSTANTS.COMMUNITY_ID,
         totalCost,
         status: 'pending',
+        series,
       });
 
       await newRecord.save({transaction});

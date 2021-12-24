@@ -60,6 +60,10 @@ class PurchaseRequest extends Model implements PurchaseRequestAttr {
   @Column
   comments?: string;
 
+  @AllowNull(true)
+  @Column
+  series?: string;
+
   @BelongsTo(() => Profile)
   requestedByProfile?: ProfileAttr;
 

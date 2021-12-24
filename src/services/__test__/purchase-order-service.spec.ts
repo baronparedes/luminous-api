@@ -5,6 +5,7 @@ import {
   CreateVoucherOrOrder,
   ProfileAttr,
 } from '../../@types/models';
+import {getCurrentMonthYear} from '../../@utils/dates';
 import {
   generateDisbursement,
   generateExpense,
@@ -21,6 +22,7 @@ import PurchaseOrderService from '../purchase-order-service';
 describe('PurchaseOrderService', () => {
   let target: PurchaseOrderService;
 
+  const {year} = getCurrentMonthYear();
   const profile = faker.random.arrayElement(SEED.PROFILES);
   const {id: chargeId} = faker.random.arrayElement(SEED.CHARGES);
 
@@ -106,6 +108,13 @@ describe('PurchaseOrderService', () => {
     expect(actualId).toBeDefined();
     expect(actualApprovalCodeCount).toEqual(3);
     expect(actualExpenseCount).toEqual(2);
+
+    const actualCreated = await target.getPurchaseOrder(actualId);
+    expect(actualCreated.description).toEqual(request.description);
+    expect(actualCreated.requestedBy).toEqual(request.requestedBy);
+    expect(actualCreated.chargeId).toEqual(request.chargeId);
+    expect(actualCreated.expenses).toHaveLength(2);
+    expect(actualCreated.series).toEqual(`${year}-1`);
 
     await expect(
       target.updatePurchaseOrder(actualId, {

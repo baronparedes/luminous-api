@@ -214,6 +214,7 @@ export interface VoucherAttr {
   rejectedByProfile?: ProfileAttr;
   approverProfiles?: ProfileAttr[];
   charge?: ChargeAttr;
+  series?: string;
 }
 export interface DisbursementAttr {
   id?: number;
@@ -262,6 +263,7 @@ export type PurchaseRequestAttr = {
   requestedByProfile?: ProfileAttr;
   rejectedByProfile?: ProfileAttr;
   approverProfiles?: ProfileAttr[];
+  series?: string;
 };
 
 export type PurchaseOrderAttr = {
@@ -285,4 +287,5 @@ export type PurchaseOrderAttr = {
   rejectedByProfile?: ProfileAttr;
   approverProfiles?: ProfileAttr[];
   isClosed?: boolean;
+  series?: string;
 };

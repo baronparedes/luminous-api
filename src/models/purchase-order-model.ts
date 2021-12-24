@@ -88,6 +88,10 @@ class PurchaseOrder extends Model implements PurchaseOrderAttr {
   @Column
   comments?: string;
 
+  @AllowNull(true)
+  @Column
+  series?: string;
+
   @BelongsTo(() => Profile)
   requestedByProfile?: ProfileAttr;
 

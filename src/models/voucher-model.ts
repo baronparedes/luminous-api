@@ -63,6 +63,10 @@ class Voucher extends Model implements VoucherAttr {
   @Column
   comments?: string;
 
+  @AllowNull(true)
+  @Column
+  series?: string;
+
   @BelongsTo(() => Profile)
   requestedByProfile?: ProfileAttr;
 
