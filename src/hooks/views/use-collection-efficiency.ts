@@ -12,11 +12,12 @@ export default async function useCollectionEfficiency(
     SELECT
         SUM(t.amount) as amount,
         t.transaction_period as "transactionPeriod",
-        t.transaction_type as "transactionType"
+        t.transaction_type as "transactionType",
+        c.code as "chargeCode"
     FROM transactions t
     JOIN charges c ON t.charge_id = c.id AND c.community_id = :communityId
     WHERE SUBSTR(CAST(t.transaction_period AS text), 1, 4) = :year
-    GROUP BY t.transaction_period, t.transaction_type
+    GROUP BY t.transaction_period, t.transaction_type, c.code
     HAVING SUM(t.amount) > 0
     ORDER BY t.transaction_period`;
 

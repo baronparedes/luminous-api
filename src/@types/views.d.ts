@@ -41,6 +41,7 @@ export type CollectionEfficiencyView = {
   amount: number;
   transactionPeriod: Date;
   transactionType: TransactionType;
+  chargeCode: string;
 };
 
 export type ChargeDisbursedView = {

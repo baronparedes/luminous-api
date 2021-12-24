@@ -184,6 +184,9 @@
 			},
 			"CollectionEfficiencyView": {
 				"properties": {
+					"chargeCode": {
+						"type": "string"
+					},
 					"transactionType": {
 						"$ref": "#/components/schemas/TransactionType"
 					},
@@ -197,6 +200,7 @@
 					}
 				},
 				"required": [
+					"chargeCode",
 					"transactionType",
 					"transactionPeriod",
 					"amount"

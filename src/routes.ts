@@ -105,7 +105,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CollectionEfficiencyView": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"transactionType":{"ref":"TransactionType","required":true},"transactionPeriod":{"dataType":"datetime","required":true},"amount":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"chargeCode":{"dataType":"string","required":true},"transactionType":{"ref":"TransactionType","required":true},"transactionPeriod":{"dataType":"datetime","required":true},"amount":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PropertyBalanceView": {
