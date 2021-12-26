@@ -68,8 +68,11 @@ export type PropertyBalanceByChargeView = {
 };
 
 export type CategorizedExpenseView = {
-  categoryId: number;
-  description: string;
   category: string;
-  amount: number;
+  parentCategory: string;
+  totalCost: number;
+  chargeCode: string;
+  passOn?: boolean;
+  transactionPeriod: Date;
+  series: string;
 };

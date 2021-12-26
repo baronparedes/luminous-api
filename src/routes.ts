@@ -120,7 +120,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CategorizedExpenseView": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"amount":{"dataType":"double","required":true},"category":{"dataType":"string","required":true},"description":{"dataType":"string","required":true},"categoryId":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"series":{"dataType":"string","required":true},"transactionPeriod":{"dataType":"datetime","required":true},"passOn":{"dataType":"boolean"},"chargeCode":{"dataType":"string","required":true},"totalCost":{"dataType":"double","required":true},"parentCategory":{"dataType":"string","required":true},"category":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PropertyBalanceByChargeView": {

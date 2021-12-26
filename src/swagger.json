@@ -262,26 +262,37 @@
 			},
 			"CategorizedExpenseView": {
 				"properties": {
-					"amount": {
+					"series": {
+						"type": "string"
+					},
+					"transactionPeriod": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"passOn": {
+						"type": "boolean"
+					},
+					"chargeCode": {
+						"type": "string"
+					},
+					"totalCost": {
 						"type": "number",
 						"format": "double"
+					},
+					"parentCategory": {
+						"type": "string"
 					},
 					"category": {
 						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"categoryId": {
-						"type": "number",
-						"format": "double"
 					}
 				},
 				"required": [
-					"amount",
-					"category",
-					"description",
-					"categoryId"
+					"series",
+					"transactionPeriod",
+					"chargeCode",
+					"totalCost",
+					"parentCategory",
+					"category"
 				],
 				"type": "object"
 			},
