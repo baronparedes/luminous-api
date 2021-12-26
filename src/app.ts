@@ -24,13 +24,13 @@ app.use(compression());
 app.use(helmet());
 app.use(morgan(config.IS_PROD ? 'tiny' : 'dev'));
 
-if (!config.IS_PROD) {
-  app.use(
-    cors({
-      origin: config.CLIENT_URI,
-    })
-  );
+app.use(
+  cors({
+    origin: config.CLIENT_URI,
+  })
+);
 
+if (!config.IS_PROD) {
   app.use('/docs', swaggerUi.serve, async (_: Request, res: Response) => {
     return res.send(swaggerUi.generateHTML(swaggerDocument));
   });
