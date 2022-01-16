@@ -390,6 +390,11 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"month":{"ref":"Month","required":true},"year":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PropertyCollectionByChargeView": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"chargeCode":{"dataType":"string","required":true},"collected":{"dataType":"double","required":true},"floorArea":{"dataType":"string","required":true},"address":{"dataType":"string","required":true},"code":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "VoucherAttr": {
         "dataType": "refObject",
         "properties": {
@@ -1708,6 +1713,31 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.suggestPaymentBreakdown.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/transaction/getCollectionBreakdown/:year/:month',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function TransactionController_getCollectionBreakdown(request: any, response: any, next: any) {
+            const args = {
+                    year: {"in":"path","name":"year","required":true,"dataType":"double"},
+                    month: {"in":"path","name":"month","required":true,"ref":"Month"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TransactionController();
+
+
+            const promise = controller.getCollectionBreakdown.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

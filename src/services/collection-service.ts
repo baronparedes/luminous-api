@@ -1,5 +1,11 @@
-import {PaymentDetailAttr, Period, TransactionAttr} from '../@types/models';
+import {
+  Month,
+  PaymentDetailAttr,
+  Period,
+  TransactionAttr,
+} from '../@types/models';
 import {toTransactionPeriod} from '../@utils/dates';
+import usePropertyCollectedByCharge from '../hooks/views/use-property-collected-by-charge';
 import useTransactionBreakdown from '../hooks/views/use-transaction-breakdown';
 import Charge from '../models/charge-model';
 import PaymentDetail from '../models/payment-detail-model';
@@ -78,5 +84,18 @@ export default class CollectionService extends BaseService {
     }
 
     return result;
+  }
+
+  public async getPropertyCollectionByCharge(
+    communityId: number,
+    year: number,
+    month: Month
+  ) {
+    return await usePropertyCollectedByCharge(
+      communityId,
+      year,
+      month,
+      this.repository
+    );
   }
 }

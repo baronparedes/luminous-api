@@ -1383,6 +1383,39 @@
 				],
 				"type": "object"
 			},
+			"PropertyCollectionByChargeView": {
+				"properties": {
+					"chargeCode": {
+						"type": "string"
+					},
+					"collected": {
+						"type": "number",
+						"format": "double"
+					},
+					"floorArea": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"code": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeCode",
+					"collected",
+					"floorArea",
+					"address",
+					"code",
+					"id"
+				],
+				"type": "object"
+			},
 			"VoucherAttr": {
 				"properties": {
 					"id": {
@@ -3343,6 +3376,50 @@
 					},
 					{
 						"in": "query",
+						"name": "month",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
+		"/api/transaction/getCollectionBreakdown/{year}/{month}": {
+			"get": {
+				"operationId": "GetCollectionBreakdown",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyCollectionByChargeView"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
 						"name": "month",
 						"required": true,
 						"schema": {

@@ -13,7 +13,7 @@ import {
 } from 'tsoa';
 
 import {Month, PaymentDetailAttr, TransactionAttr} from '../@types/models';
-import {VERBIAGE} from '../constants';
+import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
 import CollectionService from '../services/collection-service';
 import TransactionService from '../services/transaction-service';
@@ -96,5 +96,18 @@ export class TransactionController extends Controller {
       amount,
       {year, month}
     );
+  }
+
+  @Get('/getCollectionBreakdown/{year}/{month}')
+  public async getCollectionBreakdown(
+    @Path() year: number,
+    @Path() month: Month
+  ) {
+    const value = await this.collectionService.getPropertyCollectionByCharge(
+      CONSTANTS.COMMUNITY_ID,
+      year,
+      month
+    );
+    return value;
   }
 }

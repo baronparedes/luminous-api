@@ -67,6 +67,15 @@ export type PropertyBalanceByChargeView = {
   chargeCode: string;
 };
 
+export type PropertyCollectionByChargeView = {
+  id: number;
+  code: string;
+  address: string;
+  floorArea: string;
+  collected: number;
+  chargeCode: string;
+};
+
 export type CategorizedExpenseView = {
   category: string;
   parentCategory: string;
