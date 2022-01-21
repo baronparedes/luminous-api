@@ -35,7 +35,7 @@
     {
        "id": 5,
        "code": "PENALTY",
-       "rate": 0.02,
+       "rate": 0.01,
        "chargeType": "percentage",
        "postingType": "accrued",
        "thresholdInMonths": 2

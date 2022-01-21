@@ -14,6 +14,11 @@ import Charge from '../models/charge-model';
 import Transaction from '../models/transaction-model';
 import {mapCharge} from './@mappers';
 
+function formatAmount(amount: number) {
+  if (amount <= 0) return 0;
+  return Number(amount.toFixed(2));
+}
+
 export default class ChargeService {
   private async hasPreviouslyPostedPaymentsSince(
     propertyId: number,
@@ -55,8 +60,7 @@ export default class ChargeService {
       prev.month
     );
     const amount = balance * charge.rate;
-    if (amount < 0) return 0;
-    return Number(amount.toFixed(2));
+    return formatAmount(amount);
   }
 
   private async calculateAmountByAccruedPercentage(
@@ -68,8 +72,7 @@ export default class ChargeService {
     const balance = await this.getPropertyBalance(propertyId);
     if (!charge.thresholdInMonths) {
       const amount = balance * charge.rate;
-      if (amount < 0) return 0;
-      return Number(amount.toFixed(2));
+      return formatAmount(amount);
     }
 
     const hasPaid = await this.hasPreviouslyPostedPaymentsSince(
@@ -80,8 +83,7 @@ export default class ChargeService {
     );
     if (!hasPaid) {
       const amount = balance * charge.rate;
-      if (amount < 0) return 0;
-      return Number(amount.toFixed(2));
+      return formatAmount(amount);
     }
 
     return 0;
@@ -158,13 +160,13 @@ export default class ChargeService {
   ): Promise<number> {
     if (charge.chargeType === 'unit' && charge.postingType === 'monthly') {
       const amount = property.floorArea * charge.rate;
-      return Number(amount.toFixed(2));
+      return formatAmount(amount);
     }
 
     if (charge.chargeType === 'unit' && charge.postingType === 'quarterly') {
       if (['JAN', 'APR', 'JUL', 'OCT'].includes(month)) {
         const amount = property.floorArea * charge.rate;
-        return Number(amount.toFixed(2));
+        return formatAmount(amount);
       }
     }
 
