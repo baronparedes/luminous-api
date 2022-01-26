@@ -4,7 +4,7 @@ import {
   Period,
   TransactionAttr,
 } from '../@types/models';
-import {toTransactionPeriod} from '../@utils/dates';
+import {getCurrentMonthYear, toTransactionPeriod} from '../@utils/dates';
 import usePropertyCollectedByCharge from '../hooks/views/use-property-collected-by-charge';
 import useTransactionBreakdown from '../hooks/views/use-transaction-breakdown';
 import Charge from '../models/charge-model';
@@ -14,8 +14,10 @@ import BaseService from './@base-service';
 
 export default class CollectionService extends BaseService {
   private async getTransactionBreakdown(propertyId: number) {
+    const currentPeriod = getCurrentMonthYear();
     const breakdown = await useTransactionBreakdown(
       propertyId,
+      currentPeriod,
       this.repository
     );
     return breakdown;

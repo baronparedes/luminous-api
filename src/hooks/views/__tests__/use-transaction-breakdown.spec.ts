@@ -1,3 +1,4 @@
+import faker from 'faker';
 import {Sequelize} from 'sequelize-typescript';
 
 import {TransactionType} from '../../../@types/models';
@@ -9,6 +10,13 @@ import useTransactionBreakdown from '../use-transaction-breakdown';
 describe('useTransactionBreakdown', () => {
   let sequelize: Sequelize;
   const seedTransactions = [
+    {
+      amount: faker.datatype.number(),
+      chargeId: 1,
+      propertyId: 1,
+      transactionPeriod: toTransactionPeriod(2021, 'APR'),
+      transactionType: 'charged' as TransactionType,
+    },
     {
       amount: 2005,
       chargeId: 1,
@@ -59,7 +67,11 @@ describe('useTransactionBreakdown', () => {
   });
 
   it('should query transaction breakdown', async () => {
-    const result = await useTransactionBreakdown(1, sequelize);
+    const result = await useTransactionBreakdown(
+      1,
+      {year: 2021, month: 'MAR'},
+      sequelize
+    );
     expect(result.length).toEqual(5);
     expect(result.find(c => c.chargeId === 1)?.amount).toEqual(5005);
     expect(result.find(c => c.chargeId === 2)?.amount).toEqual(1058.75);

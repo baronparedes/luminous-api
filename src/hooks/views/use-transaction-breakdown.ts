@@ -1,12 +1,16 @@
 import {Sequelize} from 'sequelize-typescript';
 
+import {Period} from '../../@types/models';
 import {TransactionBreakdownView} from '../../@types/views';
+import {toTransactionPeriod} from '../../@utils/dates';
 import useSql from '../use-sql';
 
 export default async function useTransactionBreakdown(
   propertyId: number,
+  period: Period,
   db: Sequelize
 ) {
+  const transactionPeriod = toTransactionPeriod(period.year, period.month);
   const sql = `
     WITH breakdown_cte AS (
       SELECT 
@@ -16,6 +20,7 @@ export default async function useTransactionBreakdown(
       FROM transactions t
       JOIN charges c ON c.id = t.charge_id
       WHERE t.property_id = :propertyId
+      AND t.transaction_period <= :transactionPeriod
       GROUP BY t.charge_id, t.transaction_type
     ), calculated_breakdown AS (
       SELECT
@@ -33,6 +38,9 @@ export default async function useTransactionBreakdown(
     FROM calculated_breakdown WHERE amount > 0`;
 
   const {query} = useSql(db);
-  const result = await query<TransactionBreakdownView>(sql, {propertyId});
+  const result = await query<TransactionBreakdownView>(sql, {
+    propertyId,
+    transactionPeriod,
+  });
   return result;
 }
