@@ -113,4 +113,12 @@ export class PropertyController extends Controller {
   ) {
     return await this.propertyService.getPaymentHistory(propertyId, year);
   }
+
+  @Get('/getTransactionHistory/{propertyId}/{year}')
+  public async getTransactionHistory(
+    @Path() propertyId: number,
+    @Path() year: number
+  ) {
+    return await this.propertyService.getTransactionHistory(propertyId, year);
+  }
 }

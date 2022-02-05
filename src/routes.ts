@@ -1087,6 +1087,31 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/property/getTransactionHistory/:propertyId/:year',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function PropertyController_getTransactionHistory(request: any, response: any, next: any) {
+            const args = {
+                    propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
+                    year: {"in":"path","name":"year","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PropertyController();
+
+
+            const promise = controller.getTransactionHistory.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/purchase-order/getPurchaseOrder/:id',
             authenticateMiddleware([{"bearer":[]}]),
 

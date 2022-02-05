@@ -1,14 +1,16 @@
 import {FindOptions, Op} from 'sequelize';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
-import {iLike} from '../@utils/helpers-sequelize';
+import {byYear, iLike} from '../@utils/helpers-sequelize';
 import {CONSTANTS, VERBIAGE} from '../constants';
 import usePaymentHistory from '../hooks/views/use-payment-history';
+import Charge from '../models/charge-model';
 import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
+import Transaction from '../models/transaction-model';
 import BaseService from './@base-service';
-import {mapProperty, mapPropertyAssignment} from './@mappers';
+import {mapProperty, mapPropertyAssignment, mapTransaction} from './@mappers';
 
 export default class PropertyService extends BaseService {
   public async get(id: number) {
@@ -109,5 +111,18 @@ export default class PropertyService extends BaseService {
   public async getPaymentHistory(propertyId: number, year: number) {
     const data = await usePaymentHistory(propertyId, year, this.repository);
     return data;
+  }
+
+  public async getTransactionHistory(propertyId: number, year: number) {
+    const data = await Transaction.findAll({
+      where: {
+        propertyId,
+        waivedBy: null,
+        [Op.and]: [byYear('transaction_period', year)],
+      },
+      include: [Charge],
+      order: [['transaction_period', 'DESC']],
+    });
+    return data.map(t => mapTransaction(t));
   }
 }

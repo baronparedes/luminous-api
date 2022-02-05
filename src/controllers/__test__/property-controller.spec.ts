@@ -132,4 +132,17 @@ describe('PropertyController', () => {
     expect(mock).toBeCalledTimes(1);
     expect(mock).toBeCalledWith(targetId, year);
   });
+
+  it('should get transaction history', async () => {
+    const mock = jest
+      .spyOn(PropertyService.prototype, 'getTransactionHistory')
+      .mockReturnValueOnce(new Promise(resolve => resolve([])));
+    const target = new PropertyController();
+    const targetId = faker.datatype.number();
+    const year = faker.date.recent().getFullYear();
+    await target.getTransactionHistory(targetId, year);
+
+    expect(mock).toBeCalledTimes(1);
+    expect(mock).toBeCalledWith(targetId, year);
+  });
 });
