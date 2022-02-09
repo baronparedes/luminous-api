@@ -899,6 +899,12 @@
 			},
 			"PropertyTransactionHistoryView": {
 				"properties": {
+					"paymentHistory": {
+						"items": {
+							"$ref": "#/components/schemas/PaymentHistoryView"
+						},
+						"type": "array"
+					},
 					"transactionHistory": {
 						"items": {
 							"$ref": "#/components/schemas/TransactionAttr"
@@ -915,6 +921,7 @@
 					}
 				},
 				"required": [
+					"paymentHistory",
 					"transactionHistory",
 					"previousBalance",
 					"targetYear"

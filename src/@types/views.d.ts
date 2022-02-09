@@ -90,4 +90,5 @@ export type PropertyTransactionHistoryView = {
   targetYear: number;
   previousBalance: number;
   transactionHistory: TransactionAttr[];
+  paymentHistory: PaymentHistoryView[];
 };

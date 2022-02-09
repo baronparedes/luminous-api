@@ -301,7 +301,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PropertyTransactionHistoryView": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"transactionHistory":{"dataType":"array","array":{"dataType":"refObject","ref":"TransactionAttr"},"required":true},"previousBalance":{"dataType":"double","required":true},"targetYear":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"paymentHistory":{"dataType":"array","array":{"dataType":"refAlias","ref":"PaymentHistoryView"},"required":true},"transactionHistory":{"dataType":"array","array":{"dataType":"refObject","ref":"TransactionAttr"},"required":true},"previousBalance":{"dataType":"double","required":true},"targetYear":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RequestStatus": {

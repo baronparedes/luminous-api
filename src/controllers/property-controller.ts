@@ -128,10 +128,15 @@ export class PropertyController extends Controller {
       propertyId,
       year
     );
+    const paymentHistory = await this.propertyService.getPaymentHistory(
+      propertyId,
+      year
+    );
     const result: PropertyTransactionHistoryView = {
       targetYear: year,
       transactionHistory,
       previousBalance,
+      paymentHistory,
     };
     return result;
   }

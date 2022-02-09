@@ -134,12 +134,16 @@ describe('PropertyController', () => {
   });
 
   it('should get transaction history', async () => {
+    const getPaymentHistoryMock = jest
+      .spyOn(PropertyService.prototype, 'getPaymentHistory')
+      .mockReturnValueOnce(new Promise(resolve => resolve([])));
     const getTransactionHistoryMock = jest
       .spyOn(PropertyService.prototype, 'getTransactionHistory')
       .mockReturnValueOnce(new Promise(resolve => resolve([])));
     const getPreviousYearBalanceMock = jest
       .spyOn(PropertyService.prototype, 'getPreviousYearBalance')
       .mockReturnValueOnce(new Promise(resolve => resolve(0)));
+
     const target = new PropertyController();
     const targetId = faker.datatype.number();
     const year = faker.date.recent().getFullYear();
@@ -151,10 +155,14 @@ describe('PropertyController', () => {
     expect(getPreviousYearBalanceMock).toBeCalledTimes(1);
     expect(getPreviousYearBalanceMock).toBeCalledWith(targetId, year);
 
+    expect(getPaymentHistoryMock).toBeCalledTimes(1);
+    expect(getPaymentHistoryMock).toBeCalledWith(targetId, year);
+
     expect(actual).toEqual({
       transactionHistory: [],
       previousBalance: 0,
       targetYear: year,
+      paymentHistory: [],
     });
   });
 });
