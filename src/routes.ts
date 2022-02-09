@@ -299,6 +299,11 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"collectedBy":{"dataType":"string","required":true},"checkIssuingBank":{"dataType":"string"},"checkPostingDate":{"dataType":"datetime"},"checkNumber":{"dataType":"string"},"paymentType":{"ref":"PaymentType","required":true},"orNumber":{"dataType":"string","required":true},"code":{"dataType":"string","required":true},"transactionPeriod":{"dataType":"datetime","required":true},"amount":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PropertyTransactionHistoryView": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"transactionHistory":{"dataType":"array","array":{"dataType":"refObject","ref":"TransactionAttr"},"required":true},"previousBalance":{"dataType":"double","required":true},"targetYear":{"dataType":"double","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RequestStatus": {
         "dataType": "refAlias",
         "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["approved"]},{"dataType":"enum","enums":["rejected"]},{"dataType":"enum","enums":["pending"]},{"dataType":"enum","enums":["cancelled"]}],"validators":{}},

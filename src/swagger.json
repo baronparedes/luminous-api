@@ -897,6 +897,30 @@
 				],
 				"type": "object"
 			},
+			"PropertyTransactionHistoryView": {
+				"properties": {
+					"transactionHistory": {
+						"items": {
+							"$ref": "#/components/schemas/TransactionAttr"
+						},
+						"type": "array"
+					},
+					"previousBalance": {
+						"type": "number",
+						"format": "double"
+					},
+					"targetYear": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"transactionHistory",
+					"previousBalance",
+					"targetYear"
+				],
+				"type": "object"
+			},
 			"RequestStatus": {
 				"type": "string",
 				"enum": [
@@ -2548,10 +2572,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/TransactionAttr"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/PropertyTransactionHistoryView"
 								}
 							}
 						}

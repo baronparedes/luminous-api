@@ -1,4 +1,4 @@
-import {PaymentType, TransactionType} from './models';
+import {PaymentType, TransactionAttr, TransactionType} from './models';
 
 export type DashboardView = {
   year: number;
@@ -84,4 +84,10 @@ export type CategorizedExpenseView = {
   passOn?: boolean;
   transactionPeriod: Date;
   series: string;
+};
+
+export type PropertyTransactionHistoryView = {
+  targetYear: number;
+  previousBalance: number;
+  transactionHistory: TransactionAttr[];
 };

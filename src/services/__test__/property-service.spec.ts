@@ -38,7 +38,7 @@ describe('PropertyService', () => {
     },
     {
       id: 3,
-      amount: Number((property.floorArea * charge.rate).toFixed(2)),
+      amount: 1000,
       chargeId: charge.id,
       propertyId: property.id,
       transactionPeriod: toTransactionPeriod(2020, 'DEC'),
@@ -47,7 +47,7 @@ describe('PropertyService', () => {
     },
     {
       id: 4,
-      amount: Number((property.floorArea * charge.rate).toFixed(2)),
+      amount: 500,
       chargeId: charge.id,
       propertyId: property.id,
       transactionPeriod: toTransactionPeriod(2020, 'DEC'),
@@ -64,16 +64,25 @@ describe('PropertyService', () => {
   beforeAll(async () => {
     const sequelize = await initInMemoryDb();
     target = new PropertyService(sequelize);
+    await Transaction.bulkCreate([...seedTransactions]);
   });
 
   it('should get transaction history', async () => {
-    await Transaction.bulkCreate([...seedTransactions]);
     const actual1 = await target.getTransactionHistory(property.id, 2021);
     const actual2 = await target.getTransactionHistory(property.id, 2020);
     const actual3 = await target.getTransactionHistory(property.id, 2019);
     expect(actual1).toHaveLength(2);
     expect(actual2).toHaveLength(1);
     expect(actual3).toHaveLength(0);
+  });
+
+  it('should get previous balance', async () => {
+    const actual1 = await target.getPreviousYearBalance(property.id, 2021);
+    const actual2 = await target.getPreviousYearBalance(property.id, 2020);
+    const actual3 = await target.getPreviousYearBalance(property.id, 2019);
+    expect(actual1).toEqual(1000);
+    expect(actual2).toEqual(0);
+    expect(actual3).toEqual(0);
   });
 
   it('should get payment history', async () => {

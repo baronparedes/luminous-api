@@ -15,6 +15,7 @@ import {
 } from 'tsoa';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
+import {PropertyTransactionHistoryView} from '../@types/views';
 import {VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
 import PropertyService from '../services/property-service';
@@ -119,6 +120,19 @@ export class PropertyController extends Controller {
     @Path() propertyId: number,
     @Path() year: number
   ) {
-    return await this.propertyService.getTransactionHistory(propertyId, year);
+    const transactionHistory = await this.propertyService.getTransactionHistory(
+      propertyId,
+      year
+    );
+    const previousBalance = await this.propertyService.getPreviousYearBalance(
+      propertyId,
+      year
+    );
+    const result: PropertyTransactionHistoryView = {
+      targetYear: year,
+      transactionHistory,
+      previousBalance,
+    };
+    return result;
   }
 }

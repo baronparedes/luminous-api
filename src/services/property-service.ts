@@ -1,6 +1,7 @@
 import {FindOptions, Op} from 'sequelize';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
+import {sum} from '../@utils/helpers';
 import {byYear, iLike} from '../@utils/helpers-sequelize';
 import {CONSTANTS, VERBIAGE} from '../constants';
 import usePaymentHistory from '../hooks/views/use-payment-history';
@@ -124,5 +125,25 @@ export default class PropertyService extends BaseService {
       order: [['transaction_period', 'DESC']],
     });
     return data.map(t => mapTransaction(t));
+  }
+
+  public async getPreviousYearBalance(propertyId: number, currentYear: number) {
+    const data = await Transaction.findAll({
+      where: {
+        propertyId,
+        waivedBy: null,
+        [Op.and]: [byYear('transaction_period', currentYear, 'lt')],
+      },
+      include: [Charge],
+      order: [['transaction_period', 'DESC']],
+    });
+    const charged = data
+      .filter(d => d.transactionType === 'charged')
+      .map(t => t.amount);
+    const collected = data
+      .filter(d => d.transactionType === 'collected')
+      .map(t => t.amount);
+    const balance = sum(charged) - sum(collected);
+    return balance;
   }
 }
