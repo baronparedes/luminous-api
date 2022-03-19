@@ -11,9 +11,7 @@ import {
 import {PaymentDetailAttr, PaymentType} from '../@types/models';
 import Profile from './profile-model';
 
-@Table({
-  indexes: [{unique: true, fields: ['or_number']}],
-})
+@Table
 class PaymentDetail extends Model implements PaymentDetailAttr {
   @AllowNull(false)
   @Column(DataType.CITEXT)
