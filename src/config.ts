@@ -31,6 +31,10 @@ const config = {
     PASSWORD: process.env.SMTP_PASSWORD || '',
     SENDER: process.env.SMTP_SENDER || 'luminous.webapp@gmail.com',
     ENABLED: process.env.SMTP_ENABLED === 'true',
+    CLIENT_ID: process.env.SMTP_CLIENT_ID || '',
+    CLIENT_SECRET: process.env.SMTP_CLIENT_SECRET || '',
+    REFRESH_TOKEN: process.env.SMTP_REFRESH_TOKEN || '',
+    REDIRECT_URI: process.env.SMTP_REDIRECT_URI || '',
   },
 };
 
