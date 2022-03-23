@@ -24,6 +24,7 @@ describe('useDisbursementBreakdown', () => {
       requestedDate: '2021-10-26',
       approvedBy: JSON.stringify([profile.id]),
       chargeId: charge.id,
+      series: faker.random.alphaNumeric(10),
     },
     {
       id: 2,
@@ -33,6 +34,7 @@ describe('useDisbursementBreakdown', () => {
       requestedBy: profile.id,
       requestedDate: '2021-10-26',
       chargeId: charge.id,
+      series: faker.random.alphaNumeric(10),
     },
     {
       id: 3,
@@ -43,6 +45,7 @@ describe('useDisbursementBreakdown', () => {
       rejectedBy: profile.id,
       requestedDate: '2021-10-26',
       chargeId: charge.id,
+      series: faker.random.alphaNumeric(10),
     },
   ];
 

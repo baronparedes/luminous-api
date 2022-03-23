@@ -1076,6 +1076,7 @@
 					}
 				},
 				"required": [
+					"series",
 					"requestedDate",
 					"requestedBy",
 					"status",
@@ -1286,6 +1287,7 @@
 					}
 				},
 				"required": [
+					"series",
 					"requestedDate",
 					"requestedBy",
 					"status",
@@ -1524,7 +1526,8 @@
 					"totalCost",
 					"status",
 					"requestedBy",
-					"requestedDate"
+					"requestedDate",
+					"series"
 				],
 				"type": "object",
 				"additionalProperties": false

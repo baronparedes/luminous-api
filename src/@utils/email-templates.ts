@@ -8,7 +8,7 @@ export type ExpenseApprovalRequest = {
   code: string;
   requestedByProfile?: ProfileAttr;
   expenses?: ExpenseAttr[];
-  series?: string;
+  series: string;
 };
 
 type PurchaseOrderApprovalRequest = {
