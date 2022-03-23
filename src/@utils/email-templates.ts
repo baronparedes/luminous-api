@@ -8,6 +8,7 @@ export type ExpenseApprovalRequest = {
   code: string;
   requestedByProfile?: ProfileAttr;
   expenses?: ExpenseAttr[];
+  series?: string;
 };
 
 type PurchaseOrderApprovalRequest = {
@@ -54,7 +55,7 @@ export function purchaseOrderApprovalTemplate(
 ) {
   const html = `
     <p style="font-size:1.1em">Hi,</p>
-    <p><strong>PO-${request.id}</strong> has been requested by <strong>${
+    <p><strong>PO-${request.series}</strong> has been requested by <strong>${
     request.requestedByProfile?.name
   }</strong></p>
     <p>Use the following OTP for approval of this request.</p>
@@ -111,7 +112,7 @@ export function expenseApprovalTemplate(
   const html = `
     <p style="font-size:1.1em">Hi,</p>
     <p><strong>${idPrefix}-${
-    request.id
+    request.series
   }</strong> has been requested by <strong>${
     request.requestedByProfile?.name
   }</strong></p>

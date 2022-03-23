@@ -39,7 +39,7 @@ export default class NotificationService {
     const {send} = useSendMail();
 
     const promises = approvalCodes.map(ac => {
-      const subject = `[Luminous] Approval for PR-${purchaseRequestId}`;
+      const subject = `[Luminous] Approval for PR-${purchaseRequest.series}`;
       const content = expenseApprovalTemplate(
         {
           code: ac.code,
@@ -48,6 +48,7 @@ export default class NotificationService {
           expenses: purchaseRequest.expenses,
           id: purchaseRequest.id,
           requestedByProfile: purchaseRequest.requestedByProfile,
+          series: purchaseRequest.series,
         },
         'PR'
       );
@@ -68,7 +69,7 @@ export default class NotificationService {
     const {send} = useSendMail();
 
     const promises = approvalCodes.map(ac => {
-      const subject = `[Luminous] Approval for V-${voucherId}`;
+      const subject = `[Luminous] Approval for V-${voucher.series}`;
       const content = expenseApprovalTemplate(
         {
           code: ac.code,
@@ -77,6 +78,7 @@ export default class NotificationService {
           expenses: voucher.expenses,
           id: voucher.id,
           requestedByProfile: voucher.requestedByProfile,
+          series: voucher.series,
         },
         'V'
       );
@@ -99,7 +101,7 @@ export default class NotificationService {
     const {send} = useSendMail();
 
     const promises = approvalCodes.map(ac => {
-      const subject = `[Luminous] Approval for PO-${purchaseOrderId}`;
+      const subject = `[Luminous] Approval for PO-${purchaseOrder.series}`;
       const content = purchaseOrderApprovalTemplate({
         code: ac.code,
         description: purchaseOrder.description,
@@ -110,6 +112,7 @@ export default class NotificationService {
         fulfillmentDate: purchaseOrder.fulfillmentDate,
         vendorName: purchaseOrder.vendorName,
         otherDetails: purchaseOrder.otherDetails,
+        series: purchaseOrder.series,
       });
       return send(ac.email, subject, content);
     });

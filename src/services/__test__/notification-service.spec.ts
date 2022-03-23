@@ -168,7 +168,7 @@ describe('NotificationService', () => {
     for (const ac of seedApprovalCodes.filter(
       ac => ac.voucherId !== undefined
     )) {
-      const expectedSubject = `[Luminous] Approval for V-${expectedVoucherId}`;
+      const expectedSubject = `[Luminous] Approval for V-${seedVoucher.series}`;
       const expectedContent = expenseApprovalTemplate(
         {
           requestedByProfile: profile,
@@ -177,6 +177,7 @@ describe('NotificationService', () => {
           description: seedVoucher.description,
           totalCost: seedVoucher.totalCost,
           id: seedVoucher.id,
+          series: seedVoucher.series,
         },
         'V'
       );
@@ -203,7 +204,7 @@ describe('NotificationService', () => {
     for (const ac of seedApprovalCodes.filter(
       ac => ac.purchaseRequestId !== undefined
     )) {
-      const expectedSubject = `[Luminous] Approval for PR-${expectedPurchaseRequestId}`;
+      const expectedSubject = `[Luminous] Approval for PR-${seedPurchaseRequest.series}`;
       const expectedContent = expenseApprovalTemplate(
         {
           requestedByProfile: profile,
@@ -212,6 +213,7 @@ describe('NotificationService', () => {
           description: seedPurchaseRequest.description,
           totalCost: seedPurchaseRequest.totalCost,
           id: seedPurchaseRequest.id,
+          series: seedPurchaseRequest.series,
         },
         'PR'
       );
@@ -238,7 +240,7 @@ describe('NotificationService', () => {
     for (const ac of seedApprovalCodes.filter(
       ac => ac.purchaseOrderId !== undefined
     )) {
-      const expectedSubject = `[Luminous] Approval for PO-${expectedPurchaseOrderId}`;
+      const expectedSubject = `[Luminous] Approval for PO-${seedPurchaseOrder.series}`;
       const expectedContent = purchaseOrderApprovalTemplate({
         requestedByProfile: profile,
         expenses: seedExpenses.filter(e => e.purchaseOrderId),
@@ -249,6 +251,7 @@ describe('NotificationService', () => {
         fulfillmentDate: seedPurchaseOrder.fulfillmentDate,
         vendorName: seedPurchaseOrder.vendorName,
         otherDetails: seedPurchaseOrder.otherDetails,
+        series: seedPurchaseOrder.series,
       });
       expect(mockSend).toHaveBeenNthCalledWith(
         index,
