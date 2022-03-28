@@ -39,6 +39,7 @@ export function mapPaymentDetail(
     checkIssuingBank: paymentDetail.checkIssuingBank,
     checkPostingDate: paymentDetail.checkPostingDate,
     checkNumber: paymentDetail.checkNumber,
+    createdAt: paymentDetail.createdAt,
   };
 }
 
@@ -108,6 +109,7 @@ export function mapTransaction(model: Transaction): TransactionAttr {
     paymentDetail: model.paymentDetail,
     rateSnapshot: model.rateSnapshot,
     batchId: model.batchId,
+    createdAt: model.createdAt,
   };
 }
 

@@ -167,6 +167,7 @@ export interface TransactionAttr {
   paymentDetail?: PaymentDetailAttr;
   rateSnapshot?: number;
   batchId?: string | null;
+  createdAt?: Date;
 }
 
 export interface SettingAttr {
@@ -182,6 +183,7 @@ export interface PaymentDetailAttr {
   checkNumber?: string;
   checkPostingDate?: Date;
   checkIssuingBank?: string;
+  createdAt?: Date;
 }
 
 export interface ExpenseAttr {

@@ -700,6 +700,10 @@
 					},
 					"checkIssuingBank": {
 						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
 					}
 				},
 				"required": [
@@ -762,6 +766,10 @@
 					"batchId": {
 						"type": "string",
 						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
 					}
 				},
 				"required": [
