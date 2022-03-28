@@ -244,5 +244,6 @@ export const generateDisbursement = (): DisbursementAttr => {
     checkPostingDate: faker.datatype.datetime(),
     releasedBy: faker.datatype.number(),
     chargeId: faker.datatype.number(),
+    createdAt: faker.date.recent(),
   };
 };

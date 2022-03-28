@@ -35,6 +35,7 @@ export type PaymentHistoryView = {
   checkPostingDate?: Date;
   checkIssuingBank?: string;
   collectedBy: string;
+  createdAt: Date;
 };
 
 export type CollectionEfficiencyView = {

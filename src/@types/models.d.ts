@@ -232,6 +232,7 @@ export interface DisbursementAttr {
   amount: number;
   releasedByProfile?: ProfileAttr;
   charge?: ChargeAttr;
+  createdAt?: Date;
 }
 
 export type ApprovalCodeAttr = {

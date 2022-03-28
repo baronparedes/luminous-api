@@ -244,6 +244,7 @@ export function mapDisbursement(model: Disbursement): DisbursementAttr {
       ? mapProfile(model.releasedByProfile as Profile)
       : undefined,
     charge: model.charge ? mapCharge(model.charge as Charge) : undefined,
+    createdAt: model.createdAt,
   };
 }
 

@@ -31,7 +31,8 @@ export default async function usePaymentHistory(
         pd.check_number AS "checkNumber",
         pd.check_posting_date AS "checkPostingDate",
         pd.check_issuing_bank AS "checkIssuingBank",
-        pf.name AS "collectedBy"
+        pf.name AS "collectedBy",
+        pd.created_at AS "createdAt"
     FROM collection_summary_cte c
     JOIN properties p ON p.id = c.property_id
     JOIN payment_details pd ON pd.id = c.payment_detail_id

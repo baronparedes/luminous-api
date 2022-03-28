@@ -494,6 +494,10 @@
 					},
 					"charge": {
 						"$ref": "#/components/schemas/ChargeAttr"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
 					}
 				},
 				"required": [
@@ -864,6 +868,10 @@
 			},
 			"PaymentHistoryView": {
 				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
 					"collectedBy": {
 						"type": "string"
 					},
@@ -896,6 +904,7 @@
 					}
 				},
 				"required": [
+					"createdAt",
 					"collectedBy",
 					"paymentType",
 					"orNumber",
