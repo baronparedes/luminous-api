@@ -22,7 +22,7 @@ class Category extends Model implements CategoryAttr {
   description!: string;
 
   @AllowNull(false)
-  @Column
+  @Column(DataType.TEXT)
   subCategories!: string;
 }
 
