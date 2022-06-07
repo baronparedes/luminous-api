@@ -129,8 +129,8 @@ export default class CollectionService extends BaseService {
       });
 
       await refundedPayment.save({transaction});
-      await PaymentDetail.destroy({where: {id: paymentDetailId}, transaction});
       await Transaction.destroy({where: criteria, transaction});
+      await PaymentDetail.destroy({where: {id: paymentDetailId}, transaction});
     });
   }
 }
