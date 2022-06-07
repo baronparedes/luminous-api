@@ -292,3 +292,11 @@ export type PurchaseOrderAttr = {
   isClosed?: boolean;
   series: string;
 };
+
+export type RefundedPaymentAttr = {
+  id?: number;
+  propertyId: number;
+  refundedBy: number;
+  details: string;
+  comments: string;
+};

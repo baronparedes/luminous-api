@@ -1,3 +1,5 @@
+import {WhereOptions} from 'sequelize/types';
+
 import {
   Month,
   PaymentDetailAttr,
@@ -9,6 +11,7 @@ import usePropertyCollectedByCharge from '../hooks/views/use-property-collected-
 import useTransactionBreakdown from '../hooks/views/use-transaction-breakdown';
 import Charge from '../models/charge-model';
 import PaymentDetail from '../models/payment-detail-model';
+import RefundedPayment from '../models/refunded-payment-model';
 import Transaction from '../models/transaction-model';
 import BaseService from './@base-service';
 
@@ -99,5 +102,35 @@ export default class CollectionService extends BaseService {
       month,
       this.repository
     );
+  }
+
+  public async refundPayment(
+    propertyId: number,
+    paymentDetailId: number,
+    refundedBy: number,
+    comments: string
+  ) {
+    await this.repository.transaction(async transaction => {
+      const criteria: WhereOptions<Transaction> = {
+        propertyId,
+        paymentDetailId,
+        transactionType: 'collected',
+      };
+
+      const transactionsToBeRefunded = await Transaction.findAll({
+        where: criteria,
+      });
+
+      const refundedPayment = new RefundedPayment({
+        propertyId,
+        refundedBy,
+        comments,
+        details: JSON.stringify(transactionsToBeRefunded),
+      });
+
+      await refundedPayment.save({transaction});
+      await PaymentDetail.destroy({where: {id: paymentDetailId}, transaction});
+      await Transaction.destroy({where: criteria, transaction});
+    });
   }
 }

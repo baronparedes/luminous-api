@@ -1466,6 +1466,27 @@
 				],
 				"type": "object"
 			},
+			"RefundPaymentBody": {
+				"properties": {
+					"comments": {
+						"type": "string"
+					},
+					"refundedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"paymentDetailId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"comments",
+					"refundedBy",
+					"paymentDetailId"
+				],
+				"type": "object"
+			},
 			"VoucherAttr": {
 				"properties": {
 					"id": {
@@ -3520,6 +3541,42 @@
 						}
 					}
 				]
+			}
+		},
+		"/api/transaction/refundPayment/{propertyId}": {
+			"patch": {
+				"operationId": "RefundPayment",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RefundPaymentBody"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/api/voucher/getVoucher/{id}": {

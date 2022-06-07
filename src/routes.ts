@@ -403,6 +403,11 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"chargeCode":{"dataType":"string","required":true},"collected":{"dataType":"double","required":true},"floorArea":{"dataType":"string","required":true},"address":{"dataType":"string","required":true},"code":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "RefundPaymentBody": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"comments":{"dataType":"string","required":true},"refundedBy":{"dataType":"double","required":true},"paymentDetailId":{"dataType":"double","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "VoucherAttr": {
         "dataType": "refObject",
         "properties": {
@@ -1771,6 +1776,31 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getCollectionBreakdown.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.patch('/api/transaction/refundPayment/:propertyId',
+            authenticateMiddleware([{"bearer":[]}]),
+
+            function TransactionController_refundPayment(request: any, response: any, next: any) {
+            const args = {
+                    propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
+                    body: {"in":"body","name":"body","required":true,"ref":"RefundPaymentBody"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TransactionController();
+
+
+            const promise = controller.refundPayment.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  Patch,
   Path,
   Post,
   Query,
@@ -28,6 +29,12 @@ export type PostTransactionBody = {
 export type PostCollectionBody = {
   paymentDetail: PaymentDetailAttr;
   transactions: TransactionAttr[];
+};
+
+export type RefundPaymentBody = {
+  paymentDetailId: number;
+  refundedBy: number;
+  comments: string;
 };
 
 @Security('bearer')
@@ -109,5 +116,18 @@ export class TransactionController extends Controller {
       month
     );
     return value;
+  }
+
+  @Patch('/refundPayment/{propertyId}')
+  public async refundPayment(
+    @Path() propertyId: number,
+    @Body() body: RefundPaymentBody
+  ) {
+    await this.collectionService.refundPayment(
+      propertyId,
+      body.paymentDetailId,
+      body.refundedBy,
+      body.comments
+    );
   }
 }
