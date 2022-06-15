@@ -130,4 +130,16 @@ export class TransactionController extends Controller {
       body.comments
     );
   }
+
+  @Get('/getWaterReadingByPeriod/{year}/{month}')
+  public async getWaterReadingByPeriod(
+    @Path() year: number,
+    @Path() month: Month
+  ) {
+    const data = await this.transactionService.getWaterReadingByYearMonth(
+      year,
+      month
+    );
+    return data;
+  }
 }

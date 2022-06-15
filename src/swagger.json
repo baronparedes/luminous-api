@@ -3579,6 +3579,50 @@
 				}
 			}
 		},
+		"/api/transaction/getWaterReadingByPeriod/{year}/{month}": {
+			"get": {
+				"operationId": "GetWaterReadingByPeriod",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TransactionAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "month",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
 		"/api/voucher/getVoucher/{id}": {
 			"get": {
 				"operationId": "GetVoucher",

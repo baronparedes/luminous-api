@@ -2,7 +2,7 @@ import {Op, WhereOptions} from 'sequelize';
 
 import {Month, TransactionAttr, TransactionType} from '../@types/models';
 import {isSamePeriod, toPeriod, toTransactionPeriod} from '../@utils/dates';
-import {VERBIAGE} from '../constants';
+import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import Charge from '../models/charge-model';
 import Property from '../models/property-model';
@@ -147,5 +147,17 @@ export default class TransactionService {
     });
     const result = transactions.map(t => toPeriod(t.transactionPeriod));
     return result;
+  }
+
+  public async getWaterReadingByYearMonth(year: number, month: Month) {
+    const transactions = await Transaction.findAll({
+      where: {
+        chargeId: CONSTANTS.WATER_CHARGE_ID,
+        transactionPeriod: toTransactionPeriod(year, month),
+        batchId: {[Op.ne]: null},
+      },
+      order: [['id', 'ASC']],
+    });
+    return transactions.map(t => mapTransaction(t));
   }
 }
