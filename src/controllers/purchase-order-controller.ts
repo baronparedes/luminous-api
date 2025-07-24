@@ -21,7 +21,7 @@ type CancelPurchaseOrder = {
   cancelledBy: number;
 };
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/purchase-order')
 export class PurchaseOrderController extends Controller {
   private purchaseOrderService: PurchaseOrderService;

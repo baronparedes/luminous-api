@@ -4,7 +4,7 @@ import {ChargeAttr} from '../@types/models';
 import {CONSTANTS} from '../constants';
 import ChargeService from '../services/charge-service';
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/charge')
 export class ChargeController extends Controller {
   private chargeService: ChargeService;

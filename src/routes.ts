@@ -448,10 +448,13 @@ export function RegisterRoutes(app: express.Router) {
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
         app.post('/api/auth',
+            authenticateMiddleware([{"cookie":[]}]),
 
             function AuthController_auth(request: any, response: any, next: any) {
             const args = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    setCookie: {"in":"res","name":"200","required":true,"ref":"AuthResult"},
+                    forbidden: {"in":"res","name":"403","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"message":{"dataType":"string","required":true}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -471,7 +474,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/charge/getAllCharges',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function ChargeController_getAllCharges(request: any, response: any, next: any) {
             const args = {
@@ -494,7 +497,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/charge/getAllCollectedCharges',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function ChargeController_getAllCollectedCharges(request: any, response: any, next: any) {
             const args = {
@@ -517,7 +520,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/charge/patchCharges',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function ChargeController_patchCharges(request: any, response: any, next: any) {
             const args = {
@@ -541,7 +544,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/dashboard/getDashboardByYear/:year',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function DashboardController_getDashboardByYear(request: any, response: any, next: any) {
             const args = {
@@ -565,7 +568,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/disbursement/getDisbursementBreakdown',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function DisbursementController_getDisbursementBreakdown(request: any, response: any, next: any) {
             const args = {
@@ -588,7 +591,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/disbursement/getAllDisbursements/:chargeId',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function DisbursementController_getAllDisbursements(request: any, response: any, next: any) {
             const args = {
@@ -613,7 +616,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/disbursement/postChargeDisbursement',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function DisbursementController_postChargeDisbursement(request: any, response: any, next: any) {
             const args = {
@@ -637,7 +640,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/profile/getAll',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function ProfileController_getAll(request: any, response: any, next: any) {
             const args = {
@@ -684,7 +687,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/profile/me',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function ProfileController_me(request: any, response: any, next: any) {
             const args = {
@@ -708,7 +711,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/profile/updateProfileStatus/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function ProfileController_updateProfileStatus(request: any, response: any, next: any) {
             const args = {
@@ -733,7 +736,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/profile/updateProfile/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function ProfileController_updateProfile(request: any, response: any, next: any) {
             const args = {
@@ -758,7 +761,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/profile/changePassword/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function ProfileController_changePassword(request: any, response: any, next: any) {
             const args = {
@@ -806,7 +809,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property-account/getPropertyAccountsByProfile/:profileId',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyAccountController_getPropertyAccountsByProfile(request: any, response: any, next: any) {
             const args = {
@@ -830,7 +833,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property-account/getPropertyAccount/:propertyId',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyAccountController_getPropertyAccount(request: any, response: any, next: any) {
             const args = {
@@ -856,7 +859,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property-account/getPropertyAccountsByPeriod',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyAccountController_getPropertyAccountsByPeriod(request: any, response: any, next: any) {
             const args = {
@@ -881,7 +884,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getAll',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_getAll(request: any, response: any, next: any) {
             const args = {
@@ -905,7 +908,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_get(request: any, response: any, next: any) {
             const args = {
@@ -929,7 +932,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getPropertyAssignments/:propertyId',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_getPropertyAssignments(request: any, response: any, next: any) {
             const args = {
@@ -953,7 +956,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getAssignedProperties/:profileId',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_getAssignedProperties(request: any, response: any, next: any) {
             const args = {
@@ -977,7 +980,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/property/create',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_create(request: any, response: any, next: any) {
             const args = {
@@ -1001,7 +1004,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/property/updatePropertyStatus/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_updatePropertyStatus(request: any, response: any, next: any) {
             const args = {
@@ -1026,7 +1029,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/property/updateProperty/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_updateProperty(request: any, response: any, next: any) {
             const args = {
@@ -1051,7 +1054,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/property/updatePropertyAssignments/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_updatePropertyAssignments(request: any, response: any, next: any) {
             const args = {
@@ -1076,7 +1079,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getPaymentHistory/:propertyId/:year',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_getPaymentHistory(request: any, response: any, next: any) {
             const args = {
@@ -1101,7 +1104,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getTransactionHistory/:propertyId/:year',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PropertyController_getTransactionHistory(request: any, response: any, next: any) {
             const args = {
@@ -1126,7 +1129,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/purchase-order/getPurchaseOrder/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseOrderController_getPurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1150,7 +1153,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/purchase-order/getAllPurchaseOrdersByChargeAndStatus/:chargeId/:status',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseOrderController_getAllPurchaseOrdersByChargeAndStatus(request: any, response: any, next: any) {
             const args = {
@@ -1175,7 +1178,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/postPurchaseOrder',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseOrderController_postPurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1199,7 +1202,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/purchase-order/updatePurchaseOrder/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseOrderController_updatePurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1224,7 +1227,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/approvePurchaseOrder',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseOrderController_approvePurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1248,7 +1251,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/rejectPurchaseOrder',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseOrderController_rejectPurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1272,7 +1275,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/cancelPurchaseOrder',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseOrderController_cancelPurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1296,7 +1299,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/notifyPurchaseOrderApprovers/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseOrderController_notifyPurchaseOrderApprovers(request: any, response: any, next: any) {
             const args = {
@@ -1320,7 +1323,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/postPurchaseOrderDisbursement/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseOrderController_postPurchaseOrderDisbursement(request: any, response: any, next: any) {
             const args = {
@@ -1345,7 +1348,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/purchase-request/getPurchaseRequest/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseRequestController_getPurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1369,7 +1372,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/purchase-request/getAllPurchaseRequestsByChargeAndStatus/:chargeId/:status',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseRequestController_getAllPurchaseRequestsByChargeAndStatus(request: any, response: any, next: any) {
             const args = {
@@ -1394,7 +1397,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-request/postPurchaseRequest',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseRequestController_postPurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1418,7 +1421,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/purchase-request/updatePurchaseRequest/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseRequestController_updatePurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1443,7 +1446,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-request/approvePurchaseRequest',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseRequestController_approvePurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1467,7 +1470,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-request/rejectPurchaseRequest',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseRequestController_rejectPurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1491,7 +1494,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-request/notifyPurchaseRequestApprovers/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function PurchaseRequestController_notifyPurchaseRequestApprovers(request: any, response: any, next: any) {
             const args = {
@@ -1537,7 +1540,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/setting/getSettingValue',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function SettingController_getSettingValue(request: any, response: any, next: any) {
             const args = {
@@ -1561,7 +1564,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/setting/updateSettingValue',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function SettingController_updateSettingValue(request: any, response: any, next: any) {
             const args = {
@@ -1585,7 +1588,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/setting/getAllCategories',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function SettingController_getAllCategories(request: any, response: any, next: any) {
             const args = {
@@ -1608,7 +1611,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/setting/updateCategories',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function SettingController_updateCategories(request: any, response: any, next: any) {
             const args = {
@@ -1632,7 +1635,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/transaction/postMonthlyCharges',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function TransactionController_postMonthlyCharges(request: any, response: any, next: any) {
             const args = {
@@ -1656,7 +1659,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/transaction/postCollections',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function TransactionController_postCollections(request: any, response: any, next: any) {
             const args = {
@@ -1680,7 +1683,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/transaction/postTransactions',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function TransactionController_postTransactions(request: any, response: any, next: any) {
             const args = {
@@ -1704,7 +1707,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/getAvailablePeriods/:propertyId',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function TransactionController_getAvailablePeriods(request: any, response: any, next: any) {
             const args = {
@@ -1728,7 +1731,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/suggestPaymentBreakdown/:propertyId',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function TransactionController_suggestPaymentBreakdown(request: any, response: any, next: any) {
             const args = {
@@ -1755,7 +1758,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/getCollectionBreakdown/:year/:month',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function TransactionController_getCollectionBreakdown(request: any, response: any, next: any) {
             const args = {
@@ -1780,7 +1783,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/transaction/refundPayment/:propertyId',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function TransactionController_refundPayment(request: any, response: any, next: any) {
             const args = {
@@ -1805,7 +1808,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/getWaterReadingByPeriod/:year/:month',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function TransactionController_getWaterReadingByPeriod(request: any, response: any, next: any) {
             const args = {
@@ -1830,7 +1833,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/voucher/getVoucher/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function VoucherController_getVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1854,7 +1857,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/voucher/getAllVouchersByChargeAndStatus/:chargeId/:status',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function VoucherController_getAllVouchersByChargeAndStatus(request: any, response: any, next: any) {
             const args = {
@@ -1879,7 +1882,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/voucher/postVoucher',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function VoucherController_postVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1903,7 +1906,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/voucher/updateVoucher/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function VoucherController_updateVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1928,7 +1931,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/voucher/approveVoucher',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function VoucherController_approveVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1952,7 +1955,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/voucher/rejectVoucher',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function VoucherController_rejectVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1976,7 +1979,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/voucher/notifyVoucherApprovers/:id',
-            authenticateMiddleware([{"bearer":[]}]),
+            authenticateMiddleware([{"cookie":[]}]),
 
             function VoucherController_notifyVoucherApprovers(request: any, response: any, next: any) {
             const args = {

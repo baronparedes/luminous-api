@@ -37,7 +37,7 @@ export type RefundPaymentBody = {
   comments: string;
 };
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/transaction')
 export class TransactionController extends Controller {
   private transactionService: TransactionService;

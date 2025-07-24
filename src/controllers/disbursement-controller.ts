@@ -4,7 +4,7 @@ import {DisbursementAttr} from '../@types/models';
 import {CONSTANTS} from '../constants';
 import DisbursementService from '../services/disbursement-service';
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/disbursement')
 export class DisbursementController extends Controller {
   private disbursementService: DisbursementService;

@@ -13,10 +13,12 @@ export function expressAuthentication(
     return Promise.reject('Not supported authentication type');
   }
   if (securityName === 'bearer') {
-    const {authorization} = request.headers;
-    if (authorization) {
-      const result = new AuthService().verifyAuthorization(authorization);
-      return result;
+    return Promise.reject('Not supported authentication type');
+  }
+  if (securityName === 'cookie') {
+    const token = request.cookies?.auth_token;
+    if (token) {
+      return new AuthService().verifyAuthorization(token);
     }
   }
   return Promise.reject({});

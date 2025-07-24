@@ -3,7 +3,7 @@ import {Controller, Get, Path, Route, Security} from 'tsoa';
 import {CONSTANTS} from '../constants';
 import DashboardService from '../services/dashboard-service';
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/dashboard')
 export class DashboardController extends Controller {
   private dashboardService: DashboardService;

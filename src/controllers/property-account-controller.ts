@@ -4,7 +4,7 @@ import {Month, Period} from '../@types/models';
 import {getCurrentMonthYear} from '../@utils/dates';
 import PropertyAccountService from '../services/property-account-service';
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/property-account')
 export class PropertyAccountController extends Controller {
   private propertyAccountService: PropertyAccountService;

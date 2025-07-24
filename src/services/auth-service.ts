@@ -57,10 +57,9 @@ export default class AuthService {
   }
 
   public async verifyAuthorization(
-    encodedCredentials: string,
+    token: string,
     scopes?: string[]
   ): Promise<AuthProfile> {
-    const token = this.getAuthCredentials(encodedCredentials);
     return new Promise((resolve, reject) => {
       if (!token) {
         reject(new ApiError(401, VERBIAGE.FAILED_AUTHENTICATION));

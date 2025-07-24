@@ -14,7 +14,7 @@ type RejectPurchaseRequest = {
   rejectedBy: number;
 };
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/purchase-request')
 export class PurchaseRequestController extends Controller {
   private purchaseRequestService: PurchaseRequestService;

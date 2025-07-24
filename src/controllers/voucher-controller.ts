@@ -14,7 +14,7 @@ type RejectVoucher = {
   rejectedBy: number;
 };
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/voucher')
 export class VoucherController extends Controller {
   private voucherService: VoucherService;

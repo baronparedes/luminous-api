@@ -5,6 +5,7 @@ import {AuthResult} from '../../@types/models';
 import {generateAuthProfile} from '../../@utils/fake-data';
 import AuthService from '../../services/auth-service';
 import {AuthController} from '../auth-controller';
+import {TsoaResponse} from 'tsoa';
 
 describe('AuthController', () => {
   it('should authorize using request', async () => {
@@ -25,7 +26,8 @@ describe('AuthController', () => {
       .mockReturnValueOnce(new Promise(resolve => resolve(authResult)));
 
     const target = new AuthController();
-    const actual = await target.auth(request as Request);
+    const mockResponse = {} as TsoaResponse<200, AuthResult>;
+    const actual = await target.auth(request as Request, mockResponse);
 
     expect(mock).toBeCalledTimes(1);
     expect(mock).toBeCalledWith(token);

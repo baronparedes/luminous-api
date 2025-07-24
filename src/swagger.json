@@ -1615,7 +1615,7 @@
 				"operationId": "Auth",
 				"responses": {
 					"200": {
-						"description": "Ok",
+						"description": "",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -1623,9 +1623,34 @@
 								}
 							}
 						}
+					},
+					"204": {
+						"description": "No content"
+					},
+					"403": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"cookie": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -1649,7 +1674,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": []
@@ -1675,7 +1700,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": []
@@ -1691,7 +1716,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -1727,7 +1752,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -1763,7 +1788,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": []
@@ -1789,7 +1814,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -1824,7 +1849,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -1860,7 +1885,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -1931,7 +1956,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": []
@@ -1947,7 +1972,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2008,7 +2033,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2044,7 +2069,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2136,7 +2161,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2169,7 +2194,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2222,7 +2247,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2266,7 +2291,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2298,7 +2323,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2334,7 +2359,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2370,7 +2395,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2413,7 +2438,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -2439,7 +2464,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2500,7 +2525,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2536,7 +2561,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2586,7 +2611,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2628,7 +2653,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2670,7 +2695,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2706,7 +2731,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2748,7 +2773,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -2774,7 +2799,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2810,7 +2835,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -2836,7 +2861,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -2862,7 +2887,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -2888,7 +2913,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2914,7 +2939,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2957,7 +2982,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -2993,7 +3018,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3035,7 +3060,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3061,7 +3086,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3097,7 +3122,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3123,7 +3148,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3149,7 +3174,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3204,7 +3229,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3229,7 +3254,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3265,7 +3290,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": []
@@ -3281,7 +3306,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3320,7 +3345,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3356,7 +3381,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3382,7 +3407,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3421,7 +3446,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3457,7 +3482,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3519,7 +3544,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3553,7 +3578,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3599,7 +3624,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3640,7 +3665,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3676,7 +3701,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3718,7 +3743,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3744,7 +3769,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [
@@ -3780,7 +3805,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3806,7 +3831,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [],
@@ -3832,7 +3857,7 @@
 				},
 				"security": [
 					{
-						"bearer": []
+						"cookie": []
 					}
 				],
 				"parameters": [

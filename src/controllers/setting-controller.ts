@@ -14,7 +14,7 @@ import {CategoryAttr, SettingAttr} from '../@types/models';
 import {CONSTANTS} from '../constants';
 import SettingService from '../services/setting-service';
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/setting')
 export class SettingController extends Controller {
   private settingService: SettingService;

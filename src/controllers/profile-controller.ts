@@ -29,7 +29,7 @@ import AuthService from '../services/auth-service';
 import NotificationService from '../services/notification-service';
 import ProfileService from '../services/profile-service';
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/profile')
 export class ProfileController extends Controller {
   private authService: AuthService;

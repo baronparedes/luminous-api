@@ -20,7 +20,7 @@ import {VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
 import PropertyService from '../services/property-service';
 
-@Security('bearer')
+@Security('cookie')
 @Route('/api/property')
 export class PropertyController extends Controller {
   private propertyService: PropertyService;

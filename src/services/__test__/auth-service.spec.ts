@@ -48,9 +48,7 @@ describe('AuthService', () => {
 
   it('should verify an authorized token', async () => {
     const {target, actual} = await setupAuthentication();
-    const authorized = await target.verifyAuthorization(
-      `Bearer ${actual.token}`
-    );
+    const authorized = await target.verifyAuthorization(actual.token);
     expect(authorized.name).toBe(mockedProfile.name);
     expect(authorized.username).toBe(mockedProfile.username);
   });

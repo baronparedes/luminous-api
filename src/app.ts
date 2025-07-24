@@ -1,5 +1,6 @@
 import compression from 'compression';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import express, {NextFunction, Request, Response} from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -21,6 +22,7 @@ app.use(
 );
 app.use(express.json());
 app.use(compression());
+app.use(cookieParser());
 app.use(helmet());
 app.use(morgan(config.IS_PROD ? 'tiny' : 'dev'));
 
