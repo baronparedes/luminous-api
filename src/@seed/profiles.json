@@ -11,16 +11,6 @@
   },
   {
     "id": 2,
-    "name": "Redentor Manalo",
-    "username": "RManalo1978",
-    "password": "$2b$12$Iguc6yD88XvQdkb5AlOXmOKLbGRWeQXcg3SPNIlp.50XhnVDLUAS6",
-    "email": "admin@luminous.com",
-    "mobileNumber": "09999999999",
-    "type": "admin",
-    "status": "active"
-  },
-  {
-    "id": 3,
     "name": "Approver 1",
     "username": "approver1",
     "password": "$2b$12$Iguc6yD88XvQdkb5AlOXmOKLbGRWeQXcg3SPNIlp.50XhnVDLUAS6",
@@ -30,7 +20,7 @@
     "status": "active"
   },
   {
-    "id": 4,
+    "id": 3,
     "name": "Approver 2",
     "username": "approver2",
     "password": "$2b$12$Iguc6yD88XvQdkb5AlOXmOKLbGRWeQXcg3SPNIlp.50XhnVDLUAS6",
@@ -40,7 +30,7 @@
     "status": "active"
   },
   {
-    "id": 5,
+    "id": 4,
     "name": "Approver 3",
     "username": "approver3",
     "password": "$2b$12$Iguc6yD88XvQdkb5AlOXmOKLbGRWeQXcg3SPNIlp.50XhnVDLUAS6",
@@ -50,7 +40,7 @@
     "status": "active"
   },
   {
-    "id": 6,
+    "id": 5,
     "name": "Approver 4",
     "username": "approver4",
     "password": "$2b$12$Iguc6yD88XvQdkb5AlOXmOKLbGRWeQXcg3SPNIlp.50XhnVDLUAS6",
@@ -60,7 +50,7 @@
     "status": "active"
   },
   {
-    "id": 7,
+    "id": 6,
     "name": "Approver 5",
     "username": "approver5",
     "password": "$2b$12$Iguc6yD88XvQdkb5AlOXmOKLbGRWeQXcg3SPNIlp.50XhnVDLUAS6",
