@@ -207,7 +207,7 @@ export default class ChargeService {
   }
 
   public async saveCharges(charges: ChargeAttr[]) {
-    await Charge.bulkCreate([...charges], {
+    await Charge.bulkCreate([...charges] as Array<Partial<ChargeAttr>>, {
       validate: true,
       updateOnDuplicate: ['rate'],
     });

@@ -17,7 +17,8 @@
     "compile": "tsc",
     "lint": "gts lint",
     "clean": "gts clean",
-    "fix": "gts fix"
+    "fix": "gts fix",
+    "dbconn": "node ./scripts/test-db-connection.js"
   },
   "keywords": [],
   "author": "",
@@ -37,10 +38,10 @@
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.1.13",
-    "sequelize": "6.6.2",
+    "sequelize": "^6.20.1",
     "sequelize-typescript": "^2.1.0",
     "swagger-ui-express": "^4.1.6",
-    "tsoa": "^3.9.0"
+    "tsoa": "^5.1.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -62,7 +63,7 @@
     "jest": "^27.0.6",
     "jest-junit": "^12.2.0",
     "nodemon": "^2.0.12",
-    "sqlite3": "^5.0.2",
+    "sqlite3": "^5.1.7",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
     "typescript": "^4.3.5"

@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, HttpStatusCodeLiteral, TsoaResponse } from '@tsoa/runtime';
+import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, HttpStatusCodeLiteral, TsoaResponse, fetchMiddlewares } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { AuthController } from './controllers/auth-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -29,7 +29,7 @@ import { VoucherController } from './controllers/voucher-controller';
 import { expressAuthentication } from './auth';
 // @ts-ignore - no great way to install types from subpackage
 const promiseAny = require('promise.any');
-import * as express from 'express';
+import type { RequestHandler, Router } from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
@@ -442,12 +442,14 @@ const validationService = new ValidationService(models);
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
-export function RegisterRoutes(app: express.Router) {
+export function RegisterRoutes(app: Router) {
     // ###########################################################################################################
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
         app.post('/api/auth',
+            ...(fetchMiddlewares<RequestHandler>(AuthController)),
+            ...(fetchMiddlewares<RequestHandler>(AuthController.prototype.auth)),
 
             function AuthController_auth(request: any, response: any, next: any) {
             const args = {
@@ -459,19 +461,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new AuthController();
+
+
+              const promise = controller.auth.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new AuthController();
-
-
-            const promise = controller.auth.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/charge/getAllCharges',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ChargeController)),
+            ...(fetchMiddlewares<RequestHandler>(ChargeController.prototype.getAllCharges)),
 
             function ChargeController_getAllCharges(request: any, response: any, next: any) {
             const args = {
@@ -482,19 +486,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ChargeController();
+
+
+              const promise = controller.getAllCharges.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ChargeController();
-
-
-            const promise = controller.getAllCharges.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/charge/getAllCollectedCharges',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ChargeController)),
+            ...(fetchMiddlewares<RequestHandler>(ChargeController.prototype.getAllCollectedCharges)),
 
             function ChargeController_getAllCollectedCharges(request: any, response: any, next: any) {
             const args = {
@@ -505,19 +511,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ChargeController();
+
+
+              const promise = controller.getAllCollectedCharges.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ChargeController();
-
-
-            const promise = controller.getAllCollectedCharges.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/charge/patchCharges',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ChargeController)),
+            ...(fetchMiddlewares<RequestHandler>(ChargeController.prototype.patchCharges)),
 
             function ChargeController_patchCharges(request: any, response: any, next: any) {
             const args = {
@@ -529,19 +537,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ChargeController();
+
+
+              const promise = controller.patchCharges.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ChargeController();
-
-
-            const promise = controller.patchCharges.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/dashboard/getDashboardByYear/:year',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(DashboardController)),
+            ...(fetchMiddlewares<RequestHandler>(DashboardController.prototype.getDashboardByYear)),
 
             function DashboardController_getDashboardByYear(request: any, response: any, next: any) {
             const args = {
@@ -553,19 +563,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new DashboardController();
+
+
+              const promise = controller.getDashboardByYear.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new DashboardController();
-
-
-            const promise = controller.getDashboardByYear.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/disbursement/getDisbursementBreakdown',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(DisbursementController)),
+            ...(fetchMiddlewares<RequestHandler>(DisbursementController.prototype.getDisbursementBreakdown)),
 
             function DisbursementController_getDisbursementBreakdown(request: any, response: any, next: any) {
             const args = {
@@ -576,19 +588,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new DisbursementController();
+
+
+              const promise = controller.getDisbursementBreakdown.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new DisbursementController();
-
-
-            const promise = controller.getDisbursementBreakdown.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/disbursement/getAllDisbursements/:chargeId',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(DisbursementController)),
+            ...(fetchMiddlewares<RequestHandler>(DisbursementController.prototype.getAllDisbursements)),
 
             function DisbursementController_getAllDisbursements(request: any, response: any, next: any) {
             const args = {
@@ -601,19 +615,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new DisbursementController();
+
+
+              const promise = controller.getAllDisbursements.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new DisbursementController();
-
-
-            const promise = controller.getAllDisbursements.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/disbursement/postChargeDisbursement',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(DisbursementController)),
+            ...(fetchMiddlewares<RequestHandler>(DisbursementController.prototype.postChargeDisbursement)),
 
             function DisbursementController_postChargeDisbursement(request: any, response: any, next: any) {
             const args = {
@@ -625,19 +641,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new DisbursementController();
+
+
+              const promise = controller.postChargeDisbursement.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new DisbursementController();
-
-
-            const promise = controller.postChargeDisbursement.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/profile/getAll',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.getAll)),
 
             function ProfileController_getAll(request: any, response: any, next: any) {
             const args = {
@@ -649,18 +667,20 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ProfileController();
+
+
+              const promise = controller.getAll.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ProfileController();
-
-
-            const promise = controller.getAll.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/profile/register',
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.register)),
 
             function ProfileController_register(request: any, response: any, next: any) {
             const args = {
@@ -672,19 +692,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ProfileController();
+
+
+              const promise = controller.register.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 201, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ProfileController();
-
-
-            const promise = controller.register.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/profile/me',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.me)),
 
             function ProfileController_me(request: any, response: any, next: any) {
             const args = {
@@ -696,19 +718,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ProfileController();
+
+
+              const promise = controller.me.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ProfileController();
-
-
-            const promise = controller.me.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/profile/updateProfileStatus/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.updateProfileStatus)),
 
             function ProfileController_updateProfileStatus(request: any, response: any, next: any) {
             const args = {
@@ -721,19 +745,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ProfileController();
+
+
+              const promise = controller.updateProfileStatus.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 204, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ProfileController();
-
-
-            const promise = controller.updateProfileStatus.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/profile/updateProfile/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.updateProfile)),
 
             function ProfileController_updateProfile(request: any, response: any, next: any) {
             const args = {
@@ -746,19 +772,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ProfileController();
+
+
+              const promise = controller.updateProfile.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ProfileController();
-
-
-            const promise = controller.updateProfile.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/profile/changePassword/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.changePassword)),
 
             function ProfileController_changePassword(request: any, response: any, next: any) {
             const args = {
@@ -771,18 +799,20 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ProfileController();
+
+
+              const promise = controller.changePassword.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 204, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ProfileController();
-
-
-            const promise = controller.changePassword.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/profile/resetPassword',
+            ...(fetchMiddlewares<RequestHandler>(ProfileController)),
+            ...(fetchMiddlewares<RequestHandler>(ProfileController.prototype.resetPassword)),
 
             function ProfileController_resetPassword(request: any, response: any, next: any) {
             const args = {
@@ -794,19 +824,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ProfileController();
+
+
+              const promise = controller.resetPassword.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 204, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new ProfileController();
-
-
-            const promise = controller.resetPassword.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property-account/getPropertyAccountsByProfile/:profileId',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyAccountController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyAccountController.prototype.getPropertyAccountsByProfile)),
 
             function PropertyAccountController_getPropertyAccountsByProfile(request: any, response: any, next: any) {
             const args = {
@@ -818,19 +850,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyAccountController();
+
+
+              const promise = controller.getPropertyAccountsByProfile.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyAccountController();
-
-
-            const promise = controller.getPropertyAccountsByProfile.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property-account/getPropertyAccount/:propertyId',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyAccountController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyAccountController.prototype.getPropertyAccount)),
 
             function PropertyAccountController_getPropertyAccount(request: any, response: any, next: any) {
             const args = {
@@ -844,19 +878,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyAccountController();
+
+
+              const promise = controller.getPropertyAccount.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyAccountController();
-
-
-            const promise = controller.getPropertyAccount.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property-account/getPropertyAccountsByPeriod',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyAccountController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyAccountController.prototype.getPropertyAccountsByPeriod)),
 
             function PropertyAccountController_getPropertyAccountsByPeriod(request: any, response: any, next: any) {
             const args = {
@@ -869,19 +905,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyAccountController();
+
+
+              const promise = controller.getPropertyAccountsByPeriod.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyAccountController();
-
-
-            const promise = controller.getPropertyAccountsByPeriod.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getAll',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.getAll)),
 
             function PropertyController_getAll(request: any, response: any, next: any) {
             const args = {
@@ -893,19 +931,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.getAll.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.getAll.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.get)),
 
             function PropertyController_get(request: any, response: any, next: any) {
             const args = {
@@ -917,19 +957,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.get.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.get.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getPropertyAssignments/:propertyId',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.getPropertyAssignments)),
 
             function PropertyController_getPropertyAssignments(request: any, response: any, next: any) {
             const args = {
@@ -941,19 +983,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.getPropertyAssignments.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.getPropertyAssignments.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getAssignedProperties/:profileId',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.getAssignedProperties)),
 
             function PropertyController_getAssignedProperties(request: any, response: any, next: any) {
             const args = {
@@ -965,19 +1009,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.getAssignedProperties.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.getAssignedProperties.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/property/create',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.create)),
 
             function PropertyController_create(request: any, response: any, next: any) {
             const args = {
@@ -989,19 +1035,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.create.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 201, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.create.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/property/updatePropertyStatus/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.updatePropertyStatus)),
 
             function PropertyController_updatePropertyStatus(request: any, response: any, next: any) {
             const args = {
@@ -1014,19 +1062,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.updatePropertyStatus.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 204, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.updatePropertyStatus.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/property/updateProperty/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.updateProperty)),
 
             function PropertyController_updateProperty(request: any, response: any, next: any) {
             const args = {
@@ -1039,19 +1089,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.updateProperty.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.updateProperty.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/property/updatePropertyAssignments/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.updatePropertyAssignments)),
 
             function PropertyController_updatePropertyAssignments(request: any, response: any, next: any) {
             const args = {
@@ -1064,19 +1116,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.updatePropertyAssignments.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 204, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.updatePropertyAssignments.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getPaymentHistory/:propertyId/:year',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.getPaymentHistory)),
 
             function PropertyController_getPaymentHistory(request: any, response: any, next: any) {
             const args = {
@@ -1089,19 +1143,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.getPaymentHistory.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.getPaymentHistory.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getTransactionHistory/:propertyId/:year',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyController.prototype.getTransactionHistory)),
 
             function PropertyController_getTransactionHistory(request: any, response: any, next: any) {
             const args = {
@@ -1114,19 +1170,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyController();
+
+
+              const promise = controller.getTransactionHistory.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PropertyController();
-
-
-            const promise = controller.getTransactionHistory.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/purchase-order/getPurchaseOrder/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController.prototype.getPurchaseOrder)),
 
             function PurchaseOrderController_getPurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1138,19 +1196,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseOrderController();
+
+
+              const promise = controller.getPurchaseOrder.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseOrderController();
-
-
-            const promise = controller.getPurchaseOrder.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/purchase-order/getAllPurchaseOrdersByChargeAndStatus/:chargeId/:status',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController.prototype.getAllPurchaseOrdersByChargeAndStatus)),
 
             function PurchaseOrderController_getAllPurchaseOrdersByChargeAndStatus(request: any, response: any, next: any) {
             const args = {
@@ -1163,19 +1223,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseOrderController();
+
+
+              const promise = controller.getAllPurchaseOrdersByChargeAndStatus.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseOrderController();
-
-
-            const promise = controller.getAllPurchaseOrdersByChargeAndStatus.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/postPurchaseOrder',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController.prototype.postPurchaseOrder)),
 
             function PurchaseOrderController_postPurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1187,19 +1249,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseOrderController();
+
+
+              const promise = controller.postPurchaseOrder.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseOrderController();
-
-
-            const promise = controller.postPurchaseOrder.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/purchase-order/updatePurchaseOrder/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController.prototype.updatePurchaseOrder)),
 
             function PurchaseOrderController_updatePurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1212,19 +1276,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseOrderController();
+
+
+              const promise = controller.updatePurchaseOrder.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseOrderController();
-
-
-            const promise = controller.updatePurchaseOrder.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/approvePurchaseOrder',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController.prototype.approvePurchaseOrder)),
 
             function PurchaseOrderController_approvePurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1236,19 +1302,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseOrderController();
+
+
+              const promise = controller.approvePurchaseOrder.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseOrderController();
-
-
-            const promise = controller.approvePurchaseOrder.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/rejectPurchaseOrder',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController.prototype.rejectPurchaseOrder)),
 
             function PurchaseOrderController_rejectPurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1260,19 +1328,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseOrderController();
+
+
+              const promise = controller.rejectPurchaseOrder.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseOrderController();
-
-
-            const promise = controller.rejectPurchaseOrder.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/cancelPurchaseOrder',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController.prototype.cancelPurchaseOrder)),
 
             function PurchaseOrderController_cancelPurchaseOrder(request: any, response: any, next: any) {
             const args = {
@@ -1284,19 +1354,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseOrderController();
+
+
+              const promise = controller.cancelPurchaseOrder.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseOrderController();
-
-
-            const promise = controller.cancelPurchaseOrder.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/notifyPurchaseOrderApprovers/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController.prototype.notifyPurchaseOrderApprovers)),
 
             function PurchaseOrderController_notifyPurchaseOrderApprovers(request: any, response: any, next: any) {
             const args = {
@@ -1308,19 +1380,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseOrderController();
+
+
+              const promise = controller.notifyPurchaseOrderApprovers.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseOrderController();
-
-
-            const promise = controller.notifyPurchaseOrderApprovers.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-order/postPurchaseOrderDisbursement/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseOrderController.prototype.postPurchaseOrderDisbursement)),
 
             function PurchaseOrderController_postPurchaseOrderDisbursement(request: any, response: any, next: any) {
             const args = {
@@ -1333,19 +1407,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseOrderController();
+
+
+              const promise = controller.postPurchaseOrderDisbursement.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseOrderController();
-
-
-            const promise = controller.postPurchaseOrderDisbursement.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/purchase-request/getPurchaseRequest/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController.prototype.getPurchaseRequest)),
 
             function PurchaseRequestController_getPurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1357,19 +1433,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseRequestController();
+
+
+              const promise = controller.getPurchaseRequest.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseRequestController();
-
-
-            const promise = controller.getPurchaseRequest.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/purchase-request/getAllPurchaseRequestsByChargeAndStatus/:chargeId/:status',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController.prototype.getAllPurchaseRequestsByChargeAndStatus)),
 
             function PurchaseRequestController_getAllPurchaseRequestsByChargeAndStatus(request: any, response: any, next: any) {
             const args = {
@@ -1382,19 +1460,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseRequestController();
+
+
+              const promise = controller.getAllPurchaseRequestsByChargeAndStatus.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseRequestController();
-
-
-            const promise = controller.getAllPurchaseRequestsByChargeAndStatus.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-request/postPurchaseRequest',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController.prototype.postPurchaseRequest)),
 
             function PurchaseRequestController_postPurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1406,19 +1486,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseRequestController();
+
+
+              const promise = controller.postPurchaseRequest.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseRequestController();
-
-
-            const promise = controller.postPurchaseRequest.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/purchase-request/updatePurchaseRequest/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController.prototype.updatePurchaseRequest)),
 
             function PurchaseRequestController_updatePurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1431,19 +1513,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseRequestController();
+
+
+              const promise = controller.updatePurchaseRequest.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseRequestController();
-
-
-            const promise = controller.updatePurchaseRequest.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-request/approvePurchaseRequest',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController.prototype.approvePurchaseRequest)),
 
             function PurchaseRequestController_approvePurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1455,19 +1539,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseRequestController();
+
+
+              const promise = controller.approvePurchaseRequest.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseRequestController();
-
-
-            const promise = controller.approvePurchaseRequest.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-request/rejectPurchaseRequest',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController.prototype.rejectPurchaseRequest)),
 
             function PurchaseRequestController_rejectPurchaseRequest(request: any, response: any, next: any) {
             const args = {
@@ -1479,19 +1565,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseRequestController();
+
+
+              const promise = controller.rejectPurchaseRequest.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseRequestController();
-
-
-            const promise = controller.rejectPurchaseRequest.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/purchase-request/notifyPurchaseRequestApprovers/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(PurchaseRequestController.prototype.notifyPurchaseRequestApprovers)),
 
             function PurchaseRequestController_notifyPurchaseRequestApprovers(request: any, response: any, next: any) {
             const args = {
@@ -1503,18 +1591,20 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PurchaseRequestController();
+
+
+              const promise = controller.notifyPurchaseRequestApprovers.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new PurchaseRequestController();
-
-
-            const promise = controller.notifyPurchaseRequestApprovers.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/setting/getAll',
+            ...(fetchMiddlewares<RequestHandler>(SettingController)),
+            ...(fetchMiddlewares<RequestHandler>(SettingController.prototype.getAll)),
 
             function SettingController_getAll(request: any, response: any, next: any) {
             const args = {
@@ -1525,19 +1615,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SettingController();
+
+
+              const promise = controller.getAll.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new SettingController();
-
-
-            const promise = controller.getAll.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/setting/getSettingValue',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(SettingController)),
+            ...(fetchMiddlewares<RequestHandler>(SettingController.prototype.getSettingValue)),
 
             function SettingController_getSettingValue(request: any, response: any, next: any) {
             const args = {
@@ -1549,19 +1641,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SettingController();
+
+
+              const promise = controller.getSettingValue.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new SettingController();
-
-
-            const promise = controller.getSettingValue.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/setting/updateSettingValue',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(SettingController)),
+            ...(fetchMiddlewares<RequestHandler>(SettingController.prototype.updateSettingValue)),
 
             function SettingController_updateSettingValue(request: any, response: any, next: any) {
             const args = {
@@ -1573,19 +1667,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SettingController();
+
+
+              const promise = controller.updateSettingValue.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new SettingController();
-
-
-            const promise = controller.updateSettingValue.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/setting/getAllCategories',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(SettingController)),
+            ...(fetchMiddlewares<RequestHandler>(SettingController.prototype.getAllCategories)),
 
             function SettingController_getAllCategories(request: any, response: any, next: any) {
             const args = {
@@ -1596,19 +1692,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SettingController();
+
+
+              const promise = controller.getAllCategories.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new SettingController();
-
-
-            const promise = controller.getAllCategories.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/setting/updateCategories',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(SettingController)),
+            ...(fetchMiddlewares<RequestHandler>(SettingController.prototype.updateCategories)),
 
             function SettingController_updateCategories(request: any, response: any, next: any) {
             const args = {
@@ -1620,19 +1718,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SettingController();
+
+
+              const promise = controller.updateCategories.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new SettingController();
-
-
-            const promise = controller.updateCategories.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/transaction/postMonthlyCharges',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController)),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.postMonthlyCharges)),
 
             function TransactionController_postMonthlyCharges(request: any, response: any, next: any) {
             const args = {
@@ -1644,19 +1744,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new TransactionController();
+
+
+              const promise = controller.postMonthlyCharges.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 201, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new TransactionController();
-
-
-            const promise = controller.postMonthlyCharges.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/transaction/postCollections',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController)),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.postCollections)),
 
             function TransactionController_postCollections(request: any, response: any, next: any) {
             const args = {
@@ -1668,19 +1770,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new TransactionController();
+
+
+              const promise = controller.postCollections.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 201, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new TransactionController();
-
-
-            const promise = controller.postCollections.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/transaction/postTransactions',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController)),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.postTransactions)),
 
             function TransactionController_postTransactions(request: any, response: any, next: any) {
             const args = {
@@ -1692,19 +1796,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new TransactionController();
+
+
+              const promise = controller.postTransactions.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 201, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new TransactionController();
-
-
-            const promise = controller.postTransactions.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/getAvailablePeriods/:propertyId',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController)),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.getAvailablePeriods)),
 
             function TransactionController_getAvailablePeriods(request: any, response: any, next: any) {
             const args = {
@@ -1716,19 +1822,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new TransactionController();
+
+
+              const promise = controller.getAvailablePeriods.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new TransactionController();
-
-
-            const promise = controller.getAvailablePeriods.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/suggestPaymentBreakdown/:propertyId',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController)),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.suggestPaymentBreakdown)),
 
             function TransactionController_suggestPaymentBreakdown(request: any, response: any, next: any) {
             const args = {
@@ -1743,19 +1851,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new TransactionController();
+
+
+              const promise = controller.suggestPaymentBreakdown.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new TransactionController();
-
-
-            const promise = controller.suggestPaymentBreakdown.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/getCollectionBreakdown/:year/:month',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController)),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.getCollectionBreakdown)),
 
             function TransactionController_getCollectionBreakdown(request: any, response: any, next: any) {
             const args = {
@@ -1768,19 +1878,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new TransactionController();
+
+
+              const promise = controller.getCollectionBreakdown.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new TransactionController();
-
-
-            const promise = controller.getCollectionBreakdown.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/transaction/refundPayment/:propertyId',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController)),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.refundPayment)),
 
             function TransactionController_refundPayment(request: any, response: any, next: any) {
             const args = {
@@ -1793,19 +1905,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new TransactionController();
+
+
+              const promise = controller.refundPayment.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new TransactionController();
-
-
-            const promise = controller.refundPayment.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/transaction/getWaterReadingByPeriod/:year/:month',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController)),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.getWaterReadingByPeriod)),
 
             function TransactionController_getWaterReadingByPeriod(request: any, response: any, next: any) {
             const args = {
@@ -1818,19 +1932,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new TransactionController();
+
+
+              const promise = controller.getWaterReadingByPeriod.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new TransactionController();
-
-
-            const promise = controller.getWaterReadingByPeriod.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/voucher/getVoucher/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController)),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController.prototype.getVoucher)),
 
             function VoucherController_getVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1842,19 +1958,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new VoucherController();
+
+
+              const promise = controller.getVoucher.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new VoucherController();
-
-
-            const promise = controller.getVoucher.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/voucher/getAllVouchersByChargeAndStatus/:chargeId/:status',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController)),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController.prototype.getAllVouchersByChargeAndStatus)),
 
             function VoucherController_getAllVouchersByChargeAndStatus(request: any, response: any, next: any) {
             const args = {
@@ -1867,19 +1985,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new VoucherController();
+
+
+              const promise = controller.getAllVouchersByChargeAndStatus.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new VoucherController();
-
-
-            const promise = controller.getAllVouchersByChargeAndStatus.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/voucher/postVoucher',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController)),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController.prototype.postVoucher)),
 
             function VoucherController_postVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1891,19 +2011,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new VoucherController();
+
+
+              const promise = controller.postVoucher.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new VoucherController();
-
-
-            const promise = controller.postVoucher.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/voucher/updateVoucher/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController)),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController.prototype.updateVoucher)),
 
             function VoucherController_updateVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1916,19 +2038,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new VoucherController();
+
+
+              const promise = controller.updateVoucher.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new VoucherController();
-
-
-            const promise = controller.updateVoucher.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/voucher/approveVoucher',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController)),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController.prototype.approveVoucher)),
 
             function VoucherController_approveVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1940,19 +2064,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new VoucherController();
+
+
+              const promise = controller.approveVoucher.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new VoucherController();
-
-
-            const promise = controller.approveVoucher.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/voucher/rejectVoucher',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController)),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController.prototype.rejectVoucher)),
 
             function VoucherController_rejectVoucher(request: any, response: any, next: any) {
             const args = {
@@ -1964,19 +2090,21 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new VoucherController();
+
+
+              const promise = controller.rejectVoucher.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new VoucherController();
-
-
-            const promise = controller.rejectVoucher.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/voucher/notifyVoucherApprovers/:id',
             authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController)),
+            ...(fetchMiddlewares<RequestHandler>(VoucherController.prototype.notifyVoucherApprovers)),
 
             function VoucherController_notifyVoucherApprovers(request: any, response: any, next: any) {
             const args = {
@@ -1988,15 +2116,15 @@ export function RegisterRoutes(app: express.Router) {
             let validatedArgs: any[] = [];
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new VoucherController();
+
+
+              const promise = controller.notifyVoucherApprovers.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }
-
-            const controller = new VoucherController();
-
-
-            const promise = controller.notifyVoucherApprovers.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
@@ -2048,7 +2176,7 @@ export function RegisterRoutes(app: express.Router) {
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
             try {
-                request['user'] = await promiseAny(secMethodOrPromises);
+                request['user'] = await promiseAny.call(Promise, secMethodOrPromises);
                 next();
             }
             catch(err) {
@@ -2095,6 +2223,7 @@ export function RegisterRoutes(app: express.Router) {
             response.set(name, headers[name]);
         });
         if (data && typeof data.pipe === 'function' && data.readable && typeof data._read === 'function') {
+            response.status(statusCode || 200)
             data.pipe(response);
         } else if (data !== null && data !== undefined) {
             response.status(statusCode || 200).json(data);
@@ -2122,6 +2251,8 @@ export function RegisterRoutes(app: express.Router) {
                     return request;
                 case 'query':
                     return validationService.ValidateParam(args[key], request.query[name], name, fieldErrors, undefined, {"noImplicitAdditionalProperties":"throw-on-extras"});
+                case 'queries':
+                    return validationService.ValidateParam(args[key], request.query, name, fieldErrors, undefined, {"noImplicitAdditionalProperties":"throw-on-extras"});
                 case 'path':
                     return validationService.ValidateParam(args[key], request.params[name], name, fieldErrors, undefined, {"noImplicitAdditionalProperties":"throw-on-extras"});
                 case 'header':

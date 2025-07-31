@@ -1,7 +1,12 @@
 {
     "entryFile": "src/app.ts",
     "noImplicitAdditionalProperties": "throw-on-extras",
-    "controllerPathGlobs": ["src/**/*controller.ts"],
+    "controllerPathGlobs": ["src/controllers/*.ts"],
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "skipLibCheck": true
+    },
     "spec": {
       "outputDirectory": "src",
       "specVersion": 3,
@@ -14,9 +19,8 @@
       }
     },
     "routes": {
-      "routesDir": "./src",
+      "routesDir": "src",
       "basePath": "/",
-      "entryFile": "./src/app.ts",
-      "authenticationModule": "./src/auth.ts"
+      "authenticationModule": "src/auth.ts"
     }
   }

@@ -136,7 +136,9 @@ export const SEED = {
 };
 
 async function seedTestData() {
-  await Profile.bulkCreate([...SEED.PROFILES, PROFILE_INACTIVE]);
+  await Profile.bulkCreate([...SEED.PROFILES, PROFILE_INACTIVE] as Array<
+    Partial<ProfileAttr>
+  >);
   await Community.bulkCreate(SEED.COMMUNITIES);
   await Property.bulkCreate(SEED.PROPERTIES);
   await Charge.bulkCreate(SEED.CHARGES);

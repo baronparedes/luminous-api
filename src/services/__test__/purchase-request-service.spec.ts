@@ -57,7 +57,7 @@ describe('PurchaseRequestService', () => {
   });
 
   it('should validate, create, and update purchase requests', async () => {
-    await Profile.bulkCreate([approver1]);
+    await Profile.bulkCreate([approver1] as Array<Partial<ProfileAttr>>);
 
     const request: CreateVoucherOrOrder = {
       description: faker.random.words(10),
@@ -75,7 +75,7 @@ describe('PurchaseRequestService', () => {
       VERBIAGE.MIN_APPROVER_NOT_REACHED
     );
 
-    await Profile.bulkCreate([approver2]);
+    await Profile.bulkCreate([approver2] as Array<Partial<ProfileAttr>>);
     const actualId = await target.createPurchaseRequest(request);
 
     const actualApprovalCodeCount = await ApprovalCode.count();
@@ -99,7 +99,7 @@ describe('PurchaseRequestService', () => {
       })
     ).rejects.toThrow(VERBIAGE.SHOULD_HAVE_EXPENSES);
 
-    await Profile.bulkCreate([approver3]);
+    await Profile.bulkCreate([approver3] as Array<Partial<ProfileAttr>>);
     await target.updatePurchaseRequest(actualId, {
       ...request,
       expenses: [generateExpense(), generateExpense(), generateExpense()],

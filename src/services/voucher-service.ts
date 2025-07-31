@@ -178,7 +178,10 @@ export default class VoucherService extends BaseService {
       await ApprovalCode.bulkCreate([...approvalCodesToBeCreated], {
         transaction,
       });
-      await Expense.bulkCreate([...expensesToBeCreated], {transaction});
+      await Expense.bulkCreate(
+        [...expensesToBeCreated] as Array<Partial<ExpenseAttr>>,
+        {transaction}
+      );
 
       return Number(newRecord.id);
     });
@@ -247,7 +250,10 @@ export default class VoucherService extends BaseService {
       await ApprovalCode.bulkCreate([...approvalCodesToBeCreated], {
         transaction,
       });
-      await Expense.bulkCreate([...expensesToBeCreated], {transaction});
+      await Expense.bulkCreate(
+        [...expensesToBeCreated] as Array<Partial<ExpenseAttr>>,
+        {transaction}
+      );
       return Number(id);
     });
   }

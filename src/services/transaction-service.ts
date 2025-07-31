@@ -130,10 +130,13 @@ export default class TransactionService {
   }
 
   public async saveTransactions(transactions: TransactionAttr[]) {
-    await Transaction.bulkCreate([...transactions], {
-      validate: true,
-      updateOnDuplicate: ['waivedBy'],
-    });
+    await Transaction.bulkCreate(
+      [...transactions] as Array<Partial<TransactionAttr>>,
+      {
+        validate: true,
+        updateOnDuplicate: ['waivedBy'],
+      }
+    );
   }
 
   public async getAvailablePeriodsByProperty(propertyId: number) {

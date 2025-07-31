@@ -130,7 +130,9 @@ describe('NotificationService', () => {
     await PurchaseRequest.bulkCreate([seedPurchaseRequest]);
     await Voucher.bulkCreate([seedVoucher]);
     await PurchaseOrder.bulkCreate([seedPurchaseOrder]);
-    await Expense.bulkCreate([...seedExpenses]);
+    await Expense.bulkCreate([
+      ...(seedExpenses as Array<Partial<ExpenseAttr>>),
+    ]);
     await ApprovalCode.bulkCreate([...seedApprovalCodes]);
   });
 
