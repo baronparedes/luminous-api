@@ -170,6 +170,18 @@ export default class ChargeService {
       }
     }
 
+    if (charge.postingType === 'annual') {
+      if (month === 'JAN') {
+        if (charge.chargeType === 'unit') {
+          const amount = property.floorArea * charge.rate;
+          return formatAmount(amount);
+        }
+        if (charge.chargeType === 'amount') {
+          return formatAmount(charge.rate);
+        }
+      }
+    }
+
     if (
       charge.chargeType === 'percentage' &&
       charge.postingType === 'accrued'

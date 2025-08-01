@@ -3,6 +3,7 @@ import faker from 'faker';
 import {
   ChargeAttr,
   ChargeType,
+  PostingType,
   PropertyAttr,
   TransactionType,
 } from '../../@types/models';
@@ -235,6 +236,116 @@ describe('ChargeService', () => {
       'MAR'
     );
     expect(actual).toBe(Number(expected.toFixed(2)));
+  });
+
+  it('should calculate charge when charge type is amount and posting type is annual', async () => {
+    const targetChargeType: ChargeType = 'amount';
+    const targetCharge = SEED.CHARGES.find(
+      c => c.chargeType === targetChargeType && c.postingType === 'annual'
+    ) as ChargeAttr;
+    const targetProperty: PropertyAttr = {
+      ...property,
+      status: 'active',
+    };
+    const expected = targetCharge.rate;
+
+    // Should only charge in January
+    const actualJan = await target.calculateAmountByChargeType(
+      targetProperty,
+      targetCharge,
+      2021,
+      'JAN'
+    );
+    expect(actualJan).toBe(Number(expected.toFixed(2)));
+
+    // Should not charge in other months
+    const actualFeb = await target.calculateAmountByChargeType(
+      targetProperty,
+      targetCharge,
+      2021,
+      'FEB'
+    );
+    expect(actualFeb).toBe(0);
+  });
+
+  it('should calculate charge when charge type is unit and posting type is annual', async () => {
+    const targetChargeType: ChargeType = 'unit';
+    const targetCharge = SEED.CHARGES.find(
+      c => c.chargeType === targetChargeType && c.postingType === 'annual'
+    ) as ChargeAttr;
+    const targetProperty: PropertyAttr = {
+      ...property,
+      status: 'active',
+    };
+    const expected = targetProperty.floorArea * targetCharge.rate;
+
+    // Should only charge in January
+    const actualJan = await target.calculateAmountByChargeType(
+      targetProperty,
+      targetCharge,
+      2021,
+      'JAN'
+    );
+    expect(actualJan).toBe(Number(expected.toFixed(2)));
+
+    // Should not charge in other months
+    const actualMar = await target.calculateAmountByChargeType(
+      targetProperty,
+      targetCharge,
+      2021,
+      'MAR'
+    );
+    expect(actualMar).toBe(0);
+  });
+
+  it('should return 0 for unsupported charge type and posting type combinations', async () => {
+    const targetProperty: PropertyAttr = {
+      ...property,
+      status: 'active',
+    };
+
+    // Test amount charge type with monthly posting type (not supported in current logic)
+    const mockAmountMonthlyCharge: ChargeAttr = {
+      id: 999,
+      communityId: CONSTANTS.COMMUNITY_ID,
+      code: 'TEST_AMOUNT_MONTHLY',
+      rate: 100,
+      chargeType: 'amount' as ChargeType,
+      postingType: 'monthly' as PostingType,
+    };
+
+    const actual = await target.calculateAmountByChargeType(
+      targetProperty,
+      mockAmountMonthlyCharge,
+      2021,
+      'JAN'
+    );
+    expect(actual).toBe(0);
+  });
+
+  it('should handle rate calculations correctly with decimal precision', async () => {
+    const targetProperty: PropertyAttr = {
+      ...property,
+      status: 'active',
+      floorArea: 33.75, // Use specific floor area for precise calculation
+    };
+
+    // Test with unit charge type that has decimal rate
+    const targetCharge = SEED.CHARGES.find(
+      c => c.chargeType === 'unit' && c.postingType === 'quarterly'
+    ) as ChargeAttr;
+
+    const expected = targetProperty.floorArea * targetCharge.rate;
+    const actual = await target.calculateAmountByChargeType(
+      targetProperty,
+      targetCharge,
+      2021,
+      'JAN'
+    );
+
+    // Should format to 2 decimal places
+    expect(actual).toBe(Number(expected.toFixed(2)));
+    expect(Number.isInteger(actual * 100)).toBe(true); // Ensure it's properly rounded to 2 decimal places
   });
 
   describe('when handling negative balance', () => {

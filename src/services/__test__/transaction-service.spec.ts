@@ -77,7 +77,7 @@ describe('TransactionService', () => {
       'charged'
     );
     const expectedCharges = SEED.CHARGES.filter(
-      c => c.postingType !== 'manual' && c.postingType !== 'quarterly'
+      c => c.postingType === 'monthly'
     );
     for (const expected of expectedCharges) {
       const actual = actualCharges.find(c => c.chargeId === expected.id);
@@ -96,7 +96,7 @@ describe('TransactionService', () => {
       'charged'
     );
     const expectedCharges = SEED.CHARGES.filter(
-      c => c.postingType !== 'manual' && c.postingType !== 'quarterly'
+      c => c.postingType === 'monthly'
     );
     for (const expected of expectedCharges) {
       const actual = actualCharges.find(c => c.chargeId === expected.id);

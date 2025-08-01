@@ -5,7 +5,8 @@ export type PostingType =
   | 'manual'
   | 'accrued'
   | 'interest'
-  | 'quarterly';
+  | 'quarterly'
+  | 'annual';
 export type PaymentType = 'cash' | 'check';
 export type TransactionType = 'charged' | 'collected';
 export type RecordStatus = 'active' | 'inactive';

@@ -48,5 +48,23 @@
        "postingType": "manual",
        "priority": 4,
        "passOn": true
+    },
+    {
+       "id": 7,
+       "code": "ANNUAL INSURANCE",
+       "rate": 2500,
+       "chargeType": "amount",
+       "postingType": "annual",
+       "priority": 5,
+       "passOn": true
+    },
+    {
+       "id": 8,
+       "code": "ANNUAL MAINTENANCE",
+       "rate": 15,
+       "chargeType": "unit",
+       "postingType": "annual",
+       "priority": 6,
+       "passOn": true
     }
  ]
