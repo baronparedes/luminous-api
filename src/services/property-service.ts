@@ -25,8 +25,11 @@ export default class PropertyService extends BaseService {
       where: {
         [Op.or]: [iLike('code', search)],
       },
+      order: [['code', 'ASC']],
     };
-    const result = await Property.findAll(search ? opts : {});
+    const result = await Property.findAll(
+      search ? opts : {order: [['code', 'ASC']]}
+    );
     return result.map(p => {
       return mapProperty(p);
     });
