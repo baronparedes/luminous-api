@@ -24,7 +24,7 @@ import NotificationService from '../notification-service';
 jest.mock('../../hooks/use-send-mail');
 
 describe('NotificationService', () => {
-  const target = new NotificationService();
+  const target = new NotificationService(1);
   const profile = faker.random.arrayElement(SEED.PROFILES);
   const charge = faker.random.arrayElement(SEED.CHARGES);
   const expectedVoucherId = faker.datatype.number();

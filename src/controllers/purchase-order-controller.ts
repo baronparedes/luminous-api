@@ -6,6 +6,7 @@ import {
   DisbursementAttr,
   RequestStatus,
 } from '../@types/models';
+import {CONSTANTS} from '../constants';
 import NotificationService from '../services/notification-service';
 import PurchaseOrderService from '../services/purchase-order-service';
 
@@ -29,8 +30,10 @@ export class PurchaseOrderController extends Controller {
 
   constructor() {
     super();
-    this.purchaseOrderService = new PurchaseOrderService();
-    this.notificationService = new NotificationService();
+    this.purchaseOrderService = new PurchaseOrderService(
+      CONSTANTS.COMMUNITY_ID
+    );
+    this.notificationService = new NotificationService(CONSTANTS.COMMUNITY_ID);
   }
 
   @Get('/getPurchaseOrder/{id}')

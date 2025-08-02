@@ -64,4 +64,9 @@ export default class SettingService {
     const value = await this.getValue('WATER_CHARGE_ID');
     return value ? parseInt(value) : undefined; // fallback to undefined if not set
   }
+
+  public async getMinApprovers(): Promise<number> {
+    const value = await this.getValue('MIN_APPROVERS');
+    return value ? parseInt(value) : 3; // fallback to 3 if not set
+  }
 }

@@ -66,7 +66,7 @@ describe('PurchaseOrderService', () => {
 
   beforeAll(async () => {
     const sequelize = await initInMemoryDb();
-    target = new PurchaseOrderService(sequelize);
+    target = new PurchaseOrderService(1, sequelize);
     await PurchaseRequest.bulkCreate([purchaseRequest]);
   });
 

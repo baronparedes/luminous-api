@@ -23,7 +23,7 @@ import {
   RegisterProfile,
   UpdateProfile,
 } from '../@types/models';
-import {VERBIAGE} from '../constants';
+import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
 import AuthService from '../services/auth-service';
 import NotificationService from '../services/notification-service';
@@ -40,7 +40,7 @@ export class ProfileController extends Controller {
     super();
     this.authService = new AuthService();
     this.profileService = new ProfileService();
-    this.notificationService = new NotificationService();
+    this.notificationService = new NotificationService(CONSTANTS.COMMUNITY_ID);
   }
 
   @OperationId('GetAllProfiles')

@@ -13,8 +13,7 @@ import {
 import {getCurrentMonthYear} from '../@utils/dates';
 import {sum} from '../@utils/helpers';
 import {byYear} from '../@utils/helpers-sequelize';
-import config from '../config';
-import {CONSTANTS, VERBIAGE} from '../constants';
+import {VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import ApprovalCode from '../models/approval-code-model';
 import Charge from '../models/charge-model';
@@ -25,13 +24,18 @@ import PurchaseOrder from '../models/purchase-order-model';
 import BaseService from './@base-service';
 import {mapDisbursement, mapProfile, mapPurchaseOrder} from './@mappers';
 import ApprovalCodeService from './approval-code-service';
+import SettingService from './setting-service';
 
 export default class PurchaseOrderService extends BaseService {
   private approvalCodeService: ApprovalCodeService;
+  private settingService: SettingService;
+  private communityId: number;
 
-  constructor(repository?: Sequelize) {
+  constructor(communityId: number, repository?: Sequelize) {
     super(repository);
+    this.communityId = communityId;
     this.approvalCodeService = new ApprovalCodeService();
+    this.settingService = new SettingService(communityId);
   }
 
   private async getCurrentYearSeries() {
@@ -123,7 +127,8 @@ export default class PurchaseOrderService extends BaseService {
         },
       });
 
-      if (matchedCodes.length < config.APP.MIN_APPROVERS) {
+      const minApprovers = await this.settingService.getMinApprovers();
+      if (matchedCodes.length < minApprovers) {
         throw new ApiError(400, VERBIAGE.INVALID_APPROVAL_CODES);
       }
 
@@ -152,7 +157,8 @@ export default class PurchaseOrderService extends BaseService {
 
       const approvalCodes =
         await this.approvalCodeService.generateApprovalCodes();
-      if (approvalCodes.length < config.APP.MIN_APPROVERS) {
+      const minApprovers = await this.settingService.getMinApprovers();
+      if (approvalCodes.length < minApprovers) {
         throw new ApiError(400, VERBIAGE.MIN_APPROVER_NOT_REACHED);
       }
 
@@ -170,7 +176,7 @@ export default class PurchaseOrderService extends BaseService {
         requestedBy: purchaseOrder.requestedBy,
         requestedDate: purchaseOrder.requestedDate,
         chargeId: purchaseOrder.chargeId,
-        communityId: CONSTANTS.COMMUNITY_ID,
+        communityId: this.communityId,
         totalCost,
         status: 'pending',
         series,
@@ -222,7 +228,8 @@ export default class PurchaseOrderService extends BaseService {
 
       const newApprovalCodes =
         await this.approvalCodeService.generateApprovalCodes();
-      if (newApprovalCodes.length < config.APP.MIN_APPROVERS) {
+      const minApprovers = await this.settingService.getMinApprovers();
+      if (newApprovalCodes.length < minApprovers) {
         throw new ApiError(400, VERBIAGE.MIN_APPROVER_NOT_REACHED);
       }
 
