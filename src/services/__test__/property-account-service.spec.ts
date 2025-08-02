@@ -8,9 +8,10 @@ import PaymentDetail from '../../models/payment-detail-model';
 import PropertyAssignment from '../../models/property-assignment-model';
 import Transaction from '../../models/transaction-model';
 import PropertyAccountService from '../property-account-service';
+import {CONSTANTS} from '../../constants';
 
 describe('PropertyAccountService', () => {
-  const target = new PropertyAccountService();
+  const target = new PropertyAccountService(CONSTANTS.COMMUNITY_ID);
   const amount = faker.datatype.number();
   const profile = faker.random.arrayElement(SEED.PROFILES);
   const charge = faker.random.arrayElement(SEED.CHARGES);

@@ -59,4 +59,9 @@ export default class SettingService {
       updateOnDuplicate: ['description', 'subCategories'],
     });
   }
+
+  public async getWaterChargeId(): Promise<number | undefined> {
+    const value = await this.getValue('WATER_CHARGE_ID');
+    return value ? parseInt(value) : undefined; // fallback to undefined if not set
+  }
 }

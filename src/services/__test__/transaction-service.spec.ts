@@ -7,12 +7,12 @@ import {
 } from '../../@utils/dates';
 import {generateTransaction} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
-import {VERBIAGE} from '../../constants';
+import {CONSTANTS, VERBIAGE} from '../../constants';
 import Transaction from '../../models/transaction-model';
 import TransactionService from '../../services/transaction-service';
 
 describe('TransactionService', () => {
-  const target = new TransactionService();
+  const target = new TransactionService(CONSTANTS.COMMUNITY_ID);
   const charge = faker.random.arrayElement(
     SEED.CHARGES.filter(c => c.chargeType === 'unit')
   );

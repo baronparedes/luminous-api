@@ -81,4 +81,21 @@ describe('SettingService', () => {
     expect(actualAfterSave[0]).toEqual(updatedCategory);
     expect(actualAfterSave[1]).toEqual({...newCategory, id: 2});
   });
+
+  it('should get water charge id when setting exists', async () => {
+    const chargeId = faker.datatype.number({min: 1, max: 100});
+    await target.setValue('WATER_CHARGE_ID', chargeId.toString());
+
+    const actual = await target.getWaterChargeId();
+    expect(actual).toEqual(chargeId);
+  });
+
+  it('should return undefined when water charge id setting does not exist', async () => {
+    await Setting.destroy({
+      where: {key: 'WATER_CHARGE_ID', communityId: CONSTANTS.COMMUNITY_ID},
+    });
+
+    const actual = await target.getWaterChargeId();
+    expect(actual).toEqual(undefined);
+  });
 });

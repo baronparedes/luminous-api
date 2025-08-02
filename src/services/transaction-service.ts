@@ -2,19 +2,22 @@ import {Op, WhereOptions} from 'sequelize';
 
 import {Month, TransactionAttr, TransactionType} from '../@types/models';
 import {isSamePeriod, toPeriod, toTransactionPeriod} from '../@utils/dates';
-import {CONSTANTS, VERBIAGE} from '../constants';
+import {VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import Charge from '../models/charge-model';
 import Property from '../models/property-model';
 import Transaction from '../models/transaction-model';
 import {mapTransaction} from './@mappers';
 import ChargeService from './charge-service';
+import SettingService from './setting-service';
 
 export default class TransactionService {
   private chargeService: ChargeService;
+  private settingService: SettingService;
 
-  constructor() {
+  constructor(communityId: number) {
     this.chargeService = new ChargeService();
+    this.settingService = new SettingService(communityId);
   }
 
   public async getTransactionByYearMonth(
@@ -153,9 +156,13 @@ export default class TransactionService {
   }
 
   public async getWaterReadingByYearMonth(year: number, month: Month) {
+    const waterChargeId = await this.settingService.getWaterChargeId();
+    if (!waterChargeId) {
+      throw new ApiError(400, 'Water charge ID not configured');
+    }
     const transactions = await Transaction.findAll({
       where: {
-        chargeId: CONSTANTS.WATER_CHARGE_ID,
+        chargeId: waterChargeId,
         transactionPeriod: toTransactionPeriod(year, month),
         batchId: {[Op.ne]: null},
       },

@@ -13,5 +13,15 @@
         "id": 3,
         "key": "PR_NOTES",
         "value": "<h1>PR Notes</h1>"
+     },
+     {
+        "id": 4,
+        "key": "WATER_CHARGE_ID",
+        "value": "6"
+     },
+     {
+        "id": 5,
+        "key": "COMMUNITY_CHARGE_ID",
+        "value": "1"
      }
  ]

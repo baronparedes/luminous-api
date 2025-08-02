@@ -7,9 +7,10 @@ import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
 import PaymentDetail from '../../models/payment-detail-model';
 import Transaction from '../../models/transaction-model';
 import PaymentDetailService from '../payment-detail-service';
+import {CONSTANTS} from '../../constants';
 
 describe('PaymentDetailService', () => {
-  const target = new PaymentDetailService();
+  const target = new PaymentDetailService(CONSTANTS.COMMUNITY_ID);
   const charge = faker.random.arrayElement(SEED.CHARGES);
   const property = faker.random.arrayElement(SEED.PROPERTIES);
   const paymentDetail = generatePaymentDetail();
