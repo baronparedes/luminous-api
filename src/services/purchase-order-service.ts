@@ -21,12 +21,12 @@ import Disbursement from '../models/disbursement-model';
 import Expense from '../models/expense-model';
 import Profile from '../models/profile-model';
 import PurchaseOrder from '../models/purchase-order-model';
-import BaseService from './@base-service';
+import BaseServiceWithAudit from './@base-service-with-audit';
 import {mapDisbursement, mapProfile, mapPurchaseOrder} from './@mappers';
 import ApprovalCodeService from './approval-code-service';
 import SettingService from './setting-service';
 
-export default class PurchaseOrderService extends BaseService {
+export default class PurchaseOrderService extends BaseServiceWithAudit {
   private approvalCodeService: ApprovalCodeService;
   private settingService: SettingService;
   private communityId: number;
@@ -73,7 +73,7 @@ export default class PurchaseOrderService extends BaseService {
       request.comments = comments;
       request.status = 'cancelled';
       request.rejectedBy = cancelledBy;
-      await request.save({transaction});
+      await this.saveWithAudit(request, {transaction});
     });
   }
 
@@ -97,7 +97,7 @@ export default class PurchaseOrderService extends BaseService {
       request.comments = comments;
       request.status = 'rejected';
       request.rejectedBy = rejectedBy;
-      await request.save({transaction});
+      await this.saveWithAudit(request, {transaction});
       await ApprovalCode.destroy({
         where: {
           purchaseOrderId,
@@ -135,7 +135,7 @@ export default class PurchaseOrderService extends BaseService {
       request.status = 'approved';
       request.approvedBy = JSON.stringify(matchedCodes.map(c => c.profileId));
 
-      await request.save({transaction});
+      await this.saveWithAudit(request, {transaction});
       await ApprovalCode.destroy({
         where: {
           purchaseOrderId: approveRequest.purchaseOrderId,
@@ -182,7 +182,7 @@ export default class PurchaseOrderService extends BaseService {
         series,
       });
 
-      await newRecord.save({transaction});
+      await this.saveWithAudit(newRecord, {transaction});
 
       const approvalCodesToBeCreated = [
         ...approvalCodes.map(a => {
@@ -205,7 +205,8 @@ export default class PurchaseOrderService extends BaseService {
       await ApprovalCode.bulkCreate([...approvalCodesToBeCreated], {
         transaction,
       });
-      await Expense.bulkCreate(
+      await this.bulkCreateWithAudit(
+        Expense,
         [...expensesToBeCreated] as Array<Partial<ExpenseAttr>>,
         {transaction}
       );
@@ -274,7 +275,7 @@ export default class PurchaseOrderService extends BaseService {
       record.description = purchaseOrder.description;
       record.totalCost = totalCost;
 
-      await record.save({transaction});
+      await this.saveWithAudit(record, {transaction});
 
       await ApprovalCode.destroy({
         where: {
@@ -293,7 +294,8 @@ export default class PurchaseOrderService extends BaseService {
       await ApprovalCode.bulkCreate([...approvalCodesToBeCreated], {
         transaction,
       });
-      await Expense.bulkCreate(
+      await this.bulkCreateWithAudit(
+        Expense,
         [...expensesToBeCreated] as Array<Partial<ExpenseAttr>>,
         {transaction}
       );
@@ -354,7 +356,7 @@ export default class PurchaseOrderService extends BaseService {
       purchaseOrderId: id,
       voucherId: undefined,
     });
-    await newRecord.save();
+    await this.saveWithAudit(newRecord);
     return mapDisbursement(newRecord);
   }
 }

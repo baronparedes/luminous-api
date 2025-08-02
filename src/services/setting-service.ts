@@ -61,9 +61,8 @@ export default class SettingService extends BaseServiceWithAudit {
   }
 
   public async saveCategories(categories: CategoryAttr[]) {
-    // Use base class helper method for bulk operations with audit
     await this.bulkCreateWithAudit(Category, categories, {
-      updateOnDuplicate: ['description', 'subCategories'],
+      updateOnDuplicate: ['description', 'subCategories', 'updatedBy'],
     });
   }
 

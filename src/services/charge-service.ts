@@ -13,13 +13,14 @@ import {generateNumberedSeries} from '../@utils/helpers';
 import Charge from '../models/charge-model';
 import Transaction from '../models/transaction-model';
 import {mapCharge} from './@mappers';
+import BaseServiceWithAudit from './@base-service-with-audit';
 
 function formatAmount(amount: number) {
   if (amount <= 0) return 0;
   return Number(amount.toFixed(2));
 }
 
-export default class ChargeService {
+export default class ChargeService extends BaseServiceWithAudit {
   private async hasPreviouslyPostedPaymentsSince(
     propertyId: number,
     year: number,
@@ -219,10 +220,14 @@ export default class ChargeService {
   }
 
   public async saveCharges(charges: ChargeAttr[]) {
-    await Charge.bulkCreate([...charges] as Array<Partial<ChargeAttr>>, {
-      validate: true,
-      updateOnDuplicate: ['rate'],
-    });
+    await this.bulkCreateWithAudit(
+      Charge,
+      [...charges] as Array<Partial<ChargeAttr>>,
+      {
+        validate: true,
+        updateOnDuplicate: ['rate', 'updatedBy'],
+      }
+    );
   }
 
   public async getChargesWithCollectedAmount(communityId: number) {

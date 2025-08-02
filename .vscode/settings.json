@@ -9,5 +9,6 @@
     },
     "typescript.preferences.importModuleSpecifier": "relative",
     "typescript.updateImportsOnFileMove.enabled": "prompt",
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "jest.runMode": "on-demand",
 }

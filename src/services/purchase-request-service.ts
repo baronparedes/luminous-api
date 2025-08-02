@@ -18,12 +18,12 @@ import ApprovalCode from '../models/approval-code-model';
 import Expense from '../models/expense-model';
 import Profile from '../models/profile-model';
 import PurchaseRequest from '../models/purchase-request-model';
-import BaseService from './@base-service';
+import BaseServiceWithAudit from './@base-service-with-audit';
 import {mapProfile, mapPurchaseRequest} from './@mappers';
 import ApprovalCodeService from './approval-code-service';
 import SettingService from './setting-service';
 
-export default class PurchaseRequestService extends BaseService {
+export default class PurchaseRequestService extends BaseServiceWithAudit {
   private approvalCodeService: ApprovalCodeService;
   private settingService: SettingService;
   private communityId: number;
@@ -65,7 +65,7 @@ export default class PurchaseRequestService extends BaseService {
       request.comments = comments;
       request.status = 'rejected';
       request.rejectedBy = rejectedBy;
-      await request.save({transaction});
+      await this.saveWithAudit(request, {transaction});
       await ApprovalCode.destroy({
         where: {
           purchaseRequestId,
@@ -103,7 +103,7 @@ export default class PurchaseRequestService extends BaseService {
       request.status = 'approved';
       request.approvedBy = JSON.stringify(matchedCodes.map(c => c.profileId));
 
-      await request.save({transaction});
+      await this.saveWithAudit(request, {transaction});
       await ApprovalCode.destroy({
         where: {
           purchaseRequestId: approveRequest.purchaseRequestId,
@@ -142,7 +142,7 @@ export default class PurchaseRequestService extends BaseService {
         series,
       });
 
-      await newRecord.save({transaction});
+      await this.saveWithAudit(newRecord, {transaction});
 
       const approvalCodesToBeCreated = [
         ...approvalCodes.map(a => {
@@ -165,7 +165,8 @@ export default class PurchaseRequestService extends BaseService {
       await ApprovalCode.bulkCreate([...approvalCodesToBeCreated], {
         transaction,
       });
-      await Expense.bulkCreate(
+      await this.bulkCreateWithAudit(
+        Expense,
         [...expensesToBeCreated] as Array<Partial<ExpenseAttr>>,
         {transaction}
       );
@@ -223,7 +224,7 @@ export default class PurchaseRequestService extends BaseService {
       record.description = purchaseRequest.description;
       record.totalCost = totalCost;
 
-      await record.save({transaction});
+      await this.saveWithAudit(record, {transaction});
 
       await ApprovalCode.destroy({
         where: {
@@ -242,7 +243,8 @@ export default class PurchaseRequestService extends BaseService {
       await ApprovalCode.bulkCreate([...approvalCodesToBeCreated], {
         transaction,
       });
-      await Expense.bulkCreate(
+      await this.bulkCreateWithAudit(
+        Expense,
         [...expensesToBeCreated] as Array<Partial<ExpenseAttr>>,
         {transaction}
       );

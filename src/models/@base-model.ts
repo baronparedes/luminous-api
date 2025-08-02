@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   AllowNull,
+  BeforeBulkCreate,
+  BeforeBulkUpdate,
   BeforeCreate,
   BeforeUpdate,
   Column,
   CreatedAt,
-  ForeignKey,
   Model,
   UpdatedAt,
 } from 'sequelize-typescript';
-import Profile from './profile-model';
 
 interface SequelizeOptions {
   userId?: number;
@@ -25,12 +25,10 @@ export abstract class BaseModelWithAudit extends Model {
   updatedAt!: Date;
 
   @AllowNull(true)
-  @ForeignKey(() => Profile)
   @Column
   createdBy?: number;
 
   @AllowNull(true)
-  @ForeignKey(() => Profile)
   @Column
   updatedBy?: number;
 
@@ -47,6 +45,31 @@ export abstract class BaseModelWithAudit extends Model {
   static setUpdatedBy(instance: BaseModelWithAudit, options: SequelizeOptions) {
     if (options?.userId) {
       instance.updatedBy = options.userId;
+    }
+  }
+
+  @BeforeBulkCreate
+  static setBulkCreatedBy(
+    instances: BaseModelWithAudit[],
+    options: SequelizeOptions
+  ) {
+    if (options?.userId) {
+      instances.forEach(instance => {
+        instance.createdBy = options.userId;
+        instance.updatedBy = options.userId;
+      });
+    }
+  }
+
+  @BeforeBulkUpdate
+  static setBulkUpdatedBy(
+    instances: BaseModelWithAudit[],
+    options: SequelizeOptions
+  ) {
+    if (options?.userId) {
+      instances.forEach(instance => {
+        instance.updatedBy = options.userId;
+      });
     }
   }
 }

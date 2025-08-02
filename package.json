@@ -19,6 +19,7 @@
     "clean": "gts clean",
     "fix": "gts fix",
     "dbconn": "node ./scripts/test-db-connection.js",
+    "dbreseed": "node ./scripts/reseed-identities.js",
     "dev:ui": "cd ../luminous-ui && npm start",
     "dev": "concurrently \"npm start\" \"npm run dev:ui\" --names \"API,UI\" --prefix-colors \"cyan,magenta\""
   },

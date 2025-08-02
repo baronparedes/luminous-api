@@ -4,18 +4,18 @@ import {
   DataType,
   Default,
   ForeignKey,
-  Model,
   NotEmpty,
   Table,
 } from 'sequelize-typescript';
 
 import {PropertyAttr, RecordStatus} from '../@types/models';
 import Community from './community-model';
+import BaseModelWithAudit from './@base-model';
 
 @Table({
   indexes: [{unique: true, fields: ['code']}],
 })
-class Property extends Model implements PropertyAttr {
+class Property extends BaseModelWithAudit implements PropertyAttr {
   @AllowNull(false)
   @NotEmpty
   @Column

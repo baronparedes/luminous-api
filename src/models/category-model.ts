@@ -3,15 +3,15 @@ import {
   Column,
   DataType,
   ForeignKey,
-  Model,
   Table,
 } from 'sequelize-typescript';
 
 import {CategoryAttr} from '../@types/models';
 import Community from './community-model';
+import BaseModelWithAudit from './@base-model';
 
 @Table
-class Category extends Model implements CategoryAttr {
+class Category extends BaseModelWithAudit implements CategoryAttr {
   @AllowNull(false)
   @ForeignKey(() => Community)
   @Column

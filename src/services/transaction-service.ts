@@ -8,14 +8,16 @@ import Charge from '../models/charge-model';
 import Property from '../models/property-model';
 import Transaction from '../models/transaction-model';
 import {mapTransaction} from './@mappers';
+import BaseServiceWithAudit from './@base-service-with-audit';
 import ChargeService from './charge-service';
 import SettingService from './setting-service';
 
-export default class TransactionService {
+export default class TransactionService extends BaseServiceWithAudit {
   private chargeService: ChargeService;
   private settingService: SettingService;
 
   constructor(communityId: number) {
+    super();
     this.chargeService = new ChargeService();
     this.settingService = new SettingService(communityId);
   }
@@ -133,7 +135,8 @@ export default class TransactionService {
   }
 
   public async saveTransactions(transactions: TransactionAttr[]) {
-    await Transaction.bulkCreate(
+    await this.bulkCreateWithAudit(
+      Transaction,
       [...transactions] as Array<Partial<TransactionAttr>>,
       {
         validate: true,

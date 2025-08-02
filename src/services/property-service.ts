@@ -10,10 +10,10 @@ import Profile from '../models/profile-model';
 import PropertyAssignment from '../models/property-assignment-model';
 import Property from '../models/property-model';
 import Transaction from '../models/transaction-model';
-import BaseService from './@base-service';
+import BaseServiceWithAudit from './@base-service-with-audit';
 import {mapProperty, mapPropertyAssignment, mapTransaction} from './@mappers';
 
-export default class PropertyService extends BaseService {
+export default class PropertyService extends BaseServiceWithAudit {
   public async get(id: number) {
     const result = await Property.findByPk(id);
     if (!result) throw new Error(VERBIAGE.NOT_FOUND);
@@ -43,7 +43,7 @@ export default class PropertyService extends BaseService {
       status: property.status,
       communityId: CONSTANTS.COMMUNITY_ID,
     });
-    const result = await newProperty.save();
+    const result = await this.saveWithAudit(newProperty);
     return mapProperty(result);
   }
 
@@ -59,7 +59,7 @@ export default class PropertyService extends BaseService {
     result.code = property.code;
     result.floorArea = property.floorArea;
     result.address = property.address;
-    await result.save();
+    await this.saveWithAudit(result);
     return mapProperty(result);
   }
 
@@ -67,7 +67,7 @@ export default class PropertyService extends BaseService {
     const result = await Property.findByPk(id);
     if (result) {
       result.status = status;
-      await result?.save();
+      await this.saveWithAudit(result);
     }
   }
 

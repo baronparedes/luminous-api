@@ -104,6 +104,43 @@ describe('SettingService', () => {
     expect(actualAfterSave[1]).toEqual({...newCategory, id: 2});
   });
 
+  it('should save categories with audit fields', async () => {
+    const testCategories = [
+      {
+        ...generateCategory(),
+        communityId: CONSTANTS.COMMUNITY_ID,
+      },
+      {
+        ...generateCategory(),
+        communityId: CONSTANTS.COMMUNITY_ID,
+      },
+    ];
+
+    await target.saveCategories(testCategories);
+
+    // Fetch the saved categories directly from the database to check audit fields
+    const savedCategories = await Category.findAll({
+      where: {
+        communityId: CONSTANTS.COMMUNITY_ID,
+        description: [
+          testCategories[0].description,
+          testCategories[1].description,
+        ],
+      },
+      raw: true,
+    });
+
+    expect(savedCategories.length).toEqual(testCategories.length);
+
+    // Verify audit fields are populated for all saved categories
+    for (const category of savedCategories) {
+      expect(category.createdBy).toEqual(mockUser.id);
+      expect(category.updatedBy).toEqual(mockUser.id);
+      expect(category.createdAt).toBeDefined();
+      expect(category.updatedAt).toBeDefined();
+    }
+  });
+
   it('should get water charge id when setting exists', async () => {
     const chargeId = faker.datatype.number({min: 1, max: 100});
     await target.setValue('WATER_CHARGE_ID', chargeId.toString());
