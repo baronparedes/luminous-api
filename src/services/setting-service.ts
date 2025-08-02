@@ -2,9 +2,12 @@ import {CategoryAttr} from '../@types/models';
 import Category from '../models/category-model';
 import Setting from '../models/setting-model';
 import {mapCategories, mapSetting} from './@mappers';
+import BaseServiceWithAudit from './@base-service-with-audit';
 
-export default class SettingService {
-  constructor(private communityId: number) {}
+export default class SettingService extends BaseServiceWithAudit {
+  constructor(private communityId: number) {
+    super();
+  }
 
   public async getValues() {
     const result = await Setting.findAll({
@@ -32,16 +35,19 @@ export default class SettingService {
         communityId: this.communityId,
       },
     });
+
     if (existing) {
       existing.value = value;
-      await existing.save();
+      // Use base class helper method that automatically adds audit options
+      await this.saveWithAudit(existing);
     } else {
-      const newSetting = new Setting({
+      const newSettingData = {
         key,
         value,
         communityId: this.communityId,
-      });
-      await newSetting.save();
+      };
+      // Use base class helper method that automatically adds audit options
+      await this.createWithAudit(Setting, newSettingData);
     }
   }
 
@@ -55,7 +61,8 @@ export default class SettingService {
   }
 
   public async saveCategories(categories: CategoryAttr[]) {
-    await Category.bulkCreate(categories, {
+    // Use base class helper method for bulk operations with audit
+    await this.bulkCreateWithAudit(Category, categories, {
       updateOnDuplicate: ['description', 'subCategories'],
     });
   }

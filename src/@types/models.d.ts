@@ -174,6 +174,11 @@ export interface TransactionAttr {
 export interface SettingAttr {
   key: string;
   value: string;
+  communityId?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
 }
 
 export interface PaymentDetailAttr {

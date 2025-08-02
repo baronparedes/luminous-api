@@ -374,6 +374,11 @@ const models: TsoaRoute.Models = {
         "properties": {
             "key": {"dataType":"string","required":true},
             "value": {"dataType":"string","required":true},
+            "communityId": {"dataType":"double"},
+            "createdAt": {"dataType":"datetime"},
+            "updatedAt": {"dataType":"datetime"},
+            "createdBy": {"dataType":"double"},
+            "updatedBy": {"dataType":"double"},
         },
         "additionalProperties": false,
     },

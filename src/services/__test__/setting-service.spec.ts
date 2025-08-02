@@ -1,7 +1,9 @@
 import faker from 'faker';
 
+import {AuthProfile} from '../../@types/models';
 import {generateCategory} from '../../@utils/fake-data';
 import {initInMemoryDb} from '../../@utils/seeded-test-data';
+import {UserContext} from '../../context/user-context';
 import {CONSTANTS} from '../../constants';
 import Category from '../../models/category-model';
 import Setting from '../../models/setting-model';
@@ -21,10 +23,30 @@ describe('SettingService', () => {
     id: 1,
   };
 
+  // Mock user for audit operations
+  const mockUser: AuthProfile = {
+    id: 999,
+    username: 'testuser',
+    email: 'test@example.com',
+    name: 'Test User',
+    type: 'admin',
+    status: 'active',
+  };
+
   beforeAll(async () => {
     await initInMemoryDb();
     await Setting.bulkCreate([seedData]);
     await Category.bulkCreate([seedCategoryData]);
+  });
+
+  beforeEach(() => {
+    // Set up user context for each test
+    UserContext.setCurrentUser(mockUser);
+  });
+
+  afterEach(() => {
+    // Clean up user context after each test
+    UserContext.clearCurrentUser();
   });
 
   it('should fetch empty string when key does not exist', async () => {
