@@ -133,7 +133,9 @@ describe('NotificationService', () => {
     await Expense.bulkCreate([
       ...(seedExpenses as Array<Partial<ExpenseAttr>>),
     ]);
-    await ApprovalCode.bulkCreate([...seedApprovalCodes]);
+    await ApprovalCode.bulkCreate([...seedApprovalCodes] as Array<
+      Partial<ApprovalCodeAttr>
+    >);
   });
 
   it('should notify reset password', async () => {

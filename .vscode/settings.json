@@ -3,12 +3,12 @@
     "typescript.preferences.includePackageJsonAutoImports": "off",
     "typescript.suggest.autoImports": true,
     "typescript.suggest.includeAutomaticOptionalChainCompletions": false,
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.updateImportsOnFileMove.enabled": "prompt",
     "editor.codeActionsOnSave": {
         "source.organizeImports": "never",
         "source.fixAll.eslint": "explicit"
     },
-    "typescript.preferences.importModuleSpecifier": "relative",
-    "typescript.updateImportsOnFileMove.enabled": "prompt",
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     "jest.runMode": "on-demand",
 }
