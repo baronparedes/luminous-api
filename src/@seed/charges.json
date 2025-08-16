@@ -21,5 +21,12 @@
       "chargeType": "percentage",
       "postingType": "accrued",
       "thresholdInMonths": 2
+   },
+   {
+      "id": 4,
+      "code": "COMMON FUND",
+      "rate": 0,
+      "chargeType": "amount",
+      "postingType": "manual"
    }
 ]
