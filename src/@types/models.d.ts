@@ -7,7 +7,7 @@ export type PostingType =
   | 'interest'
   | 'quarterly'
   | 'annual';
-export type PaymentType = 'cash' | 'check';
+export type PaymentType = 'cash' | 'check' | 'bank-transfer' | 'gcash';
 export type TransactionType = 'charged' | 'collected';
 export type RecordStatus = 'active' | 'inactive';
 export type RequestStatus = 'approved' | 'rejected' | 'pending' | 'cancelled';
@@ -204,6 +204,10 @@ export interface PaymentDetailAttr {
   updatedAt?: Date;
   createdBy?: number;
   updatedBy?: number;
+  referenceNumber?: string;
+  transferDate?: Date;
+  transferBank?: string;
+  transferFrom?: string;
 }
 
 export interface ExpenseAttr {

@@ -416,7 +416,9 @@
 				"type": "string",
 				"enum": [
 					"cash",
-					"check"
+					"check",
+					"bank-transfer",
+					"gcash"
 				]
 			},
 			"ProfileAttr": {
@@ -765,6 +767,19 @@
 					"updatedBy": {
 						"type": "number",
 						"format": "double"
+					},
+					"referenceNumber": {
+						"type": "string"
+					},
+					"transferDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"transferBank": {
+						"type": "string"
+					},
+					"transferFrom": {
+						"type": "string"
 					}
 				},
 				"required": [

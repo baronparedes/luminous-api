@@ -40,6 +40,10 @@ export function mapPaymentDetail(
     checkPostingDate: paymentDetail.checkPostingDate,
     checkNumber: paymentDetail.checkNumber,
     createdAt: paymentDetail.createdAt,
+    transferBank: paymentDetail.transferBank,
+    transferFrom: paymentDetail.transferFrom,
+    transferDate: paymentDetail.transferDate,
+    referenceNumber: paymentDetail.referenceNumber,
   };
 }
 

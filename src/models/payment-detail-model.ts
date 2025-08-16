@@ -31,6 +31,18 @@ class PaymentDetail extends BaseModelWithAudit implements PaymentDetailAttr {
   @Column
   checkIssuingBank?: string;
 
+  @Column
+  referenceNumber?: string;
+
+  @Column(DataType.DATEONLY)
+  transferDate?: Date;
+
+  @Column
+  transferBank?: string;
+
+  @Column
+  transferFrom?: string;
+
   @AllowNull(false)
   @ForeignKey(() => Profile)
   @Column
