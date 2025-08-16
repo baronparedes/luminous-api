@@ -1,1346 +1,142 @@
 [
   {
     "id": 1,
-    "code": "A-101",
-    "address": "Unit A-101 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L1",
+    "address": "Blk 1 Lot 1 Gold Ridge Phase 2",
+    "floorArea": 206,
     "status": "active"
   },
   {
     "id": 2,
-    "code": "A-102",
-    "address": "Unit A-102 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L2",
+    "address": "Blk 1 Lot 2 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 3,
-    "code": "A-103",
-    "address": "Unit A-103 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L3",
+    "address": "Blk 1 Lot 3 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 4,
-    "code": "A-104",
-    "address": "Unit A-104 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L4",
+    "address": "Blk 1 Lot 4 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 5,
-    "code": "A-105",
-    "address": "Unit A-105 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L5",
+    "address": "Blk 1 Lot 5 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 6,
-    "code": "A-106",
-    "address": "Unit A-106 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L6",
+    "address": "Blk 1 Lot 6 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 7,
-    "code": "A-107",
-    "address": "Unit A-107 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
+    "code": "B1L7",
+    "address": "Blk 1 Lot 7 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 8,
-    "code": "A-108",
-    "address": "Unit A-108 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
+    "code": "B1L8",
+    "address": "Blk 1 Lot 8 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 9,
-    "code": "A-109",
-    "address": "Unit A-109 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
+    "code": "B1L9",
+    "address": "Blk 1 Lot 9 Gold Ridge Phase 2",
+    "floorArea": 159,
     "status": "active"
   },
   {
     "id": 10,
-    "code": "A-110",
-    "address": "Unit A-110 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 52.25,
+    "code": "B1L10",
+    "address": "Blk 1 Lot 10 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 11,
-    "code": "A-111",
-    "address": "Unit A-111 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L11",
+    "address": "Blk 1 Lot 11 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 12,
-    "code": "A-112",
-    "address": "Unit A-112 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 24.5,
+    "code": "B1L12",
+    "address": "Blk 1 Lot 12 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 13,
-    "code": "A-113",
-    "address": "Unit A-113 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 28.87,
+    "code": "B1L13",
+    "address": "Blk 1 Lot 13 Gold Ridge Phase 2",
+    "floorArea": 151,
     "status": "active"
   },
   {
     "id": 14,
-    "code": "A-201",
-    "address": "Unit A-201 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L14",
+    "address": "Blk 1 Lot 14 Gold Ridge Phase 2",
+    "floorArea": 208,
     "status": "active"
   },
   {
     "id": 15,
-    "code": "A-202",
-    "address": "Unit A-202 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L15",
+    "address": "Blk 1 Lot 15 Gold Ridge Phase 2",
+    "floorArea": 153,
     "status": "active"
   },
   {
     "id": 16,
-    "code": "A-203",
-    "address": "Unit A-203 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L16",
+    "address": "Blk 1 Lot 16 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 17,
-    "code": "A-204",
-    "address": "Unit A-204 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L17",
+    "address": "Blk 1 Lot 17 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 18,
-    "code": "A-205",
-    "address": "Unit A-205 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L18",
+    "address": "Blk 1 Lot 18 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 19,
-    "code": "A-206",
-    "address": "Unit A-206 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
+    "code": "B1L19",
+    "address": "Blk 1 Lot 19 Gold Ridge Phase 2",
+    "floorArea": 150,
     "status": "active"
   },
   {
     "id": 20,
-    "code": "A-207",
-    "address": "Unit A-207 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 52.25,
-    "status": "active"
-  },
-  {
-    "id": 21,
-    "code": "A-208",
-    "address": "Unit A-208 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 22,
-    "code": "A-209",
-    "address": "Unit A-209 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 23,
-    "code": "A-210",
-    "address": "Unit A-210 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 24,
-    "code": "A-211",
-    "address": "Unit A-211 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 25,
-    "code": "A-212",
-    "address": "Unit A-212 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 26,
-    "code": "A-213",
-    "address": "Unit A-213 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 51.39,
-    "status": "active"
-  },
-  {
-    "id": 27,
-    "code": "A-214",
-    "address": "Unit A-214 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 51,
-    "status": "active"
-  },
-  {
-    "id": 28,
-    "code": "A-215",
-    "address": "Unit A-215 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 29,
-    "code": "A-216",
-    "address": "Unit A-216 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 30,
-    "code": "A-301",
-    "address": "Unit A-301 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 31,
-    "code": "A-302",
-    "address": "Unit A-302 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 32,
-    "code": "A-303",
-    "address": "Unit A-303 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 33,
-    "code": "A-304",
-    "address": "Unit A-304 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 34,
-    "code": "A-305",
-    "address": "Unit A-305 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 35,
-    "code": "A-306",
-    "address": "Unit A-306 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 36,
-    "code": "A-307",
-    "address": "Unit A-307 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 37,
-    "code": "A-308",
-    "address": "Unit A-308 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 38,
-    "code": "A-309",
-    "address": "Unit A-309 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 39,
-    "code": "A-310",
-    "address": "Unit A-310 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 40,
-    "code": "A-311",
-    "address": "Unit A-311 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 41,
-    "code": "A-312",
-    "address": "Unit A-312 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 42,
-    "code": "A-313",
-    "address": "Unit A-313 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 43,
-    "code": "A-314",
-    "address": "Unit A-314 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 44,
-    "code": "A-315",
-    "address": "Unit A-315 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 45,
-    "code": "A-316",
-    "address": "Unit A-316 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 46,
-    "code": "A-401",
-    "address": "Unit A-401 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 47,
-    "code": "A-402",
-    "address": "Unit A-402 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 48,
-    "code": "A-403",
-    "address": "Unit A-403 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 49,
-    "code": "A-404",
-    "address": "Unit A-404 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 50,
-    "code": "A-405",
-    "address": "Unit A-405 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 51,
-    "code": "A-406",
-    "address": "Unit A-406 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 52,
-    "code": "A-407",
-    "address": "Unit A-407 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 53,
-    "code": "A-408",
-    "address": "Unit A-408 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 54,
-    "code": "A-409",
-    "address": "Unit A-409 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 55,
-    "code": "A-410",
-    "address": "Unit A-410 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 56,
-    "code": "A-411",
-    "address": "Unit A-411 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 57,
-    "code": "A-412",
-    "address": "Unit A-412 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 58,
-    "code": "A-413",
-    "address": "Unit A-413 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 59,
-    "code": "A-414",
-    "address": "Unit A-414 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 60,
-    "code": "A-415",
-    "address": "Unit A-415 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 61,
-    "code": "A-416",
-    "address": "Unit A-416 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 62,
-    "code": "A-501",
-    "address": "Unit A-501 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 63,
-    "code": "A-502",
-    "address": "Unit A-502 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 64,
-    "code": "A-503",
-    "address": "Unit A-503 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 65,
-    "code": "A-504",
-    "address": "Unit A-504 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 66,
-    "code": "A-505",
-    "address": "Unit A-505 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 67,
-    "code": "A-506/507",
-    "address": "Unit A-506/507er G Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
-    "floorArea": 71.5,
-    "status": "active"
-  },
-  {
-    "id": 68,
-    "code": "A-508",
-    "address": "Unit A-508 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 69,
-    "code": "A-509",
-    "address": "Unit A-509 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 70,
-    "code": "A-510",
-    "address": "Unit A-510 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 52.25,
-    "status": "active"
-  },
-  {
-    "id": 71,
-    "code": "A-511",
-    "address": "Unit A-511 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 72,
-    "code": "A-512",
-    "address": "Unit A-512 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 73,
-    "code": "A-513",
-    "address": "Unit A-513 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 74,
-    "code": "A-514",
-    "address": "Unit A-514 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 75,
-    "code": "A-515",
-    "address": "Unit A-515 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 76,
-    "code": "A-516",
-    "address": "Unit A-516 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 77,
-    "code": "A-601",
-    "address": "Unit A-601 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 78,
-    "code": "A-602",
-    "address": "Unit A-602 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 79,
-    "code": "A-603",
-    "address": "Unit A-603 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 80,
-    "code": "A-604",
-    "address": "Unit A-604 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 81,
-    "code": "A-605",
-    "address": "Unit A-605 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 82,
-    "code": "A-606",
-    "address": "Unit A-606 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 83,
-    "code": "A-607",
-    "address": "Unit A-607 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 84,
-    "code": "A-608",
-    "address": "Unit A-608 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 85,
-    "code": "A-609",
-    "address": "Unit A-609 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 86,
-    "code": "A-610",
-    "address": "Unit A-610 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 87,
-    "code": "A-611",
-    "address": "Unit A-611 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 88,
-    "code": "A-612",
-    "address": "Unit A-612 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 89,
-    "code": "A-613",
-    "address": "Unit A-613 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 90,
-    "code": "A-614",
-    "address": "Unit A-614 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 91,
-    "code": "A-615",
-    "address": "Unit A-615 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 92,
-    "code": "A-616",
-    "address": "Unit A-616 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 93,
-    "code": "A-LG01",
-    "address": "Unit A-LG01 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 94,
-    "code": "A-LG02",
-    "address": "Unit A-LG02 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 95,
-    "code": "A-LG03",
-    "address": "Unit A-LG03 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 96,
-    "code": "A-LG04",
-    "address": "Unit A-LG04 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 97,
-    "code": "A-LG05",
-    "address": "Unit A-LG05 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.28,
-    "status": "active"
-  },
-  {
-    "id": 98,
-    "code": "A-LG06",
-    "address": "Unit A-LG06 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.28,
-    "status": "active"
-  },
-  {
-    "id": 99,
-    "code": "A-LG07",
-    "address": "Unit A-LG07 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 100,
-    "code": "A-LG08",
-    "address": "Unit A-LG08 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 24.5,
-    "status": "active"
-  },
-  {
-    "id": 101,
-    "code": "A-LG09",
-    "address": "Unit A-LG09 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 102,
-    "code": "A-LG10",
-    "address": "Unit A-LG10 Tower AH Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 103,
-    "code": "A-LG11",
-    "address": "Unit A-LG11 Tower AH Hampton Gardens Condo, C. Raymundo Ave., Maybunga, Pasig City",
-    "floorArea": 28.87,
-    "status": "active"
-  },
-  {
-    "id": 104,
-    "code": "A-PS05",
-    "address": "Unit A-515 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 12.5,
-    "status": "active"
-  },
-  {
-    "id": 105,
-    "code": "A-PS10",
-    "address": "Unit A-203 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 12.5,
-    "status": "active"
-  },
-  {
-    "id": 106,
-    "code": "B-114",
-    "address": "Unit B-114 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 28.87,
-    "status": "active"
-  },
-  {
-    "id": 107,
-    "code": "B-115",
-    "address": "Unit B-115 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 24.5,
-    "status": "active"
-  },
-  {
-    "id": 108,
-    "code": "B-116",
-    "address": "Unit B-116 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 109,
-    "code": "B-117",
-    "address": "Unit B-117 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 110,
-    "code": "B-118",
-    "address": "Unit B-118 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 111,
-    "code": "B-119",
-    "address": "Unit B-119 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 112,
-    "code": "B-120",
-    "address": "Unit B-120 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 113,
-    "code": "B-121",
-    "address": "Unit B-121 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 114,
-    "code": "B-122",
-    "address": "Unit B-122 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 115,
-    "code": "B-123",
-    "address": "Unit B-123 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 116,
-    "code": "B-124",
-    "address": "Unit B-124 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 117,
-    "code": "B-217",
-    "address": "Unit B-217 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 118,
-    "code": "B-218",
-    "address": "Unit B-218 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 119,
-    "code": "B-219",
-    "address": "Unit B-219 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 120,
-    "code": "B-220",
-    "address": "Unit B-220 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 121,
-    "code": "B-221",
-    "address": "Unit B-221 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 122,
-    "code": "B-222",
-    "address": "Unit B-222 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 123,
-    "code": "B-223",
-    "address": "Unit B-223 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 124,
-    "code": "B-224",
-    "address": "Unit B-224 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 125,
-    "code": "B-225",
-    "address": "Unit B-225 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 126,
-    "code": "B-226",
-    "address": "Unit B-226 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 127,
-    "code": "B-227",
-    "address": "Unit B-227 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 128,
-    "code": "B-228",
-    "address": "Unit B-228 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 51,
-    "status": "active"
-  },
-  {
-    "id": 129,
-    "code": "B-229",
-    "address": "Unit B-229 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 130,
-    "code": "B-317",
-    "address": "Unit B-317 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 131,
-    "code": "B-318",
-    "address": "Unit B-318 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 132,
-    "code": "B-319",
-    "address": "Unit B-319 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 133,
-    "code": "B-320",
-    "address": "Unit B-320 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 134,
-    "code": "B-321",
-    "address": "Unit B-321 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 135,
-    "code": "B-322",
-    "address": "Unit B-322 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 136,
-    "code": "B-323",
-    "address": "Unit B-323 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 137,
-    "code": "B-324",
-    "address": "Unit B-324 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 138,
-    "code": "B-325",
-    "address": "Unit B-325 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 139,
-    "code": "B-326",
-    "address": "Unit B-326 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 140,
-    "code": "B-327",
-    "address": "Unit B-327 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 141,
-    "code": "B-328",
-    "address": "Unit B-328 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 142,
-    "code": "B-329",
-    "address": "Unit B-329 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 51,
-    "status": "active"
-  },
-  {
-    "id": 143,
-    "code": "B-417",
-    "address": "Unit B-417 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 144,
-    "code": "B-418",
-    "address": "Unit B-418 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 145,
-    "code": "B-419",
-    "address": "Unit B-419 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 146,
-    "code": "B-420",
-    "address": "Unit B-420 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 147,
-    "code": "B-421",
-    "address": "Unit B-421 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 148,
-    "code": "B-422",
-    "address": "Unit B-422 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 149,
-    "code": "B-423",
-    "address": "Unit B-423 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 150,
-    "code": "B-424",
-    "address": "Unit B-424 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 151,
-    "code": "B-425",
-    "address": "Unit B-425 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 152,
-    "code": "B-426",
-    "address": "Unit B-426 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 153,
-    "code": "B-427",
-    "address": "Unit B-427 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 154,
-    "code": "B-428",
-    "address": "Unit B-428 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 155,
-    "code": "B-429",
-    "address": "Unit B-429 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 156,
-    "code": "B-517",
-    "address": "Unit B-517 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 157,
-    "code": "B-518",
-    "address": "Unit B-518 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 158,
-    "code": "B-519",
-    "address": "Unit B-519 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 159,
-    "code": "B-520",
-    "address": "Unit B-520 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 160,
-    "code": "B-521",
-    "address": "Unit B-521 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 161,
-    "code": "B-522",
-    "address": "Unit B-522 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 162,
-    "code": "B-523",
-    "address": "Unit B-523 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 163,
-    "code": "B-524",
-    "address": "Unit B-524 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 164,
-    "code": "B-525",
-    "address": "Unit B-525 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 165,
-    "code": "B-526",
-    "address": "Unit B-526 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 166,
-    "code": "B-527",
-    "address": "Unit B-527 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 167,
-    "code": "B-528",
-    "address": "Unit B-528 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 168,
-    "code": "B-529",
-    "address": "Unit B-529 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 169,
-    "code": "B-617",
-    "address": "Unit B-617 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 170,
-    "code": "B-618",
-    "address": "Unit B-618 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 171,
-    "code": "B-619",
-    "address": "Unit B-619 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 172,
-    "code": "B-620",
-    "address": "Unit B-620 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.89,
-    "status": "active"
-  },
-  {
-    "id": 173,
-    "code": "B-621",
-    "address": "Unit B-621 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 31.75,
-    "status": "active"
-  },
-  {
-    "id": 174,
-    "code": "B-622",
-    "address": "Unit B-622 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 175,
-    "code": "B-623",
-    "address": "Unit B-623 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 176,
-    "code": "B-624",
-    "address": "Unit B-624 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.67,
-    "status": "active"
-  },
-  {
-    "id": 177,
-    "code": "B-625",
-    "address": "Unit B-625 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 178,
-    "code": "B-626",
-    "address": "Unit B-626 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 179,
-    "code": "B-627",
-    "address": "Unit B-627 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 180,
-    "code": "B-628",
-    "address": "Unit B-628 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 181,
-    "code": "B-629",
-    "address": "Unit B-629 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 182,
-    "code": "B-LG112",
-    "address": "Unit B-LG112 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 183,
-    "code": "B-LG113",
-    "address": "Unit B-LG113 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 28.87,
-    "status": "active"
-  },
-  {
-    "id": 184,
-    "code": "B-LG114",
-    "address": "Unit B-LG114 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 24.5,
-    "status": "active"
-  },
-  {
-    "id": 185,
-    "code": "B-LG115",
-    "address": "Unit B-LG115 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 19.25,
-    "status": "active"
-  },
-  {
-    "id": 186,
-    "code": "B-LG116",
-    "address": "Unit B-LG116 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 187,
-    "code": "B-LG117",
-    "address": "Unit B-LG117 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.28,
-    "status": "active"
-  },
-  {
-    "id": 188,
-    "code": "B-LG118",
-    "address": "Unit B-LG118 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 33.28,
-    "status": "active"
-  },
-  {
-    "id": 189,
-    "code": "B-LG119",
-    "address": "Unit B-LG119 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 39.75,
-    "status": "active"
-  },
-  {
-    "id": 190,
-    "code": "B-LG120",
-    "address": "Unit B-LG120 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 191,
-    "code": "B-LG121",
-    "address": "Unit B-LG121 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
-    "status": "active"
-  },
-  {
-    "id": 192,
-    "code": "B-LG122",
-    "address": "Unit B-LG122 Estate Gardens, Emerald Ave., Maybunga, Pasig City",
-    "floorArea": 38.5,
+    "code": "HOA Admin",
+    "address": "HOA Admin Gold Ridge Phase 2",
+    "floorArea": 0,
     "status": "active"
   }
 ]

@@ -17,7 +17,7 @@
      {
         "id": 4,
         "key": "WATER_CHARGE_ID",
-        "value": "6"
+        "value": "0"
      },
      {
         "id": 5,
@@ -27,6 +27,6 @@
      {
         "id": 6,
         "key": "MIN_APPROVERS",
-        "value": "3"
+        "value": "2"
      }
  ]

@@ -1,52 +1,25 @@
 [
-    {
-       "id": 1,
-       "code": "CONDO DUES",
-       "rate": 60,
-       "chargeType": "unit",
-       "postingType": "monthly",
-       "priority": 1
-    },
-    {
-       "id": 2,
-       "code": "ESTATE DUES",
-       "rate": 11,
-       "chargeType": "unit",
-       "postingType": "monthly",
-       "priority": 2,
-       "passOn": true
-    },
-    {
-       "id": 3,
-       "code": "RPT COMMON",
-       "rate": 12.76,
-       "chargeType": "unit",
-       "postingType": "quarterly",
-       "priority": 3,
-       "passOn": true
-    },
-    {
-       "id": 4,
-       "code": "INTEREST",
-       "rate": 0.01,
-       "chargeType": "percentage",
-       "postingType": "interest"
-    },
-    {
-       "id": 5,
-       "code": "PENALTY",
-       "rate": 0.01,
-       "chargeType": "percentage",
-       "postingType": "accrued",
-       "thresholdInMonths": 2
-    },
-    {
-       "id": 6,
-       "code": "WATER UTILITY",
-       "rate": 1,
-       "chargeType": "unit",
-       "postingType": "manual",
-       "priority": 4,
-       "passOn": true
-    }
- ]
+   {
+      "id": 1,
+      "code": "COMMUNITY DUES",
+      "rate": 3.5,
+      "chargeType": "unit",
+      "postingType": "monthly",
+      "priority": 1
+   },
+   {
+      "id": 2,
+      "code": "INTEREST",
+      "rate": 0.00,
+      "chargeType": "percentage",
+      "postingType": "interest"
+   },
+   {
+      "id": 3,
+      "code": "PENALTY",
+      "rate": 0.03,
+      "chargeType": "percentage",
+      "postingType": "accrued",
+      "thresholdInMonths": 2
+   }
+]
