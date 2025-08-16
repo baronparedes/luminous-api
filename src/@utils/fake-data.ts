@@ -8,6 +8,7 @@ import {
   DisbursementAttr,
   ExpenseAttr,
   PaymentDetailAttr,
+  PaymentType,
   PostingType,
   ProfileAttr,
   ProfileType,
@@ -238,12 +239,21 @@ export const generateDisbursement = (): DisbursementAttr => {
   return {
     amount: faker.datatype.number(),
     details: faker.random.words(10),
-    paymentType: faker.random.arrayElement(['cash', 'check']),
+    paymentType: faker.random.arrayElement<PaymentType>([
+      'cash',
+      'check',
+      'bank-transfer',
+      'gcash',
+    ]),
     checkNumber: faker.random.alphaNumeric(),
     checkIssuingBank: faker.random.words(),
     checkPostingDate: faker.datatype.datetime(),
     releasedBy: faker.datatype.number(),
     chargeId: faker.datatype.number(),
     createdAt: faker.date.recent(),
+    transferBank: faker.random.words(),
+    transferDate: faker.datatype.datetime(),
+    transferTo: faker.random.alphaNumeric(10),
+    referenceNumber: faker.random.alphaNumeric(10),
   };
 };
