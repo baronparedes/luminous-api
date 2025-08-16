@@ -1,6 +1,9 @@
-import {Op, WhereOptions} from 'sequelize';
-
-import {Month, TransactionAttr, TransactionType} from '../@types/models';
+import {
+  Month,
+  Period,
+  TransactionAttr,
+  TransactionType,
+} from '../@types/models';
 import {isSamePeriod, toPeriod, toTransactionPeriod} from '../@utils/dates';
 import {VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
@@ -11,6 +14,9 @@ import {mapTransaction} from './@mappers';
 import BaseServiceWithAudit from './@base-service-with-audit';
 import ChargeService from './charge-service';
 import SettingService from './setting-service';
+import {iLike} from '../@utils/helpers-sequelize';
+import PaymentDetail from '../models/payment-detail-model';
+import {Op, WhereOptions} from 'sequelize';
 
 export default class TransactionService extends BaseServiceWithAudit {
   private chargeService: ChargeService;
@@ -172,5 +178,32 @@ export default class TransactionService extends BaseServiceWithAudit {
       order: [['id', 'ASC']],
     });
     return transactions.map(t => mapTransaction(t));
+  }
+
+  public async getAllTransactions(
+    chargeId: number,
+    period: Period,
+    searchCriteria?: string
+  ) {
+    let criteria: WhereOptions<Transaction> = {
+      chargeId,
+      transactionPeriod: toTransactionPeriod(period.year, period.month),
+      transactionType: 'collected',
+    };
+    if (searchCriteria) {
+      criteria = {
+        ...criteria,
+        [Op.or]: [
+          iLike('details', searchCriteria),
+          iLike('category', searchCriteria),
+        ],
+      };
+    }
+    const result = await Transaction.findAll({
+      where: criteria,
+      order: [['id', 'ASC']],
+      include: [Charge, Property, PaymentDetail],
+    });
+    return result.map(t => mapTransaction(t));
   }
 }

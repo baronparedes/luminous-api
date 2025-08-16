@@ -105,17 +105,23 @@ export default class CollectionService extends BaseServiceWithAudit {
   }
 
   public async refundPayment(
-    propertyId: number,
     paymentDetailId: number,
     refundedBy: number,
-    comments: string
+    comments: string,
+    propertyId?: number
   ) {
     await this.repository.transaction(async transaction => {
-      const criteria: WhereOptions<Transaction> = {
-        propertyId,
+      let criteria: WhereOptions<Transaction> = {
         paymentDetailId,
         transactionType: 'collected',
       };
+
+      if (propertyId) {
+        criteria = {
+          ...criteria,
+          propertyId,
+        };
+      }
 
       const transactionsToBeRefunded = await Transaction.findAll({
         where: criteria,

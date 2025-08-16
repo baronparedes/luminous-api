@@ -162,11 +162,14 @@ export interface ChargeAttr {
 }
 
 export interface TransactionAttr {
+  details?: string;
   id?: number;
   chargeId: number;
   charge?: ChargeAttr;
-  propertyId: number;
+  propertyId?: number;
   property?: PropertyAttr;
+  categoryId?: number;
+  category?: string;
   amount: number;
   transactionPeriod: Date;
   transactionType: TransactionType;

@@ -75,4 +75,9 @@ export default class SettingService extends BaseServiceWithAudit {
     const value = await this.getValue('MIN_APPROVERS');
     return value ? parseInt(value) : 3; // fallback to 3 if not set
   }
+
+  public async getCommonChargeId(): Promise<number | undefined> {
+    const value = await this.getValue('COMMON_CHARGE_ID');
+    return value ? parseInt(value) : undefined; // fallback to undefined if not set
+  }
 }
