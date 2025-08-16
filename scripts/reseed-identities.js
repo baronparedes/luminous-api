@@ -68,6 +68,7 @@ async function main() {
       'categories',
       'property_assignments',
       'settings',
+      'vouchers',
     ];
     for (const table of tables) {
       await reseedToNextAvailable(table);

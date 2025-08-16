@@ -97,8 +97,16 @@ export default abstract class BaseServiceWithAudit {
     data: T['_creationAttributes'],
     additionalOptions?: Partial<CreateOptions<T['_attributes']>>
   ): Promise<T> {
-    const options = {...this.getAuditOptions(), ...additionalOptions};
-    return await model.create(data, options as CreateOptions<T['_attributes']>);
+    try {
+      const options = {...this.getAuditOptions(), ...additionalOptions};
+      return await model.create(
+        data,
+        options as CreateOptions<T['_attributes']>
+      );
+    } catch (error) {
+      console.error('Error in createWithAudit:', error);
+      throw error;
+    }
   }
 
   /**
@@ -117,8 +125,13 @@ export default abstract class BaseServiceWithAudit {
     instance: T,
     additionalOptions?: Partial<SaveOptions<T['_attributes']>>
   ): Promise<T> {
-    const options = {...this.getAuditOptions(), ...additionalOptions};
-    return await instance.save(options as SaveOptions<T['_attributes']>);
+    try {
+      const options = {...this.getAuditOptions(), ...additionalOptions};
+      return await instance.save(options as SaveOptions<T['_attributes']>);
+    } catch (error) {
+      console.error('Error in saveWithAudit:', error);
+      throw error;
+    }
   }
 
   /**
@@ -145,12 +158,20 @@ export default abstract class BaseServiceWithAudit {
     whereCondition: WhereOptions<T['_attributes']>,
     additionalOptions?: Partial<UpdateOptions<T['_attributes']>>
   ): Promise<[affectedCount: number]> {
-    const options = {
-      where: whereCondition,
-      ...this.getAuditOptions(),
-      ...additionalOptions,
-    };
-    return await model.update(data, options as UpdateOptions<T['_attributes']>);
+    try {
+      const options = {
+        where: whereCondition,
+        ...this.getAuditOptions(),
+        ...additionalOptions,
+      };
+      return await model.update(
+        data,
+        options as UpdateOptions<T['_attributes']>
+      );
+    } catch (error) {
+      console.error('Error in updateWithAudit:', error);
+      throw error;
+    }
   }
 
   /**
@@ -179,10 +200,15 @@ export default abstract class BaseServiceWithAudit {
     data: Array<T['_creationAttributes']>,
     additionalOptions?: Partial<BulkCreateOptions<T['_attributes']>>
   ): Promise<T[]> {
-    const options = {...this.getAuditOptions(), ...additionalOptions};
-    return await model.bulkCreate(
-      data,
-      options as BulkCreateOptions<T['_attributes']>
-    );
+    try {
+      const options = {...this.getAuditOptions(), ...additionalOptions};
+      return await model.bulkCreate(
+        data,
+        options as BulkCreateOptions<T['_attributes']>
+      );
+    } catch (error) {
+      console.error('Error in bulkCreateWithAudit:', error);
+      throw error;
+    }
   }
 }

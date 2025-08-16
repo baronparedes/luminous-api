@@ -62,6 +62,18 @@ class Disbursement extends BaseModelWithAudit implements DisbursementAttr {
   @Column(DataType.DECIMAL)
   amount!: number;
 
+  @Column
+  referenceNumber?: string;
+
+  @Column
+  transferBank?: string;
+
+  @Column
+  transferDate?: Date;
+
+  @Column
+  transferTo?: string;
+
   @BelongsTo(() => Profile)
   releasedByProfile?: ProfileAttr;
 

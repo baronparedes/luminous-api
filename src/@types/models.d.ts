@@ -261,6 +261,10 @@ export interface DisbursementAttr {
   checkNumber?: string;
   checkPostingDate?: Date;
   checkIssuingBank?: string;
+  referenceNumber?: string;
+  transferBank?: string;
+  transferDate?: Date;
+  transferTo?: string;
   amount: number;
   releasedByProfile?: ProfileAttr;
   charge?: ChargeAttr;

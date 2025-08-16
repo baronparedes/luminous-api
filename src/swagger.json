@@ -504,6 +504,19 @@
 					"checkIssuingBank": {
 						"type": "string"
 					},
+					"referenceNumber": {
+						"type": "string"
+					},
+					"transferBank": {
+						"type": "string"
+					},
+					"transferDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"transferTo": {
+						"type": "string"
+					},
 					"amount": {
 						"type": "number",
 						"format": "double"
