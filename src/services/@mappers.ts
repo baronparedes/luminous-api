@@ -114,6 +114,9 @@ export function mapTransaction(model: Transaction): TransactionAttr {
     rateSnapshot: model.rateSnapshot,
     batchId: model.batchId,
     createdAt: model.createdAt,
+    category: model.category,
+    categoryId: model.categoryId,
+    details: model.details,
   };
 }
 

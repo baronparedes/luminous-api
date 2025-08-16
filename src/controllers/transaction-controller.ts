@@ -13,7 +13,12 @@ import {
   SuccessResponse,
 } from 'tsoa';
 
-import {Month, PaymentDetailAttr, TransactionAttr} from '../@types/models';
+import {
+  Month,
+  PaymentDetailAttr,
+  Period,
+  TransactionAttr,
+} from '../@types/models';
 import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
 import CollectionService from '../services/collection-service';
@@ -118,16 +123,16 @@ export class TransactionController extends Controller {
     return value;
   }
 
-  @Patch('/refundPayment/{propertyId}')
+  @Patch('/refundPayment')
   public async refundPayment(
-    @Path() propertyId: number,
-    @Body() body: RefundPaymentBody
+    @Body() body: RefundPaymentBody,
+    @Query() propertyId?: number
   ) {
     await this.collectionService.refundPayment(
-      propertyId,
       body.paymentDetailId,
       body.refundedBy,
-      body.comments
+      body.comments,
+      propertyId
     );
   }
 
@@ -141,5 +146,24 @@ export class TransactionController extends Controller {
       month
     );
     return data;
+  }
+
+  @Get('/getAllTransactions/{year}/{month}/{chargeId}')
+  public async getAllTransactions(
+    @Path() chargeId: number,
+    @Path() year: number,
+    @Path() month: Month,
+    @Query() search?: string
+  ) {
+    const period: Period = {
+      year,
+      month,
+    };
+    const result = await this.transactionService.getAllTransactions(
+      chargeId,
+      period,
+      search
+    );
+    return result;
   }
 }

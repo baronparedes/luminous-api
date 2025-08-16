@@ -14,6 +14,7 @@ import {
   TransactionAttr,
   TransactionType,
 } from '../@types/models';
+import Category from './category-model';
 import Charge from './charge-model';
 import PaymentDetail from './payment-detail-model';
 import Profile from './profile-model';
@@ -22,15 +23,28 @@ import BaseModelWithAudit from './@base-model';
 
 @Table
 class Transaction extends BaseModelWithAudit implements TransactionAttr {
+  @AllowNull(true)
+  @Column(DataType.TEXT)
+  details?: string;
+
   @AllowNull(false)
   @ForeignKey(() => Charge)
   @Column
   chargeId!: number;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @ForeignKey(() => Property)
   @Column
-  propertyId!: number;
+  propertyId?: number;
+
+  @AllowNull(true)
+  @ForeignKey(() => Category)
+  @Column
+  categoryId!: number;
+
+  @AllowNull(true)
+  @Column(DataType.CITEXT)
+  category!: string;
 
   @AllowNull(false)
   @Column(DataType.DECIMAL)
