@@ -40,6 +40,10 @@ export function mapPaymentDetail(
     checkPostingDate: paymentDetail.checkPostingDate,
     checkNumber: paymentDetail.checkNumber,
     createdAt: paymentDetail.createdAt,
+    transferBank: paymentDetail.transferBank,
+    transferFrom: paymentDetail.transferFrom,
+    transferDate: paymentDetail.transferDate,
+    referenceNumber: paymentDetail.referenceNumber,
   };
 }
 
@@ -240,6 +244,10 @@ export function mapDisbursement(model: Disbursement): DisbursementAttr {
     checkIssuingBank: model.checkIssuingBank,
     checkNumber: model.checkNumber,
     checkPostingDate: model.checkPostingDate,
+    referenceNumber: model.referenceNumber,
+    transferBank: model.transferBank,
+    transferDate: model.transferDate,
+    transferTo: model.transferTo,
     releasedByProfile: model.releasedByProfile
       ? mapProfile(model.releasedByProfile as Profile)
       : undefined,

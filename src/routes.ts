@@ -144,7 +144,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PaymentType": {
         "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["cash"]},{"dataType":"enum","enums":["check"]}],"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["cash"]},{"dataType":"enum","enums":["check"]},{"dataType":"enum","enums":["bank-transfer"]},{"dataType":"enum","enums":["gcash"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ProfileAttr": {
@@ -177,6 +177,10 @@ const models: TsoaRoute.Models = {
             "checkNumber": {"dataType":"string"},
             "checkPostingDate": {"dataType":"datetime"},
             "checkIssuingBank": {"dataType":"string"},
+            "referenceNumber": {"dataType":"string"},
+            "transferBank": {"dataType":"string"},
+            "transferDate": {"dataType":"datetime"},
+            "transferTo": {"dataType":"string"},
             "amount": {"dataType":"double","required":true},
             "releasedByProfile": {"ref":"ProfileAttr"},
             "charge": {"ref":"ChargeAttr"},
@@ -256,6 +260,10 @@ const models: TsoaRoute.Models = {
             "updatedAt": {"dataType":"datetime"},
             "createdBy": {"dataType":"double"},
             "updatedBy": {"dataType":"double"},
+            "referenceNumber": {"dataType":"string"},
+            "transferDate": {"dataType":"datetime"},
+            "transferBank": {"dataType":"string"},
+            "transferFrom": {"dataType":"string"},
         },
         "additionalProperties": false,
     },

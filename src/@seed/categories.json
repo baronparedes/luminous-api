@@ -1,12 +1,32 @@
 [
     {
         "id": 1,
-        "description": "Category 1",
-        "subCategories": "[\"Sub-Category 1\",\"Sub-Cartegory 2\"]"
+        "description": "Utilities",
+        "subCategories": "[\"Lights and Power\",\"Water Services\",\"Communication Expenses\"]"
     },
     {
         "id": 2,
-        "description": "Category 2",
-        "subCategories": "[\"Sub-Category 3\",\"Sub-Cartegory 4\"]"
+        "description": "Facilities and Services",
+        "subCategories": "[\"Security Services\",\"Maintenance Services\",\"Landscaping and Maintenance\",\"Pool Maintenance\",\"Estate Improvements\"]"
+    },
+    {
+        "id": 3,
+        "description": "Human Resources",
+        "subCategories": "[\"Salaries & Wages\",\"Staff Benefits\",\"Transportation\"]"
+    },
+    {
+        "id": 4,
+        "description": "Administrative and Office",
+        "subCategories": "[\"Office Supplies\",\"Meetings and Events\",\"Miscellaneous\"]"
+    },
+    {
+        "id": 5,
+        "description": "Regulatory and Financial",
+        "subCategories": "[\"Taxes and Permit\",\"Bond Refund\"]"
+    },
+    {
+        "id": 6,
+        "description": "Professional Services",
+        "subCategories": "[\"Professional Fees\"]"
     }
 ]
