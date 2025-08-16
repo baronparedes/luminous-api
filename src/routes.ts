@@ -271,11 +271,14 @@ const models: TsoaRoute.Models = {
     "TransactionAttr": {
         "dataType": "refObject",
         "properties": {
+            "details": {"dataType":"string"},
             "id": {"dataType":"double"},
             "chargeId": {"dataType":"double","required":true},
             "charge": {"ref":"ChargeAttr"},
-            "propertyId": {"dataType":"double","required":true},
+            "propertyId": {"dataType":"double"},
             "property": {"ref":"PropertyAttr"},
+            "categoryId": {"dataType":"double"},
+            "category": {"dataType":"string"},
             "amount": {"dataType":"double","required":true},
             "transactionPeriod": {"dataType":"datetime","required":true},
             "transactionType": {"ref":"TransactionType","required":true},
@@ -1985,15 +1988,15 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.patch('/api/transaction/refundPayment/:propertyId',
+        app.patch('/api/transaction/refundPayment',
             authenticateMiddleware([{"bearer":[]}]),
             ...(fetchMiddlewares<RequestHandler>(TransactionController)),
             ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.refundPayment)),
 
             function TransactionController_refundPayment(request: any, response: any, next: any) {
             const args = {
-                    propertyId: {"in":"path","name":"propertyId","required":true,"dataType":"double"},
                     body: {"in":"body","name":"body","required":true,"ref":"RefundPaymentBody"},
+                    propertyId: {"in":"query","name":"propertyId","dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -2033,6 +2036,35 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.getWaterReadingByPeriod.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/transaction/getAllTransactions/:year/:month/:chargeId',
+            authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController)),
+            ...(fetchMiddlewares<RequestHandler>(TransactionController.prototype.getAllTransactions)),
+
+            function TransactionController_getAllTransactions(request: any, response: any, next: any) {
+            const args = {
+                    chargeId: {"in":"path","name":"chargeId","required":true,"dataType":"double"},
+                    year: {"in":"path","name":"year","required":true,"dataType":"double"},
+                    month: {"in":"path","name":"month","required":true,"ref":"Month"},
+                    search: {"in":"query","name":"search","dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new TransactionController();
+
+
+              const promise = controller.getAllTransactions.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

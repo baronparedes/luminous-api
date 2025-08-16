@@ -1,32 +1,33 @@
 [
-   {
-      "id": 1,
-      "code": "COMMUNITY DUES",
-      "rate": 3.5,
-      "chargeType": "unit",
-      "postingType": "monthly",
-      "priority": 1
-   },
-   {
-      "id": 2,
-      "code": "INTEREST",
-      "rate": 0.00,
-      "chargeType": "percentage",
-      "postingType": "interest"
-   },
-   {
-      "id": 3,
-      "code": "PENALTY",
-      "rate": 0.03,
-      "chargeType": "percentage",
-      "postingType": "accrued",
-      "thresholdInMonths": 2
-   },
-   {
-      "id": 4,
-      "code": "COMMON FUND",
-      "rate": 0,
-      "chargeType": "amount",
-      "postingType": "manual"
-   }
+      {
+            "id": 1,
+            "code": "COMMUNITY DUES",
+            "rate": 3.5,
+            "chargeType": "unit",
+            "postingType": "monthly",
+            "priority": 1
+      },
+      {
+            "id": 2,
+            "code": "COMMON FUNDS",
+            "rate": 0,
+            "chargeType": "amount",
+            "postingType": "manual",
+            "passOn": true
+      },
+      {
+            "id": 3,
+            "code": "INTEREST",
+            "rate": 0.00,
+            "chargeType": "percentage",
+            "postingType": "interest"
+      },
+      {
+            "id": 4,
+            "code": "PENALTY",
+            "rate": 0.03,
+            "chargeType": "percentage",
+            "postingType": "accrued",
+            "thresholdInMonths": 2
+      }
 ]
