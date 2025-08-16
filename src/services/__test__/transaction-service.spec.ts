@@ -1,23 +1,35 @@
 import faker from 'faker';
 
-import {TransactionAttr} from '../../@types/models';
+import {AuthProfile, TransactionAttr} from '../../@types/models';
 import {
   toTransactionPeriod,
   toTransactionPeriodFromDb,
 } from '../../@utils/dates';
 import {generateTransaction} from '../../@utils/fake-data';
 import {initInMemoryDb, SEED} from '../../@utils/seeded-test-data';
-import {VERBIAGE} from '../../constants';
+import {UserContext} from '../../context/user-context';
+import {CONSTANTS, VERBIAGE} from '../../constants';
 import Transaction from '../../models/transaction-model';
 import TransactionService from '../../services/transaction-service';
 
 describe('TransactionService', () => {
-  const target = new TransactionService();
+  const target = new TransactionService(CONSTANTS.COMMUNITY_ID);
   const charge = faker.random.arrayElement(
     SEED.CHARGES.filter(c => c.chargeType === 'unit')
   );
   const property = faker.random.arrayElement(SEED.PROPERTIES);
   const profile = faker.random.arrayElement(SEED.PROFILES);
+
+  // Mock user for audit operations
+  const mockUser: AuthProfile = {
+    id: 999,
+    username: 'testuser',
+    email: 'test@example.com',
+    name: 'Test User',
+    type: 'admin',
+    status: 'active',
+  };
+
   const seedTransactions = [
     {
       id: 1,
@@ -51,6 +63,16 @@ describe('TransactionService', () => {
   beforeAll(async () => {
     await initInMemoryDb();
     await Transaction.bulkCreate([...seedTransactions]);
+  });
+
+  beforeEach(() => {
+    // Set up user context for each test
+    UserContext.setCurrentUser(mockUser);
+  });
+
+  afterEach(() => {
+    // Clean up user context after each test
+    UserContext.clearCurrentUser();
   });
 
   it('should get available periods for a property', async () => {
@@ -166,6 +188,68 @@ describe('TransactionService', () => {
         batchId: expected.batchId,
       };
       expect(a).toEqual(e);
+    }
+  });
+
+  it('should save transactions with audit fields', async () => {
+    const transactionPeriod = toTransactionPeriod(2023, 'JAN');
+    const batchId = faker.datatype.uuid();
+    const expectedTransactions = [
+      {
+        ...generateTransaction(),
+        id: undefined,
+        propertyId: property.id,
+        chargeId: charge.id,
+        transactionPeriod,
+        batchId,
+      },
+    ];
+
+    await target.saveTransactions(expectedTransactions);
+
+    // Fetch the created transactions directly from the database to check audit fields
+    const savedTransactions = await Transaction.findAll({
+      where: {
+        propertyId: property.id,
+        transactionPeriod: toTransactionPeriodFromDb(transactionPeriod),
+        batchId,
+      },
+      raw: true,
+    });
+
+    expect(savedTransactions.length).toEqual(expectedTransactions.length);
+
+    // Verify audit fields are populated
+    for (const savedTransaction of savedTransactions) {
+      expect(savedTransaction.createdBy).toEqual(mockUser.id);
+      expect(savedTransaction.updatedBy).toEqual(mockUser.id);
+      expect(savedTransaction.createdAt).toBeDefined();
+      expect(savedTransaction.updatedAt).toBeDefined();
+    }
+  });
+
+  it('should post monthly charges with audit fields', async () => {
+    // Post monthly charges for a new period
+    await target.postMonthlyCharges(2023, 'FEB', property.id);
+
+    // Fetch the posted transactions directly from the database
+    const postedTransactions = await Transaction.findAll({
+      where: {
+        propertyId: property.id,
+        transactionPeriod: toTransactionPeriod(2023, 'FEB'),
+        transactionType: 'charged',
+      },
+      raw: true,
+    });
+
+    expect(postedTransactions.length).toBeGreaterThan(0);
+
+    // Verify audit fields are populated for all posted transactions
+    for (const transaction of postedTransactions) {
+      expect(transaction.createdBy).toEqual(mockUser.id);
+      expect(transaction.updatedBy).toEqual(mockUser.id);
+      expect(transaction.createdAt).toBeDefined();
+      expect(transaction.updatedAt).toBeDefined();
     }
   });
 });

@@ -53,7 +53,7 @@ describe('PurchaseRequestService', () => {
 
   beforeAll(async () => {
     const sequelize = await initInMemoryDb();
-    target = new PurchaseRequestService(sequelize);
+    target = new PurchaseRequestService(1, sequelize);
   });
 
   it('should validate, create, and update purchase requests', async () => {

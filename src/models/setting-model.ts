@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   AllowNull,
   Column,
   DataType,
   ForeignKey,
-  Model,
   Table,
 } from 'sequelize-typescript';
 
 import {SettingAttr} from '../@types/models';
+import BaseModelWithAudit from './@base-model';
 import Community from './community-model';
 
 @Table({
@@ -19,7 +20,7 @@ import Community from './community-model';
     },
   ],
 })
-class Setting extends Model implements SettingAttr {
+class Setting extends BaseModelWithAudit implements SettingAttr {
   @AllowNull(false)
   @Column(DataType.CITEXT)
   key!: string;

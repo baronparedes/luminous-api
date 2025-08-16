@@ -12,8 +12,7 @@ import {
 import {getCurrentMonthYear} from '../@utils/dates';
 import {sum} from '../@utils/helpers';
 import {byYear} from '../@utils/helpers-sequelize';
-import config from '../config';
-import {CONSTANTS, VERBIAGE} from '../constants';
+import {VERBIAGE} from '../constants';
 import {ApiError} from '../errors';
 import ApprovalCode from '../models/approval-code-model';
 import Charge from '../models/charge-model';
@@ -21,16 +20,21 @@ import Disbursement from '../models/disbursement-model';
 import Expense from '../models/expense-model';
 import Profile from '../models/profile-model';
 import Voucher from '../models/voucher-model';
-import BaseService from './@base-service';
+import BaseServiceWithAudit from './@base-service-with-audit';
 import {mapProfile, mapVoucher} from './@mappers';
+import SettingService from './setting-service';
 import ApprovalCodeService from './approval-code-service';
 
-export default class VoucherService extends BaseService {
+export default class VoucherService extends BaseServiceWithAudit {
   private approvalCodeService: ApprovalCodeService;
+  private settingService: SettingService;
+  private communityId: number;
 
-  constructor(repository?: Sequelize) {
+  constructor(communityId: number, repository?: Sequelize) {
     super(repository);
+    this.communityId = communityId;
     this.approvalCodeService = new ApprovalCodeService();
+    this.settingService = new SettingService(communityId);
   }
 
   private async getCurrentYearSeries() {
@@ -63,7 +67,7 @@ export default class VoucherService extends BaseService {
       request.comments = comments;
       request.status = 'rejected';
       request.rejectedBy = rejectedBy;
-      await request.save({transaction});
+      await this.saveWithAudit(request, {transaction});
       await ApprovalCode.destroy({
         where: {
           voucherId,
@@ -100,15 +104,17 @@ export default class VoucherService extends BaseService {
         },
       });
 
-      if (matchedCodes.length < config.APP.MIN_APPROVERS) {
+      const minApprovers = await this.settingService.getMinApprovers();
+      if (matchedCodes.length < minApprovers) {
         throw new ApiError(400, VERBIAGE.INVALID_APPROVAL_CODES);
       }
 
       request.status = 'approved';
       request.approvedBy = JSON.stringify(matchedCodes.map(c => c.profileId));
 
-      await request.save({transaction});
-      await Disbursement.bulkCreate(
+      await this.saveWithAudit(request, {transaction});
+      await this.bulkCreateWithAudit(
+        Disbursement,
         [
           ...approveRequest.disbursements.map(d => {
             return {
@@ -137,7 +143,8 @@ export default class VoucherService extends BaseService {
 
       const approvalCodes =
         await this.approvalCodeService.generateApprovalCodes();
-      if (approvalCodes.length < config.APP.MIN_APPROVERS) {
+      const minApprovers = await this.settingService.getMinApprovers();
+      if (approvalCodes.length < minApprovers) {
         throw new ApiError(400, VERBIAGE.MIN_APPROVER_NOT_REACHED);
       }
 
@@ -149,13 +156,13 @@ export default class VoucherService extends BaseService {
         requestedBy: voucher.requestedBy,
         requestedDate: voucher.requestedDate,
         chargeId: voucher.chargeId,
-        communityId: CONSTANTS.COMMUNITY_ID,
+        communityId: this.communityId,
         totalCost,
         status: 'pending',
         series,
       });
 
-      await newRecord.save({transaction});
+      await this.saveWithAudit(newRecord, {transaction});
 
       const approvalCodesToBeCreated = [
         ...approvalCodes.map(a => {
@@ -178,7 +185,8 @@ export default class VoucherService extends BaseService {
       await ApprovalCode.bulkCreate([...approvalCodesToBeCreated], {
         transaction,
       });
-      await Expense.bulkCreate(
+      await this.bulkCreateWithAudit(
+        Expense,
         [...expensesToBeCreated] as Array<Partial<ExpenseAttr>>,
         {transaction}
       );
@@ -195,7 +203,8 @@ export default class VoucherService extends BaseService {
 
       const newApprovalCodes =
         await this.approvalCodeService.generateApprovalCodes();
-      if (newApprovalCodes.length < config.APP.MIN_APPROVERS) {
+      const minApprovers = await this.settingService.getMinApprovers();
+      if (newApprovalCodes.length < minApprovers) {
         throw new ApiError(400, VERBIAGE.MIN_APPROVER_NOT_REACHED);
       }
 
@@ -231,7 +240,7 @@ export default class VoucherService extends BaseService {
       record.description = voucher.description;
       record.totalCost = totalCost;
 
-      await record.save({transaction});
+      await this.saveWithAudit(record, {transaction});
 
       await ApprovalCode.destroy({
         where: {
@@ -250,7 +259,8 @@ export default class VoucherService extends BaseService {
       await ApprovalCode.bulkCreate([...approvalCodesToBeCreated], {
         transaction,
       });
-      await Expense.bulkCreate(
+      await this.bulkCreateWithAudit(
+        Expense,
         [...expensesToBeCreated] as Array<Partial<ExpenseAttr>>,
         {transaction}
       );

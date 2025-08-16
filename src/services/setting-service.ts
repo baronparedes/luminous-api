@@ -2,9 +2,12 @@ import {CategoryAttr} from '../@types/models';
 import Category from '../models/category-model';
 import Setting from '../models/setting-model';
 import {mapCategories, mapSetting} from './@mappers';
+import BaseServiceWithAudit from './@base-service-with-audit';
 
-export default class SettingService {
-  constructor(private communityId: number) {}
+export default class SettingService extends BaseServiceWithAudit {
+  constructor(private communityId: number) {
+    super();
+  }
 
   public async getValues() {
     const result = await Setting.findAll({
@@ -32,16 +35,19 @@ export default class SettingService {
         communityId: this.communityId,
       },
     });
+
     if (existing) {
       existing.value = value;
-      await existing.save();
+      // Use base class helper method that automatically adds audit options
+      await this.saveWithAudit(existing);
     } else {
-      const newSetting = new Setting({
+      const newSettingData = {
         key,
         value,
         communityId: this.communityId,
-      });
-      await newSetting.save();
+      };
+      // Use base class helper method that automatically adds audit options
+      await this.createWithAudit(Setting, newSettingData);
     }
   }
 
@@ -55,8 +61,18 @@ export default class SettingService {
   }
 
   public async saveCategories(categories: CategoryAttr[]) {
-    await Category.bulkCreate(categories, {
-      updateOnDuplicate: ['description', 'subCategories'],
+    await this.bulkCreateWithAudit(Category, categories, {
+      updateOnDuplicate: ['description', 'subCategories', 'updatedBy'],
     });
+  }
+
+  public async getWaterChargeId(): Promise<number | undefined> {
+    const value = await this.getValue('WATER_CHARGE_ID');
+    return value ? parseInt(value) : undefined; // fallback to undefined if not set
+  }
+
+  public async getMinApprovers(): Promise<number> {
+    const value = await this.getValue('MIN_APPROVERS');
+    return value ? parseInt(value) : 3; // fallback to 3 if not set
   }
 }

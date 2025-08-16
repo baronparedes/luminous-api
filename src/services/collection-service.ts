@@ -13,9 +13,9 @@ import Charge from '../models/charge-model';
 import PaymentDetail from '../models/payment-detail-model';
 import RefundedPayment from '../models/refunded-payment-model';
 import Transaction from '../models/transaction-model';
-import BaseService from './@base-service';
+import BaseServiceWithAudit from './@base-service-with-audit';
 
-export default class CollectionService extends BaseService {
+export default class CollectionService extends BaseServiceWithAudit {
   private async getTransactionBreakdown(propertyId: number) {
     const currentPeriod = getCurrentMonthYear();
     const breakdown = await useTransactionBreakdown(
@@ -32,7 +32,7 @@ export default class CollectionService extends BaseService {
   ) {
     await this.repository.transaction(async transaction => {
       const newPaymentDetail = new PaymentDetail({...paymentDetail});
-      await newPaymentDetail.save();
+      await this.saveWithAudit(newPaymentDetail, {transaction});
 
       const taggedTransactions = transactions.map(t => {
         return {
@@ -40,7 +40,7 @@ export default class CollectionService extends BaseService {
           paymentDetailId: newPaymentDetail.id,
         };
       });
-      await Transaction.bulkCreate(taggedTransactions, {
+      await this.bulkCreateWithAudit(Transaction, taggedTransactions, {
         validate: true,
         transaction,
       });
@@ -128,7 +128,7 @@ export default class CollectionService extends BaseService {
         details: JSON.stringify(transactionsToBeRefunded),
       });
 
-      await refundedPayment.save({transaction});
+      await this.saveWithAudit(refundedPayment, {transaction});
       await Transaction.destroy({where: criteria, transaction});
       await PaymentDetail.destroy({where: {id: paymentDetailId}, transaction});
     });

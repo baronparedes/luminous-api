@@ -6,7 +6,6 @@ import {
   Default,
   ForeignKey,
   HasMany,
-  Model,
   NotEmpty,
   Table,
 } from 'sequelize-typescript';
@@ -23,9 +22,10 @@ import Charge from './charge-model';
 import Disbursement from './disbursement-model';
 import Expense from './expense-model';
 import Profile from './profile-model';
+import BaseModelWithAudit from './@base-model';
 
 @Table
-class Voucher extends Model implements VoucherAttr {
+class Voucher extends BaseModelWithAudit implements VoucherAttr {
   @AllowNull(false)
   @NotEmpty
   @Column

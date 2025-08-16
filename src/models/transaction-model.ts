@@ -4,7 +4,6 @@ import {
   Column,
   DataType,
   ForeignKey,
-  Model,
   Table,
 } from 'sequelize-typescript';
 
@@ -19,9 +18,10 @@ import Charge from './charge-model';
 import PaymentDetail from './payment-detail-model';
 import Profile from './profile-model';
 import Property from './property-model';
+import BaseModelWithAudit from './@base-model';
 
 @Table
-class Transaction extends Model implements TransactionAttr {
+class Transaction extends BaseModelWithAudit implements TransactionAttr {
   @AllowNull(false)
   @ForeignKey(() => Charge)
   @Column

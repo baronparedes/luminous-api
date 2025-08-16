@@ -3,16 +3,19 @@ import {
   Column,
   DataType,
   ForeignKey,
-  Model,
   Table,
 } from 'sequelize-typescript';
 
 import {RefundedPaymentAttr} from '../@types/models';
 import Profile from './profile-model';
 import Property from './property-model';
+import BaseModelWithAudit from './@base-model';
 
 @Table
-class RefundedPayment extends Model implements RefundedPaymentAttr {
+class RefundedPayment
+  extends BaseModelWithAudit
+  implements RefundedPaymentAttr
+{
   @Column
   @ForeignKey(() => Property)
   propertyId!: number;

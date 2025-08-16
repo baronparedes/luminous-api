@@ -15,11 +15,11 @@ export default class PropertyAccountService {
   private transactionService: TransactionService;
   private paymentDetailService: PaymentDetailService;
 
-  constructor() {
+  constructor(communityId: number) {
     this.propertyService = new PropertyService();
     this.chargeService = new ChargeService();
-    this.transactionService = new TransactionService();
-    this.paymentDetailService = new PaymentDetailService();
+    this.transactionService = new TransactionService(communityId);
+    this.paymentDetailService = new PaymentDetailService(communityId);
   }
 
   private async getAssignedProfiles(propertyId: number) {

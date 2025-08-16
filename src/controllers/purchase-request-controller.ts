@@ -5,6 +5,7 @@ import {
   CreateVoucherOrOrder,
   RequestStatus,
 } from '../@types/models';
+import {CONSTANTS} from '../constants';
 import NotificationService from '../services/notification-service';
 import PurchaseRequestService from '../services/purchase-request-service';
 
@@ -22,8 +23,10 @@ export class PurchaseRequestController extends Controller {
 
   constructor() {
     super();
-    this.purchaseRequestService = new PurchaseRequestService();
-    this.notificationService = new NotificationService();
+    this.purchaseRequestService = new PurchaseRequestService(
+      CONSTANTS.COMMUNITY_ID
+    );
+    this.notificationService = new NotificationService(CONSTANTS.COMMUNITY_ID);
   }
 
   @Get('/getPurchaseRequest/{id}')

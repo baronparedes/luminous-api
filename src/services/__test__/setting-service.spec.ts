@@ -1,7 +1,9 @@
 import faker from 'faker';
 
+import {AuthProfile} from '../../@types/models';
 import {generateCategory} from '../../@utils/fake-data';
 import {initInMemoryDb} from '../../@utils/seeded-test-data';
+import {UserContext} from '../../context/user-context';
 import {CONSTANTS} from '../../constants';
 import Category from '../../models/category-model';
 import Setting from '../../models/setting-model';
@@ -21,10 +23,30 @@ describe('SettingService', () => {
     id: 1,
   };
 
+  // Mock user for audit operations
+  const mockUser: AuthProfile = {
+    id: 999,
+    username: 'testuser',
+    email: 'test@example.com',
+    name: 'Test User',
+    type: 'admin',
+    status: 'active',
+  };
+
   beforeAll(async () => {
     await initInMemoryDb();
     await Setting.bulkCreate([seedData]);
     await Category.bulkCreate([seedCategoryData]);
+  });
+
+  beforeEach(() => {
+    // Set up user context for each test
+    UserContext.setCurrentUser(mockUser);
+  });
+
+  afterEach(() => {
+    // Clean up user context after each test
+    UserContext.clearCurrentUser();
   });
 
   it('should fetch empty string when key does not exist', async () => {
@@ -80,5 +102,59 @@ describe('SettingService', () => {
     expect(actualAfterSave).toHaveLength(2);
     expect(actualAfterSave[0]).toEqual(updatedCategory);
     expect(actualAfterSave[1]).toEqual({...newCategory, id: 2});
+  });
+
+  it('should save categories with audit fields', async () => {
+    const testCategories = [
+      {
+        ...generateCategory(),
+        communityId: CONSTANTS.COMMUNITY_ID,
+      },
+      {
+        ...generateCategory(),
+        communityId: CONSTANTS.COMMUNITY_ID,
+      },
+    ];
+
+    await target.saveCategories(testCategories);
+
+    // Fetch the saved categories directly from the database to check audit fields
+    const savedCategories = await Category.findAll({
+      where: {
+        communityId: CONSTANTS.COMMUNITY_ID,
+        description: [
+          testCategories[0].description,
+          testCategories[1].description,
+        ],
+      },
+      raw: true,
+    });
+
+    expect(savedCategories.length).toEqual(testCategories.length);
+
+    // Verify audit fields are populated for all saved categories
+    for (const category of savedCategories) {
+      expect(category.createdBy).toEqual(mockUser.id);
+      expect(category.updatedBy).toEqual(mockUser.id);
+      expect(category.createdAt).toBeDefined();
+      expect(category.updatedAt).toBeDefined();
+    }
+  });
+
+  it('should get water charge id when setting exists', async () => {
+    const chargeId = faker.datatype.number({min: 1, max: 100});
+    await target.setValue('WATER_CHARGE_ID', chargeId.toString());
+
+    const actual = await target.getWaterChargeId();
+    expect(actual).toEqual(chargeId);
+  });
+
+  it('should return undefined when water charge id setting does not exist', async () => {
+    await Setting.destroy({
+      where: {key: 'WATER_CHARGE_ID', communityId: CONSTANTS.COMMUNITY_ID},
+    });
+
+    const actual = await target.getWaterChargeId();
+    expect(actual).toEqual(undefined);
   });
 });

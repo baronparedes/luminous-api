@@ -45,7 +45,7 @@ export class TransactionController extends Controller {
 
   constructor() {
     super();
-    this.transactionService = new TransactionService();
+    this.transactionService = new TransactionService(CONSTANTS.COMMUNITY_ID);
     this.collectionService = new CollectionService();
   }
 

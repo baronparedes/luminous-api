@@ -127,6 +127,10 @@ export interface PropertyAttr {
   floorArea: number;
   address: string;
   status: RecordStatus;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
 }
 
 export interface PropertyAssignmentAttr {
@@ -151,6 +155,10 @@ export interface ChargeAttr {
   thresholdInMonths?: number | null;
   priority?: number | null;
   passOn?: boolean | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
 }
 
 export interface TransactionAttr {
@@ -169,11 +177,19 @@ export interface TransactionAttr {
   rateSnapshot?: number;
   batchId?: string | null;
   createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
 }
 
 export interface SettingAttr {
   key: string;
   value: string;
+  communityId?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
 }
 
 export interface PaymentDetailAttr {
@@ -185,6 +201,9 @@ export interface PaymentDetailAttr {
   checkPostingDate?: Date;
   checkIssuingBank?: string;
   createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
 }
 
 export interface ExpenseAttr {
@@ -198,6 +217,10 @@ export interface ExpenseAttr {
   unitCost: number;
   totalCost: number;
   waivedBy?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
 }
 
 export interface VoucherAttr {
@@ -218,6 +241,10 @@ export interface VoucherAttr {
   approverProfiles?: ProfileAttr[];
   charge?: ChargeAttr;
   series: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
 }
 export interface DisbursementAttr {
   id?: number;
@@ -234,25 +261,32 @@ export interface DisbursementAttr {
   releasedByProfile?: ProfileAttr;
   charge?: ChargeAttr;
   createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
 }
 
-export type ApprovalCodeAttr = {
+export interface ApprovalCodeAttr {
   profileId: number;
   email: string;
   code: string;
   voucherId?: number | null;
   purchaseRequestId?: number | null;
   purchaseOrderId?: number | null;
-};
+}
 
-export type CategoryAttr = {
+export interface CategoryAttr {
   id?: number;
   communityId: number;
   description: string;
   subCategories: string;
-};
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
+}
 
-export type PurchaseRequestAttr = {
+export interface PurchaseRequestAttr {
   id?: number;
   chargeId: number;
   description: string;
@@ -268,9 +302,13 @@ export type PurchaseRequestAttr = {
   rejectedByProfile?: ProfileAttr;
   approverProfiles?: ProfileAttr[];
   series: string;
-};
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
+}
 
-export type PurchaseOrderAttr = {
+export interface PurchaseOrderAttr {
   id?: number;
   purchaseRequestId: number;
   vendorName: string;
@@ -292,12 +330,20 @@ export type PurchaseOrderAttr = {
   approverProfiles?: ProfileAttr[];
   isClosed?: boolean;
   series: string;
-};
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
+}
 
-export type RefundedPaymentAttr = {
+export interface RefundedPaymentAttr {
   id?: number;
   propertyId: number;
   refundedBy: number;
   details: string;
   comments: string;
-};
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: number;
+  updatedBy?: number;
+}

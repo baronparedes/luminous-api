@@ -4,7 +4,6 @@ import {
   Column,
   DataType,
   ForeignKey,
-  Model,
   Table,
 } from 'sequelize-typescript';
 
@@ -15,11 +14,12 @@ import {
   PostingType,
 } from '../@types/models';
 import Community from './community-model';
+import BaseModelWithAudit from './@base-model';
 
 @Table({
   indexes: [{unique: true, fields: ['code']}],
 })
-class Charge extends Model implements ChargeAttr {
+class Charge extends BaseModelWithAudit implements ChargeAttr {
   @AllowNull(false)
   @Column(DataType.CITEXT)
   code!: string;

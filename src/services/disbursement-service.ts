@@ -9,10 +9,10 @@ import useDisbursementBreakdown from '../hooks/views/use-disbursement-breakdown'
 import Charge from '../models/charge-model';
 import Disbursement from '../models/disbursement-model';
 import Profile from '../models/profile-model';
-import BaseService from './@base-service';
+import BaseServiceWithAudit from './@base-service-with-audit';
 import {mapDisbursement} from './@mappers';
 
-export default class DisbursementService extends BaseService {
+export default class DisbursementService extends BaseServiceWithAudit {
   public async getDisbursementBreakdown(communityId: number) {
     const breakdown = await useDisbursementBreakdown(
       communityId,
@@ -63,10 +63,6 @@ export default class DisbursementService extends BaseService {
       charge: undefined,
     };
 
-    const newRecord = new Disbursement({
-      ...sanitized,
-    });
-
-    await newRecord.save();
+    await this.createWithAudit(Disbursement, sanitized);
   }
 }

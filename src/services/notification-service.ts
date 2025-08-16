@@ -14,10 +14,10 @@ export default class NotificationService {
   private purchaseRequestService: PurchaseRequestService;
   private purchaseOrderService: PurchaseOrderService;
 
-  constructor() {
-    this.voucherService = new VoucherService();
-    this.purchaseRequestService = new PurchaseRequestService();
-    this.purchaseOrderService = new PurchaseOrderService();
+  constructor(communityId: number) {
+    this.voucherService = new VoucherService(communityId);
+    this.purchaseRequestService = new PurchaseRequestService(communityId);
+    this.purchaseOrderService = new PurchaseOrderService(communityId);
   }
 
   public async notifyResetPassword(email: string, password: string) {

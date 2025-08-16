@@ -6,7 +6,6 @@ import {
   Default,
   ForeignKey,
   HasMany,
-  Model,
   NotEmpty,
   Table,
 } from 'sequelize-typescript';
@@ -20,9 +19,13 @@ import {
 import Charge from './charge-model';
 import Expense from './expense-model';
 import Profile from './profile-model';
+import BaseModelWithAudit from './@base-model';
 
 @Table
-class PurchaseRequest extends Model implements PurchaseRequestAttr {
+class PurchaseRequest
+  extends BaseModelWithAudit
+  implements PurchaseRequestAttr
+{
   @AllowNull(false)
   @NotEmpty
   @Column

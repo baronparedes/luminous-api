@@ -147,6 +147,22 @@
 					"passOn": {
 						"type": "boolean",
 						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -499,6 +515,18 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -669,6 +697,22 @@
 					},
 					"status": {
 						"$ref": "#/components/schemas/RecordStatus"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -709,6 +753,18 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -775,6 +831,18 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -994,6 +1062,22 @@
 					"waivedBy": {
 						"type": "number",
 						"format": "double"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -1009,37 +1093,48 @@
 			},
 			"PurchaseOrderAttr": {
 				"properties": {
-					"series": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"purchaseRequestId": {
+						"type": "number",
+						"format": "double"
+					},
+					"vendorName": {
 						"type": "string"
 					},
-					"isClosed": {
-						"type": "boolean"
+					"fulfillmentDate": {
+						"type": "string",
+						"format": "date-time"
 					},
-					"approverProfiles": {
-						"items": {
-							"$ref": "#/components/schemas/ProfileAttr"
-						},
-						"type": "array"
+					"otherDetails": {
+						"type": "string",
+						"nullable": true
 					},
-					"rejectedByProfile": {
-						"$ref": "#/components/schemas/ProfileAttr"
+					"chargeId": {
+						"type": "number",
+						"format": "double"
 					},
-					"requestedByProfile": {
-						"$ref": "#/components/schemas/ProfileAttr"
+					"description": {
+						"type": "string"
 					},
-					"disbursements": {
-						"items": {
-							"$ref": "#/components/schemas/DisbursementAttr"
-						},
-						"type": "array"
+					"totalCost": {
+						"type": "number",
+						"format": "double"
 					},
-					"expenses": {
-						"items": {
-							"$ref": "#/components/schemas/ExpenseAttr"
-						},
-						"type": "array"
+					"status": {
+						"$ref": "#/components/schemas/RequestStatus"
 					},
-					"comments": {
+					"requestedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"requestedDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"approvedBy": {
 						"type": "string",
 						"nullable": true
 					},
@@ -1047,65 +1142,71 @@
 						"type": "number",
 						"format": "double"
 					},
-					"approvedBy": {
+					"comments": {
 						"type": "string",
 						"nullable": true
 					},
-					"requestedDate": {
+					"expenses": {
+						"items": {
+							"$ref": "#/components/schemas/ExpenseAttr"
+						},
+						"type": "array"
+					},
+					"disbursements": {
+						"items": {
+							"$ref": "#/components/schemas/DisbursementAttr"
+						},
+						"type": "array"
+					},
+					"requestedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"rejectedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"approverProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileAttr"
+						},
+						"type": "array"
+					},
+					"isClosed": {
+						"type": "boolean"
+					},
+					"series": {
+						"type": "string"
+					},
+					"createdAt": {
 						"type": "string",
 						"format": "date-time"
 					},
-					"requestedBy": {
-						"type": "number",
-						"format": "double"
-					},
-					"status": {
-						"$ref": "#/components/schemas/RequestStatus"
-					},
-					"totalCost": {
-						"type": "number",
-						"format": "double"
-					},
-					"description": {
-						"type": "string"
-					},
-					"chargeId": {
-						"type": "number",
-						"format": "double"
-					},
-					"otherDetails": {
-						"type": "string",
-						"nullable": true
-					},
-					"fulfillmentDate": {
+					"updatedAt": {
 						"type": "string",
 						"format": "date-time"
 					},
-					"vendorName": {
-						"type": "string"
-					},
-					"purchaseRequestId": {
+					"createdBy": {
 						"type": "number",
 						"format": "double"
 					},
-					"id": {
+					"updatedBy": {
 						"type": "number",
 						"format": "double"
 					}
 				},
 				"required": [
-					"series",
-					"requestedDate",
-					"requestedBy",
-					"status",
-					"totalCost",
-					"description",
-					"chargeId",
-					"fulfillmentDate",
+					"purchaseRequestId",
 					"vendorName",
-					"purchaseRequestId"
+					"fulfillmentDate",
+					"chargeId",
+					"description",
+					"totalCost",
+					"status",
+					"requestedBy",
+					"requestedDate",
+					"series"
 				],
-				"type": "object"
+				"type": "object",
+				"additionalProperties": false
 			},
 			"CreatePurchaseOrder": {
 				"properties": {
@@ -1244,28 +1345,33 @@
 			},
 			"PurchaseRequestAttr": {
 				"properties": {
-					"series": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
 						"type": "string"
 					},
-					"approverProfiles": {
-						"items": {
-							"$ref": "#/components/schemas/ProfileAttr"
-						},
-						"type": "array"
+					"totalCost": {
+						"type": "number",
+						"format": "double"
 					},
-					"rejectedByProfile": {
-						"$ref": "#/components/schemas/ProfileAttr"
+					"status": {
+						"$ref": "#/components/schemas/RequestStatus"
 					},
-					"requestedByProfile": {
-						"$ref": "#/components/schemas/ProfileAttr"
+					"requestedBy": {
+						"type": "number",
+						"format": "double"
 					},
-					"expenses": {
-						"items": {
-							"$ref": "#/components/schemas/ExpenseAttr"
-						},
-						"type": "array"
+					"requestedDate": {
+						"type": "string",
+						"format": "date-time"
 					},
-					"comments": {
+					"approvedBy": {
 						"type": "string",
 						"nullable": true
 					},
@@ -1273,47 +1379,59 @@
 						"type": "number",
 						"format": "double"
 					},
-					"approvedBy": {
+					"comments": {
 						"type": "string",
 						"nullable": true
 					},
-					"requestedDate": {
+					"expenses": {
+						"items": {
+							"$ref": "#/components/schemas/ExpenseAttr"
+						},
+						"type": "array"
+					},
+					"requestedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"rejectedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"approverProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileAttr"
+						},
+						"type": "array"
+					},
+					"series": {
+						"type": "string"
+					},
+					"createdAt": {
 						"type": "string",
 						"format": "date-time"
 					},
-					"requestedBy": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
 						"type": "number",
 						"format": "double"
 					},
-					"status": {
-						"$ref": "#/components/schemas/RequestStatus"
-					},
-					"totalCost": {
-						"type": "number",
-						"format": "double"
-					},
-					"description": {
-						"type": "string"
-					},
-					"chargeId": {
-						"type": "number",
-						"format": "double"
-					},
-					"id": {
+					"updatedBy": {
 						"type": "number",
 						"format": "double"
 					}
 				},
 				"required": [
-					"series",
-					"requestedDate",
-					"requestedBy",
-					"status",
-					"totalCost",
+					"chargeId",
 					"description",
-					"chargeId"
+					"totalCost",
+					"status",
+					"requestedBy",
+					"requestedDate",
+					"series"
 				],
-				"type": "object"
+				"type": "object",
+				"additionalProperties": false
 			},
 			"RejectPurchaseRequest": {
 				"properties": {
@@ -1343,6 +1461,26 @@
 					},
 					"value": {
 						"type": "string"
+					},
+					"communityId": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -1354,27 +1492,44 @@
 			},
 			"CategoryAttr": {
 				"properties": {
-					"subCategories": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
+					"id": {
+						"type": "number",
+						"format": "double"
 					},
 					"communityId": {
 						"type": "number",
 						"format": "double"
 					},
-					"id": {
+					"description": {
+						"type": "string"
+					},
+					"subCategories": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
 						"type": "number",
 						"format": "double"
 					}
 				},
 				"required": [
-					"subCategories",
+					"communityId",
 					"description",
-					"communityId"
+					"subCategories"
 				],
-				"type": "object"
+				"type": "object",
+				"additionalProperties": false
 			},
 			"PostTransactionBody": {
 				"properties": {
@@ -1557,6 +1712,22 @@
 					},
 					"series": {
 						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [

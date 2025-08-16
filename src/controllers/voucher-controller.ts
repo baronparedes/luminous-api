@@ -5,6 +5,7 @@ import {
   CreateVoucherOrOrder,
   RequestStatus,
 } from '../@types/models';
+import {CONSTANTS} from '../constants';
 import NotificationService from '../services/notification-service';
 import VoucherService from '../services/voucher-service';
 
@@ -22,8 +23,8 @@ export class VoucherController extends Controller {
 
   constructor() {
     super();
-    this.voucherService = new VoucherService();
-    this.notificationService = new NotificationService();
+    this.voucherService = new VoucherService(CONSTANTS.COMMUNITY_ID);
+    this.notificationService = new NotificationService(CONSTANTS.COMMUNITY_ID);
   }
 
   @Get('/getVoucher/{id}')

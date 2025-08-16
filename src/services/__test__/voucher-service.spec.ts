@@ -53,7 +53,7 @@ describe('VoucherService', () => {
 
   beforeAll(async () => {
     const sequelize = await initInMemoryDb();
-    target = new VoucherService(sequelize);
+    target = new VoucherService(1, sequelize);
   });
 
   it('should validate, create, and update vouchers', async () => {

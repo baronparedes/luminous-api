@@ -8,8 +8,8 @@ import TransactionService from './transaction-service';
 export default class PaymentDetailService {
   private transactionService: TransactionService;
 
-  constructor() {
-    this.transactionService = new TransactionService();
+  constructor(communityId: number) {
+    this.transactionService = new TransactionService(communityId);
   }
 
   public async getPaymentDetailsByPropertyAndPeriod(

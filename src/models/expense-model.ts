@@ -3,7 +3,6 @@ import {
   Column,
   DataType,
   ForeignKey,
-  Model,
   NotEmpty,
   Table,
 } from 'sequelize-typescript';
@@ -14,9 +13,10 @@ import Profile from './profile-model';
 import PurchaseOrder from './purchase-order-model';
 import PurchaseRequest from './purchase-request-model';
 import Voucher from './voucher-model';
+import BaseModelWithAudit from './@base-model';
 
 @Table
-class Expense extends Model implements ExpenseAttr {
+class Expense extends BaseModelWithAudit implements ExpenseAttr {
   @AllowNull(true)
   @ForeignKey(() => Voucher)
   @Column
