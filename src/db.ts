@@ -27,7 +27,6 @@ const sequelize = new Sequelize(
     models: [`${__dirname}/models`],
     define: {underscored: true},
     logging: !config.IS_PROD ? console.log : false,
-    ssl: config.IS_PROD,
   }
 );
 
