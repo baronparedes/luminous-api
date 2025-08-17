@@ -2049,6 +2049,45 @@
 				}
 			}
 		},
+		"/api/health": {
+			"get": {
+				"operationId": "GetHealth",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"timestamp": {
+											"type": "string"
+										},
+										"smtp": {
+											"type": "string"
+										},
+										"db": {
+											"type": "string"
+										},
+										"status": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"timestamp",
+										"smtp",
+										"db",
+										"status"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/api/profile/getAll": {
 			"get": {
 				"operationId": "GetAllProfiles",
