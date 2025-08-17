@@ -27,6 +27,7 @@ const sequelize = new Sequelize(
     models: [`${__dirname}/models`],
     define: {underscored: true},
     logging: !config.IS_PROD ? console.log : false,
+    ssl: config.IS_PROD,
   }
 );
 
@@ -102,9 +103,34 @@ async function enableExtensions() {
 
 export async function dbInit() {
   await sequelize.authenticate();
-  await enableExtensions();
-  if (config.DB.SYNC) await sequelize.sync({alter: true});
-  if (config.DB.SEED) await seed();
+  if (!config.IS_PROD) {
+    await enableExtensions();
+    if (config.DB.SYNC) await sequelize.sync({alter: true});
+    if (config.DB.SEED) await seed();
+  }
+}
+
+export async function checkDbHealth() {
+  const testSequelize = new Sequelize(
+    config.DB.DB_NAME,
+    config.DB.USER_NAME,
+    config.DB.PASSWORD,
+    {
+      host: config.DB.HOST,
+      port: Number(config.DB.PORT),
+      dialect: config.DB.DIALECT as Dialect,
+      logging: false,
+      pool: {max: 1, min: 0, acquire: 10000, idle: 10000},
+    }
+  );
+  try {
+    await testSequelize.authenticate();
+    await testSequelize.close();
+    return {db: 'ok'};
+  } catch (err) {
+    console.error('Database connection error:', err);
+    return {db: 'error'};
+  }
 }
 
 export default sequelize;
