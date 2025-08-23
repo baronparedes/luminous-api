@@ -5,6 +5,33 @@ import Mail from 'nodemailer/lib/mailer';
 import config from '../config';
 
 export default function useSendMail() {
+  async function testSmtpConnection() {
+    if (config.SMTP.ENABLED === false) {
+      return 'disabled';
+    }
+
+    try {
+      const token = await getAccessToken();
+      const transporter = nodemailer.createTransport({
+        logger: config.NODE_ENV !== 'production',
+        service: 'gmail',
+        auth: {
+          type: 'OAuth2',
+          user: config.SMTP.USER_NAME,
+          clientId: config.SMTP.CLIENT_ID,
+          clientSecret: config.SMTP.CLIENT_SECRET,
+          refreshToken: config.SMTP.REFRESH_TOKEN,
+          accessToken: token,
+        },
+      });
+      await transporter.verify();
+      return 'ok';
+    } catch (err) {
+      console.error('SMTP connection error:', err);
+      return 'error';
+    }
+  }
+
   async function getAccessToken() {
     const oauth2Client = new google.auth.OAuth2(
       config.SMTP.CLIENT_ID,
@@ -51,5 +78,6 @@ export default function useSendMail() {
 
   return {
     send,
+    testSmtpConnection,
   };
 }
