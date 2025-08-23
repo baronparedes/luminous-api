@@ -4,133 +4,152 @@
     "code": "B1L1",
     "address": "Blk 1 Lot 1 Gold Ridge Phase 2",
     "floorArea": 206,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 0.00
   },
   {
     "id": 2,
     "code": "B1L2",
     "address": "Blk 1 Lot 2 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 6300.00
   },
   {
     "id": 3,
     "code": "B1L3",
     "address": "Blk 1 Lot 3 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 59503.40
   },
   {
     "id": 4,
     "code": "B1L4",
     "address": "Blk 1 Lot 4 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 6300.00
   },
   {
     "id": 5,
     "code": "B1L5",
     "address": "Blk 1 Lot 5 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 6300.00
   },
   {
     "id": 6,
     "code": "B1L6",
     "address": "Blk 1 Lot 6 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 6300.00
   },
   {
     "id": 7,
     "code": "B1L7",
     "address": "Blk 1 Lot 7 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 51649.34
   },
   {
     "id": 8,
     "code": "B1L8",
     "address": "Blk 1 Lot 8 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 67588.50
   },
   {
     "id": 9,
     "code": "B1L9",
     "address": "Blk 1 Lot 9 Gold Ridge Phase 2",
     "floorArea": 159,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 54748.30
   },
   {
     "id": 10,
     "code": "B1L10",
     "address": "Blk 1 Lot 10 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 26356.85
   },
   {
     "id": 11,
     "code": "B1L11",
     "address": "Blk 1 Lot 11 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": -27241.72
   },
   {
     "id": 12,
     "code": "B1L12",
     "address": "Blk 1 Lot 12 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": -29522.37
   },
   {
     "id": 13,
     "code": "B1L13",
     "address": "Blk 1 Lot 13 Gold Ridge Phase 2",
     "floorArea": 151,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 51993.67
   },
   {
     "id": 14,
     "code": "B1L14",
     "address": "Blk 1 Lot 14 Gold Ridge Phase 2",
     "floorArea": 208,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 8735.99
   },
   {
     "id": 15,
     "code": "B1L15",
     "address": "Blk 1 Lot 15 Gold Ridge Phase 2",
     "floorArea": 153,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 52682.32
   },
   {
     "id": 16,
     "code": "B1L16",
     "address": "Blk 1 Lot 16 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 26356.85
   },
   {
     "id": 17,
     "code": "B1L17",
     "address": "Blk 1 Lot 17 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 26356.85
   },
   {
     "id": 18,
     "code": "B1L18",
     "address": "Blk 1 Lot 18 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 26356.85
   },
   {
     "id": 19,
     "code": "B1L19",
     "address": "Blk 1 Lot 19 Gold Ridge Phase 2",
     "floorArea": 150,
-    "status": "active"
+    "status": "active",
+    "startingBalance": 18234.82
   },
   {
     "id": 20,

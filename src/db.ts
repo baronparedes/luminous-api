@@ -15,6 +15,9 @@ import Community from './models/community-model';
 import Profile from './models/profile-model';
 import Property from './models/property-model';
 import Setting from './models/setting-model';
+import {TransactionAttr} from './@types/models';
+import {getCurrentTransactionPeriod} from './@utils/dates';
+import Transaction from './models/transaction-model';
 
 const sequelize = new Sequelize(
   config.DB.DB_NAME,
@@ -46,7 +49,10 @@ async function seed() {
   });
 
   const properties = propertiesData.map(p => {
-    return {...p, communityId: CONSTANTS.COMMUNITY_ID};
+    // intentionally removing startingBalance
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const {startingBalance, ...rest} = p;
+    return {...rest, communityId: CONSTANTS.COMMUNITY_ID};
   });
 
   const categories = categoriesData.map(c => {
@@ -100,12 +106,49 @@ async function enableExtensions() {
   );
 }
 
+async function seedStartingBalance() {
+  const properties = [...propertiesData].filter(
+    p => p.startingBalance !== undefined && p.startingBalance !== 0
+  );
+  const batchId = '89d63dd0-4cf0-4f47-a086-8d2b601eab5d';
+  const chargeId = 1;
+  const transactions: TransactionAttr[] = [];
+  for (const property of properties) {
+    const transaction: TransactionAttr = {
+      propertyId: property.id,
+      amount: property.startingBalance || 0,
+      chargeId,
+      batchId,
+      transactionPeriod: getCurrentTransactionPeriod(),
+      transactionType: 'charged',
+      comments: 'starting balance',
+    };
+    transactions.push(transaction);
+  }
+
+  await Transaction.bulkCreate(
+    transactions.map(t => ({...t})),
+    {
+      updateOnDuplicate: [
+        'propertyId',
+        'amount',
+        'chargeId',
+        'batchId',
+        'transactionPeriod',
+        'transactionType',
+        'comments',
+      ],
+    }
+  );
+}
+
 export async function dbInit() {
   await sequelize.authenticate();
   if (!config.IS_PROD) {
     await enableExtensions();
     if (config.DB.SYNC) await sequelize.sync({alter: true});
     if (config.DB.SEED) await seed();
+    if (config.DB.SEED) await seedStartingBalance();
   }
 }
 
