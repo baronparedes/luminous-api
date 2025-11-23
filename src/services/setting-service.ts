@@ -71,6 +71,11 @@ export default class SettingService extends BaseServiceWithAudit {
     return value ? parseInt(value) : undefined; // fallback to undefined if not set
   }
 
+  public async getSoaNotes(): Promise<string | undefined> {
+    const value = await this.getValue('SOA_NOTES');
+    return value ?? undefined; // fallback to undefined if not set
+  }
+
   public async getMinApprovers(): Promise<number> {
     const value = await this.getValue('MIN_APPROVERS');
     return value ? parseInt(value) : 3; // fallback to 3 if not set
@@ -79,5 +84,10 @@ export default class SettingService extends BaseServiceWithAudit {
   public async getCommonChargeId(): Promise<number | undefined> {
     const value = await this.getValue('COMMON_CHARGE_ID');
     return value ? parseInt(value) : undefined; // fallback to undefined if not set
+  }
+
+  public async getEmailBatchLimit(): Promise<number> {
+    const value = await this.getValue('EMAIL_BATCH_LIMIT');
+    return value ? parseInt(value) : 400; // fallback to 400 if not set
   }
 }

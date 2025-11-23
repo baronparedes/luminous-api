@@ -5,7 +5,7 @@ import {toTransactionPeriodFromDb} from './dates';
 type StatementEmailData = {
   propertyAccount: PropertyAccount;
   period: Period;
-  waterChargeId: number;
+  waterChargeId?: number;
   notes?: string;
 };
 

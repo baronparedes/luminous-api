@@ -13,7 +13,6 @@ import PurchaseRequestService from './purchase-request-service';
 import VoucherService from './voucher-service';
 import PropertyAccountService from './property-account-service';
 import SettingService from './setting-service';
-import {CONSTANTS} from '../constants';
 
 export default class NotificationService {
   private voucherService: VoucherService;
@@ -149,13 +148,8 @@ export default class NotificationService {
     );
 
     // Get water charge ID and notes from settings
-    const waterChargeIdValue = await this.settingService.getValue(
-      CONSTANTS.SETTING_KEYS.WATER_CHARGE_ID
-    );
-    const waterChargeId = waterChargeIdValue ? parseInt(waterChargeIdValue) : 0;
-    const notes = await this.settingService.getValue(
-      CONSTANTS.SETTING_KEYS.SOA_NOTES
-    );
+    const waterChargeId = await this.settingService.getWaterChargeId();
+    const notes = await this.settingService.getSoaNotes();
 
     // Generate email content
     const subject = `[Luminous] SOA - ${period.month} ${period.year} - ${propertyAccount.property?.code}`;
@@ -163,7 +157,7 @@ export default class NotificationService {
       propertyAccount,
       period,
       waterChargeId,
-      notes: notes || undefined,
+      notes,
     });
 
     // Send email

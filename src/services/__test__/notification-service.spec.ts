@@ -138,10 +138,14 @@ describe('NotificationService', () => {
     >);
   });
 
-  it('should notify reset password', async () => {
+  it('should notify disbursement', async () => {
     const mockSend = jest.fn().mockImplementation(() => Promise.resolve());
+    const mockTestSmtp = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve('ok'));
     useSendMailMock.mockReturnValue({
       send: mockSend,
+      testSmtpConnection: mockTestSmtp,
     });
 
     const email = faker.internet.email();
@@ -161,8 +165,12 @@ describe('NotificationService', () => {
 
   it('should notify voucher approvers', async () => {
     const mockSend = jest.fn().mockImplementation(() => Promise.resolve());
+    const mockTestSmtp = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve('ok'));
     useSendMailMock.mockReturnValue({
       send: mockSend,
+      testSmtpConnection: mockTestSmtp,
     });
 
     await target.notifyVoucherApprovers(expectedVoucherId);
@@ -197,8 +205,12 @@ describe('NotificationService', () => {
 
   it('should notify purchase request approvers', async () => {
     const mockSend = jest.fn().mockImplementation(() => Promise.resolve());
+    const mockTestSmtp = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve('ok'));
     useSendMailMock.mockReturnValue({
       send: mockSend,
+      testSmtpConnection: mockTestSmtp,
     });
 
     await target.notifyPurchaseRequestApprovers(expectedPurchaseRequestId);
@@ -233,8 +245,12 @@ describe('NotificationService', () => {
 
   it('should notify purchase order approvers', async () => {
     const mockSend = jest.fn().mockImplementation(() => Promise.resolve());
+    const mockTestSmtp = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve('ok'));
     useSendMailMock.mockReturnValue({
       send: mockSend,
+      testSmtpConnection: mockTestSmtp,
     });
 
     await target.notifyPurchaseOrderApprovers(expectedPurchaseOrderId);

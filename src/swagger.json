@@ -554,6 +554,196 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Month": {
+				"type": "string",
+				"enum": [
+					"JAN",
+					"FEB",
+					"MAR",
+					"APR",
+					"MAY",
+					"JUN",
+					"JUL",
+					"AUG",
+					"SEP",
+					"OCT",
+					"NOV",
+					"DEC"
+				]
+			},
+			"EmailBatchStatus": {
+				"type": "string",
+				"enum": [
+					"pending",
+					"in_progress",
+					"completed",
+					"failed",
+					"cancelled"
+				]
+			},
+			"EmailBatchLogStatus": {
+				"type": "string",
+				"enum": [
+					"sent",
+					"failed",
+					"skipped"
+				]
+			},
+			"PropertyAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"code": {
+						"type": "string"
+					},
+					"floorArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"address": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RecordStatus"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"code",
+					"floorArea",
+					"address",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EmailBatchLogAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"batchId": {
+						"type": "number",
+						"format": "double"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"email": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/EmailBatchLogStatus"
+					},
+					"errorMessage": {
+						"type": "string"
+					},
+					"sentAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyAttr"
+					}
+				},
+				"required": [
+					"batchId",
+					"propertyId",
+					"email",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EmailBatchAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"batchName": {
+						"type": "string"
+					},
+					"periodYear": {
+						"type": "number",
+						"format": "double"
+					},
+					"periodMonth": {
+						"$ref": "#/components/schemas/Month"
+					},
+					"totalProperties": {
+						"type": "number",
+						"format": "double"
+					},
+					"sentCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"failedCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"$ref": "#/components/schemas/EmailBatchStatus"
+					},
+					"startedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"completedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"logs": {
+						"items": {
+							"$ref": "#/components/schemas/EmailBatchLogAttr"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"batchName",
+					"periodYear",
+					"periodMonth",
+					"totalProperties",
+					"sentCount",
+					"failedCount",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"FieldError": {
 				"properties": {
 					"value": {
@@ -693,51 +883,6 @@
 					"name"
 				],
 				"type": "object"
-			},
-			"PropertyAttr": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"code": {
-						"type": "string"
-					},
-					"floorArea": {
-						"type": "number",
-						"format": "double"
-					},
-					"address": {
-						"type": "string"
-					},
-					"status": {
-						"$ref": "#/components/schemas/RecordStatus"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"updatedAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"createdBy": {
-						"type": "number",
-						"format": "double"
-					},
-					"updatedBy": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"code",
-					"floorArea",
-					"address",
-					"status"
-				],
-				"type": "object",
-				"additionalProperties": false
 			},
 			"PaymentDetailAttr": {
 				"properties": {
@@ -930,23 +1075,6 @@
 				],
 				"type": "object",
 				"additionalProperties": false
-			},
-			"Month": {
-				"type": "string",
-				"enum": [
-					"JAN",
-					"FEB",
-					"MAR",
-					"APR",
-					"MAY",
-					"JUN",
-					"JUL",
-					"AUG",
-					"SEP",
-					"OCT",
-					"NOV",
-					"DEC"
-				]
 			},
 			"PropertyAssignmentAttr": {
 				"properties": {
@@ -2047,6 +2175,308 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/email-batch/create": {
+			"post": {
+				"operationId": "CreateBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EmailBatchAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"month": {
+										"$ref": "#/components/schemas/Month"
+									},
+									"year": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/email-batch/list": {
+			"get": {
+				"operationId": "GetAllBatches",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/EmailBatchAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/email-batch/{batchId}": {
+			"get": {
+				"operationId": "GetBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EmailBatchAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/email-batch/process/{batchId}": {
+			"post": {
+				"operationId": "ProcessBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"remaining": {
+											"type": "number",
+											"format": "double"
+										},
+										"failed": {
+											"type": "number",
+											"format": "double"
+										},
+										"sent": {
+											"type": "number",
+											"format": "double"
+										},
+										"processed": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"remaining",
+										"failed",
+										"sent",
+										"processed"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/email-batch/retry/{batchId}": {
+			"post": {
+				"operationId": "RetryFailed",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"remaining": {
+											"type": "number",
+											"format": "double"
+										},
+										"failed": {
+											"type": "number",
+											"format": "double"
+										},
+										"sent": {
+											"type": "number",
+											"format": "double"
+										},
+										"processed": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"remaining",
+										"failed",
+										"sent",
+										"processed"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/email-batch/cancel/{batchId}": {
+			"post": {
+				"operationId": "CancelBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EmailBatchAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/email-batch/delete/{batchId}": {
+			"post": {
+				"operationId": "DeleteBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"message",
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/health": {

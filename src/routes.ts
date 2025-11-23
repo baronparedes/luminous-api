@@ -11,6 +11,8 @@ import { DashboardController } from './controllers/dashboard-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { DisbursementController } from './controllers/disbursement-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { EmailBatchController } from './controllers/email-batch-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { HealthController } from './controllers/health-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ProfileController } from './controllers/profile-controller';
@@ -194,6 +196,73 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Month": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["JAN"]},{"dataType":"enum","enums":["FEB"]},{"dataType":"enum","enums":["MAR"]},{"dataType":"enum","enums":["APR"]},{"dataType":"enum","enums":["MAY"]},{"dataType":"enum","enums":["JUN"]},{"dataType":"enum","enums":["JUL"]},{"dataType":"enum","enums":["AUG"]},{"dataType":"enum","enums":["SEP"]},{"dataType":"enum","enums":["OCT"]},{"dataType":"enum","enums":["NOV"]},{"dataType":"enum","enums":["DEC"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EmailBatchStatus": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["pending"]},{"dataType":"enum","enums":["in_progress"]},{"dataType":"enum","enums":["completed"]},{"dataType":"enum","enums":["failed"]},{"dataType":"enum","enums":["cancelled"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EmailBatchLogStatus": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["sent"]},{"dataType":"enum","enums":["failed"]},{"dataType":"enum","enums":["skipped"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PropertyAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "code": {"dataType":"string","required":true},
+            "floorArea": {"dataType":"double","required":true},
+            "address": {"dataType":"string","required":true},
+            "status": {"ref":"RecordStatus","required":true},
+            "createdAt": {"dataType":"datetime"},
+            "updatedAt": {"dataType":"datetime"},
+            "createdBy": {"dataType":"double"},
+            "updatedBy": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EmailBatchLogAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "batchId": {"dataType":"double","required":true},
+            "propertyId": {"dataType":"double","required":true},
+            "email": {"dataType":"string","required":true},
+            "status": {"ref":"EmailBatchLogStatus","required":true},
+            "errorMessage": {"dataType":"string"},
+            "sentAt": {"dataType":"datetime"},
+            "createdAt": {"dataType":"datetime"},
+            "property": {"ref":"PropertyAttr"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EmailBatchAttr": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "batchName": {"dataType":"string","required":true},
+            "periodYear": {"dataType":"double","required":true},
+            "periodMonth": {"ref":"Month","required":true},
+            "totalProperties": {"dataType":"double","required":true},
+            "sentCount": {"dataType":"double","required":true},
+            "failedCount": {"dataType":"double","required":true},
+            "status": {"ref":"EmailBatchStatus","required":true},
+            "startedAt": {"dataType":"datetime"},
+            "completedAt": {"dataType":"datetime"},
+            "createdAt": {"dataType":"datetime"},
+            "updatedAt": {"dataType":"datetime"},
+            "logs": {"dataType":"array","array":{"dataType":"refObject","ref":"EmailBatchLogAttr"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "FieldError": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"value":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"field":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"type":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"message":{"dataType":"string","required":true}},"validators":{}},
@@ -230,22 +299,6 @@ const models: TsoaRoute.Models = {
     "UpdateProfile": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"remarks":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"scopes":{"dataType":"string"},"status":{"ref":"RecordStatus","required":true},"type":{"ref":"ProfileType","required":true},"mobileNumber":{"dataType":"string"},"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true}},"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PropertyAttr": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "code": {"dataType":"string","required":true},
-            "floorArea": {"dataType":"double","required":true},
-            "address": {"dataType":"string","required":true},
-            "status": {"ref":"RecordStatus","required":true},
-            "createdAt": {"dataType":"datetime"},
-            "updatedAt": {"dataType":"datetime"},
-            "createdBy": {"dataType":"double"},
-            "updatedBy": {"dataType":"double"},
-        },
-        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PaymentDetailAttr": {
@@ -309,11 +362,6 @@ const models: TsoaRoute.Models = {
             "paymentDetails": {"dataType":"array","array":{"dataType":"refObject","ref":"PaymentDetailAttr"}},
         },
         "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Month": {
-        "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["JAN"]},{"dataType":"enum","enums":["FEB"]},{"dataType":"enum","enums":["MAR"]},{"dataType":"enum","enums":["APR"]},{"dataType":"enum","enums":["MAY"]},{"dataType":"enum","enums":["JUN"]},{"dataType":"enum","enums":["JUL"]},{"dataType":"enum","enums":["AUG"]},{"dataType":"enum","enums":["SEP"]},{"dataType":"enum","enums":["OCT"]},{"dataType":"enum","enums":["NOV"]},{"dataType":"enum","enums":["DEC"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PropertyAssignmentAttr": {
@@ -747,6 +795,188 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.postChargeDisbursement.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/email-batch/create',
+            authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController)),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController.prototype.createBatch)),
+
+            function EmailBatchController_createBatch(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"month":{"ref":"Month"},"year":{"dataType":"double"}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EmailBatchController();
+
+
+              const promise = controller.createBatch.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/email-batch/list',
+            authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController)),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController.prototype.getAllBatches)),
+
+            function EmailBatchController_getAllBatches(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EmailBatchController();
+
+
+              const promise = controller.getAllBatches.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/email-batch/:batchId',
+            authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController)),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController.prototype.getBatch)),
+
+            function EmailBatchController_getBatch(request: any, response: any, next: any) {
+            const args = {
+                    batchId: {"in":"path","name":"batchId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EmailBatchController();
+
+
+              const promise = controller.getBatch.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/email-batch/process/:batchId',
+            authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController)),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController.prototype.processBatch)),
+
+            function EmailBatchController_processBatch(request: any, response: any, next: any) {
+            const args = {
+                    batchId: {"in":"path","name":"batchId","required":true,"dataType":"double"},
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EmailBatchController();
+
+
+              const promise = controller.processBatch.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/email-batch/retry/:batchId',
+            authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController)),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController.prototype.retryFailed)),
+
+            function EmailBatchController_retryFailed(request: any, response: any, next: any) {
+            const args = {
+                    batchId: {"in":"path","name":"batchId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EmailBatchController();
+
+
+              const promise = controller.retryFailed.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/email-batch/cancel/:batchId',
+            authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController)),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController.prototype.cancelBatch)),
+
+            function EmailBatchController_cancelBatch(request: any, response: any, next: any) {
+            const args = {
+                    batchId: {"in":"path","name":"batchId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EmailBatchController();
+
+
+              const promise = controller.cancelBatch.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/email-batch/delete/:batchId',
+            authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController)),
+            ...(fetchMiddlewares<RequestHandler>(EmailBatchController.prototype.deleteBatch)),
+
+            function EmailBatchController_deleteBatch(request: any, response: any, next: any) {
+            const args = {
+                    batchId: {"in":"path","name":"batchId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EmailBatchController();
+
+
+              const promise = controller.deleteBatch.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
