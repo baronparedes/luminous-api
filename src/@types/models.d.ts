@@ -358,3 +358,40 @@ export interface RefundedPaymentAttr {
   createdBy?: number;
   updatedBy?: number;
 }
+
+export type EmailBatchStatus =
+  | 'pending'
+  | 'in_progress'
+  | 'completed'
+  | 'failed'
+  | 'cancelled';
+
+export type EmailBatchLogStatus = 'sent' | 'failed' | 'skipped';
+
+export interface EmailBatchAttr {
+  id?: number;
+  batchName: string;
+  periodYear: number;
+  periodMonth: Month;
+  totalProperties: number;
+  sentCount: number;
+  failedCount: number;
+  status: EmailBatchStatus;
+  startedAt?: Date;
+  completedAt?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+  logs?: EmailBatchLogAttr[];
+}
+
+export interface EmailBatchLogAttr {
+  id?: number;
+  batchId: number;
+  propertyId: number;
+  email: string;
+  status: EmailBatchLogStatus;
+  errorMessage?: string;
+  sentAt?: Date;
+  createdAt?: Date;
+  property?: PropertyAttr;
+}

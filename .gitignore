@@ -105,3 +105,5 @@ dist
 
 junit.xml
 test-db.sqlite
+
+local/

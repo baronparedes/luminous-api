@@ -1,20 +1,23 @@
-import {Controller, Get, Path, Query, Route, Security} from 'tsoa';
+import {Body, Controller, Get, Path, Post, Query, Route, Security} from 'tsoa';
 
 import {Month, Period} from '../@types/models';
 import {getCurrentMonthYear} from '../@utils/dates';
 import PropertyAccountService from '../services/property-account-service';
+import NotificationService from '../services/notification-service';
 import {CONSTANTS} from '../constants';
 
 @Security('bearer')
 @Route('/api/property-account')
 export class PropertyAccountController extends Controller {
   private propertyAccountService: PropertyAccountService;
+  private notificationService: NotificationService;
 
   constructor() {
     super();
     this.propertyAccountService = new PropertyAccountService(
       CONSTANTS.COMMUNITY_ID
     );
+    this.notificationService = new NotificationService(CONSTANTS.COMMUNITY_ID);
   }
 
   @Get('/getPropertyAccountsByProfile/{profileId}')
@@ -56,5 +59,29 @@ export class PropertyAccountController extends Controller {
       period
     );
     return result;
+  }
+
+  @Post('/sendStatementEmail')
+  public async sendStatementEmail(
+    @Body()
+    body: {
+      propertyId: number;
+      email: string;
+      year?: number;
+      month?: Month;
+    }
+  ) {
+    const {propertyId, email, year, month} = body;
+    await this.notificationService.sendStatementEmail(
+      propertyId,
+      email,
+      year,
+      month
+    );
+
+    return {
+      success: true,
+      message: 'Statement email sent successfully',
+    };
   }
 }
