@@ -2494,6 +2494,71 @@
 				]
 			}
 		},
+		"/api/property-account/sendStatementEmail": {
+			"post": {
+				"operationId": "SendStatementEmail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"message",
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"month": {
+										"$ref": "#/components/schemas/Month"
+									},
+									"year": {
+										"type": "number",
+										"format": "double"
+									},
+									"email": {
+										"type": "string"
+									},
+									"propertyId": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"email",
+									"propertyId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/property/getAll": {
 			"get": {
 				"operationId": "GetAllProperties",

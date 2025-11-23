@@ -3,21 +3,31 @@ import {
   purchaseOrderApprovalTemplate,
   resetPasswordTemplate,
 } from '../@utils/email-templates';
+import {statementEmailTemplate} from '../@utils/email-soa-templates';
+import {Month, Period} from '../@types/models';
+import {getCurrentMonthYear} from '../@utils/dates';
 import useSendMail from '../hooks/use-send-mail';
 import ApprovalCode from '../models/approval-code-model';
 import PurchaseOrderService from './purchase-order-service';
 import PurchaseRequestService from './purchase-request-service';
 import VoucherService from './voucher-service';
+import PropertyAccountService from './property-account-service';
+import SettingService from './setting-service';
+import {CONSTANTS} from '../constants';
 
 export default class NotificationService {
   private voucherService: VoucherService;
   private purchaseRequestService: PurchaseRequestService;
   private purchaseOrderService: PurchaseOrderService;
+  private propertyAccountService: PropertyAccountService;
+  private settingService: SettingService;
 
   constructor(communityId: number) {
     this.voucherService = new VoucherService(communityId);
     this.purchaseRequestService = new PurchaseRequestService(communityId);
     this.purchaseOrderService = new PurchaseOrderService(communityId);
+    this.propertyAccountService = new PropertyAccountService(communityId);
+    this.settingService = new SettingService(communityId);
   }
 
   public async notifyResetPassword(email: string, password: string) {
@@ -118,5 +128,46 @@ export default class NotificationService {
     });
 
     await Promise.all(promises);
+  }
+
+  public async sendStatementEmail(
+    propertyId: number,
+    email: string,
+    year?: number,
+    month?: Month
+  ) {
+    const currentPeriod = getCurrentMonthYear();
+    const period: Period = {
+      year: year ?? currentPeriod.year,
+      month: month ?? currentPeriod.month,
+    };
+
+    // Get property account data
+    const propertyAccount = await this.propertyAccountService.getPropertyAcount(
+      propertyId,
+      period
+    );
+
+    // Get water charge ID and notes from settings
+    const waterChargeIdValue = await this.settingService.getValue(
+      CONSTANTS.SETTING_KEYS.WATER_CHARGE_ID
+    );
+    const waterChargeId = waterChargeIdValue ? parseInt(waterChargeIdValue) : 0;
+    const notes = await this.settingService.getValue(
+      CONSTANTS.SETTING_KEYS.SOA_NOTES
+    );
+
+    // Generate email content
+    const subject = `[Luminous] SOA - ${period.month} ${period.year} - ${propertyAccount.property?.code}`;
+    const content = statementEmailTemplate({
+      propertyAccount,
+      period,
+      waterChargeId,
+      notes: notes || undefined,
+    });
+
+    // Send email
+    const {send} = useSendMail();
+    await send(email, subject, content);
   }
 }

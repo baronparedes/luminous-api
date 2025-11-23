@@ -1041,6 +1041,32 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/property-account/sendStatementEmail',
+            authenticateMiddleware([{"bearer":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(PropertyAccountController)),
+            ...(fetchMiddlewares<RequestHandler>(PropertyAccountController.prototype.sendStatementEmail)),
+
+            function PropertyAccountController_sendStatementEmail(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"month":{"ref":"Month"},"year":{"dataType":"double"},"email":{"dataType":"string","required":true},"propertyId":{"dataType":"double","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PropertyAccountController();
+
+
+              const promise = controller.sendStatementEmail.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/property/getAll',
             authenticateMiddleware([{"bearer":[]}]),
             ...(fetchMiddlewares<RequestHandler>(PropertyController)),

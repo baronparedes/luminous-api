@@ -16,6 +16,10 @@ export const VERBIAGE = {
 
 export const CONSTANTS = {
   COMMUNITY_ID: 1, //TODO: Hard coded for now until we migrate to multiple communities
+  SETTING_KEYS: {
+    WATER_CHARGE_ID: 'WATER_CHARGE_ID',
+    SOA_NOTES: 'SOA_NOTES',
+  },
 };
 
 export const MONTHS: Month[] = [
