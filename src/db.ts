@@ -27,7 +27,7 @@ const sequelize = new Sequelize(
     models: [`${__dirname}/models`],
     define: {underscored: true},
     logging: !config.IS_PROD ? console.log : false,
-    ssl: config.IS_PROD,
+    ssl: config.DB.SSL,
   }
 );
 
@@ -119,6 +119,7 @@ export async function checkDbHealth() {
       host: config.DB.HOST,
       port: Number(config.DB.PORT),
       dialect: config.DB.DIALECT as Dialect,
+      ssl: config.DB.SSL,
       logging: false,
       pool: {max: 1, min: 0, acquire: 10000, idle: 10000},
     }

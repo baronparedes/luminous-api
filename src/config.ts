@@ -20,6 +20,7 @@ const config = {
     HOST: process.env.DB_HOST || '',
     PORT: process.env.DB_PORT || '',
     DIALECT: process.env.DB_DIALECT || 'postgres',
+    SSL: process.env.DB_SSL?.toLowerCase() === 'true',
     SYNC: process.env.DB_SYNC?.toLowerCase() === 'true',
     SEED: process.env.DB_SEED?.toLowerCase() === 'true',
   },
