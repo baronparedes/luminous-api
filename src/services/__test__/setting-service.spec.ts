@@ -1,0 +1,160 @@
+import faker from 'faker';
+
+import {AuthProfile} from '../../@types/models';
+import {generateCategory} from '../../@utils/fake-data';
+import {initInMemoryDb} from '../../@utils/seeded-test-data';
+import {UserContext} from '../../context/user-context';
+import {CONSTANTS} from '../../constants';
+import Category from '../../models/category-model';
+import Setting from '../../models/setting-model';
+import SettingService from '../setting-service';
+
+describe('SettingService', () => {
+  const target = new SettingService(CONSTANTS.COMMUNITY_ID);
+  const seedData = {
+    key: faker.random.word(),
+    value: faker.random.words(),
+    communityId: CONSTANTS.COMMUNITY_ID,
+  };
+
+  const seedCategoryData = {
+    ...generateCategory(),
+    communityId: CONSTANTS.COMMUNITY_ID,
+    id: 1,
+  };
+
+  // Mock user for audit operations
+  const mockUser: AuthProfile = {
+    id: 999,
+    username: 'testuser',
+    email: 'test@example.com',
+    name: 'Test User',
+    type: 'admin',
+    status: 'active',
+  };
+
+  beforeAll(async () => {
+    await initInMemoryDb();
+    await Setting.bulkCreate([seedData]);
+    await Category.bulkCreate([seedCategoryData]);
+  });
+
+  beforeEach(() => {
+    // Set up user context for each test
+    UserContext.setCurrentUser(mockUser);
+  });
+
+  afterEach(() => {
+    // Clean up user context after each test
+    UserContext.clearCurrentUser();
+  });
+
+  it('should fetch empty string when key does not exist', async () => {
+    const actual = await target.getValue(faker.random.word());
+    expect(actual).toEqual('');
+  });
+
+  it('should update value', async () => {
+    const actualSeededValue = await target.getValue(seedData.key);
+    expect(actualSeededValue).toEqual(seedData.value);
+
+    const newValue = faker.random.words();
+    await target.setValue(seedData.key, newValue);
+
+    const actual = await target.getValue(seedData.key);
+    expect(actual).toEqual(newValue);
+
+    const values = await target.getValues();
+    expect(values.length).toEqual(1);
+  });
+
+  it('should create new entry when key does not exist', async () => {
+    const key = faker.random.word();
+    const value = faker.random.words();
+
+    await target.setValue(key, value);
+
+    const actual = await target.getValue(key);
+    expect(actual).toEqual(value);
+
+    const values = await target.getValues();
+    expect(values.length).toEqual(2);
+  });
+
+  it('should update and get all categories', async () => {
+    const actual = await target.getCategories();
+    expect(actual[0]).toEqual(seedCategoryData);
+
+    const updatedCategory = {
+      ...generateCategory(),
+      id: 1,
+      communityId: CONSTANTS.COMMUNITY_ID,
+    };
+
+    const newCategory = {
+      ...generateCategory(),
+      communityId: CONSTANTS.COMMUNITY_ID,
+    };
+
+    await target.saveCategories([updatedCategory, newCategory]);
+    const actualAfterSave = await target.getCategories();
+
+    expect(actualAfterSave).toHaveLength(2);
+    expect(actualAfterSave[0]).toEqual(updatedCategory);
+    expect(actualAfterSave[1]).toEqual({...newCategory, id: 2});
+  });
+
+  it('should save categories with audit fields', async () => {
+    const testCategories = [
+      {
+        ...generateCategory(),
+        communityId: CONSTANTS.COMMUNITY_ID,
+      },
+      {
+        ...generateCategory(),
+        communityId: CONSTANTS.COMMUNITY_ID,
+      },
+    ];
+
+    await target.saveCategories(testCategories);
+
+    // Fetch the saved categories directly from the database to check audit fields
+    const savedCategories = await Category.findAll({
+      where: {
+        communityId: CONSTANTS.COMMUNITY_ID,
+        description: [
+          testCategories[0].description,
+          testCategories[1].description,
+        ],
+      },
+      raw: true,
+    });
+
+    expect(savedCategories.length).toEqual(testCategories.length);
+
+    // Verify audit fields are populated for all saved categories
+    for (const category of savedCategories) {
+      expect(category.createdBy).toEqual(mockUser.id);
+      expect(category.updatedBy).toEqual(mockUser.id);
+      expect(category.createdAt).toBeDefined();
+      expect(category.updatedAt).toBeDefined();
+    }
+  });
+
+  it('should get water charge id when setting exists', async () => {
+    const chargeId = faker.datatype.number({min: 1, max: 100});
+    await target.setValue('WATER_CHARGE_ID', chargeId.toString());
+
+    const actual = await target.getWaterChargeId();
+    expect(actual).toEqual(chargeId);
+  });
+
+  it('should return undefined when water charge id setting does not exist', async () => {
+    await Setting.destroy({
+      where: {key: 'WATER_CHARGE_ID', communityId: CONSTANTS.COMMUNITY_ID},
+    });
+
+    const actual = await target.getWaterChargeId();
+    expect(actual).toEqual(undefined);
+  });
+});

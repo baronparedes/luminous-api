@@ -7,8 +7,6 @@ import AuthService from '../../services/auth-service';
 import {AuthController} from '../auth-controller';
 
 describe('AuthController', () => {
-  afterAll(() => jest.clearAllMocks());
-
   it('should authorize using request', async () => {
     const authProfile = generateAuthProfile();
     const token = faker.random.alphaNumeric(64);

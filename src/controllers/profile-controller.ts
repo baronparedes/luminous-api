@@ -19,13 +19,14 @@ import {
 import {ApprovedAny} from '../@types';
 import {
   AuthProfile,
-  ProfileStatus,
+  RecordStatus,
   RegisterProfile,
   UpdateProfile,
 } from '../@types/models';
-import {VERBIAGE} from '../constants';
+import {CONSTANTS, VERBIAGE} from '../constants';
 import {ApiError, EntityError} from '../errors';
 import AuthService from '../services/auth-service';
+import NotificationService from '../services/notification-service';
 import ProfileService from '../services/profile-service';
 
 @Security('bearer')
@@ -33,11 +34,13 @@ import ProfileService from '../services/profile-service';
 export class ProfileController extends Controller {
   private authService: AuthService;
   private profileService: ProfileService;
+  private notificationService: NotificationService;
 
   constructor() {
     super();
     this.authService = new AuthService();
     this.profileService = new ProfileService();
+    this.notificationService = new NotificationService(CONSTANTS.COMMUNITY_ID);
   }
 
   @OperationId('GetAllProfiles')
@@ -60,7 +63,7 @@ export class ProfileController extends Controller {
       if (e instanceof ValidationError) {
         throw new EntityError(e);
       }
-      throw new ApiError(400, VERBIAGE.BAD_REQUEST);
+      throw e;
     }
   }
 
@@ -73,7 +76,7 @@ export class ProfileController extends Controller {
   @Patch('/updateProfileStatus/{id}')
   public async updateProfileStatus(
     @Path() id: number,
-    @Query() status: ProfileStatus
+    @Query() status: RecordStatus
   ): Promise<void> {
     await this.profileService.updateStatus(id, status);
   }
@@ -105,6 +108,22 @@ export class ProfileController extends Controller {
       id,
       profile.currentPassword,
       profile.newPassword
+    );
+  }
+
+  @NoSecurity()
+  @SuccessResponse(204, VERBIAGE.NO_CONTENT)
+  @Post('/resetPassword')
+  public async resetPassword(
+    @Body() profile: {username: string; email: string}
+  ) {
+    const newPassword = await this.profileService.resetPassword(
+      profile.username,
+      profile.email
+    );
+    await this.notificationService.notifyResetPassword(
+      profile.email,
+      newPassword
     );
   }
 }

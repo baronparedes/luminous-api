@@ -11,10 +11,10 @@
 				"enum": [
 					"stakeholder",
 					"admin",
-					"user"
+					"unit owner"
 				]
 			},
-			"ProfileStatus": {
+			"RecordStatus": {
 				"type": "string",
 				"enum": [
 					"active",
@@ -23,14 +23,20 @@
 			},
 			"AuthProfile": {
 				"properties": {
+					"remarks": {
+						"type": "string"
+					},
 					"scopes": {
 						"type": "string"
 					},
 					"status": {
-						"$ref": "#/components/schemas/ProfileStatus"
+						"$ref": "#/components/schemas/RecordStatus"
 					},
 					"type": {
 						"$ref": "#/components/schemas/ProfileType"
+					},
+					"mobileNumber": {
+						"type": "string"
 					},
 					"email": {
 						"type": "string"
@@ -70,6 +76,673 @@
 					"profile"
 				],
 				"type": "object"
+			},
+			"CommunityAttr": {
+				"properties": {
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ChargeType": {
+				"type": "string",
+				"enum": [
+					"unit",
+					"percentage",
+					"amount"
+				]
+			},
+			"PostingType": {
+				"type": "string",
+				"enum": [
+					"monthly",
+					"manual",
+					"accrued",
+					"interest",
+					"quarterly",
+					"annual"
+				]
+			},
+			"ChargeAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"communityId": {
+						"type": "number",
+						"format": "double"
+					},
+					"community": {
+						"$ref": "#/components/schemas/CommunityAttr"
+					},
+					"code": {
+						"type": "string"
+					},
+					"rate": {
+						"type": "number",
+						"format": "double"
+					},
+					"chargeType": {
+						"$ref": "#/components/schemas/ChargeType"
+					},
+					"postingType": {
+						"$ref": "#/components/schemas/PostingType"
+					},
+					"thresholdInMonths": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"priority": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"passOn": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"communityId",
+					"code",
+					"rate",
+					"chargeType",
+					"postingType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ChargeCollected": {
+				"properties": {
+					"charge": {
+						"$ref": "#/components/schemas/ChargeAttr"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"charge",
+					"amount"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TransactionType": {
+				"type": "string",
+				"enum": [
+					"charged",
+					"collected"
+				]
+			},
+			"CollectionEfficiencyView": {
+				"properties": {
+					"chargeCode": {
+						"type": "string"
+					},
+					"transactionType": {
+						"$ref": "#/components/schemas/TransactionType"
+					},
+					"transactionPeriod": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeCode",
+					"transactionType",
+					"transactionPeriod",
+					"amount"
+				],
+				"type": "object"
+			},
+			"PropertyBalanceView": {
+				"properties": {
+					"balance": {
+						"type": "number",
+						"format": "double"
+					},
+					"collected": {
+						"type": "number",
+						"format": "double"
+					},
+					"charged": {
+						"type": "number",
+						"format": "double"
+					},
+					"code": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"balance",
+					"collected",
+					"charged",
+					"code",
+					"id"
+				],
+				"type": "object"
+			},
+			"ChargeDisbursedView": {
+				"properties": {
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"transactionPeriod": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeId",
+					"transactionPeriod",
+					"amount"
+				],
+				"type": "object"
+			},
+			"CategorizedExpenseView": {
+				"properties": {
+					"series": {
+						"type": "string"
+					},
+					"transactionPeriod": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"passOn": {
+						"type": "boolean"
+					},
+					"chargeCode": {
+						"type": "string"
+					},
+					"totalCost": {
+						"type": "number",
+						"format": "double"
+					},
+					"parentCategory": {
+						"type": "string"
+					},
+					"category": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"series",
+					"transactionPeriod",
+					"chargeCode",
+					"totalCost",
+					"parentCategory",
+					"category"
+				],
+				"type": "object"
+			},
+			"PropertyBalanceByChargeView": {
+				"properties": {
+					"chargeCode": {
+						"type": "string"
+					},
+					"balance": {
+						"type": "number",
+						"format": "double"
+					},
+					"floorArea": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"code": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeCode",
+					"balance",
+					"floorArea",
+					"address",
+					"code",
+					"id"
+				],
+				"type": "object"
+			},
+			"DashboardView": {
+				"properties": {
+					"propertyBalanceByCharge": {
+						"items": {
+							"$ref": "#/components/schemas/PropertyBalanceByChargeView"
+						},
+						"type": "array"
+					},
+					"categorizedExpense": {
+						"items": {
+							"$ref": "#/components/schemas/CategorizedExpenseView"
+						},
+						"type": "array"
+					},
+					"chargeDisbursed": {
+						"items": {
+							"$ref": "#/components/schemas/ChargeDisbursedView"
+						},
+						"type": "array"
+					},
+					"propertyBalance": {
+						"items": {
+							"$ref": "#/components/schemas/PropertyBalanceView"
+						},
+						"type": "array"
+					},
+					"collectionEfficieny": {
+						"items": {
+							"$ref": "#/components/schemas/CollectionEfficiencyView"
+						},
+						"type": "array"
+					},
+					"year": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"propertyBalanceByCharge",
+					"categorizedExpense",
+					"chargeDisbursed",
+					"propertyBalance",
+					"collectionEfficieny",
+					"year"
+				],
+				"type": "object"
+			},
+			"DisbursementBreakdownView": {
+				"properties": {
+					"passOn": {
+						"type": "boolean"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"code": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"amount",
+					"code"
+				],
+				"type": "object"
+			},
+			"PaymentType": {
+				"type": "string",
+				"enum": [
+					"cash",
+					"check",
+					"bank-transfer",
+					"gcash"
+				]
+			},
+			"ProfileAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"mobileNumber": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/ProfileType"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RecordStatus"
+					},
+					"scopes": {
+						"type": "string"
+					},
+					"remarks": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"username",
+					"password",
+					"email",
+					"type",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"DisbursementAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"voucherId": {
+						"type": "number",
+						"format": "double"
+					},
+					"purchaseOrderId": {
+						"type": "number",
+						"format": "double"
+					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"releasedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"paymentType": {
+						"$ref": "#/components/schemas/PaymentType"
+					},
+					"details": {
+						"type": "string"
+					},
+					"checkNumber": {
+						"type": "string"
+					},
+					"checkPostingDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"checkIssuingBank": {
+						"type": "string"
+					},
+					"referenceNumber": {
+						"type": "string"
+					},
+					"transferBank": {
+						"type": "string"
+					},
+					"transferDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"transferTo": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"releasedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"charge": {
+						"$ref": "#/components/schemas/ChargeAttr"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeId",
+					"releasedBy",
+					"paymentType",
+					"details",
+					"amount"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Month": {
+				"type": "string",
+				"enum": [
+					"JAN",
+					"FEB",
+					"MAR",
+					"APR",
+					"MAY",
+					"JUN",
+					"JUL",
+					"AUG",
+					"SEP",
+					"OCT",
+					"NOV",
+					"DEC"
+				]
+			},
+			"EmailBatchStatus": {
+				"type": "string",
+				"enum": [
+					"pending",
+					"in_progress",
+					"completed",
+					"failed",
+					"cancelled"
+				]
+			},
+			"EmailBatchLogStatus": {
+				"type": "string",
+				"enum": [
+					"sent",
+					"failed",
+					"skipped"
+				]
+			},
+			"PropertyAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"code": {
+						"type": "string"
+					},
+					"floorArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"address": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RecordStatus"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"code",
+					"floorArea",
+					"address",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EmailBatchLogAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"batchId": {
+						"type": "number",
+						"format": "double"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"email": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/EmailBatchLogStatus"
+					},
+					"errorMessage": {
+						"type": "string"
+					},
+					"sentAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyAttr"
+					}
+				},
+				"required": [
+					"batchId",
+					"propertyId",
+					"email",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EmailBatchAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"batchName": {
+						"type": "string"
+					},
+					"periodYear": {
+						"type": "number",
+						"format": "double"
+					},
+					"periodMonth": {
+						"$ref": "#/components/schemas/Month"
+					},
+					"totalProperties": {
+						"type": "number",
+						"format": "double"
+					},
+					"sentCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"failedCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"$ref": "#/components/schemas/EmailBatchStatus"
+					},
+					"startedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"completedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"logs": {
+						"items": {
+							"$ref": "#/components/schemas/EmailBatchLogAttr"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"batchName",
+					"periodYear",
+					"periodMonth",
+					"totalProperties",
+					"sentCount",
+					"failedCount",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
 			},
 			"FieldError": {
 				"properties": {
@@ -130,6 +803,9 @@
 			},
 			"RegisterProfile": {
 				"properties": {
+					"mobileNumber": {
+						"type": "string"
+					},
 					"email": {
 						"type": "string"
 					},
@@ -177,14 +853,21 @@
 			},
 			"UpdateProfile": {
 				"properties": {
+					"remarks": {
+						"type": "string",
+						"nullable": true
+					},
 					"scopes": {
 						"type": "string"
 					},
 					"status": {
-						"$ref": "#/components/schemas/ProfileStatus"
+						"$ref": "#/components/schemas/RecordStatus"
 					},
 					"type": {
 						"$ref": "#/components/schemas/ProfileType"
+					},
+					"mobileNumber": {
+						"type": "string"
 					},
 					"email": {
 						"type": "string"
@@ -198,6 +881,1050 @@
 					"type",
 					"email",
 					"name"
+				],
+				"type": "object"
+			},
+			"PaymentDetailAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"collectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"orNumber": {
+						"type": "string"
+					},
+					"paymentType": {
+						"$ref": "#/components/schemas/PaymentType"
+					},
+					"checkNumber": {
+						"type": "string"
+					},
+					"checkPostingDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"checkIssuingBank": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"referenceNumber": {
+						"type": "string"
+					},
+					"transferDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"transferBank": {
+						"type": "string"
+					},
+					"transferFrom": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"collectedBy",
+					"orNumber",
+					"paymentType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TransactionAttr": {
+				"properties": {
+					"details": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"charge": {
+						"$ref": "#/components/schemas/ChargeAttr"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyAttr"
+					},
+					"categoryId": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"transactionPeriod": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"transactionType": {
+						"$ref": "#/components/schemas/TransactionType"
+					},
+					"waivedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string"
+					},
+					"paymentDetailId": {
+						"type": "number",
+						"format": "double"
+					},
+					"paymentDetail": {
+						"$ref": "#/components/schemas/PaymentDetailAttr"
+					},
+					"rateSnapshot": {
+						"type": "number",
+						"format": "double"
+					},
+					"batchId": {
+						"type": "string",
+						"nullable": true
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeId",
+					"amount",
+					"transactionPeriod",
+					"transactionType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PropertyAccount": {
+				"properties": {
+					"balance": {
+						"type": "number",
+						"format": "double"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyAttr"
+					},
+					"assignedProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileAttr"
+						},
+						"type": "array"
+					},
+					"transactions": {
+						"items": {
+							"$ref": "#/components/schemas/TransactionAttr"
+						},
+						"type": "array"
+					},
+					"paymentDetails": {
+						"items": {
+							"$ref": "#/components/schemas/PaymentDetailAttr"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"balance",
+					"propertyId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PropertyAssignmentAttr": {
+				"properties": {
+					"profileId": {
+						"type": "number",
+						"format": "double"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"profile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyAttr"
+					}
+				},
+				"required": [
+					"profileId",
+					"propertyId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaymentHistoryView": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"collectedBy": {
+						"type": "string"
+					},
+					"checkIssuingBank": {
+						"type": "string"
+					},
+					"checkPostingDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"checkNumber": {
+						"type": "string"
+					},
+					"paymentType": {
+						"$ref": "#/components/schemas/PaymentType"
+					},
+					"orNumber": {
+						"type": "string"
+					},
+					"code": {
+						"type": "string"
+					},
+					"transactionPeriod": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"createdAt",
+					"collectedBy",
+					"paymentType",
+					"orNumber",
+					"code",
+					"transactionPeriod",
+					"amount"
+				],
+				"type": "object"
+			},
+			"PropertyTransactionHistoryView": {
+				"properties": {
+					"paymentHistory": {
+						"items": {
+							"$ref": "#/components/schemas/PaymentHistoryView"
+						},
+						"type": "array"
+					},
+					"transactionHistory": {
+						"items": {
+							"$ref": "#/components/schemas/TransactionAttr"
+						},
+						"type": "array"
+					},
+					"previousBalance": {
+						"type": "number",
+						"format": "double"
+					},
+					"targetYear": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"paymentHistory",
+					"transactionHistory",
+					"previousBalance",
+					"targetYear"
+				],
+				"type": "object"
+			},
+			"RequestStatus": {
+				"type": "string",
+				"enum": [
+					"approved",
+					"rejected",
+					"pending",
+					"cancelled"
+				]
+			},
+			"ExpenseAttr": {
+				"properties": {
+					"voucherId": {
+						"type": "number",
+						"format": "double"
+					},
+					"purchaseRequestId": {
+						"type": "number",
+						"format": "double"
+					},
+					"purchaseOrderId": {
+						"type": "number",
+						"format": "double"
+					},
+					"categoryId": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"quantity": {
+						"type": "number",
+						"format": "double"
+					},
+					"unitCost": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalCost": {
+						"type": "number",
+						"format": "double"
+					},
+					"waivedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"categoryId",
+					"category",
+					"description",
+					"quantity",
+					"unitCost",
+					"totalCost"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PurchaseOrderAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"purchaseRequestId": {
+						"type": "number",
+						"format": "double"
+					},
+					"vendorName": {
+						"type": "string"
+					},
+					"fulfillmentDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"otherDetails": {
+						"type": "string",
+						"nullable": true
+					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"totalCost": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RequestStatus"
+					},
+					"requestedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"requestedDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"approvedBy": {
+						"type": "string",
+						"nullable": true
+					},
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string",
+						"nullable": true
+					},
+					"expenses": {
+						"items": {
+							"$ref": "#/components/schemas/ExpenseAttr"
+						},
+						"type": "array"
+					},
+					"disbursements": {
+						"items": {
+							"$ref": "#/components/schemas/DisbursementAttr"
+						},
+						"type": "array"
+					},
+					"requestedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"rejectedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"approverProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileAttr"
+						},
+						"type": "array"
+					},
+					"isClosed": {
+						"type": "boolean"
+					},
+					"series": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"purchaseRequestId",
+					"vendorName",
+					"fulfillmentDate",
+					"chargeId",
+					"description",
+					"totalCost",
+					"status",
+					"requestedBy",
+					"requestedDate",
+					"series"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreatePurchaseOrder": {
+				"properties": {
+					"purchaseRequestId": {
+						"type": "number",
+						"format": "double"
+					},
+					"otherDetails": {
+						"type": "string"
+					},
+					"fulfillmentDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"vendorName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"purchaseRequestId",
+					"otherDetails",
+					"fulfillmentDate",
+					"vendorName"
+				],
+				"type": "object"
+			},
+			"CreateVoucherOrOrder": {
+				"properties": {
+					"orderData": {
+						"$ref": "#/components/schemas/CreatePurchaseOrder"
+					},
+					"expenses": {
+						"items": {
+							"$ref": "#/components/schemas/ExpenseAttr"
+						},
+						"type": "array"
+					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"requestedDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"requestedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"expenses",
+					"chargeId",
+					"requestedDate",
+					"requestedBy",
+					"description"
+				],
+				"type": "object"
+			},
+			"ApproveVoucherOrOrder": {
+				"properties": {
+					"disbursements": {
+						"items": {
+							"$ref": "#/components/schemas/DisbursementAttr"
+						},
+						"type": "array"
+					},
+					"codes": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"purchaseOrderId": {
+						"type": "number",
+						"format": "double"
+					},
+					"purchaseRequestId": {
+						"type": "number",
+						"format": "double"
+					},
+					"voucherId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"codes"
+				],
+				"type": "object"
+			},
+			"RejectPurchaseOrder": {
+				"properties": {
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"rejectedBy",
+					"comments",
+					"id"
+				],
+				"type": "object"
+			},
+			"CancelPurchaseOrder": {
+				"properties": {
+					"cancelledBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"cancelledBy",
+					"comments",
+					"id"
+				],
+				"type": "object"
+			},
+			"PurchaseRequestAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"totalCost": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RequestStatus"
+					},
+					"requestedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"requestedDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"approvedBy": {
+						"type": "string",
+						"nullable": true
+					},
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string",
+						"nullable": true
+					},
+					"expenses": {
+						"items": {
+							"$ref": "#/components/schemas/ExpenseAttr"
+						},
+						"type": "array"
+					},
+					"requestedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"rejectedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"approverProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileAttr"
+						},
+						"type": "array"
+					},
+					"series": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeId",
+					"description",
+					"totalCost",
+					"status",
+					"requestedBy",
+					"requestedDate",
+					"series"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RejectPurchaseRequest": {
+				"properties": {
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"rejectedBy",
+					"comments",
+					"id"
+				],
+				"type": "object"
+			},
+			"SettingAttr": {
+				"properties": {
+					"key": {
+						"type": "string"
+					},
+					"value": {
+						"type": "string"
+					},
+					"communityId": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"key",
+					"value"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CategoryAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"communityId": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"subCategories": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"communityId",
+					"description",
+					"subCategories"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PostTransactionBody": {
+				"properties": {
+					"batchId": {
+						"type": "string"
+					},
+					"propertyId": {
+						"type": "number",
+						"format": "double"
+					},
+					"month": {
+						"$ref": "#/components/schemas/Month"
+					},
+					"year": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"propertyId",
+					"month",
+					"year"
+				],
+				"type": "object"
+			},
+			"PostCollectionBody": {
+				"properties": {
+					"transactions": {
+						"items": {
+							"$ref": "#/components/schemas/TransactionAttr"
+						},
+						"type": "array"
+					},
+					"paymentDetail": {
+						"$ref": "#/components/schemas/PaymentDetailAttr"
+					}
+				},
+				"required": [
+					"transactions",
+					"paymentDetail"
+				],
+				"type": "object"
+			},
+			"Period": {
+				"properties": {
+					"month": {
+						"$ref": "#/components/schemas/Month"
+					},
+					"year": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"month",
+					"year"
+				],
+				"type": "object"
+			},
+			"PropertyCollectionByChargeView": {
+				"properties": {
+					"chargeCode": {
+						"type": "string"
+					},
+					"collected": {
+						"type": "number",
+						"format": "double"
+					},
+					"floorArea": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"code": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeCode",
+					"collected",
+					"floorArea",
+					"address",
+					"code",
+					"id"
+				],
+				"type": "object"
+			},
+			"RefundPaymentBody": {
+				"properties": {
+					"comments": {
+						"type": "string"
+					},
+					"refundedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"paymentDetailId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"comments",
+					"refundedBy",
+					"paymentDetailId"
+				],
+				"type": "object"
+			},
+			"VoucherAttr": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"chargeId": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"totalCost": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"$ref": "#/components/schemas/RequestStatus"
+					},
+					"requestedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"requestedDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"approvedBy": {
+						"type": "string",
+						"nullable": true
+					},
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string",
+						"nullable": true
+					},
+					"expenses": {
+						"items": {
+							"$ref": "#/components/schemas/ExpenseAttr"
+						},
+						"type": "array"
+					},
+					"disbursements": {
+						"items": {
+							"$ref": "#/components/schemas/DisbursementAttr"
+						},
+						"type": "array"
+					},
+					"requestedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"rejectedByProfile": {
+						"$ref": "#/components/schemas/ProfileAttr"
+					},
+					"approverProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileAttr"
+						},
+						"type": "array"
+					},
+					"charge": {
+						"$ref": "#/components/schemas/ChargeAttr"
+					},
+					"series": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedBy": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chargeId",
+					"description",
+					"totalCost",
+					"status",
+					"requestedBy",
+					"requestedDate",
+					"series"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RejectVoucher": {
+				"properties": {
+					"rejectedBy": {
+						"type": "number",
+						"format": "double"
+					},
+					"comments": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"rejectedBy",
+					"comments",
+					"id"
 				],
 				"type": "object"
 			}
@@ -230,6 +1957,558 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/AuthResult"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/charge/getAllCharges": {
+			"get": {
+				"operationId": "GetAllCharges",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ChargeAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/charge/getAllCollectedCharges": {
+			"get": {
+				"operationId": "GetAllCollectedCharges",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ChargeCollected"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/charge/patchCharges": {
+			"patch": {
+				"operationId": "PatchCharges",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/ChargeAttr"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/dashboard/getDashboardByYear/{year}": {
+			"get": {
+				"operationId": "GetDashboardByYear",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DashboardView"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/disbursement/getDisbursementBreakdown": {
+			"get": {
+				"operationId": "GetDisbursementBreakdown",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/DisbursementBreakdownView"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/disbursement/getAllDisbursements/{chargeId}": {
+			"get": {
+				"operationId": "GetAllDisbursements",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/DisbursementAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "chargeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "year",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/disbursement/postChargeDisbursement": {
+			"post": {
+				"operationId": "PostChargeDisbursement",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DisbursementAttr"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/email-batch/create": {
+			"post": {
+				"operationId": "CreateBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EmailBatchAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"month": {
+										"$ref": "#/components/schemas/Month"
+									},
+									"year": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/email-batch/list": {
+			"get": {
+				"operationId": "GetAllBatches",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/EmailBatchAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/email-batch/{batchId}": {
+			"get": {
+				"operationId": "GetBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EmailBatchAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/email-batch/process/{batchId}": {
+			"post": {
+				"operationId": "ProcessBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"remaining": {
+											"type": "number",
+											"format": "double"
+										},
+										"failed": {
+											"type": "number",
+											"format": "double"
+										},
+										"sent": {
+											"type": "number",
+											"format": "double"
+										},
+										"processed": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"remaining",
+										"failed",
+										"sent",
+										"processed"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/email-batch/retry/{batchId}": {
+			"post": {
+				"operationId": "RetryFailed",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"remaining": {
+											"type": "number",
+											"format": "double"
+										},
+										"failed": {
+											"type": "number",
+											"format": "double"
+										},
+										"sent": {
+											"type": "number",
+											"format": "double"
+										},
+										"processed": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"remaining",
+										"failed",
+										"sent",
+										"processed"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/email-batch/cancel/{batchId}": {
+			"post": {
+				"operationId": "CancelBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EmailBatchAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/email-batch/delete/{batchId}": {
+			"post": {
+				"operationId": "DeleteBatch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"message",
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "batchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/health": {
+			"get": {
+				"operationId": "GetHealth",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"timestamp": {
+											"type": "string"
+										},
+										"smtp": {
+											"type": "string"
+										},
+										"db": {
+											"type": "string"
+										},
+										"status": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"timestamp",
+										"smtp",
+										"db",
+										"status"
+									],
+									"type": "object"
 								}
 							}
 						}
@@ -364,7 +2643,7 @@
 						"name": "status",
 						"required": true,
 						"schema": {
-							"$ref": "#/components/schemas/ProfileStatus"
+							"$ref": "#/components/schemas/RecordStatus"
 						}
 					}
 				]
@@ -479,6 +2758,1898 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/profile/resetPassword": {
+			"post": {
+				"operationId": "ResetPassword",
+				"responses": {
+					"204": {
+						"description": "no content"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"email": {
+										"type": "string"
+									},
+									"username": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"email",
+									"username"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/property-account/getPropertyAccountsByProfile/{profileId}": {
+			"get": {
+				"operationId": "GetPropertyAccountsByProfile",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAccount"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "profileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property-account/getPropertyAccount/{propertyId}": {
+			"get": {
+				"operationId": "GetPropertyAccount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PropertyAccount"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "year",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "month",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
+		"/api/property-account/getPropertyAccountsByPeriod": {
+			"get": {
+				"operationId": "GetPropertyAccountsByPeriod",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAccount"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "year",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "month",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
+		"/api/property-account/sendStatementEmail": {
+			"post": {
+				"operationId": "SendStatementEmail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"message",
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"month": {
+										"$ref": "#/components/schemas/Month"
+									},
+									"year": {
+										"type": "number",
+										"format": "double"
+									},
+									"email": {
+										"type": "string"
+									},
+									"propertyId": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"email",
+									"propertyId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/property/getAll": {
+			"get": {
+				"operationId": "GetAllProperties",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/{id}": {
+			"get": {
+				"operationId": "GetProperty",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PropertyAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/getPropertyAssignments/{propertyId}": {
+			"get": {
+				"operationId": "GetPropertyAssignments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAssignmentAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/getAssignedProperties/{profileId}": {
+			"get": {
+				"operationId": "GetAssignedProperties",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyAssignmentAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "profileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/create": {
+			"post": {
+				"operationId": "CreateProperty",
+				"responses": {
+					"201": {
+						"description": "created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PropertyAttr"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PropertyAttr"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/property/updatePropertyStatus/{id}": {
+			"patch": {
+				"operationId": "UpdatePropertyStatus",
+				"responses": {
+					"204": {
+						"description": "no content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/RecordStatus"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/updateProperty/{id}": {
+			"patch": {
+				"operationId": "UpdateProperty",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PropertyAttr"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PropertyAttr"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/property/updatePropertyAssignments/{id}": {
+			"patch": {
+				"operationId": "UpdatePropertyAssignments",
+				"responses": {
+					"204": {
+						"description": "no content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"type": "number",
+									"format": "double"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/property/getPaymentHistory/{propertyId}/{year}": {
+			"get": {
+				"operationId": "GetPaymentHistory",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PaymentHistoryView"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/property/getTransactionHistory/{propertyId}/{year}": {
+			"get": {
+				"operationId": "GetTransactionHistory",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PropertyTransactionHistoryView"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/purchase-order/getPurchaseOrder/{id}": {
+			"get": {
+				"operationId": "GetPurchaseOrder",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PurchaseOrderAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/purchase-order/getAllPurchaseOrdersByChargeAndStatus/{chargeId}/{status}": {
+			"get": {
+				"operationId": "GetAllPurchaseOrdersByChargeAndStatus",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PurchaseOrderAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "chargeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "status",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/RequestStatus"
+						}
+					}
+				]
+			}
+		},
+		"/api/purchase-order/postPurchaseOrder": {
+			"post": {
+				"operationId": "PostPurchaseOrder",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "number",
+									"format": "double"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-order/updatePurchaseOrder/{id}": {
+			"patch": {
+				"operationId": "UpdatePurchaseOrder",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-order/approvePurchaseOrder": {
+			"post": {
+				"operationId": "ApprovePurchaseOrder",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ApproveVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-order/rejectPurchaseOrder": {
+			"post": {
+				"operationId": "RejectPurchaseOrder",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RejectPurchaseOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-order/cancelPurchaseOrder": {
+			"post": {
+				"operationId": "CancelPurchaseOrder",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CancelPurchaseOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-order/notifyPurchaseOrderApprovers/{id}": {
+			"post": {
+				"operationId": "NotifyPurchaseOrderApprovers",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/purchase-order/postPurchaseOrderDisbursement/{id}": {
+			"post": {
+				"operationId": "PostPurchaseOrderDisbursement",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DisbursementAttr"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-request/getPurchaseRequest/{id}": {
+			"get": {
+				"operationId": "GetPurchaseRequest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PurchaseRequestAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/purchase-request/getAllPurchaseRequestsByChargeAndStatus/{chargeId}/{status}": {
+			"get": {
+				"operationId": "GetAllPurchaseRequestsByChargeAndStatus",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PurchaseRequestAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "chargeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "status",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/RequestStatus"
+						}
+					}
+				]
+			}
+		},
+		"/api/purchase-request/postPurchaseRequest": {
+			"post": {
+				"operationId": "PostPurchaseRequest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "number",
+									"format": "double"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-request/updatePurchaseRequest/{id}": {
+			"patch": {
+				"operationId": "UpdatePurchaseRequest",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-request/approvePurchaseRequest": {
+			"post": {
+				"operationId": "ApprovePurchaseRequest",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ApproveVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-request/rejectPurchaseRequest": {
+			"post": {
+				"operationId": "RejectPurchaseRequest",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RejectPurchaseRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/purchase-request/notifyPurchaseRequestApprovers/{id}": {
+			"post": {
+				"operationId": "NotifyPurchaseRequestApprovers",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/setting/getAll": {
+			"get": {
+				"operationId": "GetAllSettings",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/SettingAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/setting/getSettingValue": {
+			"get": {
+				"operationId": "GetSettingValue",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "key",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/setting/updateSettingValue": {
+			"patch": {
+				"operationId": "UpdateSettingValue",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SettingAttr"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/setting/getAllCategories": {
+			"get": {
+				"operationId": "GetAllCategories",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CategoryAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/setting/updateCategories": {
+			"patch": {
+				"operationId": "UpdateCategories",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/CategoryAttr"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/transaction/postMonthlyCharges": {
+			"post": {
+				"operationId": "PostMonthlyCharges",
+				"responses": {
+					"201": {
+						"description": "created"
+					},
+					"400": {
+						"description": "duplicate charges",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostTransactionBody"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/transaction/postCollections": {
+			"post": {
+				"operationId": "PostCollections",
+				"responses": {
+					"201": {
+						"description": "created"
+					},
+					"400": {
+						"description": "bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostCollectionBody"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/transaction/postTransactions": {
+			"post": {
+				"operationId": "PostTransactions",
+				"responses": {
+					"201": {
+						"description": "created"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/TransactionAttr"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/transaction/getAvailablePeriods/{propertyId}": {
+			"get": {
+				"operationId": "GetAvailablePeriods",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Period"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/transaction/suggestPaymentBreakdown/{propertyId}": {
+			"get": {
+				"operationId": "SuggestPaymentBreakdown",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TransactionAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "propertyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "amount",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "month",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
+		"/api/transaction/getCollectionBreakdown/{year}/{month}": {
+			"get": {
+				"operationId": "GetCollectionBreakdown",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PropertyCollectionByChargeView"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "month",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
+		"/api/transaction/refundPayment": {
+			"patch": {
+				"operationId": "RefundPayment",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "propertyId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RefundPaymentBody"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/transaction/getWaterReadingByPeriod/{year}/{month}": {
+			"get": {
+				"operationId": "GetWaterReadingByPeriod",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TransactionAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "month",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					}
+				]
+			}
+		},
+		"/api/transaction/getAllTransactions/{year}/{month}/{chargeId}": {
+			"get": {
+				"operationId": "GetAllTransactions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TransactionAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "chargeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "year",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "month",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Month"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/voucher/getVoucher/{id}": {
+			"get": {
+				"operationId": "GetVoucher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/VoucherAttr"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/voucher/getAllVouchersByChargeAndStatus/{chargeId}/{status}": {
+			"get": {
+				"operationId": "GetAllVouchersByChargeAndStatus",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/VoucherAttr"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "chargeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "status",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/RequestStatus"
+						}
+					}
+				]
+			}
+		},
+		"/api/voucher/postVoucher": {
+			"post": {
+				"operationId": "PostVoucher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "number",
+									"format": "double"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/voucher/updateVoucher/{id}": {
+			"patch": {
+				"operationId": "UpdateVoucher",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/voucher/approveVoucher": {
+			"post": {
+				"operationId": "ApproveVoucher",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ApproveVoucherOrOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/voucher/rejectVoucher": {
+			"post": {
+				"operationId": "RejectVoucher",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RejectVoucher"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/voucher/notifyVoucherApprovers/{id}": {
+			"post": {
+				"operationId": "NotifyVoucherApprovers",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		}
 	},

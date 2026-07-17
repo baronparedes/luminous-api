@@ -1,10 +1,11 @@
 import faker from 'faker';
 
-import {ProfileStatus, UpdateProfile} from '../../@types/models';
+import {RecordStatus, UpdateProfile} from '../../@types/models';
 import {
   generateAuthProfile,
   generateRegisterProfile,
 } from '../../@utils/fake-data';
+import NotificationService from '../../services/notification-service';
 import ProfileService from '../../services/profile-service';
 import {ProfileController} from '../profile-controller';
 
@@ -50,7 +51,7 @@ describe('ProfileController', () => {
     expect(actual.profile).toStrictEqual(authProfile);
   });
 
-  it('should update my profile status', async () => {
+  it('should update my profile details', async () => {
     const authProfile = generateAuthProfile();
     const updateProfile: UpdateProfile = {
       email: authProfile.email,
@@ -76,7 +77,7 @@ describe('ProfileController', () => {
       .mockReturnValueOnce(new Promise(resolve => resolve()));
     const target = new ProfileController();
     const targetId = faker.datatype.number();
-    const status = faker.random.arrayElement<ProfileStatus>([
+    const status = faker.random.arrayElement<RecordStatus>([
       'active',
       'inactive',
     ]);
@@ -98,5 +99,28 @@ describe('ProfileController', () => {
 
     expect(mock).toBeCalledTimes(1);
     expect(mock).toBeCalledWith(targetId, currentPassword, newPassword);
+  });
+
+  it('should reset password', async () => {
+    const newPassword = faker.internet.password();
+    const username = faker.internet.userName();
+    const email = faker.internet.email();
+
+    const mock = jest
+      .spyOn(ProfileService.prototype, 'resetPassword')
+      .mockReturnValueOnce(new Promise(resolve => resolve(newPassword)));
+
+    const mockNotificationService = jest
+      .spyOn(NotificationService.prototype, 'notifyResetPassword')
+      .mockReturnValueOnce(new Promise(resolve => resolve()));
+
+    const target = new ProfileController();
+    await target.resetPassword({username, email});
+
+    expect(mock).toBeCalled();
+    expect(mock).toBeCalledWith(username, email);
+
+    expect(mockNotificationService).toBeCalled();
+    expect(mockNotificationService).toBeCalledWith(email, newPassword);
   });
 });

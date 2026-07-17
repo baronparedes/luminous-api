@@ -7,12 +7,16 @@ import swaggerUi from 'swagger-ui-express';
 import {ValidateError} from 'tsoa';
 
 import {ApprovedAny} from './@types';
+import {clearUserContext} from './middleware/clear-user-context-middleware';
 import config from './config';
 import {ApiError, EntityError, ForbiddenError} from './errors';
 import {RegisterRoutes} from './routes';
 import swaggerDocument from './swagger.json';
 
 export const app = express();
+
+// Add user context cleanup middleware early in the pipeline
+app.use(clearUserContext);
 
 app.use(
   express.urlencoded({
@@ -24,13 +28,13 @@ app.use(compression());
 app.use(helmet());
 app.use(morgan(config.IS_PROD ? 'tiny' : 'dev'));
 
-if (!config.IS_PROD) {
-  app.use(
-    cors({
-      origin: config.CLIENT_URI,
-    })
-  );
+app.use(
+  cors({
+    origin: config.CLIENT_URI,
+  })
+);
 
+if (!config.IS_PROD) {
   app.use('/docs', swaggerUi.serve, async (_: Request, res: Response) => {
     return res.send(swaggerUi.generateHTML(swaggerDocument));
   });

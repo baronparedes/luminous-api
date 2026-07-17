@@ -1,28 +1,19 @@
 import {
   AllowNull,
   Column,
+  DataType,
   Default,
   IsEmail,
   Model,
   NotEmpty,
   Table,
-  Unique,
 } from 'sequelize-typescript';
 
-import {ProfileStatus, ProfileType} from '../@types/models';
+import {ProfileAttr, ProfileType, RecordStatus} from '../@types/models';
 
-export interface ProfileAttr {
-  id?: number;
-  name: string;
-  username: string;
-  password: string;
-  email: string;
-  type: ProfileType;
-  status: ProfileStatus;
-  scopes?: string;
-}
-
-@Table
+@Table({
+  indexes: [{unique: true, fields: ['username']}],
+})
 class Profile extends Model implements ProfileAttr {
   @AllowNull(false)
   @NotEmpty
@@ -31,8 +22,7 @@ class Profile extends Model implements ProfileAttr {
 
   @AllowNull(false)
   @NotEmpty
-  @Unique
-  @Column
+  @Column(DataType.CITEXT)
   username!: string;
 
   @AllowNull(false)
@@ -46,18 +36,25 @@ class Profile extends Model implements ProfileAttr {
   @Column
   email!: string;
 
+  @Column
+  mobileNumber?: string;
+
   @AllowNull(false)
-  @Default('user')
+  @Default('unit owner')
   @Column
   type!: ProfileType;
 
   @AllowNull(false)
   @Default('active')
   @Column
-  status!: ProfileStatus;
+  status!: RecordStatus;
 
   @Column
   scopes?: string;
+
+  @AllowNull(true)
+  @Column
+  remarks?: string;
 }
 
 export default Profile;

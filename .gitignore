@@ -104,3 +104,6 @@ dist
 .tern-port
 
 junit.xml
+test-db.sqlite
+
+local/

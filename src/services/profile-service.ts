@@ -2,31 +2,29 @@ import {FindOptions, Op} from 'sequelize';
 
 import {
   AuthProfile,
-  ProfileStatus,
+  ProfileAttr,
+  RecordStatus,
   RegisterProfile,
   UpdateProfile,
 } from '../@types/models';
-import {useHash} from '../@utils/use-hash';
+import {generatePassword} from '../@utils/helpers';
+import {iLike} from '../@utils/helpers-sequelize';
 import {VERBIAGE} from '../constants';
-import Profile from '../models/profile';
-
-const PROFILE_MSGS = {
-  NOT_FOUND: 'unable to get profile',
-};
+import {ApiError} from '../errors';
+import {useHash} from '../hooks/use-hash';
+import Profile from '../models/profile-model';
+import {mapAuthProfile} from './@mappers';
 
 export default class ProfileService {
-  constructor() {}
-
-  private mapAuthProfile(profile: Profile): AuthProfile {
-    return {
-      id: Number(profile.id),
-      name: profile.name,
-      username: profile.username,
-      scopes: profile.scopes,
-      type: profile.type,
-      email: profile.email,
-      status: profile.status,
-    };
+  private validateProfile(password: string, profile: ProfileAttr | null) {
+    if (!profile) {
+      throw new Error(VERBIAGE.NOT_FOUND);
+    }
+    const {compare} = useHash();
+    const match = compare(password, profile.password);
+    if (!match) {
+      throw new Error(VERBIAGE.NOT_FOUND);
+    }
   }
 
   public async register(profile: RegisterProfile): Promise<AuthProfile> {
@@ -36,9 +34,10 @@ export default class ProfileService {
       username: profile.username,
       password: hash(profile.password),
       email: profile.email,
+      mobileNumber: profile.mobileNumber,
     });
     const result = await newProfile.save();
-    return this.mapAuthProfile(result);
+    return mapAuthProfile(result);
   }
 
   public async getProfileByUsernameAndPassword(
@@ -46,25 +45,24 @@ export default class ProfileService {
     password: string
   ): Promise<AuthProfile> {
     const result = await Profile.findOne({
-      where: {username, status: {[Op.eq]: 'active'}},
+      where: {username, status: 'active'},
     });
-    const {compare} = useHash();
-    if (!result || !compare(password, result?.password)) {
-      throw new Error(PROFILE_MSGS.NOT_FOUND);
-    }
-    return this.mapAuthProfile(result);
+    this.validateProfile(password, result);
+    return mapAuthProfile(result as Profile);
   }
 
   public async getAll(search?: string): Promise<AuthProfile[]> {
-    const criteria = {[Op.iLike]: `%${search}%`};
+    const criteria = (column: string) => {
+      return iLike(column, search);
+    };
     const opts: FindOptions<Profile> = {
       where: {
-        [Op.or]: [{name: criteria}, {email: criteria}, {username: criteria}],
+        [Op.or]: [criteria('name'), criteria('email'), criteria('username')],
       },
     };
     const result = await Profile.findAll(search ? opts : {});
     return result.map(p => {
-      return this.mapAuthProfile(p);
+      return mapAuthProfile(p);
     });
   }
 
@@ -81,15 +79,17 @@ export default class ProfileService {
     result.type = profile.type;
     result.status = profile.status;
     result.scopes = profile.scopes;
-    result.save();
-    return this.mapAuthProfile(result);
+    result.mobileNumber = profile.mobileNumber;
+    result.remarks = profile.remarks ?? undefined;
+    await result.save();
+    return mapAuthProfile(result);
   }
 
-  public async updateStatus(id: number, status: ProfileStatus) {
-    const profile = await Profile.findOne({where: {id}});
-    if (profile) {
-      profile.status = status;
-      await profile?.save();
+  public async updateStatus(id: number, status: RecordStatus) {
+    const result = await Profile.findByPk(id);
+    if (result) {
+      result.status = status;
+      await result?.save();
     }
   }
 
@@ -99,11 +99,29 @@ export default class ProfileService {
     newPassword: string
   ): Promise<void> {
     const result = await Profile.findByPk(id);
-    const {compare, hash} = useHash();
-    if (!result || !compare(currentPassword, result?.password)) {
-      throw new Error(PROFILE_MSGS.NOT_FOUND);
+    this.validateProfile(currentPassword, result);
+    if (result) {
+      const {hash} = useHash();
+      result.password = hash(newPassword);
+      await result.save();
     }
-    result.password = hash(newPassword);
-    await result.save();
+  }
+
+  public async resetPassword(username: string, email: string) {
+    const profile = await Profile.findOne({
+      where: {
+        username,
+      },
+    });
+
+    if (!profile) throw new ApiError(404, VERBIAGE.NOT_FOUND);
+    if (profile && profile.email.toLowerCase() !== email.toLowerCase())
+      throw new ApiError(404, VERBIAGE.NOT_FOUND);
+
+    const newPassword = generatePassword();
+    const {hash} = useHash();
+    profile.password = hash(newPassword);
+    await profile.save();
+    return newPassword;
   }
 }

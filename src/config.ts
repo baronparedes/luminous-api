@@ -5,6 +5,8 @@ dotenv.config();
 const config = {
   NODE_ENV: process.env.NODE_ENV,
   IS_PROD: process.env.NODE_ENV === 'production',
+  IS_TEST: process.env.NODE_ENV === 'test',
+  IS_DEV: process.env.NODE_ENV === 'development',
   PORT: process.env.PORT || 3001,
   JWT_ACCESS_TOKEN: process.env.JWT_ACCESS_TOKEN || '',
   JWT_REFRESH_TOKEN: process.env.JWT_REFRESH_TOKEN || '',
@@ -18,7 +20,22 @@ const config = {
     HOST: process.env.DB_HOST || '',
     PORT: process.env.DB_PORT || '',
     DIALECT: process.env.DB_DIALECT || 'postgres',
+    SSL: process.env.DB_SSL?.toLowerCase() === 'true',
     SYNC: process.env.DB_SYNC?.toLowerCase() === 'true',
+    SEED: process.env.DB_SEED?.toLowerCase() === 'true',
+  },
+  APP: {
+    MIN_APPROVERS: 3,
+  },
+  SMTP: {
+    USER_NAME: process.env.SMTP_USER_NAME || '',
+    PASSWORD: process.env.SMTP_PASSWORD || '',
+    SENDER: process.env.SMTP_SENDER || 'luminous.webapp@gmail.com',
+    ENABLED: process.env.SMTP_ENABLED === 'true',
+    CLIENT_ID: process.env.SMTP_CLIENT_ID || '',
+    CLIENT_SECRET: process.env.SMTP_CLIENT_SECRET || '',
+    REFRESH_TOKEN: process.env.SMTP_REFRESH_TOKEN || '',
+    REDIRECT_URI: process.env.SMTP_REDIRECT_URI || '',
   },
 };
 

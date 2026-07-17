@@ -1,6 +1,7 @@
 import * as faker from 'faker';
 
 import {generateAuthProfile} from '../../@utils/fake-data';
+import {VERBIAGE} from '../../constants';
 import AuthService from '../auth-service';
 import ProfileService from '../profile-service';
 
@@ -58,7 +59,7 @@ describe('AuthService', () => {
     const target = new AuthService();
     await expect(
       target.verifyAuthorization(`Bearer ${faker.random.alphaNumeric(64)}`)
-    ).rejects.toThrow();
+    ).rejects.toThrow(VERBIAGE.FAILED_AUTHENTICATION);
   });
 
   it('should throw an error when profile is invalid', async () => {
